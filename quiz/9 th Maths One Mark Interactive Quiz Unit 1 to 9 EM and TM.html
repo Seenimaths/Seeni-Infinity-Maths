@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9th Maths Complete Quiz (Units 1-9) - TN Board</title>
+   
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Tamil Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+	
+    <script>
+        window.MathJax = {
+            tex: { 
+                inlineMath: [['$', '$']], 
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            startup: { typeset: false }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Tiro Tamil', 'Cambria', Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80') no-repeat center center fixed;
+            background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 15, 30, 0.2); z-index: -1; }
+
+        .global-lang-toggle {
+            position: fixed; top: 20px; right: 30px; background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px); padding: 5px 8px; border-radius: 40px; display: flex; gap: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5); border: 2px solid rgba(255, 255, 255, 0.2); z-index: 10000;
+        }
+        .global-lang-toggle .lang-btn {
+            background: transparent; color: #fff; border: none; padding: 10px 22px; border-radius: 30px;
+            font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.5px;
+        }
+        .global-lang-toggle .lang-btn.active { background: #f39c12; color: #fff; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.6); transform: scale(1.05); }
+
+        @media (max-width: 600px) {
+            .global-lang-toggle { top: 15px; right: 15px; padding: 4px; gap: 4px; }
+            .global-lang-toggle .lang-btn { padding: 8px 15px; font-size: 13px; }
+        }
+
+        .card {
+            background: linear-gradient(135deg, #e6d5b8, #D2B48C);
+            width: 100%; max-width: 780px; border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            overflow: hidden; position: relative; margin: 90px 15px 40px; border: 3px solid rgba(255,255,255,0.4);
+        }
+
+        .header {
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)), url('https://upload.wikimedia.org/wikipedia/commons/c/c8/Srinivasa_Ramanujan_-_OPC_-_1.jpg') center top/cover;
+            color: white; text-align: center; padding: 40px 20px 30px; border-bottom: 5px solid #f39c12; position: relative; overflow: hidden;
+        }
+
+        .math-anim-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.5; }
+        .math-anim-bg span { position: absolute; color: #f1c40f; font-size: 28px; font-weight: bold; animation: floatUp linear infinite; bottom: -40px; opacity: 0; text-shadow: 0 0 10px rgba(241, 196, 15, 0.8); }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-250px) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        .header-content { position: relative; z-index: 1; }
+        .header h1 { margin: 0; font-size: 26px; font-weight: 800; line-height: 1.4; text-shadow: 2px 2px 5px rgba(0,0,0,0.9); letter-spacing: 0.5px;}
+        .header h2 { margin: 8px 0 0; font-size: 14px; color: #f1c40f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);}
+
+        .prepared-by {
+            background: rgba(255, 255, 255, 0.95); color: #333; width: max-content; margin: 25px auto 0;
+            padding: 8px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 2px solid #f39c12;
+        }
+        .prepared-by .icon { background: linear-gradient(135deg, #e67e22, #d35400); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; box-shadow: 0 2px 10px rgba(211, 84, 0, 0.5); }
+        .prepared-by div { text-align: left; }
+        .prepared-by div h4 { margin: 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+        .prepared-by div p { margin: 2px 0 0; font-weight: 800; color: #c0392b; font-size: 15px; }
+        .prepared-by div small { font-size: 11px; color: #555; font-weight: 600; }
+
+        .content { padding: 30px; }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 800; font-size: 16px; color: #2c3e50; margin-bottom: 12px; text-shadow: 1px 1px 1px rgba(255,255,255,0.5); }
+        
+        .checkbox-group { background: rgba(255, 255, 255, 0.7); border: 2px solid #e0e6ed; padding: 15px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .checkbox-group label { font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 700; color: #34495e; transition: 0.2s;}
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: #1f4b8f; cursor: pointer;}
+
+        @media (max-width: 600px) { .checkbox-group { grid-template-columns: 1fr; } }
+
+        .select-box { width: 100%; padding: 14px; border: 2px solid #e0e6ed; border-radius: 10px; font-size: 15px; background: #fff; font-family: 'Poppins', sans-serif; font-weight: 700; color: #2c3e50; outline: none; cursor: pointer; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .btn { width: 100%; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border: none; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .btn:hover { background: linear-gradient(135deg, #e67e22, #d35400); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(230, 126, 34, 0.6); }
+
+        #quiz-screen, #result-screen { display: none; }
+        .timer-container { width: 100%; background: #ecf0f1; height: 12px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
+        .timer-bar { height: 100%; width: 100%; background: #2ecc71; transition: width 1s linear, background 0.3s; }
+        .timer-text { text-align: right; font-size: 15px; font-weight: 800; padding: 8px 25px; color: #e74c3c; background: rgba(255, 255, 255, 0.7); border-bottom: 2px solid #e0e6ed; text-shadow: 1px 1px 1px rgba(255,255,255,0.8); }
+
+        .quiz-content { padding: 25px 30px 35px; }
+        .badges-wrap { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .badge { background: #3498db; color: white; padding: 6px 15px; border-radius: 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(0,0,0,0.15);}
+        .unit-badge { background: #8e44ad; }
+        
+        .question-text { font-size: 21px; font-weight: bold; color: #1a252f; margin-bottom: 25px; line-height: 1.6; font-family: 'Cambria Math', Cambria, Georgia, serif; text-shadow: 1px 1px 1px rgba(255,255,255,0.6); }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        .option-btn { background: rgba(255,255,255,0.9); border: 2px solid #bdc3c7; padding: 12px 18px; border-radius: 12px; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .option-btn * { pointer-events: none; }
+        
+        .opt-alpha { background: #e0e6ed; color: #2c3e50; font-weight: 800; font-size: 16px; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .opt-text { font-size: 18px; font-weight: 600; color: #2c3e50; font-family: 'Cambria Math', Cambria, serif; line-height: 1.5; }
+        
+        .option-btn:hover:not(:disabled) { background: #ffffff; border-color: #3498db; transform: translateX(5px) scale(1.02); box-shadow: 0 6px 15px rgba(52, 152, 219, 0.2); }
+        .option-btn:hover:not(:disabled) .opt-alpha { background: #3498db; color: white; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background: #d4edda; border-color: #28a745; box-shadow: 0 0 15px rgba(40,167,69,0.4); transform: scale(1.02); z-index: 10;}
+        .option-btn.correct .opt-alpha { background: #28a745; color: white; }
+        .option-btn.wrong { background: #f8d7da; border-color: #dc3545; transform: scale(0.98);}
+        .option-btn.wrong .opt-alpha { background: #dc3545; color: white; }
+
+        .exp-box { background: #ffffff; border-left: 6px solid #2980b9; padding: 22px; border-radius: 12px; margin-bottom: 25px; display: none; animation: slideDown 0.3s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-right: 1px solid #eee; border-top: 1px solid #eee; border-bottom: 1px solid #eee;}
+        .exp-box h4 { margin: 0 0 12px 0; color: #1f4b8f; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+        .exp-box p { margin: 0; font-size: 16px; color: #2c3e50; line-height: 1.8; font-family: 'Cambria Math', Cambria, serif; font-weight: 600; text-align: justify;}
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .next-btn-container { display: flex; justify-content: flex-end; display: none; animation: fadeIn 0.5s ease; }
+        .next-btn-modern { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 17px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4); display: flex; align-items: center; gap: 10px; letter-spacing: 1px; text-transform: uppercase;}
+        .next-btn-modern:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 30px rgba(39, 174, 96, 0.6); }
+
+        .score-display { text-align: center; font-size: 60px; font-weight: 800; color: #27ae60; margin: 25px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        
+        .game-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 20000; visibility: hidden; opacity: 0; transition: opacity 0.1s ease; }
+        .game-overlay.show { visibility: visible; opacity: 1; }
+        .popup-box { background: #fff; padding: 40px 70px; border-radius: 30px; text-align: center; transform: scale(0.5); transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 60px rgba(0,0,0,0.6); border: 5px solid #f1c40f;}
+        .game-overlay.show .popup-box { transform: scale(1); }
+        @keyframes popup-shake { 0%, 100% { transform: scale(1) translateX(0); } 20%, 60% { transform: scale(1) translateX(-15px) rotate(-5deg); } 40%, 80% { transform: scale(1) translateX(15px) rotate(5deg); } }
+        .game-overlay.show .popup-box.wrong-shake { animation: popup-shake 0.35s ease-in-out; border-color: #e74c3c; }
+        .game-overlay.show .popup-box.correct-pop { border-color: #27ae60; }
+        .popup-icon { font-size: 95px; margin-bottom: 15px; line-height: 1; text-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .popup-text { font-size: 34px; font-weight: 800; letter-spacing: 1px; }
+        .theme-correct { color: #27ae60; }
+        .theme-wrong { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <div class="global-lang-toggle">
+        <button id="lang-btn-ta" class="lang-btn active" onclick="setLang('ta')">தமிழ்</button>
+        <button id="lang-btn-en" class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+
+    <div class="game-overlay" id="game-overlay">
+        <div class="popup-box" id="popup-box">
+            <div class="popup-icon" id="popup-icon"></div>
+            <div class="popup-text" id="popup-text"></div>
+        </div>
+    </div>
+
+    <div class="card" id="quiz-card">
+        <!-- Setup Screen -->
+        <div id="setup-screen">
+            <div class="header">
+                <div class="math-anim-bg">
+                    <span style="left: 10%; animation-duration: 6s; animation-delay: 0s;">$\int$</span>
+                    <span style="left: 25%; animation-duration: 7s; animation-delay: 2s;">$\pi$</span>
+                    <span style="left: 45%; animation-duration: 5s; animation-delay: 1s;">$\sum$</span>
+                    <span style="left: 60%; animation-duration: 8s; animation-delay: 3s;">$\sqrt{x}$</span>
+                    <span style="left: 75%; animation-duration: 6s; animation-delay: 0.5s;">$\infty$</span>
+                    <span style="left: 85%; animation-duration: 7s; animation-delay: 1.5s;">$\theta$</span>
+                    <span style="left: 15%; animation-duration: 5.5s; animation-delay: 2.5s;">$=$</span>
+                    <span style="left: 80%; animation-duration: 6.5s; animation-delay: 0.2s;">$\Delta$</span>
+                </div>
+                <div class="header-content">
+                    <h1 id="ui-main-title">9ஆம் வகுப்பு கணிதம்: முழுத் தொகுப்பு<br>ஒரு மதிப்பெண் வினாடி வினா</h1>
+                    <h2 id="ui-sub-title">தமிழ்நாடு மாநில பாடத்திட்டம்</h2>
+                    <div class="prepared-by">
+                        <div class="icon">YS</div>
+                        <div>
+                            <h4 id="ui-prep-by">தயாரிப்பு</h4>
+                            <p>யோ. சீனிவாசன்</p>
+                            <small>M.Sc., B.Ed. | 📞 8489880553</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="input-group">
+                    <label id="ui-sel-unit">📚 1. அலகுகளைத் தேர்ந்தெடுக்கவும்:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" class="unit-cb" value="1" checked> <span class="lbl-u1">அலகு-1: கண மொழி</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="2" checked> <span class="lbl-u2">அலகு-2: மெய்யெண்கள்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="3" checked> <span class="lbl-u3">அலகு-3: இயற்கணிதம்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="4" checked> <span class="lbl-u4">அலகு-4: வடிவியல்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="5" checked> <span class="lbl-u5">அலகு-5: ஆயத்தொலை வடிவியல்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="6" checked> <span class="lbl-u6">அலகு-6: முக்கோணவியல்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="7" checked> <span class="lbl-u7">அலகு-7: அளவியல்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="8" checked> <span class="lbl-u8">அலகு-8: புள்ளியியல்</span></label>
+                        <label><input type="checkbox" class="unit-cb" value="9" checked> <span class="lbl-u9">அலகு-9: நிகழ்தகவு</span></label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label id="ui-sel-order">🔀 2. வினாக்களின் வரிசை:</label>
+                    <select id="order-select" class="select-box">
+                        <option value="book" id="ui-opt-book" selected>புத்தக வரிசை (Sequential)</option>
+                        <option value="shuffle" id="ui-opt-shuffle">கலைக்கப்பட்ட வரிசை (Shuffle)</option>
+                    </select>
+                </div>
+
+                <button class="btn" id="ui-start-btn" onclick="startQuiz()">வினாடி வினாவைத் தொடங்கு 🚀</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div class="header" style="padding: 25px 20px 20px;">
+                 <div class="math-anim-bg">
+                    <span style="left: 10%; animation-duration: 6s; animation-delay: 0s;">$\int$</span>
+                    <span style="left: 25%; animation-duration: 7s; animation-delay: 2s;">$\pi$</span>
+                    <span style="left: 45%; animation-duration: 5s; animation-delay: 1s;">$\sum$</span>
+                    <span style="left: 60%; animation-duration: 8s; animation-delay: 3s;">$\sqrt{x}$</span>
+                    <span style="left: 75%; animation-duration: 6s; animation-delay: 0.5s;">$\infty$</span>
+                    <span style="left: 85%; animation-duration: 7s; animation-delay: 1.5s;">$\theta$</span>
+                </div>
+                <div class="header-content">
+                    <h1 style="font-size: 22px;" id="ui-quiz-header">9ஆம் வகுப்பு கணிதம் வினாடி வினா</h1>
+                </div>
+            </div>
+            <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+            <div class="timer-text" id="timer-text">⏳ 30s</div>
+
+            <div class="quiz-content">
+                <div class="badges-wrap">
+                    <span class="badge" id="part-badge">சரியான விடையைத் தேர்ந்தெடு</span>
+                    <span class="badge unit-badge" id="unit-badge">Unit</span>
+                </div>
+                
+                <div class="question-text" id="question-text">Question?</div>
+                <div id="answer-area"></div>
+                
+                <div id="feedback-msg" style="font-weight:800; margin-top:10px; margin-bottom:15px; display:none; font-size: 18px;"></div>
+                
+                <div id="explanation-box" class="exp-box">
+                    <h4 id="ui-exp-title">💡 விரிவான விளக்கம் (Explanation):</h4>
+                    <p id="exp-text"></p>
+                </div>
+
+                <div class="next-btn-container" id="next-btn-wrapper">
+                    <button class="next-btn-modern" id="ui-next-btn" onclick="nextQuestion()">அடுத்த வினா ➡️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <div class="header">
+                <h1 id="ui-res-title">🎉 வினாடி வினா நிறைவடைந்தது!</h1>
+            </div>
+            <div class="content" style="text-align: center;">
+                <h3 style="color:#2c3e50; font-size: 28px; margin-top: 10px; font-weight: 800;" id="ui-res-sub">சிறப்பான முயற்சி!</h3>
+                <div class="score-display" id="final-score">0 / 0</div>
+                <p style="color:#7f8c8d; margin-bottom: 35px; font-weight: 700; font-size: 18px;" id="ui-res-msg">தொடர்ந்து பயிற்சி செய்யுங்கள். வெற்றி நிச்சயம்!</p>
+                <button class="btn" id="ui-replay-btn" onclick="location.reload()">மீண்டும் விளையாடு 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uiDict = {
+            ta: {
+                mainTitle: "9ஆம் வகுப்பு கணிதம்: முழுத் தொகுப்பு<br>ஒரு மதிப்பெண் வினாடி வினா", subTitle: "தமிழ்நாடு மாநில பாடத்திட்டம்",
+                prepBy: "தயாரிப்பு", selUnit: "📚 1. அலகுகளைத் தேர்ந்தெடுக்கவும்:", selUnitErr: "குறைந்தபட்சம் ஒரு அலகையாவது தேர்ந்தெடுக்கவும்!",
+                u1: "அலகு-1: கண மொழி", u2: "அலகு-2: மெய்யெண்கள்", u3: "அலகு-3: இயற்கணிதம்", u4: "அலகு-4: வடிவியல்",
+                u5: "அலகு-5: ஆயத்தொலை வடிவியல்", u6: "அலகு-6: முக்கோணவியல்", u7: "அலகு-7: அளவியல்", u8: "அலகு-8: புள்ளியியல்", u9: "அலகு-9: நிகழ்தகவு",
+                selOrder: "🔀 2. வினாக்களின் வரிசை:", optBook: "புத்தக வரிசை (Sequential)", optShuffle: "கலைக்கப்பட்ட வரிசை (Shuffle)",
+                startBtn: "வினாடி வினாவைத் தொடங்கு 🚀", quizHeader: "9ஆம் வகுப்பு கணிதம் வினாடி வினா",
+                partBadge: "சரியான விடையைத் தேர்ந்தெடு", nextBtn: "அடுத்த வினா ➡️", showResBtn: "முடிவுகளைக் காட்டு 🏆",
+                expTitle: "💡 விரிவான விளக்கம்:", timeUp: "❌ நேரம் முடிந்தது! சரியான விடை:",
+                correct: "✅ அருமை! சரியான விடை!", wrong: "❌ தவறான விடை! சரியான விடை:",
+                resTitle: "🎉 வினாடி வினா நிறைவடைந்தது!", resSub: "சிறப்பான முயற்சி!",
+                resMsg: "தொடர்ந்து பயிற்சி செய்யுங்கள். வெற்றி நிச்சயம்!", replayBtn: "மீண்டும் விளையாடு 🔄",
+                correctPopup: "மிகச் சரி!", wrongPopup: "தவறு!"
+            },
+            en: {
+                mainTitle: "9th Standard Maths: Complete Guide<br>One Mark Quiz", subTitle: "Tamil Nadu State Board",
+                prepBy: "Prepared by", selUnit: "📚 1. Select Units:", selUnitErr: "Please select at least one unit!",
+                u1: "Unit-1: Set Language", u2: "Unit-2: Real Numbers", u3: "Unit-3: Algebra", u4: "Unit-4: Geometry",
+                u5: "Unit-5: Co-ordinate Geometry", u6: "Unit-6: Trigonometry", u7: "Unit-7: Mensuration", u8: "Unit-8: Statistics", u9: "Unit-9: Probability",
+                selOrder: "🔀 2. Question Order:", optBook: "Book Order (Sequential)", optShuffle: "Shuffled Order (Random)",
+                startBtn: "Start Quiz 🚀", quizHeader: "9th Standard Maths Quiz",
+                partBadge: "Choose the Correct Answer", nextBtn: "Next Question ➡️", showResBtn: "Show Results 🏆",
+                expTitle: "💡 Detailed Explanation:", timeUp: "❌ Time's Up! Correct Answer:",
+                correct: "✅ Excellent! Correct Answer!", wrong: "❌ Wrong Answer! Correct Answer:",
+                resTitle: "🎉 Quiz Completed!", resSub: "Outstanding Effort!",
+                resMsg: "Keep practicing. Success is yours!", replayBtn: "Play Again 🔄",
+                correctPopup: "CORRECT!", wrongPopup: "WRONG!"
+            }
+        };
+
+        let currentLang = 'ta';
+        let isAnswered = false;
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-btn-' + lang).classList.add('active');
+            updateUITexts();
+            if(document.getElementById('quiz-screen').style.display === 'block') {
+                updateQuestionTexts();
+            }
+        }
+
+        function updateUITexts() {
+            const d = uiDict[currentLang];
+            document.getElementById('ui-main-title').innerHTML = d.mainTitle;
+            document.getElementById('ui-sub-title').innerText = d.subTitle;
+            document.getElementById('ui-prep-by').innerText = d.prepBy;
+            document.getElementById('ui-sel-unit').innerText = d.selUnit;
+            document.querySelectorAll('.lbl-u1').forEach(e => e.innerText = d.u1);
+            document.querySelectorAll('.lbl-u2').forEach(e => e.innerText = d.u2);
+            document.querySelectorAll('.lbl-u3').forEach(e => e.innerText = d.u3);
+            document.querySelectorAll('.lbl-u4').forEach(e => e.innerText = d.u4);
+            document.querySelectorAll('.lbl-u5').forEach(e => e.innerText = d.u5);
+            document.querySelectorAll('.lbl-u6').forEach(e => e.innerText = d.u6);
+            document.querySelectorAll('.lbl-u7').forEach(e => e.innerText = d.u7);
+            document.querySelectorAll('.lbl-u8').forEach(e => e.innerText = d.u8);
+            document.querySelectorAll('.lbl-u9').forEach(e => e.innerText = d.u9);
+            document.getElementById('ui-sel-order').innerText = d.selOrder;
+            document.getElementById('ui-opt-book').innerText = d.optBook;
+            document.getElementById('ui-opt-shuffle').innerText = d.optShuffle;
+            document.getElementById('ui-start-btn').innerText = d.startBtn;
+            document.getElementById('ui-quiz-header').innerText = d.quizHeader;
+            document.getElementById('part-badge').innerText = d.partBadge;
+            
+            let nxtBtn = document.getElementById('ui-next-btn');
+            if (quizQuestions && quizQuestions.length > 0) {
+                nxtBtn.innerText = (currentIdx === quizQuestions.length - 1) ? d.showResBtn : d.nextBtn;
+            } else {
+                nxtBtn.innerText = d.nextBtn;
+            }
+
+            document.getElementById('ui-exp-title').innerText = d.expTitle;
+            document.getElementById('ui-res-title').innerText = d.resTitle;
+            document.getElementById('ui-res-sub').innerText = d.resSub;
+            document.getElementById('ui-res-msg').innerText = d.resMsg;
+            document.getElementById('ui-replay-btn').innerText = d.replayBtn;
+        }
+
+        function updateQuestionTexts() {
+            if(!quizQuestions || !quizQuestions[currentIdx]) return;
+            const q = quizQuestions[currentIdx];
+            document.getElementById('unit-badge').innerText = currentLang === 'ta' ? q.unitTa : q.unitEn;
+            document.getElementById('question-text').innerHTML = (currentIdx + 1) + ". " + q.q[currentLang];
+            
+            const optTexts = document.querySelectorAll('.opt-text');
+            q.opts[currentLang].forEach((optStr, i) => {
+                if(optTexts[i]) optTexts[i].innerHTML = wrapMathTokens(optStr);
+            });
+
+            if(isAnswered) {
+                document.getElementById('exp-text').innerHTML = q.exp[currentLang];
+                const msgBox = document.getElementById('feedback-msg');
+                if(msgBox.dataset.status === 'correct') {
+                    msgBox.innerText = uiDict[currentLang].correct;
+                } else if(msgBox.dataset.status === 'wrong' || msgBox.dataset.status === 'timeup') {
+                    msgBox.innerHTML = (msgBox.dataset.status === 'wrong' ? uiDict[currentLang].wrong : uiDict[currentLang].timeUp) + " <b>" + wrapMathTokens(q.opts[currentLang][q.ansIdx]) + "</b>";
+                }
+            }
+            renderMath();
+        }
+
+        const dbRaw = [
+            // UNIT 1: Set Language (20 Qs)
+            [1, "பின்வருவனவற்றில் எது சரியானது?", "Which of the following is correct?", ["$ \\{7\\} \\subseteq \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ 7 \\in \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ 7 \\subseteq \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ \\{7\\} \\in \\{1,2,3,4,5,6,7,8,9,10\\} $"], ["$ \\{7\\} \\subseteq \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ 7 \\in \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ 7 \\subseteq \\{1,2,3,4,5,6,7,8,9,10\\} $", "$ \\{7\\} \\in \\{1,2,3,4,5,6,7,8,9,10\\} $"], 1, "7 என்பது கொடுக்கப்பட்ட கணத்தில் உள்ள ஓர் உறுப்பு ஆகும். ஓர் உறுப்பு ஒரு கணத்தில் இருப்பதை குறிக்க '$\\in$' (உறுப்பாகும்) என்ற குறியீடு மட்டுமே பயன்படுத்தப்பட வேண்டும்.", "7 is an element present in the given set. To denote that an element belongs to a set, we strictly use the '$\\in$' (belongs to) symbol."],
+            [1, "$ P=\\{x|x \\in \\mathbb{Z}, -1 < x < 1\\} $ என்பது", "The set $ P=\\{x|x \\in \\mathbb{Z}, -1 < x < 1\\} $ is a", ["ஓருறுப்புக் கணம்", "அடுக்குக் கணம்", "வெற்றுக்கணம்", "உட்கணம்"], ["Singleton set", "Power set", "Null set", "Subset"], 0, "முழு எண்களில் (Integers) -1 க்கும் 1 க்கும் இடைப்பட்ட ஒரே எண் 0 மட்டுமே. எனவே, P = {0}. இக்கணம் ஒரே ஒரு உறுப்பை மட்டும் கொண்டுள்ளதால், இது ஓருறுப்புக் கணம் (Singleton set) எனப்படும்.", "The only integer between -1 and 1 is 0. So, P = {0}. Since the set contains exactly one element, it is called a Singleton set."],
+            [1, "$ U=\\{x|x \\in \\mathbb{N}, x < 10\\} $ மற்றும் $ A=\\{x|x \\in \\mathbb{N}, 2 \\le x < 6\\} $ எனில் $ (A')' $ ஆனது", "If $ U=\\{x|x \\in \\mathbb{N}, x < 10\\} $ and $ A=\\{x|x \\in \\mathbb{N}, 2 \\le x < 6\\} $ then $ (A')' $ is", ["$ \\{1,6,7,8,9\\} $", "$ \\{1,2,3,4\\} $", "$ \\{2,3,4,5\\} $", "$ \\{\\} $"], ["$ \\{1,6,7,8,9\\} $", "$ \\{1,2,3,4\\} $", "$ \\{2,3,4,5\\} $", "$ \\{\\} $"], 2, "நிரப்பு கணத்தின் விதிகளின்படி, ஒரு கணத்தின் நிரப்பியின் நிரப்பி அதே கணம் ஆகும். அதாவது $ (A')' = A $. கணம் A-ல் உள்ள இயல் எண்கள் $ \\{2,3,4,5\\} $ ஆகும்.", "By the law of complementation, the complement of a complement is the original set itself. i.e., $ (A')' = A $. The natural numbers satisfying $ 2 \\le x < 6 $ are $ \\{2,3,4,5\\} $."],
+            [1, "$ B \\subseteq A $ எனில் $ n(A \\cap B) $ ஆனது", "If $ B \\subseteq A $ then $ n(A \\cap B) $ is", ["$ n(A-B) $", "$ n(B) $", "$ n(B-A) $", "$ n(A) $"], ["$ n(A-B) $", "$ n(B) $", "$ n(B-A) $", "$ n(A) $"], 1, "B என்பது A இன் உட்கணம் (Subset) எனில், B இல் உள்ள அனைத்து உறுப்புகளும் A இலும் இருக்கும். ஆகையால், இரண்டுக்கும் பொதுவான உறுப்புகளின் கணம் ($A \\cap B$) கணம் B க்கே சமம். எனவே $ n(A \\cap B) = n(B) $.", "If B is a subset of A, all elements of B are also in A. Therefore, the intersection of A and B is simply B. Hence, the number of elements in the intersection is equal to $ n(B) $."],
+            [1, "A = $ \\{x, y, z\\} $ எனில், A-ன் வெற்றற்ற உட்கணங்களின் எண்ணிக்கை", "If A = $ \\{x, y, z\\} $ then the number of non-empty subsets of A is", ["8", "5", "6", "7"], ["8", "5", "6", "7"], 3, "ஒரு கணத்தில் n உறுப்புகள் இருந்தால், மொத்த உட்கணங்களின் எண்ணிக்கை $ 2^n $ ஆகும். இங்கு n = 3, எனவே மொத்த உட்கணங்கள் = $ 2^3 = 8 $. வெற்றற்ற உட்கணங்கள் (Non-empty subsets) தேவை என்பதால், வெற்றுக்கணத்தை (1) கழிக்க வேண்டும். $ 8 - 1 = 7 $.", "If a set has n elements, the total number of subsets is $ 2^n $. Here n=3, so total subsets = $ 2^3 = 8 $. Since we need non-empty subsets, we subtract the null set. $ 8 - 1 = 7 $."],
+            [1, "பின்வருவனவற்றில் எது சரியானது?", "Which of the following is correct?", ["$ \\phi \\subseteq \\{a,b\\} $", "$ \\phi \\in \\{a,b\\} $", "$ \\{a\\} \\in \\{a,b\\} $", "$ a \\subseteq \\{a,b\\} $"], ["$ \\phi \\subseteq \\{a,b\\} $", "$ \\phi \\in \\{a,b\\} $", "$ \\{a\\} \\in \\{a,b\\} $", "$ a \\subseteq \\{a,b\\} $"], 0, "கணக் கோட்பாட்டின் (Set Theory) அடிப்படை விதியின்படி, வெற்றுக்கணம் ($\\phi$) என்பது எந்தவொரு கணத்திற்கும் உட்கணமாக (Subset) அமையும்.", "According to the fundamental rules of Set Theory, an empty set ($\\phi$) is automatically considered a subset of every set."],
+            [1, "$ A \\cup B = A \\cap B $ எனில்", "If $ A \\cup B = A \\cap B $ then", ["$ A \\ne B $", "$ A = B $", "$ A \\subset B $", "$ B \\subset A $"], ["$ A \\ne B $", "$ A = B $", "$ A \\subset B $", "$ B \\subset A $"], 1, "இரண்டு கணங்களின் சேர்ப்பும் (Union) வெட்டும் (Intersection) சமமாக இருக்க வேண்டுமானால், அந்த இரண்டு கணங்களிலும் உள்ள உறுப்புகள் முற்றிலுமாக ஒன்றாக இருக்க வேண்டும். எனவே A = B.", "The union and intersection of two sets can yield the exact same result only when the two sets are completely identical. Therefore, A = B."],
+            [1, "B-A என்பது B எனில், $ A \\cap B $ ஆனது", "If B-A is B, then $ A \\cap B $ is", ["A", "B", "U", "Ø"], ["A", "B", "U", "Ø"], 3, "B-A = B என்றால், B இலிருந்து A இன் உறுப்புகளை நீக்கினாலும் B மாறவில்லை என்று அர்த்தம். அதாவது, B க்கும் A க்கும் பொதுவான உறுப்புகள் எதுவும் இல்லை. எனவே வெட்டு $ A \\cap B = \\emptyset $.", "B-A = B means removing A's elements from B leaves B unchanged. This implies there are absolutely no common elements between A and B. Hence, their intersection is the null set (Ø)."],
+            [1,
+			  "<svg viewBox='0 0 450 280' style='width:100%; max-width:450px;'><rect x='20' y='15' width='410' height='250' stroke='#e6004c' stroke-width='4' fill='none'/><circle cx='160' cy='140' r='90' stroke='#901a7e' stroke-width='4' fill='none'/><circle cx='275' cy='140' r='90' stroke='#901a7e' stroke-width='4' fill='none'/><g font-size='32' fill='#231F20'><text x='400' y='45'>U</text><text x='38' y='70'>50</text><text x='390' y='80'>10</text><text x='370' y='240'>65</text><text x='95' y='55' font-style='italic'>A</text><text x='340' y='55' font-style='italic'>B</text><text x='132' y='90'>60</text><text x='132' y='145'>85</text><text x='132' y='200'>75</text><text x='210' y='110'>30</text><text x='210' y='170'>20</text><text x='288' y='95'>90</text><text x='290' y='195'>70</text></g></svg><br><br>படத்தில் கொடுக்கப்பட்டுள்ளவற்றிலிருந்து $n(P(A\\Delta B))$ ஆனது",
+			  "<svg viewBox='0 0 450 280' style='width:100%; max-width:450px;'><rect x='20' y='15' width='410' height='250' stroke='#e6004c' stroke-width='4' fill='none'/><circle cx='160' cy='140' r='90' stroke='#901a7e' stroke-width='4' fill='none'/><circle cx='275' cy='140' r='90' stroke='#901a7e' stroke-width='4' fill='none'/><g font-size='32' fill='#231F20'><text x='400' y='45'>U</text><text x='38' y='70'>50</text><text x='390' y='80'>10</text><text x='370' y='240'>65</text><text x='95' y='55' font-style='italic'>A</text><text x='340' y='55' font-style='italic'>B</text><text x='132' y='90'>60</text><text x='132' y='145'>85</text><text x='132' y='200'>75</text><text x='210' y='110'>30</text><text x='210' y='170'>20</text><text x='288' y='95'>90</text><text x='290' y='195'>70</text></g></svg><br><br>From the adjacent diagram, $n(P(A\\Delta B))$ is",
+			  ["8", "16", "32", "64"],
+			  ["8", "16", "32", "64"],
+			  2,
+			  "$ A\\Delta B $ (சமச்சீர் வித்தியாசம்) என்பது A மற்றும் B இல் மட்டும் உள்ள தனித்த உறுப்புகளின் கணம். A-யில் மட்டும் 3 உறுப்புகள், B-யில் மட்டும் 2 உறுப்புகள் உள்ளன. மொத்தம் 5 உறுப்புகள். அடுக்குக் கணத்தின் எண்ணிக்கை $ P(5) = 2^5 = 32 $.",
+			  "$ A\\Delta B $ (Symmetric difference) contains elements present strictly in A only and B only. A has 3, B has 2. Total elements = 5. Number of subsets in Power set = $ 2^5 = 32 $."
+			],
+            [1, "n(A)=10 மற்றும் n(B)=15 எனில் $A \\cap B$ இல் உள்ள உறுப்புகளின் குறைந்தபட்ச மற்றும் அதிகபட்ச எண்ணிக்கை", "If n(A)=10 and n(B)=15 then the minimum and maximum number of elements in $A \\cap B$ is", ["10, 15", "15, 10", "10, 0", "0, 10"], ["10, 15", "15, 10", "10, 0", "0, 10"], 3, "இரண்டு கணங்களும் வெட்டாத கணங்களாக (Disjoint sets) இருந்தால் பொது உறுப்புகள் 0 ஆக இருக்கும். கணம் A முழுவதும் கணம் B இன் உட்கணமாக இருந்தால் அதிகபட்சமாக 10 பொது உறுப்புகள் இருக்கும்.", "If the sets are completely disjoint, the minimum common elements will be 0. If the smaller set A is entirely inside B, the maximum common elements will be 10."],
+            [1, "$ A=\\{\\emptyset\\} $ மற்றும் $ B=P(A) $ எனில், $ A \\cap B $ ஆனது", "Let $ A=\\{\\emptyset\\} $ and $ B=P(A) $, then $ A \\cap B $ is", ["$ \\{\\emptyset, \\{\\emptyset\\}\\} $", "$ \\{\\emptyset\\} $", "Ø", "$ \\{\\emptyset\\} $"], ["$ \\{\\emptyset, \\{\\emptyset\\}\\} $", "$ \\{\\emptyset\\} $", "Ø", "$ \\{\\emptyset\\} $"], 1, "A இன் அடுக்குக் கணம் B = $ \\{\\emptyset, \\{\\emptyset\\}\\} $. கணம் A க்கும் கணம் B க்கும் பொதுவான உறுப்பைப் பார்த்தால் அது $ \\emptyset $ ஆகும். இதை கணக் குறியீட்டில் $ \\{\\emptyset\\} $ என எழுதலாம்.", "The power set B = $ \\{\\emptyset, \\{\\emptyset\\}\\} $. Comparing Set A = $ \\{\\emptyset\\} $ and Set B, the common element present in both is $ \\emptyset $. Hence intersection is $ \\{\\emptyset\\} $."],
+            [1, "50 பேரில், 35 பேர் கேரம் மற்றும் 20 பேர் சதுரங்கம் விளையாடுகிறார்கள் எனில், இரண்டு விளையாட்டுகளையும் விளையாடுவோர் எண்ணிக்கை", "In a class of 50 boys, 35 play Carrom and 20 play Chess. Number of boys playing both is", ["5", "30", "15", "10"], ["5", "30", "15", "10"], 0, "கணங்களுக்கான கூட்டல் தேற்றத்தின்படி: $ n(A \\cap B) = n(A) + n(B) - n(A \\cup B) $. இங்கு $ n(A \\cap B) = 35 + 20 - 50 = 55 - 50 = 5 $ பேர்.", "By the set addition principle: $ n(A \\cap B) = n(A) + n(B) - n(A \\cup B) $. Substituting the values gives $ 35 + 20 - 50 = 5 $ boys."],
+            [1, "$ U=\\{x:x \\in \\mathbb{N}, x < 10\\} $, $A=\\{1,2,3,5,8\\}$, $B=\\{2,5,6,7,9\\}$ எனில் $ n[(A \\cup B)'] $ ஆனது", "If U={x:x∈N, x<10}, A={1,2,3,5,8}, B={2,5,6,7,9} then $ n[(A \\cup B)'] $ is", ["1", "2", "3", "4"], ["1", "2", "3", "4"], 0, "அனைத்துக் கணம் U = {1,2,3,4,5,6,7,8,9}. $ A \\cup B $ = {1,2,3,5,6,7,8,9}. இதன் நிரப்பிக் கணம் $ (A \\cup B)' $ = {4}. இதில் ஒரே ஒரு உறுப்பு மட்டுமே உள்ளதால் விடை 1.", "Universal set U = {1 to 9}. $ A \\cup B $ combines all elements of A and B = {1,2,3,5,6,7,8,9}. Its complement $ (A \\cup B)' $ contains only {4}, which means count is 1."],
+            [1, "P, Q, மற்றும் R என்ற எதேனும் மூன்று கணங்களுக்கு, $ P-(Q \\cap R) $ ஆனது", "For any three sets P, Q and R, $ P-(Q \\cap R) $ is", ["$ P-(Q \\cup R) $", "$ (P \\cap Q)-R $", "$ (P-Q) \\cup (P-R) $", "$ (P-Q) \\cap (P-R) $"], ["$ P-(Q \\cup R) $", "$ (P \\cap Q)-R $", "$ (P-Q) \\cup (P-R) $", "$ (P-Q) \\cap (P-R) $"], 2, "இது டி மார்கனின் (De Morgan's) கண வித்தியாச விதியாகும். ஒரு வெட்டுக் கணத்தை (Intersection) கழிக்கும்போது, அது தனித்தனி வித்தியாசங்களின் சேர்ப்பாக (Union) மாறும்.", "This is a direct application of De Morgan's laws for set difference. Subtracting an intersection results in the union of individual set differences."],
+            [1, "பின்வருவனவற்றில் எது உண்மை?", "Which of the following is true?", ["$ A-B = A \\cap B $", "$ A-B = B-A $", "$ (A \\cup B)' = A' \\cup B' $", "$ (A \\cap B)' = A' \\cup B' $"], ["$ A-B = A \\cap B $", "$ A-B = B-A $", "$ (A \\cup B)' = A' \\cup B' $", "$ (A \\cap B)' = A' \\cup B' $"], 3, "டி மார்கனின் நிரப்பு விதிகளின்படி (De Morgan's laws of complementation), ஒரு வெட்டுக் கணத்தின் நிரப்பியானது, தனித்தனி கணங்களின் நிரப்பிகளின் சேர்ப்பிற்குச் சமம்.", "According to De Morgan's laws of complementation, the complement of an intersection is strictly equal to the union of their individual complements."],
+            [1, "$ n(A \\cup B \\cup C)=100 $, n(A)=4x, n(B)=6x, n(C)=5x, $n(A \\cap B)=20$, $n(B \\cap C)=15$, $n(A \\cap C)=25$, $n(A \\cap B \\cap C)=10$ எனில் x = ?", "Given properties... find value of x.", ["10", "15", "25", "30"], ["10", "15", "25", "30"], 0, "சூத்திரம்: $ n(A \\cup B \\cup C) = n(A) + n(B) + n(C) - n(A \\cap B) - n(B \\cap C) - n(A \\cap C) + n(A \\cap B \\cap C) $. இதன்படி, $ 100 = 4x + 6x + 5x - 20 - 15 - 25 + 10 $. $ 100 = 15x - 50 \\implies 15x = 150 \\implies x = 10 $.", "Formula for 3 sets: Sum the individual counts, subtract the pairwise intersections, and add the triple intersection. Equation becomes $ 100 = 15x - 50 $, solving yields x=10."],
+            [1, "$ (A-B) \\cap (B-C) $ எதற்குச் சமம்", "$ (A-B) \\cap (B-C) $ is equal to", ["A மட்டும்", "B மட்டும்", "C மட்டும்", "Φ"], ["A only", "B only", "C only", "Φ"], 3, "(A-B) என்பது A-யில் மட்டும் உள்ளவை. (B-C) என்பது B-யில் மட்டும் உள்ளவை. இவை இரண்டுக்கும் பொதுவான உறுப்புகள் (Intersection) இருக்க வாய்ப்பே இல்லை. எனவே இது ஒரு வெற்றுக்கணம் (Φ).", "(A-B) contains elements exclusively in A. (B-C) contains elements exclusively in B. By definition, they cannot share any common elements. Thus, their intersection is the null set (Φ)."],
+            [1, "J=3 பக்க வடிவங்கள், K=2 சம பக்க வடிவங்கள், L=செங்கோண வடிவங்கள் எனில், $ J \\cap K \\cap L $ ஆனது", "J=3 sided shapes, K=2 equal sides, L=right angle. $ J \\cap K \\cap L $ is", ["இருசமபக்க முக்கோணங்கள்", "சமபக்க முக்கோணங்கள்", "இருசமபக்க செங்கோண முக்கோணங்கள்", "செங்கோண முக்கோணங்கள்"], ["Isosceles triangles", "Equilateral triangles", "Isosceles right triangles", "Right angled triangles"], 2, "கணம் J முக்கோணங்களையும், கணம் K இருசமபக்கத்தையும், கணம் L செங்கோணத்தையும் குறிக்கிறது. மூன்றின் வெட்டு என்பது மூன்றையும் பூர்த்தி செய்யும் 'இருசமபக்க செங்கோண முக்கோணங்கள்' ஆகும்.", "Set J implies Triangles, K implies Isosceles, L implies Right-angled. The intersection requires a shape possessing all three properties: Isosceles right triangles."],
+            [1,
+			  "வென் வரைபடத்தில் நிழலிடப்பட்ட பகுதி எதைக் குறிக்கிறது?<br><br><svg viewBox='0 0 420 350' style='width:100%; max-width:420px;'><defs><mask id='mask-xy'><rect x='0' y='0' width='420' height='350' fill='white'/><path d='M 210 56.35 A 95 95 0 0 1 210 203.65 A 95 95 0 0 1 210 56.35' fill='black'/></mask></defs><rect x='15' y='15' width='390' height='320' stroke='#eb1c52' stroke-width='5' fill='none'/><circle cx='210' cy='220' r='95' fill='#ccebf9' mask='url(#mask-xy)'/><circle cx='150' cy='130' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><circle cx='270' cy='130' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><circle cx='210' cy='220' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><g font-size='32' font-style='italic' fill='#231F20'><text x='35' y='60'>X</text><text x='350' y='60'>Y</text><text x='290' y='325'>Z</text></g></svg>",
+			  "The shaded region in the Venn diagram is<br><br><svg viewBox='0 0 420 350' style='width:100%; max-width:420px;'><defs><mask id='mask-xy'><rect x='0' y='0' width='420' height='350' fill='white'/><path d='M 210 56.35 A 95 95 0 0 1 210 203.65 A 95 95 0 0 1 210 56.35' fill='black'/></mask></defs><rect x='15' y='15' width='390' height='320' stroke='#eb1c52' stroke-width='5' fill='none'/><circle cx='210' cy='220' r='95' fill='#ccebf9' mask='url(#mask-xy)'/><circle cx='150' cy='130' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><circle cx='270' cy='130' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><circle cx='210' cy='220' r='95' stroke='#eb1c52' stroke-width='4' fill='none'/><g font-size='32' font-style='italic' fill='#231F20'><text x='35' y='60'>X</text><text x='350' y='60'>Y</text><text x='290' y='325'>Z</text></g></svg>",
+			  ["$ Z-(X \\cup Y) $", "$ (X \\cup Y) \\cap Z $", "$ Z-(X \\cap Y) $", "$ Z \\cup (X \\cap Y) $"],
+			  ["$ Z-(X \\cup Y) $", "$ (X \\cup Y) \\cap Z $", "$ Z-(X \\cap Y) $", "$ Z \\cup (X \\cap Y) $"],
+			  2,
+			  "முழுக் கணம் Z நிழலிடப்பட்டுள்ளது, ஆனால் X மற்றும் Y வெட்டும் பகுதி ($X \\cap Y$) மட்டும் நீக்கப்பட்டுள்ளது. எனவே இது $ Z-(X \\cap Y) $ ஆகும்.",
+			  "The entire set Z is shaded except for the exact region where sets X and Y intersect. Thus, it represents Z minus the intersection of X and Y: $ Z-(X \\cap Y) $."
+			],
+            [1, "40% மக்கள் 1 பழம், 35% மக்கள் 2 பழங்கள், 20% மக்கள் 3 பழங்கள் விரும்புகிறார்கள் எனில், எதையும் விரும்பாதவர்கள்?", "40% like only 1 fruit, 35% like only 2, 20% like all 3. Percentage of people who do not like any?", ["5", "8", "10", "15"], ["5", "8", "10", "15"], 0, "பழங்களை விரும்புவோரின் மொத்த சதவீதம் = 40% + 35% + 20% = 95%. எதையும் விரும்பாதவர்கள் சதவீதம் = 100% - 95% = 5%.", "Total percentage of people who like at least one category of fruits = 40% + 35% + 20% = 95%. People disliking all = 100% - 95% = 5%."],
+
+            // UNIT 2: Real Numbers (20 Qs)
+            [2, "n என்பது ஒரு இயல் எண் எனில் $ \\sqrt{n} $ ஆனது", "If n is a natural number then $ \\sqrt{n} $ is", ["எப்போதும் ஒரு இயல் எண்", "எப்போதும் விகிதமுறா எண்", "எப்போதும் விகிதமுறு எண்", "விகிதமுறு / விகிதமுறா இருக்கலாம்"], ["Always a natural number", "Always irrational number", "Always rational number", "May be rational or irrational"], 3, "n என்பது ஒரு இயல் எண். n=4 எனில் $ \\sqrt{4} = 2 $ (விகிதமுறு). n=2 எனில் $ \\sqrt{2} $ (விகிதமுறா). எனவே, இது இரண்டுமாக இருக்கலாம்.", "If we take a perfect square like n=4, $ \\sqrt{4}=2 $ (Rational). If we take a non-perfect square like n=2, $ \\sqrt{2} $ is Irrational. It varies."],
+            [2, "பின்வருவனவற்றில் எது உண்மையல்ல?", "Which of the following is not true?", ["ஒவ்வொரு விகிதமுறு எண்ணும் மெய்யெண்", "ஒவ்வொரு முழுவும் விகிதமுறு எண்", "ஒவ்வொரு மெய்யெண்ணும் விகிதமுறா எண்", "ஒவ்வொரு இயல் எண்ணும் முழு எண்"], ["Every rational is a real number", "Every integer is a rational number", "Every real number is an irrational number", "Every natural is a whole number"], 2, "மெய்யெண்கள் (Real numbers) என்பது விகிதமுறு மற்றும் விகிதமுறா எண்களின் ஒருங்கிணைந்த தொகுப்பாகும். எனவே அனைத்து மெய்யெண்களும் விகிதமுறா எண்கள் என்பது தவறான கூற்று.", "The set of Real numbers is formed by combining both rational and irrational numbers. Stating that every real number is inherently irrational is completely false."],
+            [2, "இரண்டு விகிதமுறா எண்களின் கூடுதல் பற்றிய கூற்றுகளில் எது உண்மை?", "Which one regarding sum of two irrational numbers is true?", ["எப்போதும் விகிதமுறா எண்", "விகிதமுறு / விகிதமுறா", "எப்போதும் விகிதமுறு எண்", "எப்போதும் முழு எண்"], ["Always an irrational number", "May be rational or irrational", "Always a rational number", "Always an integer"], 1, "கூட்டப்படும் எண்களைப் பொறுத்து மாறும். எ.கா: $ \\sqrt{2} + \\sqrt{3} $ என்பது விகிதமுறா எண். ஆனால் $ \\sqrt{2} + (-\\sqrt{2}) = 0 $, இது ஒரு விகிதமுறு எண்.", "The sum depends entirely on the numbers chosen. $ \\sqrt{2} + \\sqrt{3} $ results in an irrational sum, whereas $ \\sqrt{2} + (-\\sqrt{2}) = 0 $, which is a rational number."],
+            [2, "எது முடிவுறு தசம விரிவைக் கொண்டுள்ளது?", "Which has a terminating decimal expansion?", ["5/64", "8/9", "14/15", "1/12"], ["5/64", "8/9", "14/15", "1/12"], 0, "ஒரு பின்னத்தின் பகுதியின் (Denominator) பகா காரணிகள் 2 அல்லது 5 ஆக மட்டுமே இருந்தால் அது முடிவுறு தசமமாகும். இங்கு 64 = $ 2^6 $. இதில் 2 ஐ தவிர வேறு பகா காரணிகள் இல்லை.", "A fraction results in a terminating decimal if and only if the prime factors of its completely simplified denominator consist solely of 2s and/or 5s. Here, 64 = $ 2^6 $."],
+            [2, "பின்வருவனவற்றில் எது விகிதமுறா எண்?", "Which one of the following is an irrational number?", ["$ \\sqrt{25} $", "$ \\sqrt{9/4} $", "7/11", "$ \\pi $"], ["$ \\sqrt{25} $", "$ \\sqrt{9/4} $", "7/11", "$ \\pi $"], 3, "$ \\pi $ (பை) என்பது முடிவுறாத, சுழல்தன்மையற்ற தசம விரிவைக் கொண்ட ஒரு விகிதமுறா எண் (Irrational number). மற்றவை சுருக்கப்படும்போது விகிதமுறு எண்களாகிவிடும்.", "$ \\pi $ is a transcendental and irrational number because its decimal expansion never terminates and never repeats."],
+            [2, "2 மற்றும் 2.5 க்கு இடைப்பட்ட ஒரு விகிதமுறா எண்", "An irrational number between 2 and 2.5 is", ["$ \\sqrt{11} $", "$ \\sqrt{5} $", "$ \\sqrt{2.5} $", "$ \\sqrt{8} $"], ["$ \\sqrt{11} $", "$ \\sqrt{5} $", "$ \\sqrt{2.5} $", "$ \\sqrt{8} $"], 1, "மதிப்புகளை வர்க்கப்படுத்தினால்: $ 2 = \\sqrt{4} $ மற்றும் $ 2.5 = \\sqrt{6.25} $. $ \\sqrt{4} $ க்கும் $ \\sqrt{6.25} $ க்கும் இடையில் சரியாக அமைவது $ \\sqrt{5} $ (மதிப்பு 2.236).", "Squaring the limits helps: $ 2 = \\sqrt{4} $ and $ 2.5 = \\sqrt{6.25} $. Comparing the terms inside the square root, $ \\sqrt{5} $ sits perfectly within this range."],
+            [2, "1/3 என்ற எண்ணை எந்த மிகச்சிறிய விகிதமுறு எண்ணால் பெருக்கினால் முடிவுறு தசமமாகும்?", "Multiply 1/3 by which smallest rational so it terminates with 1 decimal place?", ["1/10", "3/10", "3", "30"], ["1/10", "3/10", "3", "30"], 1, "விடை ஒரு தசம இடத்தில் முடிவுற வேண்டும் (அதாவது 0.1). $ \\frac{1}{3} \\times x = \\frac{1}{10} $. எனவே $ x = \\frac{3}{10} $.", "To make the decimal terminate at one place, the desired answer is 0.1 (or 1/10). Solving $ \\frac{1}{3} \\times x = \\frac{1}{10} $ yields x = 3/10."],
+            [2, "$ 1/7 = 0.\\overline{142857} $ எனில் $ 5/7 $ இன் மதிப்பு", "If $ 1/7 = 0.\\overline{142857} $ then the value of $ 5/7 $ is", ["0.142857", "0.714285", "0.571428", "$ 0.\\overline{714285} $"], ["0.142857", "0.714285", "0.571428", "$ 0.\\overline{714285} $"], 3, "$ \\frac{5}{7} = 5 \\times \\frac{1}{7} = 5 \\times 0.\\overline{142857} = 0.\\overline{714285} $. மீளும் தசம குறியீடு (Bar) கட்டாயம் இருக்க வேண்டும்.", "Simply multiply the given repeating decimal value by 5. $ 5 \\times 0.\\overline{142857} = 0.\\overline{714285} $. The overline denoting infinite repetition is essential."],
+            [2, "பொருந்தாததைக் காண்க.", "Find the odd one out.", ["$ \\sqrt{32} \\times \\sqrt{2} $", "$ \\frac{\\sqrt{27}}{\\sqrt{3}} $", "$ \\sqrt{72} \\times \\sqrt{8} $", "$ \\frac{\\sqrt{54}}{\\sqrt{18}} $"], ["$ \\sqrt{32} \\times \\sqrt{2} $", "$ \\frac{\\sqrt{27}}{\\sqrt{3}} $", "$ \\sqrt{72} \\times \\sqrt{8} $", "$ \\frac{\\sqrt{54}}{\\sqrt{18}} $"], 3, "மற்றவற்றின் சுருக்கப்பட்ட விடை முழு எண்கள் (A:8, B:3, C:24). ஆனால் D இன் சுருக்கம் $ \\sqrt{3} $ ஆகும். இது ஒரு விகிதமுறா எண்.", "Options A, B, and C simplify perfectly into whole numbers (8, 3, and 24 respectively). Option D simplifies to $ \\sqrt{3} $, making it the only irrational number."],
+            [2, "$ 0.\\overline{34} + 0.3\\overline{4} = $", "$ 0.\\overline{34} + 0.3\\overline{4} = $", ["0.687", "$ 0.\\overline{68} $", "$ 0.6\\overline{8} $", "$ 0.6\\overline{87} $"], ["0.687", "$ 0.\\overline{68} $", "$ 0.6\\overline{8} $", "$ 0.6\\overline{87} $"], 3, "$ 0.343434... $ மற்றும் $ 0.344444... $ ஆகியவற்றை நேரடியாகக் கூட்டினால் $ 0.6878787... $ கிடைக்கும். இதை $ 0.6\\overline{87} $ என எழுதலாம்.", "Align and sum the infinite repeating sequences: $ 0.343434... $ + $ 0.344444... $ yields $ 0.6878787... $, which is accurately represented as $ 0.6\\overline{87} $."],
+            [2, "பின்வருவனவற்றில் எது தவறானது?", "Which of the following statement is false?", ["25 இன் வர்க்கமூலம் 5 அல்லது -5", "$ -\\sqrt{25} = -5 $", "$ \\sqrt{25} = 5 $", "$ \\sqrt{25} = \\pm 5 $"], ["Square root of 25 is 5 or -5", "$ -\\sqrt{25} = -5 $", "$ \\sqrt{25} = 5 $", "$ \\sqrt{25} = \\pm 5 $"], 3, "கணித மரபுப்படி, $ \\sqrt{x} $ (வர்க்கமூலக் குறியீடு) என்பது முதன்மை நேர்ம வர்க்கமூலத்தை (Principal positive square root) மட்டுமே குறிக்கும். எனவே $ \\sqrt{25} $ இன் விடை 5 மட்டுமே, $\\pm5$ அல்ல.", "By mathematical convention, the radical symbol $ \\sqrt{x} $ denotes only the principal (positive) square root. Thus, equating it to $\\pm5$ is notationally incorrect."],
+            [2, "எது விகிதமுறு எண் அல்ல?", "Which one of the following is not a rational number?", ["$ \\sqrt{\\frac{8}{18}} $", "7/3", "$ \\sqrt{0.01} $", "$ \\sqrt{13} $"], ["$ \\sqrt{\\frac{8}{18}} $", "7/3", "$ \\sqrt{0.01} $", "$ \\sqrt{13} $"], 3, "$ \\sqrt{13} $ என்பது ஒரு முழு வர்க்கம் அல்லாத எண்ணின் வர்க்கமூலம். எனவே இது ஒரு விகிதமுறா எண்.", "$ \\sqrt{13} $ is the square root of a non-perfect square, making its decimal expansion non-terminating and non-repeating (Irrational)."],
+            [2, "$ \\sqrt{27} + \\sqrt{12} = $", "$ \\sqrt{27} + \\sqrt{12} = $", ["$ \\sqrt{39} $", "$ 5\\sqrt{6} $", "$ 5\\sqrt{3} $", "$ 3\\sqrt{5} $"], ["$ \\sqrt{39} $", "$ 5\\sqrt{6} $", "$ 5\\sqrt{3} $", "$ 3\\sqrt{5} $"], 2, "$ \\sqrt{27} $ ஐ $ 3\\sqrt{3} $ எனவும், $ \\sqrt{12} $ ஐ $ 2\\sqrt{3} $ எனவும் சுருக்கலாம். இவற்றை கூட்டினால் $ 3\\sqrt{3} + 2\\sqrt{3} = 5\\sqrt{3} $.", "Break down the radicals: $ \\sqrt{9 \\times 3} + \\sqrt{4 \\times 3} $. This simplifies to $ 3\\sqrt{3} + 2\\sqrt{3} $, giving the sum $ 5\\sqrt{3} $."],
+            [2, "$ \\sqrt{80} = k\\sqrt{5} $, k =", "If $ \\sqrt{80} = k\\sqrt{5} $, then k =", ["2", "4", "8", "16"], ["2", "4", "8", "16"], 1, "80 ஐ $ 16 \\times 5 $ எனப் பிரிக்கலாம். $ \\sqrt{16 \\times 5} = 4\\sqrt{5} $. எனவே k = 4.", "Factorize 80 inside the square root to find perfect squares: $ \\sqrt{16 \\times 5} $. Bringing the 16 outside as 4 leaves $ 4\\sqrt{5} $. Hence k=4."],
+            [2, "$ 4\\sqrt{7} \\times 2\\sqrt{3} = $", "$ 4\\sqrt{7} \\times 2\\sqrt{3} = $", ["$ 6\\sqrt{10} $", "$ 8\\sqrt{21} $", "$ 8\\sqrt{10} $", "$ 6\\sqrt{21} $"], ["$ 6\\sqrt{10} $", "$ 8\\sqrt{21} $", "$ 8\\sqrt{10} $", "$ 6\\sqrt{21} $"], 1, "வெளியே உள்ள முழு எண்களைப் பெருக்க: $ 4 \\times 2 = 8 $. உள்ளே உள்ள முருடுகளைப் பெருக்க: $ \\sqrt{7 \\times 3} = \\sqrt{21} $. விடை: $ 8\\sqrt{21} $.", "Multiply the integer coefficients together (4 × 2 = 8) and the radicals together ($\\sqrt{7} \\times \\sqrt{3} = \\sqrt{21}$) to get $ 8\\sqrt{21} $."],
+            [2, "$ \\frac{2\\sqrt{3}}{3\\sqrt{2}} $ இன் பகுதியை விகிதமுறு எண்ணாக மாற்றினால்", "When written with a rational denominator, $ \\frac{2\\sqrt{3}}{3\\sqrt{2}} $ simplifies as", ["$ \\frac{\\sqrt{2}}{3} $", "$ \\frac{\\sqrt{3}}{2} $", "$ \\frac{\\sqrt{6}}{3} $", "2/3"], ["$ \\frac{\\sqrt{2}}{3} $", "$ \\frac{\\sqrt{3}}{2} $", "$ \\frac{\\sqrt{6}}{3} $", "2/3"], 2, "பகுதியையும் (Denominator) தொகுதியையும் (Numerator) $ \\sqrt{2} $ ஆல் பெருக்க வேண்டும். $ \\frac{2\\sqrt{3}\\sqrt{2}}{3\\sqrt{2}\\sqrt{2}} = \\frac{2\\sqrt{6}}{3 \\times 2} = \\frac{\\sqrt{6}}{3} $.", "Multiply both the numerator and denominator by $ \\sqrt{2} $ to eliminate the radical from the bottom. $ \\frac{2\\sqrt{6}}{6} $, which simplifies to $ \\frac{\\sqrt{6}}{3} $."],
+            [2, "$ (2\\sqrt{5} - \\sqrt{2})^2 $ ஐ சுருக்கும்போது", "When $ (2\\sqrt{5} - \\sqrt{2})^2 $ is simplified, we get", ["$ 4\\sqrt{5} + 2\\sqrt{2} $", "$ 22 - 4\\sqrt{10} $", "$ 8 - 4\\sqrt{10} $", "$ 2\\sqrt{10} - 2 $"], ["$ 4\\sqrt{5} + 2\\sqrt{2} $", "$ 22 - 4\\sqrt{10} $", "$ 8 - 4\\sqrt{10} $", "$ 2\\sqrt{10} - 2 $"], 1, "$ (a-b)^2 = a^2 - 2ab + b^2 $ சூத்திரத்தைப் பயன்படுத்த: $ (2\\sqrt{5})^2 - 2(2\\sqrt{5})(\\sqrt{2}) + (\\sqrt{2})^2 = 20 - 4\\sqrt{10} + 2 = 22 - 4\\sqrt{10} $.", "Expand using the algebraic identity $ (a-b)^2 $. The terms evaluate to $ 20 - 4\\sqrt{10} + 2 $, summing up to $ 22 - 4\\sqrt{10} $."],
+            [2, "$ (0.000729)^{-3/4} \\times (0.09)^{-3/4} = $", "$ (0.000729)^{-3/4} \\times (0.09)^{-3/4} = $", ["$ \\frac{10^3}{3^3} $", "$ \\frac{10^5}{3^5} $", "$ \\frac{10^2}{3^2} $", "$ \\frac{10^6}{3^6} $"], ["$ \\frac{10^3}{3^3} $", "$ \\frac{10^5}{3^5} $", "$ \\frac{10^2}{3^2} $", "$ \\frac{10^6}{3^6} $"], 3, "அடுக்கு விதிகளைப் பயன்படுத்தி அடிமானங்களைப் பெருக்கினால் $ (0.00006561)^{-3/4} $ கிடைக்கும். இதை $ ( (0.09)^4 )^{-3/4} $ என எழுதலாம். சுருக்கினால் $ \\frac{10^6}{3^6} $.", "Since the exponents are identical, multiply the bases directly. Applying exponent rules to the resulting fraction evaluates exactly to $ \\frac{10^6}{3^6} $."],
+            [2, "$ \\sqrt{9^x} = \\sqrt[3]{9^2} $ எனில், x =", "If $ \\sqrt{9^x} = \\sqrt[3]{9^2} $, then x =", ["2/3", "4/3", "1/3", "5/3"], ["2/3", "4/3", "1/3", "5/3"], 1, "இதை அடுக்கு வடிவில் எழுதினால்: $ 9^{x/2} = 9^{2/3} $. அடிமானங்கள் சமம் என்பதால் அடுக்குகளை சமப்படுத்தலாம். $ \\frac{x}{2} = \\frac{2}{3} \\implies x = \\frac{4}{3} $.", "Rewrite the roots as fractional exponents: $ 9^{x/2} = 9^{2/3} $. Since the bases are equal, equating the exponents gives $ x/2 = 2/3 $, resulting in $ x = 4/3 $."],
+            [2, "நிலத்தின் நீளம் $ 5 \\times 10^5 $, அகலம் $ 4 \\times 10^4 $. பரப்பளவு:", "Length $ 5 \\times 10^5 $, breadth $ 4 \\times 10^4 $. Area is", ["$ 9 \\times 10^1 m^2 $", "$ 9 \\times 10^9 m^2 $", "$ 2 \\times 10^{10} m^2 $", "$ 20 \\times 10^{20} m^2 $"], ["$ 9 \\times 10^1 m^2 $", "$ 9 \\times 10^9 m^2 $", "$ 2 \\times 10^{10} m^2 $", "$ 20 \\times 10^{20} m^2 $"], 2, "பரப்பளவு = நீளம் × அகலம். $ (5 \\times 10^5) \\times (4 \\times 10^4) = 20 \\times 10^9 $. இதை அறிவியல் குறியீட்டில் $ 2 \\times 10^{10} m^2 $ என எழுத வேண்டும்.", "Area of a rectangle is length multiplied by breadth. $ (5 \\times 4) \\times 10^{(5+4)} = 20 \\times 10^9 $. Adjusting to standard scientific notation gives $ 2 \\times 10^{10} m^2 $."],
+
+            // UNIT 3: Algebra (29 Qs)
+            [3, "$ x^3+6x^2+kx+6 $ ஆனது $ (x+2) $ ஆல் வகுபடும் எனில் k=?", "If $ x^3+6x^2+kx+6 $ is exactly divisible by (x+2) then k=?", ["-6", "-7", "-8", "11"], ["-6", "-7", "-8", "11"], 3, "காரணி தேற்றத்தின்படி (Factor Theorem), P(-2) = 0 ஆக இருக்க வேண்டும். $ (-2)^3 + 6(-2)^2 + k(-2) + 6 = 0 $. $ -8 + 24 - 2k + 6 = 0 \\implies 22 - 2k = 0 \\implies k = 11 $.", "By the Factor Theorem, if a polynomial is divisible by (x+2), substituting x=-2 should equal zero. $ -8 + 24 - 2k + 6 = 0 \\implies 22 = 2k \\implies k=11 $."],
+            [3, "$ 2x+3=0 $ என்ற சமன்பாட்டின் மூலம்", "The root of the polynomial equation $ 2x+3=0 $ is", ["$ \\frac{1}{3} $", "$ -\\frac{1}{3} $", "$ -\\frac{3}{2} $", "$ -\\frac{2}{3} $"], ["$ \\frac{1}{3} $", "$ -\\frac{1}{3} $", "$ -\\frac{3}{2} $", "$ -\\frac{2}{3} $"], 2, "சமன்பாட்டைத் தீர்க்க: $ 2x = -3 $. எனவே, $ x = -\\frac{3}{2} $.", "Solving for x: isolate the variable term by moving 3 to the other side ($2x = -3$), then divide by 2 to get $ x = -3/2 $."],
+            [3, "$ 4-3x^3 $ என்ற பல்லுறுப்புக்கோவையின் வகை", "The type of the polynomial $ 4-3x^3 $ is", ["மாறிலி பல்லுறுப்புக்கோவை", "நேரிய பல்லுறுப்புக்கோவை", "இருபடி பல்லுறுப்புக்கோவை", "முப்படி பல்லுறுப்புக்கோவை"], ["Constant polynomial", "Linear polynomial", "Quadratic polynomial", "Cubic polynomial"], 3, "கொடுக்கப்பட்ட பல்லுறுப்புக்கோவையில் உள்ள மாறியின் (x) அதிகபட்ச அடுக்கு (Degree) 3 ஆகும். எனவே இது முப்படிப் பல்லுறுப்புக்கோவை (Cubic polynomial) எனப்படும்.", "The classification of a polynomial depends strictly on its highest degree. Here, the highest power of x is 3, making it a cubic polynomial."],
+            [3, "$ x^{51}+51 $ ஐ $ x+1 $ ஆல் வகுக்கக் கிடைக்கும் மீதி", "If $ x^{51}+51 $ is divided by x+1 then remainder is", ["0", "1", "49", "50"], ["0", "1", "49", "50"], 3, "மீதி தேற்றத்தின்படி (Remainder Theorem), x+1 ஆல் வகுக்க P(-1) ஐக் கண்டுபிடிக்க வேண்டும். $ P(-1) = (-1)^{51} + 51 = -1 + 51 = 50 $.", "According to the Remainder Theorem, divide by (x+1) by evaluating the polynomial at x = -1. $ (-1)^{51} + 51 = -1 + 51 = 50 $."],
+            [3, "$ 2x+5 $ என்ற பல்லுறுப்புக்கோவையின் பூச்சியம்", "The zero of the polynomial $ 2x+5 $ is", ["5/2", "-5/2", "2/5", "-2/5"], ["5/2", "-5/2", "2/5", "-2/5"], 1, "ஒரு பல்லுறுப்புக்கோவையின் பூச்சியம் (Zero) என்பது, அக்கோவையின் மதிப்பை 0 ஆக்கும் x-இன் மதிப்பாகும். $ 2x+5 = 0 \\implies 2x = -5 \\implies x = -\\frac{5}{2} $.", "The 'zero' of a polynomial is the value of x that makes the entire expression equal zero. Set $ 2x+5 = 0 $ and solve to get $ x = -5/2 $."],
+            [3, "$ p(x)=x^3-x^2-2 $, $ q(x)=x^2-3x+1 $ ஆகியவற்றின் கூடுதல்", "The sum of $ p(x)=x^3-x^2-2 $ and $ q(x)=x^2-3x+1 $ is", ["$ x^3-3x-1 $", "$ x^3+2x^2-1 $", "$ x^3-2x^2-3x $", "$ x^3-2x^2+3x-1 $"], ["$ x^3-3x-1 $", "$ x^3+2x^2-1 $", "$ x^3-2x^2-3x $", "$ x^3-2x^2+3x-1 $"], 0, "ஒத்த உறுப்புகளைக் கூட்ட வேண்டும். p(x)-ல் உள்ள $ -x^2 $ மற்றும் q(x)-ல் உள்ள $ +x^2 $ ஆகியவை ஒன்றுக்கொன்று நீக்கப்படும் (Cancel). மீதமுள்ள உறுப்புகள் $ x^3 - 3x - 1 $.", "Combine like terms algebraically: The $ -x^2 $ from p(x) exactly cancels out the $ +x^2 $ from q(x). The remaining terms form $ x^3 - 3x - 1 $."],
+            [3, "$ (y^3-2)(y^3+1) $ என்ற பல்லுறுப்புக்கோவையின் படி", "Degree of the polynomial $ (y^3-2)(y^3+1) $ is", ["9", "2", "3", "6"], ["9", "2", "3", "6"], 3, "பல்லுறுப்புக்கோவைகளைப் பெருக்கும்போது அவற்றின் உயர்ந்த படிகள் (Powers) கூட்டப்படும். $ y^3 \\times y^3 = y^{3+3} = y^6 $. எனவே பல்லுறுப்புக்கோவையின் படி 6.", "When multiplying polynomials, the degree of the resulting polynomial is the sum of the highest degrees of the multiplied terms: $ 3 + 3 = 6 $."],
+            [3, "பல்லுறுப்புக்கோவைகள் A(படி 5), B(படி 4), C(படி 8), D(படி 12) இன் ஏறுவரிசை", "Ascending order of their degree: A(5), B(4), C(8), D(12)", ["A, B, D, C", "A, B, C, D", "B, C, D, A", "B, A, C, D"], ["A, B, D, C", "A, B, C, D", "B, C, D, A", "B, A, C, D"], 3, "A இன் படி 5, B இன் படி 4, C இன் படி 8, D இன் படி 12. ஏறுவரிசை (சிறியதிலிருந்து பெரியது) என்பது 4, 5, 8, 12 ஆகும். எனவே வரிசை B, A, C, D.", "Identify the highest exponent (degree) in each polynomial: A is 5, B is 4 (x²*x²), C is 8, D is 12. Ascending order is 4, 5, 8, 12 (B, A, C, D)."],
+            [3, "$ p(a)=0 $ எனில் $ (x-a) $ என்பது $ p(x) $ இன் ஒரு", "If $ p(a)=0 $ then $ (x-a) $ is a ________ of $ p(x) $", ["வகுத்தி", "ஈவு", "மீதி", "காரணி"], ["Divisor", "Quotient", "Remainder", "Factor"], 3, "காரணி தேற்றத்தின்படி (Factor Theorem), $ p(x) $ இல் x-க்கு பதிலாக a-ஐப் பிரதியிடும்போது விடை 0 கிடைத்தால், $ (x-a) $ என்பது அக்கோவையின் ஒரு காரணி (Factor) ஆகும்.", "Based on the fundamental Factor Theorem, if evaluating a polynomial at x=a yields exactly zero, then the binomial (x-a) is a perfect factor of that polynomial."],
+            [3, "$ (2-3x) $ இன் பூச்சியம்", "Zeros of $ (2-3x) $ is", ["3", "2", "2/3", "3/2"], ["3", "2", "2/3", "3/2"], 2, "பூச்சியம் காண, சமன்பாட்டை 0-க்கு சமப்படுத்த வேண்டும். $ 2 - 3x = 0 \\implies 2 = 3x \\implies x = 2/3 $.", "Set the linear binomial to zero to find its root: $ 2 - 3x = 0 $. Moving terms gives $ 3x = 2 $, which simplifies to $ x = 2/3 $."],
+            [3, "பின்வருவனவற்றில் $ x-1 $ ஐ காரணியாகக் கொண்டது எது?", "Which of the following has $ x-1 $ as a factor?", ["2x-1", "3x-3", "4x-3", "3x-4"], ["2x-1", "3x-3", "4x-3", "3x-4"], 1, "x-1 ஒரு காரணி என்றால், x=1 எனப் பிரதியிட்டால் விடை 0 வர வேண்டும். $ 3x-3 $ என்பதில் $ 3(1)-3 = 3-3 = 0 $ வருகிறது.", "If x-1 is a factor, substituting x=1 must evaluate to 0. Testing option B: $ 3(1) - 3 = 0 $. Thus, it's the correct expression."],
+            [3, "$ p(x) $ இன் ஒரு காரணி $ x-3 $ எனில், மீதி", "If $ x-3 $ is a factor of $ p(x) $ then remainder is", ["3", "-3", "p(3)", "p(-3)"], ["3", "-3", "p(3)", "p(-3)"], 2, "மீதி தேற்றத்தின்படி (Remainder Theorem), $ (x-a) $ ஆல் வகுக்கக் கிடைக்கும் மீதி $ p(a) $ ஆகும். இங்கு a=3, எனவே மீதி p(3). மேலும் காரணி என்பதால் p(3)=0 ஆகவும் இருக்கும்.", "According to the Remainder Theorem, dividing by a linear divisor of form (x-a) leaves a remainder of p(a). Here, a=3, so the remainder is notated as p(3)."],
+            [3, "$ (x+y)(x^2-xy+y^2) $ எதற்குச் சமம்", "$ (x+y)(x^2-xy+y^2) $ is equal to", ["$ (x+y)^3 $", "$ (x-y)^3 $", "$ x^3+y^3 $", "$ x^3-y^3 $"], ["$ (x+y)^3 $", "$ (x-y)^3 $", "$ x^3+y^3 $", "$ x^3-y^3 $"], 2, "இது இயற்கணிதத்தின் மிக அடிப்படையான முற்றொருமைச் சூத்திரம் (Algebraic Identity). $ a^3 + b^3 = (a+b)(a^2-ab+b^2) $.", "This expression represents a standard algebraic factorization identity specifically defining the sum of two cubes: $ x^3 + y^3 $."],
+            [3, "$ (a+b-c)^2 $ எதற்குச் சமம்", "$ (a+b-c)^2 $ is equal to", ["$ (a-b+c)^2 $", "$ (-a-b+c)^2 $", "$ (a+b+c)^2 $", "$ (a-b-c)^2 $"], ["$ (a-b+c)^2 $", "$ (-a-b+c)^2 $", "$ (a+b+c)^2 $", "$ (a-b-c)^2 $"], 1, "ஒரு கோவையின் வர்க்கமும் (Square), அதன் குறை (Negative) கோவையின் வர்க்கமும் சமம். $ (a+b-c) $ இன் குறை கோவை $ (-a-b+c) $ ஆகும். எனவே அவற்றின் வர்க்கங்கள் சமம்.", "The square of any algebraic expression is mathematically identical to the square of its negative counterpart. Multiplying the entire expression by -1 gives $ (-a-b+c)^2 $."],
+            [3, "$ (x+5) $ & $ (x-3) $ என்பன $ ax^2+bx+c $ இன் காரணிகள் எனில் a, b, c இன் மதிப்புகள்", "If $ (x+5) $ & $ (x-3) $ are factors of $ ax^2+bx+c $ then a, b, c are", ["1, 2, 3", "1, 2, 15", "1, 2, -15", "1, -2, 15"], ["1, 2, 3", "1, 2, 15", "1, 2, -15", "1, -2, 15"], 2, "காரணிகளைப் பெருக்கிக் கோவையை உருவாக்க வேண்டும்: $ (x+5)(x-3) = x^2 - 3x + 5x - 15 = x^2 + 2x - 15 $. ஒப்பிட்டால் a=1, b=2, c=-15.", "Expand the linear binomials to find the quadratic form: $ x^2 - 3x + 5x - 15 = x^2 + 2x - 15 $. Comparing coefficients yields a=1, b=2, c=-15."],
+            [3, "முப்படிப் பல்லுறுப்புக்கோவை அதிகபட்சம் ________ நேரியக் காரணிகளைக் கொண்டிருக்கும்", "Cubic polynomial may have maximum of ________ linear factors", ["1", "2", "3", "4"], ["1", "2", "3", "4"], 2, "இயற்கணிதத்தின் அடிப்படைத் தேற்றத்தின்படி, ஒரு பல்லுறுப்புக்கோவையின் படி (Degree) எவ்வளவோ, அதிகபட்சமாக அத்தனை நேரியக் காரணிகள் (Linear factors) அதற்கிருக்கும். முப்படி கோவைக்கு 3.", "The Fundamental Theorem of Algebra states a polynomial has exactly as many roots (and thus potential linear factors) as its highest degree. A cubic equation has a degree of 3."],
+            [3, "மாறிலிப் பல்லுறுப்புக்கோவையின் படி", "Degree of the constant polynomial is", ["3", "2", "1", "0"], ["3", "2", "1", "0"], 3, "எந்தவொரு மாறிலி எண்ணையும் (உதாரணமாக 5), $ 5x^0 $ என எழுதலாம். மாறியின் (x) உயர்ந்த அடுக்கு 0 என்பதால், மாறிலி பல்லுறுப்புக்கோவையின் படி 0 ஆகும்.", "Any non-zero constant real number (like 7) can be algebraically expressed as $ 7x^0 $ since $ x^0 = 1 $. Thus, its polynomial degree is intrinsically 0."],
+            [3, "$ 2x+3y=m $ இன் ஒரு தீர்வு x=2, y=-2 எனில் m இன் மதிப்பு", "Value of m from $ 2x+3y=m $ if solution is x=2, y=-2.", ["2", "-2", "10", "0"], ["2", "-2", "10", "0"], 1, "கொடுக்கப்பட்ட x மற்றும் y மதிப்புகளைச் சமன்பாட்டில் பிரதியிட (Substitute) வேண்டும். $ 2(2) + 3(-2) = m \\implies 4 - 6 = -2 $.", "Substitute the provided coordinates into the equation to isolate m. $ 2(2) + 3(-2) = 4 - 6 = -2 $."],
+            [3, "பின்வருவனவற்றில் எது நேரியச் சமன்பாடு?", "Which of the following is a linear equation?", ["$ x + \\frac{1}{x} = 2 $", "$ x(x-1) = 2 $", "$ 3x+5 = \\frac{2}{3} $", "$ x^3-x = 5 $"], ["$ x + \\frac{1}{x} = 2 $", "$ x(x-1) = 2 $", "$ 3x+5 = \\frac{2}{3} $", "$ x^3-x = 5 $"], 2, "நேரிய சமன்பாடு (Linear equation) என்பது மாறியின் அடுக்கு 1 ஆக மட்டுமே உள்ள சமன்பாடாகும். A-ல் $ x^{-1} $ உள்ளது, B-ல் $ x^2 $ உள்ளது, D-ல் $ x^3 $ உள்ளது. C மட்டுமே சரி.", "A linear equation is characterized strictly by variables having a maximum power of 1. Only option C maintains this property without squared, cubic, or inverse terms."],
+            [3, "$ 2x-y=6 $ என்ற சமன்பாட்டின் தீர்வு எது?", "Which of the following is a solution of $ 2x-y=6 $?", ["(2,4)", "(4,2)", "(3,-1)", "(0,6)"], ["(2,4)", "(4,2)", "(3,-1)", "(0,6)"], 1, "ஒவ்வொரு மதிப்பையும் சமன்பாட்டில் பிரதியிட்டுச் சரிபார்க்கவும். x=4, y=2 எனில், $ 2(4) - 2 = 8 - 2 = 6 $. இது சமன்பாட்டைச் சரியாக நிறைவு செய்கிறது.", "Test each coordinate pair in the given equation. Plugging in x=4 and y=2 yields $ 2(4) - 2 = 8 - 2 = 6 $, which satisfies the equation perfectly."],
+            [3, "நேரியச் சமன்பாடு $ 2x+3y=k $ இன் ஒரு தீர்வு (2,3) எனில், k இன் மதிப்பு", "If (2,3) is a solution of $ 2x+3y=k $, value of k is", ["12", "6", "0", "13"], ["12", "6", "0", "13"], 3, "x-க்கு 2 மற்றும் y-க்கு 3 எனப் பிரதியிடுக: $ 2(2) + 3(3) = k \\implies 4 + 9 = 13 $.", "Substitute x=2 and y=3 directly into the left side of the equation: $ 2(2) + 3(3) $ becomes $ 4 + 9 $, which equals 13."],
+            [3, "$ ax+by+c=0 $ என்ற நேரியச் சமன்பாட்டை நிறைவு செய்யாத நிபந்தனை", "Which condition does not satisfy the linear eq $ ax+by+c=0 $?", ["$ a \\ne 0, b=0 $", "$ a=0, b \\ne 0 $", "$ a=0, b=0 $", "$ a \\ne 0, b \\ne 0 $"], ["$ a \\ne 0, b=0 $", "$ a=0, b \\ne 0 $", "$ a=0, b=0 $", "$ a \\ne 0, b \\ne 0 $"], 2, "நேரிய சமன்பாட்டில் குறைந்தது ஒரு மாறி (Variable) ஆவது இருக்க வேண்டும். a மற்றும் b இரண்டுமே 0 ஆகிவிட்டால் ($a=0, b=0$), சமன்பாட்டில் x, y என எந்த மாறியும் இருக்காது.", "A valid linear equation must retain at least one variable. If both coefficients 'a' and 'b' are exactly zero, all variables vanish, invalidating the linear equation format."],
+            [3, "இரு மாறிகளில் அமைந்த நேரியச் சமன்பாடு அல்லாதது எது?", "Which is not a linear equation in two variable?", ["$ ax+by+c=0 $", "$ 0x+0y+c=0 $", "$ 0x+by+c=0 $", "$ ax+0y+c=0 $"], ["$ ax+by+c=0 $", "$ 0x+0y+c=0 $", "$ 0x+by+c=0 $", "$ ax+0y+c=0 $"], 1, "x மற்றும் y இரண்டின் கெழுக்களும் (Coefficients) பூஜ்ஜியமாகிவிட்டால் ($0x+0y$), அங்கு மாறிகளே இல்லை என்று அர்த்தம். எனவே இது சமன்பாடு அல்ல.", "When the coefficients for both x and y are simultaneously zero, the equation loses both variables, disqualifying it from being a two-variable linear equation."],
+            [3, "$ 4x+6y-1=0 $ மற்றும் $ 2x+ky-7=0 $ இணையான கோடுகளைக் குறிக்கும் எனில் k = ?", "Value of k for which pair represents parallel lines", ["k=3", "k=2", "k=4", "k=-3"], ["k=3", "k=2", "k=4", "k=-3"], 0, "இணையான கோடுகள் (Parallel lines) அமைவதற்கான நிபந்தனை: $ \\frac{a_1}{a_2} = \\frac{b_1}{b_2} $. இங்கு $ \\frac{4}{2} = \\frac{6}{k} \\implies 2 = \\frac{6}{k} \\implies 2k = 6 \\implies k = 3 $.", "The mathematical condition for two lines to be perfectly parallel is $ a_1/a_2 = b_1/b_2 $. Setting up $ 4/2 = 6/k $ gives $ 2 = 6/k $, which easily solves to k=3."],
+            [3,
+		  "ஒரு நேரியச் சமன்பாட்டுத் தொகுப்பிற்கு தீர்வு இல்லை எனில், அதன் வரைபடம்",
+		  "If a pair of linear equations has no solution, then the graphical representation is",
+		  [
+			"<div style='text-align:center;'>வெட்டும் கோடுகள்<br><svg viewBox='50 20 150 170' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m1_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b1_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='80' y1='160' x2='160' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m1_t)' marker-start='url(#m1_t)'/><line x1='80' y1='40' x2='160' y2='160' stroke='#0071bc' stroke-width='3' marker-end='url(#b1_t)' marker-start='url(#b1_t)'/><text x='65' y='170' font-style='italic'>l</text><text x='170' y='170' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>இணைக் கோடுகள்<br><svg viewBox='250 20 170 190' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m2_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b2_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='280' y1='140' x2='380' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m2_t)' marker-start='url(#m2_t)'/><line x1='300' y1='170' x2='400' y2='70' stroke='#0071bc' stroke-width='3' marker-end='url(#b2_t)' marker-start='url(#b2_t)'/><text x='265' y='150' font-style='italic'>l</text><text x='295' y='190' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>ஒன்றின் மீது அமையும் கோடுகள்<br><svg viewBox='490 20 150 150' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m3_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b3_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='520' y1='140' x2='620' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m3_t)' marker-start='url(#m3_t)'/><line x1='535' y1='125' x2='605' y2='55' stroke='#0071bc' stroke-width='3' marker-end='url(#b3_t)' marker-start='url(#b3_t)'/><text x='505' y='150' font-style='italic'>l</text><text x='545' y='145' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>எதுவுமில்லை<br><svg viewBox='660 10 220 190' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m4_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b4_t' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='770' y1='20' x2='770' y2='180' stroke='#e9167e' stroke-width='3' marker-end='url(#m4_t)' marker-start='url(#m4_t)'/><line x1='680' y1='100' x2='860' y2='100' stroke='#0071bc' stroke-width='3' marker-end='url(#b4_t)' marker-start='url(#b4_t)'/><text x='790' y='180' font-style='italic'>l</text><text x='850' y='130' font-style='italic'>m</text></g></svg></div>"
+		  ],
+		  [
+			"<div style='text-align:center;'>Intersecting lines<br><svg viewBox='50 20 150 170' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m1_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b1_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='80' y1='160' x2='160' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m1_e)' marker-start='url(#m1_e)'/><line x1='80' y1='40' x2='160' y2='160' stroke='#0071bc' stroke-width='3' marker-end='url(#b1_e)' marker-start='url(#b1_e)'/><text x='65' y='170' font-style='italic'>l</text><text x='170' y='170' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>Parallel lines<br><svg viewBox='250 20 170 190' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m2_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b2_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='280' y1='140' x2='380' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m2_e)' marker-start='url(#m2_e)'/><line x1='300' y1='170' x2='400' y2='70' stroke='#0071bc' stroke-width='3' marker-end='url(#b2_e)' marker-start='url(#b2_e)'/><text x='265' y='150' font-style='italic'>l</text><text x='295' y='190' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>Coincident lines<br><svg viewBox='490 20 150 150' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m3_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b3_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='520' y1='140' x2='620' y2='40' stroke='#e9167e' stroke-width='3' marker-end='url(#m3_e)' marker-start='url(#m3_e)'/><line x1='535' y1='125' x2='605' y2='55' stroke='#0071bc' stroke-width='3' marker-end='url(#b3_e)' marker-start='url(#b3_e)'/><text x='505' y='150' font-style='italic'>l</text><text x='545' y='145' font-style='italic'>m</text></g></svg></div>",
+			"<div style='text-align:center;'>None<br><svg viewBox='660 10 220 190' style='width:90px; height:90px; margin-top:10px;'><defs><marker id='m4_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#e9167e'/></marker><marker id='b4_e' viewBox='0 0 10 10' refX='5' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#0071bc'/></marker></defs><g font-size='28' fill='#231F20'><line x1='770' y1='20' x2='770' y2='180' stroke='#e9167e' stroke-width='3' marker-end='url(#m4_e)' marker-start='url(#m4_e)'/><line x1='680' y1='100' x2='860' y2='100' stroke='#0071bc' stroke-width='3' marker-end='url(#b4_e)' marker-start='url(#b4_e)'/><text x='790' y='180' font-style='italic'>l</text><text x='850' y='130' font-style='italic'>m</text></g></svg></div>"
+		  ],
+		  1,
+		  "இரண்டு கோடுகளும் எங்கும் வெட்டிக்கொள்ளாமல் இணையாக (Parallel) சென்றால் மட்டுமே அந்தத் தொகுப்பிற்குத் தீர்வு இருக்காது.",
+		  "When two lines are strictly parallel, they extend infinitely without ever intersecting. The complete lack of intersection points means there is zero solution."
+		],
+            [3, "$ \\frac{a_1}{a_2} \\ne \\frac{b_1}{b_2} $ எனில் தொகுப்பிற்கு ________ தீர்வு இருக்கும்", "If $ \\frac{a_1}{a_2} \\ne \\frac{b_1}{b_2} $ then the pair has ________ solution(s)", ["தீர்வு இல்லை", "இரண்டு தீர்வுகள்", "ஒரே ஒரு தீர்வு", "எண்ணற்ற தீர்வுகள்"], ["No solution", "Two solutions", "Unique solution", "Infinite solutions"], 2, "கெழுக்களின் விகிதங்கள் சமமாக இல்லையெனில், அந்த இரண்டு நேர்கோடுகளும் ஒரே ஒரு புள்ளியில் மட்டுமே வெட்டிக்கொள்ளும். எனவே ஒரே ஒரு தீர்வு (Unique solution) கிடைக்கும்.", "Unequal variable ratios indicate that the two distinct lines will inevitably cross each other at exactly one point, guaranteeing a single, unique solution."],
+            [3, "$ \\frac{a_1}{a_2} = \\frac{b_1}{b_2} \\ne \\frac{c_1}{c_2} $ எனில் தொகுப்பிற்கு ________ தீர்வு இருக்கும்", "If $ \\frac{a_1}{a_2} = \\frac{b_1}{b_2} \\ne \\frac{c_1}{c_2} $ then the pair has ________ solution(s)", ["தீர்வு இல்லை", "இரண்டு தீர்வுகள்", "எண்ணற்ற தீர்வுகள்", "ஒரே ஒரு தீர்வு"], ["No solution", "Two solutions", "Infinite solutions", "Unique solution"], 0, "இது இணைக் கோடுகளுக்கான (Parallel lines) இயற்கணித நிபந்தனையாகும். இணைக் கோடுகள் சந்திக்காது என்பதால் தீர்வு கிடையாது.", "This specific ratio arrangement is the exact condition for parallel lines. Because they never touch, the system yields no solution whatsoever."],
+            [3, "எதேனும் இரண்டு பகா எண்களின் மீ.பொ.வ", "GCD of any two prime numbers is", ["-1", "0", "1", "2"], ["-1", "0", "1", "2"], 2, "பகா எண்கள் (Prime numbers) தங்களை மற்றும் 1-ஐ மட்டுமே வகுத்திகளாகக் கொண்டவை. எனவே இரண்டு வேறுபட்ட பகா எண்களுக்குப் பொதுவான வகுத்தி 1 மட்டுமே.", "Prime numbers by definition are only divisible by themselves and 1. Therefore, any two distinct primes share 1 as their highest and only common divisor."],
+            [3, "$ x^4-y^4 $ மற்றும் $ x^2-y^2 $ இன் மீ.பொ.வ", "The GCD of $ x^4-y^4 $ and $ x^2-y^2 $ is", ["$ x^4-y^4 $", "$ x^2-y^2 $", "$ (x+y)^2 $", "$ (x+y)^4 $"], ["$ x^4-y^4 $", "$ x^2-y^2 $", "$ (x+y)^2 $", "$ (x+y)^4 $"], 1, "$ x^4-y^4 $ என்பதை $ (x^2-y^2)(x^2+y^2) $ என காரணிப்படுத்தலாம். இப்போது, $ x^2-y^2 $ என்பது இரண்டுக்கும் பொதுவாக உள்ளதால் அதுவே மீ.பொ.வ (GCD).", "Factoring the larger polynomial gives $ x^4-y^4 = (x^2-y^2)(x^2+y^2) $. Since the smaller term $ x^2-y^2 $ is completely embedded as a factor, it becomes the GCD."],
+
+            // UNIT 4: Geometry (20 Qs) - Enhanced Explanations
+            [4, "ஒரு முக்கோணத்தின் வெளிக்கோணம் எந்த கோணங்களின் கூடுதலுக்குச் சமம்?", "The exterior angle of a triangle is equal to the sum of two", ["வெளிக்கோணங்கள்", "உள்ளெதிர் கோணங்கள்", "ஒன்றுவிட்ட கோணங்கள்", "உட்கோணங்கள்"], ["Exterior angles", "Interior opposite angles", "Alternate angles", "Interior angles"], 1, "வெளிக்கோண தேற்றத்தின்படி (Exterior Angle Theorem), ஒரு முக்கோணத்தின் எந்தவொரு வெளிக்கோணமும், அந்த கோணத்தோடு தொடர்பில்லாத மற்ற இரண்டு உள்ளெதிர் கோணங்களின் (Interior opposite angles) கூடுதலுக்குத் துல்லியமாகச் சமமாக இருக்கும்.", "According to the robust Exterior Angle Theorem of geometry, the measure of an exterior angle of a triangle is strictly equal to the sum of its two remote interior (opposite) angles."],
+            [4,
+			  "<svg viewBox='0 0 500 320' style='width:100%; max-width:500px;'><polygon points='150,50 40,160 150,270 450,160' fill='none' stroke='#e6007e' stroke-width='5' stroke-linejoin='round'/><line x1='82' y1='92' x2='108' y2='118' stroke='#e6007e' stroke-width='5'/><line x1='82' y1='228' x2='108' y2='202' stroke='#e6007e' stroke-width='5'/><line x1='285' y1='90' x2='295' y2='120' stroke='#e6007e' stroke-width='5'/><line x1='300' y1='95' x2='310' y2='125' stroke='#e6007e' stroke-width='5'/><line x1='285' y1='230' x2='295' y2='200' stroke='#e6007e' stroke-width='5'/><line x1='300' y1='225' x2='310' y2='195' stroke='#e6007e' stroke-width='5'/><path d='M 68 132 A 40 40 0 0 0 68 188' fill='none' stroke='#e6007e' stroke-width='4'/><path d='M 390 138 A 45 45 0 0 0 390 182' fill='none' stroke='#e6007e' stroke-width='4'/><g font-size='36' font-style='italic' fill='#231F20'><text x='135' y='35'>A</text><text x='10' y='170'>B</text><text x='140' y='310'>C</text><text x='465' y='170'>D</text><text x='85' y='170'>108°</text><text x='350' y='170'>42°</text></g></svg><br><br>நாற்கரம் ABCD இல், AB=BC மற்றும் AD=DC. கோணம் BCD இன் அளவு",
+			  "<svg viewBox='0 0 500 320' style='width:100%; max-width:500px;'><polygon points='150,50 40,160 150,270 450,160' fill='none' stroke='#e6007e' stroke-width='5' stroke-linejoin='round'/><line x1='82' y1='92' x2='108' y2='118' stroke='#e6007e' stroke-width='5'/><line x1='82' y1='228' x2='108' y2='202' stroke='#e6007e' stroke-width='5'/><line x1='285' y1='90' x2='295' y2='120' stroke='#e6007e' stroke-width='5'/><line x1='300' y1='95' x2='310' y2='125' stroke='#e6007e' stroke-width='5'/><line x1='285' y1='230' x2='295' y2='200' stroke='#e6007e' stroke-width='5'/><line x1='300' y1='225' x2='310' y2='195' stroke='#e6007e' stroke-width='5'/><path d='M 68 132 A 40 40 0 0 0 68 188' fill='none' stroke='#e6007e' stroke-width='4'/><path d='M 390 138 A 45 45 0 0 0 390 182' fill='none' stroke='#e6007e' stroke-width='4'/><g font-size='36' font-style='italic' fill='#231F20'><text x='135' y='35'>A</text><text x='10' y='170'>B</text><text x='140' y='310'>C</text><text x='465' y='170'>D</text><text x='85' y='170'>108°</text><text x='350' y='170'>42°</text></g></svg><br><br>In quadrilateral ABCD, AB=BC and AD=DC. Measure of BCD is",
+			  ["$ 150^\\circ $", "$ 30^\\circ $", "$ 105^\\circ $", "$ 72^\\circ $"],
+			  ["$ 150^\\circ $", "$ 30^\\circ $", "$ 105^\\circ $", "$ 72^\\circ $"],
+			  2,
+			  "இது ஒரு பட்டம் (Kite) வடிவ நாற்கரமாகும். பட்டத்தின் பண்புகளின்படி, சமமில்லாத பக்கங்களுக்கு இடைப்பட்ட இரண்டு கோணங்கள் சமமாக இருக்கும். நாற்கரத்தின் மொத்த கோணமான 360°-லிருந்து மற்ற கோணங்களைக் கழித்து இரண்டால் வகுத்தால், விடை $ 105^\\circ $ கிடைக்கும்.",
+			  "Based on the unique properties of a kite where adjacent pairs of sides are equal, the angles between unequal sides are equal. Calculating the internal angles strictly satisfying the polygon sum of 360° yields $ 105^\\circ $."
+			],
+            [4,
+			  "<svg viewBox='0 0 300 300' style='width:100%; max-width:300px;'><rect x='40' y='40' width='220' height='220' fill='#ccebf9' stroke='#00a0e9' stroke-width='5'/><line x1='40' y1='40' x2='260' y2='260' stroke='#00a0e9' stroke-width='4'/><line x1='40' y1='260' x2='260' y2='40' stroke='#00a0e9' stroke-width='4'/><g font-size='38' font-style='italic' fill='#231F20'><text x='12' y='290'>A</text><text x='268' y='290'>B</text><text x='265' y='32'>C</text><text x='15' y='32'>D</text><text x='132' y='195' font-style='normal'>O</text></g></svg><br><br>சதுரம் ABCD இல் மூலைவிட்டங்கள் சந்திக்கின்றன. சர்வசம முக்கோணச் சோடிகள்:",
+			  "<svg viewBox='0 0 300 300' style='width:100%; max-width:300px;'><rect x='40' y='40' width='220' height='220' fill='#ccebf9' stroke='#00a0e9' stroke-width='5'/><line x1='40' y1='40' x2='260' y2='260' stroke='#00a0e9' stroke-width='4'/><line x1='40' y1='260' x2='260' y2='40' stroke='#00a0e9' stroke-width='4'/><g font-size='38' font-style='italic' fill='#231F20'><text x='12' y='290'>A</text><text x='268' y='290'>B</text><text x='265' y='32'>C</text><text x='15' y='32'>D</text><text x='132' y='195' font-style='normal'>O</text></g></svg><br><br>Square ABCD diagonals meet at O. Pairs of congruent triangles:",
+			  ["6", "8", "4", "1"],
+			  ["6", "8", "4", "1"],
+			  0,
+			  "ஒரு சதுரத்தில் மூலைவிட்டங்கள் (Diagonals) வரையும்போது, மையப்புள்ளி O-வை உச்சியாகக் கொண்டு 4 சிறிய செங்கோண முக்கோணங்கள் ஒன்றையொன்று சர்வசமமாக இருக்கும். மேலும் பெரிய முக்கோணங்களை ஒப்பிட்டால் இன்னும் சோடிகள் கிடைக்கும். மொத்தமாக 6 சோடி சர்வசம முக்கோணங்கள் (Congruent pairs) உருவாகும்.",
+			  "Drawing diagonals in a perfect square creates highly symmetrical sections. Combining adjacent small triangles and the larger triangles formed by the diagonals yields exactly 6 distinct congruent pairs."
+			],
+            [4,
+			  "<svg viewBox='0 0 750 320' style='width:100%; max-width:750px;'><defs><marker id='arrOrg' viewBox='0 0 10 10' refX='6' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#f57c00'/></marker></defs><polygon points='50,280 500,280 390,60 80,80' fill='#fcdcc4' stroke='#f57c00' stroke-width='4' stroke-linejoin='round'/><line x1='50' y1='280' x2='390' y2='60' stroke='#f57c00' stroke-width='4'/><line x1='500' y1='280' x2='650' y2='140' stroke='#f57c00' stroke-width='4' marker-end='url(#arrOrg)'/><path d='M 70 140 A 60 60 0 0 1 115 76' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 105 280 A 55 55 0 0 0 75 220' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 345 66 A 50 50 0 0 0 350 90' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 455 280 A 45 45 0 0 1 475 230' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 505 235 A 45 45 0 0 1 540 280' fill='none' stroke='#f57c00' stroke-width='3'/><g font-size='34' font-style='italic' fill='#231F20'><text x='75' y='65'>A</text><text x='390' y='45'>B</text><text x='495' y='315'>C</text><text x='45' y='315'>D</text><text x='670' y='150'>E</text><text x='95' y='120'>110°</text><text x='50' y='240'>75°</text><text x='290' y='90'>30°</text><text x='420' y='260'>60°</text><text x='535' y='240'>x°</text></g></svg><br><br>CE || DB எனில் X இன் மதிப்பு",
+			  "<svg viewBox='0 0 750 320' style='width:100%; max-width:750px;'><defs><marker id='arrOrg' viewBox='0 0 10 10' refX='6' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M 0 1 L 10 5 L 0 9 z' fill='#f57c00'/></marker></defs><polygon points='50,280 500,280 390,60 80,80' fill='#fcdcc4' stroke='#f57c00' stroke-width='4' stroke-linejoin='round'/><line x1='50' y1='280' x2='390' y2='60' stroke='#f57c00' stroke-width='4'/><line x1='500' y1='280' x2='650' y2='140' stroke='#f57c00' stroke-width='4' marker-end='url(#arrOrg)'/><path d='M 70 140 A 60 60 0 0 1 115 76' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 105 280 A 55 55 0 0 0 75 220' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 345 66 A 50 50 0 0 0 350 90' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 455 280 A 45 45 0 0 1 475 230' fill='none' stroke='#f57c00' stroke-width='3'/><path d='M 505 235 A 45 45 0 0 1 540 280' fill='none' stroke='#f57c00' stroke-width='3'/><g font-size='34' font-style='italic' fill='#231F20'><text x='75' y='65'>A</text><text x='390' y='45'>B</text><text x='495' y='315'>C</text><text x='45' y='315'>D</text><text x='670' y='150'>E</text><text x='95' y='120'>110°</text><text x='50' y='240'>75°</text><text x='290' y='90'>30°</text><text x='420' y='260'>60°</text><text x='535' y='240'>x°</text></g></svg><br><br>If CE || DB then the value of x is",
+			  ["$ 45^\\circ $", "$ 30^\\circ $", "$ 75^\\circ $", "$ 85^\\circ $"],
+			  ["$ 45^\\circ $", "$ 30^\\circ $", "$ 75^\\circ $", "$ 85^\\circ $"],
+			  3,
+			  "இணை கோடுகளின் (Parallel lines) பண்புகளின்படி, ஒரு குறுக்குவெட்டி வெட்டும்போது ஏற்படும் ஒன்றுவிட்ட கோணங்கள் (Alternate angles) மற்றும் ஒத்த கோணங்களைச் (Corresponding angles) சமப்படுத்திச் சுருக்கினால், X இன் மதிப்பு $ 85^\\circ $ ஆக அமையும்.",
+			  "Utilizing the geometric properties of parallel lines intersected by transversals, applying the rules of corresponding and alternate interior angles logically resolves the unknown angle X to exactly $ 85^\\circ $."
+			],
+            [4,
+			  "<svg viewBox='0 0 800 350' style='width:100%; max-width:800px;'><g fill='#e5f2d0' stroke='#8bc34a' stroke-width='4'><polygon points='50,290 350,290 150,40' stroke-linejoin='round'/><line x1='85' y1='170' x2='115' y2='160' stroke-width='4'/></g><path d='M 85 290 A 35 35 0 0 0 70 240' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 130 90 A 40 40 0 0 0 170 90' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 310 290 A 40 40 0 0 1 325 240' fill='none' stroke='#8bc34a' stroke-width='3'/><g font-size='36' font-style='italic' fill='#231F20'><text x='35' y='325'>B</text><text x='165' y='30'>C</text><text x='350' y='325'>A</text><text x='90' y='265'>70°</text><text x='145' y='115'>60°</text><text x='260' y='265'>50°</text></g><g transform='translate(380,0)' fill='#e5f2d0' stroke='#8bc34a' stroke-width='4'><polygon points='50,290 350,290 150,40' stroke-linejoin='round'/><line x1='85' y1='170' x2='115' y2='160' stroke-width='4'/></g><path d='M 465 290 A 35 35 0 0 0 450 240' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 510 90 A 40 40 0 0 0 550 90' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 690 290 A 40 40 0 0 1 705 240' fill='none' stroke='#8bc34a' stroke-width='3'/><g font-size='36' font-style='italic' fill='#231F20'><text x='415' y='325'>E</text><text x='545' y='30'>D</text><text x='730' y='325'>F</text><text x='470' y='265'>70°</text><text x='525' y='115'>60°</text><text x='640' y='265'>50°</text></g></svg><br><br>பின்வருவனவற்றில் சரியான கூற்று",
+			  "<svg viewBox='0 0 800 350' style='width:100%; max-width:800px;'><g fill='#e5f2d0' stroke='#8bc34a' stroke-width='4'><polygon points='50,290 350,290 150,40' stroke-linejoin='round'/><line x1='85' y1='170' x2='115' y2='160' stroke-width='4'/></g><path d='M 85 290 A 35 35 0 0 0 70 240' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 130 90 A 40 40 0 0 0 170 90' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 310 290 A 40 40 0 0 1 325 240' fill='none' stroke='#8bc34a' stroke-width='3'/><g font-size='36' font-style='italic' fill='#231F20'><text x='35' y='325'>B</text><text x='165' y='30'>C</text><text x='350' y='325'>A</text><text x='90' y='265'>70°</text><text x='145' y='115'>60°</text><text x='260' y='265'>50°</text></g><g transform='translate(380,0)' fill='#e5f2d0' stroke='#8bc34a' stroke-width='4'><polygon points='50,290 350,290 150,40' stroke-linejoin='round'/><line x1='85' y1='170' x2='115' y2='160' stroke-width='4'/></g><path d='M 465 290 A 35 35 0 0 0 450 240' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 510 90 A 40 40 0 0 0 550 90' fill='none' stroke='#8bc34a' stroke-width='3'/><path d='M 690 290 A 40 40 0 0 1 705 240' fill='none' stroke='#8bc34a' stroke-width='3'/><g font-size='36' font-style='italic' fill='#231F20'><text x='415' y='325'>E</text><text x='545' y='30'>D</text><text x='730' y='325'>F</text><text x='470' y='265'>70°</text><text x='525' y='115'>60°</text><text x='640' y='265'>50°</text></g></svg><br><br>The correct statement out of the following is",
+			  ["$ \\Delta ABC \\cong \\Delta DEF $", "$ \\Delta ABC \\cong \\Delta DFE $", "$ \\Delta ABC \\cong \\Delta FDE $", "$ \\Delta ABC \\cong \\Delta FED $"],
+			  ["$ \\Delta ABC \\cong \\Delta DEF $", "$ \\Delta ABC \\cong \\Delta DFE $", "$ \\Delta ABC \\cong \\Delta FDE $", "$ \\Delta ABC \\cong \\Delta FED $"],
+			  3,
+			  "இரண்டு முக்கோணங்கள் சர்வசமம் (Congruent) எனக் கூறும்போது, அவற்றின் ஒத்த பக்கங்களும் (Corresponding sides), ஒத்த கோணங்களும் (Corresponding angles) சரியாகப் பொருந்தும் வகையில் உச்சிகளை (Vertices) வரிசைப்படுத்திக் கூற வேண்டும். இங்கு FED என்பதே சரியான வரிசை.",
+			  "When stating congruency, vertices must be explicitly ordered so corresponding sides and angles match perfectly. Following the standard figure marks, the sequence FED geometrically corresponds exactly to ABC."
+			],
+            [4, "ஒரு சாய்சதுரத்தின் மூலைவிட்டங்கள் சமம் எனில், அந்தச் சாய்சதுரம் ஒரு", "If the diagonal of a rhombus are equal, then it is a", ["இணைகரம் (செவ்வகம் அல்ல)", "செவ்வகம் (சதுரம் அல்ல)", "சதுரம்", "இணைகரம் (சதுரம் அல்ல)"], ["Parallelogram not rectangle", "Rectangle not square", "Square", "Parallelogram not square"], 2, "ஒரு சாய்சதுரத்தின் (Rhombus) நான்கு பக்கங்களும் சமம். அதன் மூலைவிட்டங்களும் சமமாகிவிட்டால், பிதாகரஸ் தேற்றத்தின்படி அதன் ஒவ்வொரு உட்கோணமும் 90° ஆக மாறிவிடும். பக்கங்களும் சமம், கோணங்களும் 90° என்பதால் அது உறுதியாக ஒரு சதுரம் (Square) ஆகும்.", "A rhombus already possesses four identically equal sides. Imposing equal diagonals forces every internal corner angle to strictly become 90° due to symmetry, definitively transforming it into a perfect square."],
+            [4, "A, B இருசமவெட்டிகள் O இல் சந்தித்தால், $ \\angle AOB $ ஆனது", "If bisectors of A and B meet at O, then $ \\angle AOB $ is", ["$ \\angle C+\\angle D $", "$ \\frac{1}{2}(\\angle C+\\angle D) $", "$ \\frac{1}{2}\\angle C+\\frac{1}{3}\\angle D $", "$ \\frac{1}{3}\\angle C+\\frac{1}{2}\\angle D $"], ["$ \\angle C+\\angle D $", "$ \\frac{1}{2}(\\angle C+\\angle D) $", "$ \\frac{1}{2}\\angle C+\\frac{1}{3}\\angle D $", "$ \\frac{1}{3}\\angle C+\\frac{1}{2}\\angle D $"], 1, "நாற்கரத்தின் உட்கோணங்களின் கூடுதல் 360°. முக்கோணம் AOB-யில் $ \\angle AOB = 180^\\circ - (\\frac{\\angle A}{2} + \\frac{\\angle B}{2}) $. நாற்கர விதியின்படி $ \\angle A+\\angle B = 360^\\circ - (\\angle C+\\angle D) $. இதைப் பிரதியிட்டுச் சுருக்கினால் $ \\angle AOB = \\frac{\\angle C+\\angle D}{2} $ கிடைக்கும்.", "In any quadrilateral, angles sum to 360°. In triangle AOB, the base angles are half of A and B. Solving the triangle's 180° equation algebraically proves the angle equals exactly half the sum of C and D."],
+            [4, "ஒரு இணைகரத்தின் உட்கோணம் $ 90^\\circ $ எனில், அது ஒரு", "Interior angle in a parallelogram is $ 90^\\circ $ then it is a", ["சாய்சதுரம்", "செவ்வகம்", "சரிவகம்", "பட்டம்"], ["Rhombus", "Rectangle", "Trapezium", "Kite"], 1, "இணைகரத்தின் (Parallelogram) எதிரெதிர் கோணங்கள் சமம், அடுத்தடுத்த கோணங்கள் 180°. ஒரு கோணம் 90° என்றால், மற்ற அனைத்து கோணங்களும் கட்டாயமாக 90° ஆகிவிடும். இது செவ்வகத்தின் (Rectangle) அடிப்படைப் பண்பாகும்.", "A parallelogram has supplementary adjacent angles. If one is 90°, the adjacent must be 180°-90°=90°. Consequently, all four interior angles are forced to 90°, mathematically defining a rectangle."],
+            [4, "பின்வரும் கூற்றுகளில் எது சரியானது?", "Which of the following statement is correct?", ["எதிரெதிர் கோணங்கள் சமமல்ல", "அடுத்தடுத்த கோணங்கள் நிரப்பு", "மூலைவிட்டங்கள் எப்போதும் சமம்", "எதிரெதிர் பக்கங்கள் எப்போதும் சமம்"], ["Opposite angles are not equal", "Adjacent angles are complementary", "Diagonals are always equal", "Opposite sides are always equal"], 3, "ஒரு இணைகரத்தின் (Parallelogram) முக்கிய மற்றும் மாறாத பண்பே, அதன் இரண்டு சோடி எதிரெதிர் பக்கங்களும் ஒன்றுக்கொன்று இணையாகவும், அளவுகளில் சமமாகவும் (Always equal) இருப்பதுதான்.", "The universally defining fundamental property of any parallelogram is that both pairs of its opposite sides are invariably parallel and equal in length."],
+            [4, "முக்கோணத்தின் கோணங்கள் $3x-40^\\circ$, $x+20^\\circ$, $2x-10^\\circ$ எனில் x =", "Angles are $3x-40^\\circ$, $x+20^\\circ$, $2x-10^\\circ$. Value of x is", ["$ 40^\\circ $", "$ 35^\\circ $", "$ 50^\\circ $", "$ 45^\\circ $"], ["$ 40^\\circ $", "$ 35^\\circ $", "$ 50^\\circ $", "$ 45^\\circ $"], 1, "முக்கோணத்தின் மூன்று உட்கோணங்களின் கூடுதல் எப்போதுமே 180°. $ (3x-40) + (x+20) + (2x-10) = 180 $. இதைச் சுருக்கினால் $ 6x - 30 = 180 \\implies 6x = 210 \\implies x = 35^\\circ $.", "The absolute sum of interior angles in a Euclidean triangle is strictly 180°. Algebraic addition of the given terms yields $ 6x - 30 = 180 $. Moving constants yields $ 6x = 210 $, thus x = 35."],
+            [4, "சம நாண்கள் PQ, RS. $ \\angle POQ=70^\\circ $ எனில், $ \\angle ORS = $", "Equal chords PQ, RS. $ \\angle POQ=70^\\circ $, then $ \\angle ORS = $", ["$ 60^\\circ $", "$ 70^\\circ $", "$ 55^\\circ $", "$ 80^\\circ $"], ["$ 60^\\circ $", "$ 70^\\circ $", "$ 55^\\circ $", "$ 80^\\circ $"], 2, "வட்டத்தின் மையத்தில் சம நாண்கள் சம கோணங்களைத் தாங்கும். எனவே $ \\angle ROS = 70^\\circ $. முக்கோணம் ROS ஒரு இருசமபக்க முக்கோணம் (OR மற்றும் OS ஆரங்கள் என்பதால் சமம்). எனவே, மற்ற இரு கோணங்களும் சமம். $ \\angle ORS = (180^\\circ - 70^\\circ) / 2 = 110^\\circ / 2 = 55^\\circ $.", "Equal chords subtend identical central angles, so $ \\angle ROS = 70^\\circ $. Because radii OR and OS are equal, triangle ROS is undeniably isosceles. The base angles share the remaining 110°, making each exactly 55°."],
+            [4, "ஆரம் 25 செ.மீ, மையத்திலிருந்து தூரம் 15 செ.மீ எனில் நாணின் நீளம்", "Radius 25cm, distance from centre 15cm. Chord length is", ["25 செ.மீ", "20 செ.மீ", "40 செ.மீ", "18 செ.மீ"], ["25cm", "20cm", "40cm", "18cm"], 2, "மையத்திலிருந்து நாணிற்கு வரையப்படும் செங்குத்துக்கோடு நாணை இருசமக்கூறிடும். இது ஒரு செங்கோண முக்கோணத்தை உருவாக்குகிறது. பிதாகரஸ் தேற்றப்படி, நாணின் பாதி நீளம் = $ \\sqrt{25^2 - 15^2} = \\sqrt{625 - 225} = \\sqrt{400} = 20 $. எனவே முழு நாணின் நீளம் = $ 2 \\times 20 = 40 $ செ.மீ.", "Using the Pythagorean theorem on the right triangle formed by the radius and perpendicular distance: Half-chord = $ \\sqrt{25^2 - 15^2} = \\sqrt{400} = 20 $. The total chord length is double this, equaling 40 cm."],
+            [4,
+			  "<svg viewBox='0 0 350 350' style='width:100%; max-width:350px;'><circle cx='175' cy='180' r='140' stroke='#00a0e9' stroke-width='4' fill='none'/><g stroke='#e6007e' stroke-width='4' stroke-linecap='round'><line x1='45' y1='230' x2='185' y2='45'/><line x1='185' y1='45' x2='265' y2='288'/><line x1='45' y1='230' x2='155' y2='190'/><line x1='155' y1='190' x2='265' y2='288'/></g><path d='M 130 200 A 30 30 0 0 0 178 210' fill='none' stroke='#231F20' stroke-width='4'/><path d='M 165 75 A 30 30 0 0 0 200 85' fill='none' stroke='#231F20' stroke-width='4'/><g fill='#901a7e'><circle cx='155' cy='190' r='4.5'/><circle cx='45' cy='230' r='4.5'/><circle cx='265' cy='288' r='4.5'/><circle cx='185' cy='45' r='4.5'/></g><g font-size='38' fill='#231F20' font-family='Times New Roman, serif'><text x='15' y='245'>A</text><text x='280' y='310'>B</text><text x='180' y='32'>C</text><text x='165' y='180'>O</text><text x='140' y='125'>40°</text></g></svg><br><br>O வட்டத்தின் மையம், $ \\angle ACB=40^\\circ $ எனில் $ \\angle AOB = $",
+			  "<svg viewBox='0 0 350 350' style='width:100%; max-width:350px;'><circle cx='175' cy='180' r='140' stroke='#00a0e9' stroke-width='4' fill='none'/><g stroke='#e6007e' stroke-width='4' stroke-linecap='round'><line x1='45' y1='230' x2='185' y2='45'/><line x1='185' y1='45' x2='265' y2='288'/><line x1='45' y1='230' x2='155' y2='190'/><line x1='155' y1='190' x2='265' y2='288'/></g><path d='M 130 200 A 30 30 0 0 0 178 210' fill='none' stroke='#231F20' stroke-width='4'/><path d='M 165 75 A 30 30 0 0 0 200 85' fill='none' stroke='#231F20' stroke-width='4'/><g fill='#901a7e'><circle cx='155' cy='190' r='4.5'/><circle cx='45' cy='230' r='4.5'/><circle cx='265' cy='288' r='4.5'/><circle cx='185' cy='45' r='4.5'/></g><g font-size='38' fill='#231F20' font-family='Times New Roman, serif'><text x='15' y='245'>A</text><text x='280' y='310'>B</text><text x='180' y='32'>C</text><text x='165' y='180'>O</text><text x='140' y='125'>40°</text></g></svg><br><br>O is centre, $ \\angle ACB=40^\\circ $ then $ \\angle AOB = $",
+			  ["$ 80^\\circ $", "$ 85^\\circ $", "$ 70^\\circ $", "$ 65^\\circ $"],
+			  ["$ 80^\\circ $", "$ 85^\\circ $", "$ 70^\\circ $", "$ 65^\\circ $"],
+			  0,
+			  "வட்டத்தின் ஒரு வில் மையத்தில் தாங்கும் கோணம் (Central angle) ஆனது, அதே வில் வட்டத்தின் மீதிப் பரிதியில் எந்தப் புள்ளியிலும் தாங்கும் கோணத்தை (Inscribed angle) விட சரியாக இரு மடங்கு பெரியதாக இருக்கும். எனவே, $ 2 \\times 40^\\circ = 80^\\circ $.",
+			  "A fundamental circle theorem definitively states that the angle subtended at the center by an arc is exactly twice the angle subtended by the same arc anywhere on the circumference. Hence, $ 2 \\times 40 = 80 $."
+			],
+            [4, "வட்ட நாற்கரம் ABCD இல், $ \\angle A=4x $, $ \\angle C=2x $ எனில் x =", "In cyclic quad ABCD, $ \\angle A=4x $, $ \\angle C=2x $. Value of x is", ["$ 30^\\circ $", "$ 20^\\circ $", "$ 15^\\circ $", "$ 25^\\circ $"], ["$ 30^\\circ $", "$ 20^\\circ $", "$ 15^\\circ $", "$ 25^\\circ $"], 0, "ஒரு வட்ட நாற்கரத்தில் (Cyclic quadrilateral) உள்ள மிக முக்கியப் பண்பு என்னவென்றால், அதன் எதிரெதிர் கோணங்களின் கூடுதல் 180° ஆக இருக்கும். A மற்றும் C எதிரெதிர் கோணங்கள். எனவே $ 4x + 2x = 180^\\circ \\implies 6x = 180^\\circ \\implies x = 30^\\circ $.", "The unique property of a cyclic quadrilateral dictates that its opposite angles are strictly supplementary (summing to 180°). Solving the algebraic equation $ 6x = 180 $ directly results in x = 30."],
+            [4,
+			  "<svg viewBox='0 0 350 300' style='width:100%; max-width:350px;'><circle cx='180' cy='150' r='130' stroke='#00a0e9' stroke-width='4' fill='none'/><line x1='50' y1='150' x2='310' y2='150' stroke='#e6007e' stroke-width='4'/><line x1='260' y1='47.5' x2='260' y2='252.5' stroke='#e6007e' stroke-width='4'/><line x1='254' y1='98.7' x2='266' y2='98.7' stroke='#2e3192' stroke-width='4'/><line x1='254' y1='201.2' x2='266' y2='201.2' stroke='#2e3192' stroke-width='4'/><circle cx='180' cy='150' r='4.5' fill='#901a7e'/><circle cx='260' cy='150' r='4.5' fill='#901a7e'/><g font-size='36' fill='#231F20'><text x='25' y='160'>A</text><text x='315' y='160'>B</text><text x='250' y='35'>D</text><text x='255' y='285'>C</text><text x='170' y='135'>O</text><text x='230' y='180'>E</text></g></svg><br><br>CE=ED=8, EB=4 எனில் வட்டத்தின் ஆரம்",
+			  "<svg viewBox='0 0 350 300' style='width:100%; max-width:350px;'><circle cx='180' cy='150' r='130' stroke='#00a0e9' stroke-width='4' fill='none'/><line x1='50' y1='150' x2='310' y2='150' stroke='#e6007e' stroke-width='4'/><line x1='260' y1='47.5' x2='260' y2='252.5' stroke='#e6007e' stroke-width='4'/><line x1='254' y1='98.7' x2='266' y2='98.7' stroke='#2e3192' stroke-width='4'/><line x1='254' y1='201.2' x2='266' y2='201.2' stroke='#2e3192' stroke-width='4'/><circle cx='180' cy='150' r='4.5' fill='#901a7e'/><circle cx='260' cy='150' r='4.5' fill='#901a7e'/><g font-size='36' fill='#231F20'><text x='25' y='160'>A</text><text x='315' y='160'>B</text><text x='250' y='35'>D</text><text x='255' y='285'>C</text><text x='170' y='135'>O</text><text x='230' y='180'>E</text></g></svg><br><br>CE=ED=8, EB=4. Radius of circle is",
+			  ["8 செ.மீ", "4 செ.மீ", "6 செ.மீ", "10 செ.மீ"],
+			  ["8cm", "4cm", "6cm", "10cm"],
+			  3,
+			  "விட்டம் நாணை இருசமக்கூறிடுவதால், செங்கோண முக்கோணத்தில் பிதாகரஸ் தேற்றத்தைப் பயன்படுத்தலாம். ஆரம் r என்க. $ OE = r - 4 $. $ r^2 = (r-4)^2 + 8^2 $. இதை விரித்தால் $ r^2 = r^2 - 8r + 16 + 64 \\implies 8r = 80 \\implies r = 10 $ கிடைக்கும்.",
+			  "Since the perpendicular diameter bisects the chord, a right triangle is formed with hypotenuse 'r' and legs '8' and '(r-4)'. Solving $ r^2 = (r-4)^2 + 64 $ algebraically proves r = 10."
+			],
+            [4,
+			  "<svg viewBox='0 0 450 350' style='width:100%; max-width:450px;'><circle cx='150' cy='170' r='110' stroke='#00a0e9' stroke-width='4' fill='none'/><circle cx='228' cy='170' r='135' stroke='#e6007e' stroke-width='4' fill='none'/><path d='M 150 60 L 230 95 L 230 245 L 150 280 Z' fill='none' stroke='#009b4d' stroke-width='4' stroke-linejoin='round'/><path d='M 150 60 L 345 103 L 345 237 L 150 280 Z' fill='none' stroke='#009b4d' stroke-width='4' stroke-linejoin='round'/><line x1='150' y1='60' x2='150' y2='280' stroke='#009b4d' stroke-width='4'/><path d='M 215 89 A 15 15 0 0 0 230 115' fill='none' stroke='#231F20' stroke-width='4'/><g font-size='34' fill='#231F20'><text x='135' y='45'>S</text><text x='135' y='320'>P</text><text x='220' y='80'>R</text><text x='225' y='280'>Q</text><text x='355' y='115'>V</text><text x='355' y='240'>T</text><text x='160' y='115' font-size='28'>100°</text></g></svg><br><br>PQRS, PTVS வட்ட நாற்கரங்கள். $ \\angle QRS=100^\\circ $ எனில் $ \\angle TVS = $",
+			  "<svg viewBox='0 0 450 350' style='width:100%; max-width:450px;'><circle cx='150' cy='170' r='110' stroke='#00a0e9' stroke-width='4' fill='none'/><circle cx='228' cy='170' r='135' stroke='#e6007e' stroke-width='4' fill='none'/><path d='M 150 60 L 230 95 L 230 245 L 150 280 Z' fill='none' stroke='#009b4d' stroke-width='4' stroke-linejoin='round'/><path d='M 150 60 L 345 103 L 345 237 L 150 280 Z' fill='none' stroke='#009b4d' stroke-width='4' stroke-linejoin='round'/><line x1='150' y1='60' x2='150' y2='280' stroke='#009b4d' stroke-width='4'/><path d='M 215 89 A 15 15 0 0 0 230 115' fill='none' stroke='#231F20' stroke-width='4'/><g font-size='34' fill='#231F20'><text x='135' y='45'>S</text><text x='135' y='320'>P</text><text x='220' y='80'>R</text><text x='225' y='280'>Q</text><text x='355' y='115'>V</text><text x='355' y='240'>T</text><text x='160' y='115' font-size='28'>100°</text></g></svg><br><br>PQRS, PTVS are cyclic. $ \\angle QRS=100^\\circ $, then $ \\angle TVS = $",
+			  ["$ 80^\\circ $", "$ 100^\\circ $", "$ 70^\\circ $", "$ 90^\\circ $"],
+			  ["$ 80^\\circ $", "$ 100^\\circ $", "$ 70^\\circ $", "$ 90^\\circ $"],
+			  1,
+			  "வட்ட நாற்கரங்களின் பொதுவான பண்புகளின்படி, ஒரு வட்ட நாற்கரத்தின் வெளிக்கோணம், அதன் உள்ளெதிர் கோணத்திற்குச் சமம் என்ற விதியைப் பயன்படுத்தினால் கோணம் 100° என்றே கிடைக்கும்.",
+			  "Applying the geometric theorem that the exterior angle of a cyclic quadrilateral is directly equal to the interior opposite angle elegantly reveals the answer to be identically 100°."
+			],
+            [4, "வட்ட நாற்கரத்தின் ஒரு கோணம் $ 75^\\circ $ எனில், எதிர்க் கோணம்", "One angle of cyclic quad is $ 75^\\circ $, opposite angle is", ["$ 100^\\circ $", "$ 105^\\circ $", "$ 85^\\circ $", "$ 90^\\circ $"], ["$ 100^\\circ $", "$ 105^\\circ $", "$ 85^\\circ $", "$ 90^\\circ $"], 1, "வட்ட நாற்கரத்தின் (Cyclic Quadrilateral) அடிப்படை தேற்றத்தின்படி, எதிரெதிர் கோணங்களின் கூடுதல் 180° ஆகும். எனவே தேவையான மற்ற கோணம் = $ 180^\\circ - 75^\\circ = 105^\\circ $.", "Opposite angles in any cyclic quadrilateral are universally and always supplementary. Subtracting the given angle from 180° provides the exact measure: $ 180 - 75 = 105 $."],
+            [4,
+			  "<svg viewBox='0 0 420 320' style='width:100%; max-width:420px;'><circle cx='180' cy='160' r='140' stroke='#00a0e9' stroke-width='4' fill='none'/><polygon points='65,80 73,250 144,295 312,112' fill='none' stroke='#e6007e' stroke-width='4' stroke-linejoin='round'/><line x1='312' y1='112' x2='390' y2='122' stroke='#e6007e' stroke-width='4'/><line x1='312' y1='112' x2='385' y2='152' stroke='#e6007e' stroke-width='4'/><circle cx='180' cy='160' r='4' fill='#901a7e'/><path d='M 65 105 A 25 25 0 0 0 90 83' fill='none' stroke='#231F20' stroke-width='3'/><path d='M 125 280 A 25 25 0 0 1 165 285' fill='none' stroke='#231F20' stroke-width='3'/><path d='M 355 117 A 25 25 0 0 1 350 133' fill='none' stroke='#231F20' stroke-width='3'/><g font-size='34' fill='#231F20'><text x='40' y='65'>D</text><text x='45' y='285'>A</text><text x='145' y='325'>B</text><text x='300' y='95'>C</text><text x='375' y='105'>E</text><text x='370' y='185'>F</text><text x='170' y='145'>O</text><text x='95' y='115' font-size='28'>80°</text><text x='135' y='255' font-size='28'>100°</text><text x='365' y='142' font-size='28'>20°</text></g></svg><br><br>$ \\angle ADC=80^\\circ $, $ \\angle ECF=20^\\circ $ எனில் $ \\angle BAD = ? $",
+			  "<svg viewBox='0 0 420 320' style='width:100%; max-width:420px;'><circle cx='180' cy='160' r='140' stroke='#00a0e9' stroke-width='4' fill='none'/><polygon points='65,80 73,250 144,295 312,112' fill='none' stroke='#e6007e' stroke-width='4' stroke-linejoin='round'/><line x1='312' y1='112' x2='390' y2='122' stroke='#e6007e' stroke-width='4'/><line x1='312' y1='112' x2='385' y2='152' stroke='#e6007e' stroke-width='4'/><circle cx='180' cy='160' r='4' fill='#901a7e'/><path d='M 65 105 A 25 25 0 0 0 90 83' fill='none' stroke='#231F20' stroke-width='3'/><path d='M 125 280 A 25 25 0 0 1 165 285' fill='none' stroke='#231F20' stroke-width='3'/><path d='M 355 117 A 25 25 0 0 1 350 133' fill='none' stroke='#231F20' stroke-width='3'/><g font-size='34' fill='#231F20'><text x='40' y='65'>D</text><text x='45' y='285'>A</text><text x='145' y='325'>B</text><text x='300' y='95'>C</text><text x='375' y='105'>E</text><text x='370' y='185'>F</text><text x='170' y='145'>O</text><text x='95' y='115' font-size='28'>80°</text><text x='135' y='255' font-size='28'>100°</text><text x='365' y='142' font-size='28'>20°</text></g></svg><br><br>$ \\angle ADC=80^\\circ $, $ \\angle ECF=20^\\circ $, then $ \\angle BAD = ? $",
+			  ["$ 100^\\circ $", "$ 20^\\circ $", "$ 120^\\circ $", "$ 110^\\circ $"],
+			  ["$ 100^\\circ $", "$ 20^\\circ $", "$ 120^\\circ $", "$ 110^\\circ $"],
+			  2,
+			  "வடிவியல் படத்திலுள்ள இணைகோடுகள் மற்றும் வட்ட நாற்கரப் பண்புகளை ஒன்றிணைத்துப் படிநிலைகளாகத் தீர்க்கும்போது கோணம் 120° எனத் தெளிவாகக் கிடைக்கும்.",
+			  "Sequentially applying the properties of parallel transversals alongside the fundamental cyclic quadrilateral angle theorems definitively resolves the required geometric angle to 120°."
+			],
+            [4, "AD=30, AB=24. மையத்திலிருந்து தொலைவு", "AD=30 (dia), AB=24 (chord). Distance from centre is", ["10 செ.மீ", "9 செ.மீ", "8 செ.மீ", "6 செ.மீ"], ["10cm", "9cm", "8cm", "6cm"], 1, "விட்டம் 30 செ.மீ எனில் ஆரம் = 15 செ.மீ. நாண் 24 செ.மீ எனில் அதன் பாதி = 12 செ.மீ. மையத்திலிருந்து நாணிற்கான செங்குத்துத் தொலைவை பிதாகரஸ் தேற்றத்தின் மூலம் காண: $ \\sqrt{15^2 - 12^2} = \\sqrt{225 - 144} = \\sqrt{81} = 9 $ செ.மீ.", "Radius is half of diameter (15). The perpendicular from the center completely bisects the chord (12). Applying the Pythagorean theorem: distance = $ \\sqrt{15^2 - 12^2} = \\sqrt{81} = 9 $ cm."],
+            [4,
+			  "<svg viewBox='0 0 320 320' style='width:100%; max-width:320px;'><circle cx='170' cy='160' r='130' stroke='#00a0e9' stroke-width='4' fill='none'/><line x1='60.5' y1='230' x2='279.5' y2='230' stroke='#e6007e' stroke-width='4'/><line x1='170' y1='160' x2='170' y2='290' stroke='#e6007e' stroke-width='4'/><line x1='170' y1='160' x2='60.5' y2='230' stroke='#e6007e' stroke-width='4' stroke-dasharray='7,7'/><circle cx='170' cy='160' r='4.5' fill='#901a7e'/><circle cx='60.5' cy='230' r='4.5' fill='#901a7e'/><circle cx='279.5' cy='230' r='4.5' fill='#901a7e'/><g font-size='36' fill='#231F20'><text x='155' y='145'>O</text><text x='25' y='260'>P</text><text x='285' y='260'>Q</text><text x='178' y='260'>R</text><text x='160' y='320'>S</text></g><text x='95' y='195' font-size='32' fill='#231F20' transform='rotate(-32.6, 95, 195)'>17 cm</text></svg><br><br>OP=17, PQ=30 எனில் RS ஆனது",
+			  "<svg viewBox='0 0 320 320' style='width:100%; max-width:320px;'><circle cx='170' cy='160' r='130' stroke='#00a0e9' stroke-width='4' fill='none'/><line x1='60.5' y1='230' x2='279.5' y2='230' stroke='#e6007e' stroke-width='4'/><line x1='170' y1='160' x2='170' y2='290' stroke='#e6007e' stroke-width='4'/><line x1='170' y1='160' x2='60.5' y2='230' stroke='#e6007e' stroke-width='4' stroke-dasharray='7,7'/><circle cx='170' cy='160' r='4.5' fill='#901a7e'/><circle cx='60.5' cy='230' r='4.5' fill='#901a7e'/><circle cx='279.5' cy='230' r='4.5' fill='#901a7e'/><g font-size='36' fill='#231F20'><text x='155' y='145'>O</text><text x='25' y='260'>P</text><text x='285' y='260'>Q</text><text x='178' y='260'>R</text><text x='160' y='320'>S</text></g><text x='95' y='195' font-size='32' fill='#231F20' transform='rotate(-32.6, 95, 195)'>17 cm</text></svg><br><br>OP=17, PQ=30, OS perp PQ. RS is",
+			  ["10 செ.மீ", "6 செ.மீ", "7 செ.மீ", "9 செ.மீ"],
+			  ["10cm", "6cm", "7cm", "9cm"],
+			  3,
+			  "OP (ஆரம்) = 17 செ.மீ. மையக்குத்துக்கோடு நாணை இருசமக்கூறிடும் என்பதால், நாணின் பாதி RQ = 15. பிதாகரஸ் தேற்றப்படி, OR = $ \\sqrt{17^2 - 15^2} = \\sqrt{289 - 225} = \\sqrt{64} = 8 $. OS என்பதும் ஆரம் என்பதால் அதன் நீளமும் 17 தான். எனவே, RS = OS - OR = 17 - 8 = 9 செ.மீ.",
+			  "Radius OP=17. Half-chord is 15. The distance OR from center is calculated via Pythagoras as $ \\sqrt{17^2 - 15^2} = 8 $. The remaining segment RS is the full Radius minus OR: 17 - 8 = 9 cm."
+			],
+						
+            // 🔵 பகுதி 2 (Part 2) வினாக்கள்:
+            // UNIT 5: Co-ordinate Geometry (20 Qs)
+            [5, "ஒரு புள்ளியின் y-ஆயத்தொலைவு பூச்சியம் எனில், அந்தப் புள்ளி எப்போதுமே எங்கு அமையும்", "If the y-coordinate of a point is zero, then the point always lies", ["I காற்பகுதியில்", "II காற்பகுதியில்", "x-அச்சில்", "y-அச்சில்"], ["in the I quadrant", "in the II quadrant", "on x-axis", "on y-axis"], 2, "வரைபடத் தளத்தில் x-அச்சின் மீதுள்ள எந்தவொரு புள்ளிக்கும் y-ஆயத்தொலைவு (y-coordinate) எப்போதும் பூச்சியமாக (0) இருக்கும். உதாரணமாக: (5,0), (-3,0).", "On a Cartesian plane, any point situated perfectly on the x-axis has a y-coordinate of exactly zero (e.g., (x, 0))."],
+            [5, "(-5,2) மற்றும் (2,-5) என்ற புள்ளிகள் அமையும் காற்பகுதிகள்", "The points (-5,2) and (2,-5) lie in the", ["ஒரே காற்பகுதி", "முறையே II மற்றும் III காற்பகுதிகள்", "முறையே II மற்றும் IV காற்பகுதிகள்", "முறையே IV மற்றும் II காற்பகுதிகள்"], ["same quadrant", "II and III quadrant respectively", "II and IV quadrant respectively", "IV and II quadrant respectively"], 2, "(-, +) என்பது II-ஆம் காற்பகுதி. (+, -) என்பது IV-ஆம் காற்பகுதி. எனவே (-5, 2) II-ஆவது காற்பகுதியிலும், (2, -5) IV-ஆவது காற்பகுதியிலும் அமையும்.", "A point with (negative x, positive y) lies in Quadrant II. A point with (positive x, negative y) lies in Quadrant IV."],
+            [5, "O(0,0), A(3,-4), B(3,4) மற்றும் C(0,4) என்ற புள்ளிகளை வரைபடத்தில் குறித்து OA, AB, BC மற்றும் CO ஆகியவற்றை இணைத்தால் கிடைக்கும் உருவம் எது?", "On plotting the points O(0,0), A(3,-4), B(3,4) and C(0,4) and joining OA, AB, BC and CO, which of the following figure is obtained?", ["சதுரம்", "செவ்வகம்", "சரிவகம்", "சாய்சதுரம்"], ["Square", "Rectangle", "Trapezium", "Rhombus"], 2, "புள்ளிகளை இணைக்கும்போது, y-அச்சில் உள்ள OC என்ற கோடும், y-அச்சுக்கு இணையாக உள்ள AB என்ற கோடும் ஒன்றுக்கொன்று இணையாக (Parallel) அமையும். ஒரு சோடி எதிர்ப் பக்கங்கள் மட்டுமே இணையானால் அது சரிவகம் (Trapezium).", "Plotting the points reveals that side AB is completely parallel to the y-axis, and side OC lies on the y-axis. Since only one pair of opposite sides is parallel, the polygon is a Trapezium."],
+            [5, "P(-1,1), Q(3,-4), R(1,-1), S(-2,-3) மற்றும் T(-4,4) என்பவற்றில் நான்காம் காற்பகுதியில் அமையும் புள்ளிகள்", "If P(-1,1), Q(3,-4), R(1,-1), S(-2,-3) and T(-4,4) are plotted, the points in the fourth quadrant are", ["P மற்றும் T", "Q மற்றும் R", "S மட்டும்", "P மற்றும் Q"], ["P and T", "Q and R", "only S", "P and Q"], 1, "நான்காம் காற்பகுதியில் x-அச்சு மிகையாகவும் (+), y-அச்சு குறையாகவும் (-) இருக்கும். (+, -) வடிவில் உள்ள புள்ளிகள் Q(3,-4) மற்றும் R(1,-1) மட்டுமே.", "The fourth quadrant contains points with positive x and negative y values (+, -). Among the choices, only Q(3,-4) and R(1,-1) fit this strict condition."],
+            [5, "y-ஆயத்தொலைவு 4 ஆகவும் y-அச்சின் மீதும் அமையும் புள்ளி", "The point whose ordinate is 4 and which lies on the y-axis is", ["(4,0)", "(0,4)", "(1,4)", "(4,2)"], ["(4,0)", "(0,4)", "(1,4)", "(4,2)"], 1, "ஒரு புள்ளி y-அச்சின் மீது அமைந்தால் அதன் x-ஆயத்தொலைவு (abscissa) பூச்சியம். இங்கு y-ஆயத்தொலைவு 4 எனக் கொடுக்கப்பட்டுள்ளது. எனவே புள்ளி (0,4).", "Any point located strictly on the y-axis has an x-coordinate of 0. Given the ordinate (y-coordinate) is 4, the correct coordinate pair is (0,4)."],
+            [5, "(2,3) மற்றும் (1,4) ஆகிய இரண்டு புள்ளிகளுக்கு இடைப்பட்ட தொலைவு", "The distance between the two points (2,3) and (1,4) is", ["2", "$ \\sqrt{56} $", "$ \\sqrt{10} $", "$ \\sqrt{2} $"], ["2", "$ \\sqrt{56} $", "$ \\sqrt{10} $", "$ \\sqrt{2} $"], 3, "தொலைவுச் சூத்திரம் $ d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} $. பிரதியிட்டால்: $ d = \\sqrt{(1-2)^2 + (4-3)^2} = \\sqrt{(-1)^2 + (1)^2} = \\sqrt{1+1} = \\sqrt{2} $.", "Using the standard distance formula: $ d = \\sqrt{(1-2)^2 + (4-3)^2} = \\sqrt{(-1)^2 + 1^2} = \\sqrt{2} $."],
+            [5, "A(2,0), B(-6,0), C(3,a-3) என்ற புள்ளிகள் x-அச்சில் அமைகின்றன எனில் a இன் மதிப்பு", "If the points A(2,0), B(-6,0), C(3,a-3) lie on the x-axis then the value of a is", ["0", "2", "3", "-6"], ["0", "2", "3", "-6"], 2, "புள்ளி C(3, a-3) ஆனது x-அச்சின் மீது அமைவதால், அதன் y-ஆயத்தொலைவு பூச்சியமாக இருக்க வேண்டும். $ a-3 = 0 \\implies a = 3 $.", "Since point C lies on the x-axis, its y-coordinate must be identically zero. Setting $ a-3 = 0 $ yields $ a=3 $."],
+            [5, "$ (x+2, 4) = (5, y-2) $ எனில் (x, y) ஆனது", "If $ (x+2, 4) = (5, y-2) $ then the coordinates (x, y) are", ["(7,12)", "(6,3)", "(3,6)", "(2,1)"], ["(7,12)", "(6,3)", "(3,6)", "(2,1)"], 2, "இரண்டு ஆயத்தொலைவுகள் சமம் எனில், ஒத்த ஆயத்தொலைவுகளைச் சமப்படுத்த வேண்டும். $ x+2 = 5 \\implies x = 3 $. அதேபோல் $ y-2 = 4 \\implies y = 6 $. விடை: (3,6).", "Equate corresponding coordinates: $ x+2 = 5 $ solves to x=3. $ y-2 = 4 $ solves to y=6. Thus, the pair is (3,6)."],
+            [5, "$ Q_1, Q_2, Q_3, Q_4 $ என்பன ஒரு கார்ட்டீசியன் தளத்தின் காற்பகுதிகள் எனில் $ Q_2 \\cap Q_3 $ ஆனது", "If $ Q_1, Q_2, Q_3, Q_4 $ are the quadrants in a Cartesian plane then $ Q_2 \\cap Q_3 $ is", ["$ Q_1 \\cup Q_2 $", "$ Q_2 \\cup Q_3 $", "வெற்றுக்கணம்", "குறை x-அச்சு"], ["$ Q_1 \\cup Q_2 $", "$ Q_2 \\cup Q_3 $", "Null set", "Negative x-axis"], 2, "காற்பகுதிகள் (Quadrants) தங்களுக்குள் பொதுவான பகுதிகளை (Intersection) கொண்டிருக்காது. கார்ட்டீசியன் தளத்தில் அச்சுகள் மட்டுமே காற்பகுதிகளைப் பிரிக்கின்றன. எனவே பொதுப்பகுதி வெற்றுக்கணம்.", "The four distinct quadrants of a Cartesian plane are mutually exclusive regions and do not overlap. Therefore, their intersection is the Null set."],
+            [5, "(5,-1) என்ற புள்ளிக்கும் ஆதிப்புள்ளிக்கும் இடைப்பட்ட தொலைவு", "The distance between the point (5,-1) and the origin is", ["$ \\sqrt{24} $", "$ \\sqrt{37} $", "$ \\sqrt{26} $", "$ \\sqrt{17} $"], ["$ \\sqrt{24} $", "$ \\sqrt{37} $", "$ \\sqrt{26} $", "$ \\sqrt{17} $"], 2, "ஆதிப்புள்ளி (0,0)-லிருந்து உள்ள தொலைவு = $ \\sqrt{x^2 + y^2} = \\sqrt{5^2 + (-1)^2} = \\sqrt{25 + 1} = \\sqrt{26} $.", "The distance from the origin (0,0) is computed as $ \\sqrt{x^2 + y^2} $. Substituting the coordinates: $ \\sqrt{5^2 + (-1)^2} = \\sqrt{26} $."],
+            [5, "P(2,4) மற்றும் Q(5,7) ஐ இணைக்கும் கோட்டுத்துண்டை 2:1 என்ற விகிதத்தில் உட்புறமாகப் பிரிக்கும் புள்ளி", "The coordinates of the point dividing the line segment joining P(2,4) and Q(5,7) internally in the ratio 2:1 is", ["$ (\\frac{7}{2}, \\frac{11}{2}) $", "(3,5)", "(4,4)", "(4,6)"], ["$ (\\frac{7}{2}, \\frac{11}{2}) $", "(3,5)", "(4,4)", "(4,6)"], 3, "பிரிவுச் சூத்திரம்: $ x = \\frac{mx_2+nx_1}{m+n} = \\frac{2(5)+1(2)}{3} = \\frac{12}{3} = 4 $. $ y = \\frac{my_2+ny_1}{m+n} = \\frac{2(7)+1(4)}{3} = \\frac{18}{3} = 6 $. விடை: (4,6).", "Using the section formula $ (mx_2+nx_1)/(m+n) $ for x yields $ (10+2)/3 = 4 $. Similarly for y, $ (14+4)/3 = 6 $. Coordinate is (4,6)."],
+            [5, "A(-4,3) மற்றும் B(-2,4) ஐ இணைக்கும் கோட்டின் நடுப்புள்ளி P(a/3, b/2) எனில் (a,b) ஆனது", "If P(a/3, b/2) is the mid-point of the line joining A(-4,3) and B(-2,4) then (a,b) is", ["(-9,7)", "$ (-3, \\frac{7}{2}) $", "(9,-7)", "$ (3, -\\frac{7}{2}) $"], ["(-9,7)", "$ (-3, \\frac{7}{2}) $", "(9,-7)", "$ (3, -\\frac{7}{2}) $"], 0, "நடுப்புள்ளி = $ (\\frac{-4-2}{2}, \\frac{3+4}{2}) = (-3, \\frac{7}{2}) $. இதை P(a/3, b/2) உடன் ஒப்பிட, $ \\frac{a}{3} = -3 \\implies a = -9 $; $ \\frac{b}{2} = \\frac{7}{2} \\implies b = 7 $. விடை (-9,7).", "Calculate midpoint: $ ((-4-2)/2, (3+4)/2) = (-3, 7/2) $. Equating to P: $ a/3 = -3 \\implies a=-9 $ and $ b/2 = 7/2 \\implies b=7 $."],
+            [5, "P(2,7) மற்றும் R(-2,3) ஐ இணைக்கும் கோட்டுத்துண்டை Q(1,6) என்ற புள்ளி எந்த விகிதத்தில் பிரிக்கிறது?", "In what ratio does Q(1,6) divide the line segment joining P(2,7) and R(-2,3)?", ["1:2", "2:1", "1:3", "3:1"], ["1:2", "2:1", "1:3", "3:1"], 2, "விகிதம் m:n என்க. x ஆயத்தொலைவைப் பயன்படுத்தினால்: $ 1 = \\frac{m(-2) + n(2)}{m+n} $. குறுக்கு பெருக்கல் செய்தால், $ m+n = -2m + 2n \\implies 3m = n \\implies \\frac{m}{n} = \\frac{1}{3} $. விகிதம் 1:3.", "Assume ratio m:n. Using x-coordinates: $ 1 = (-2m + 2n) / (m+n) $. Cross multiplying gives $ m+n = -2m+2n $, which simplifies to $ 3m=n $, so the ratio is 1:3."],
+            [5, "வட்டத்தின் விட்டத்தின் ஒரு முனை (3,4), மையம் (-3,2) எனில், மற்றொரு முனையின் ஆயத்தொலைவுகள்", "If one end of a diameter is (3,4) and centre is (-3,2), the other end of the diameter is", ["(0,-3)", "(0,9)", "(3,0)", "(-9,0)"], ["(0,-3)", "(0,9)", "(3,0)", "(-9,0)"], 3, "மையம் என்பது விட்டத்தின் நடுப்புள்ளி. மற்றொரு முனை (x,y) என்க. $ \\frac{x+3}{2} = -3 \\implies x+3 = -6 \\implies x = -9 $. $ \\frac{y+4}{2} = 2 \\implies y+4 = 4 \\implies y = 0 $. விடை: (-9,0).", "The center is the midpoint of the diameter. Let the other end be (x,y). $ (x+3)/2 = -3 \\implies x = -9 $ and $ (y+4)/2 = 2 \\implies y = 0 $."],
+            [5, "A($a_1,b_1$) மற்றும் B($a_2,b_2$) ஐ இணைக்கும் கோட்டை x-அச்சு பிரிக்கும் விகிதம்", "The ratio in which the x-axis divides the line segment joining A($a_1,b_1$) and B($a_2,b_2$) is", ["$ b_1:b_2 $", "$ -b_1:b_2 $", "$ a_1:a_2 $", "$ -a_1:a_2 $"], ["$ b_1:b_2 $", "$ -b_1:b_2 $", "$ a_1:a_2 $", "$ -a_1:a_2 $"], 1, "x-அச்சின் மீது புள்ளி அமைவதால் அதன் y-ஆயத்தொலைவு பூச்சியம். $ \\frac{mb_2 + nb_1}{m+n} = 0 \\implies mb_2 = -nb_1 \\implies \\frac{m}{n} = \\frac{-b_1}{b_2} $. எனவே விகிதம் $ -b_1:b_2 $.", "A point on the x-axis has a y-coordinate of 0. Using the section formula for y: $ (mb_2 + nb_1)/(m+n) = 0 $. This implies $ mb_2 = -nb_1 $, giving the ratio $ -b_1:b_2 $."],
+            [5, "(6,4) மற்றும் (1,-7) ஐ இணைக்கும் கோட்டுத்துண்டை x-அச்சு பிரிக்கும் விகிதம்", "The ratio in which the x-axis divides the line segment joining (6,4) and (1,-7) is", ["2:3", "3:4", "4:7", "4:3"], ["2:3", "3:4", "4:7", "4:3"], 2, "மேற்கண்ட விதியின்படி ($-y_1 : y_2$), இங்கு $ y_1=4 $ மற்றும் $ y_2=-7 $. விகிதம் = $ -4 : -7 = 4:7 $.", "Using the shortcut formula derived above ($-y_1 : y_2$): the ratio is $ -4 : -7 $, which simplifies to exactly 4:7."],
+            [5, "முக்கோணத்தின் பக்கங்களின் நடுப்புள்ளிகள் (3,4), (1,1), (2,-3) எனில், உச்சிகள் A மற்றும் B ஆகியவை", "If mid-points of sides AB, BC, CA are (3,4), (1,1) and (2,-3), the vertices A and B are", ["(3,2), (2,4)", "(4,0), (2,8)", "(3,4), (2,0)", "(4,3), (2,4)"], ["(3,2), (2,4)", "(4,0), (2,8)", "(3,4), (2,0)", "(4,3), (2,4)"], 1, "$ x_1+x_2=6, x_2+x_3=2, x_3+x_1=4 $. கூட்டினால் $ 2(x_1+x_2+x_3)=12 \\implies x_1+x_2+x_3=6 $. இதிலிருந்து $ x_1=6-2=4, x_2=6-4=2 $. அதேபோல y-களைக் கண்டால் A(4,0) மற்றும் B(2,8) கிடைக்கும்.", "Applying vertex formulas from midpoints: $ x_1 = 3 + 2 - 1 = 4 $. $ y_1 = 4 + (-3) - 1 = 0 $. Thus A is (4,0). Similarly, B computes to (2,8)."],
+            [5, "(-a, 2b) மற்றும் (-3a, -4b) ஆகிய புள்ளிகளை இணைக்கும் கோட்டின் நடுப்புள்ளி", "The mid-point of the line joining (-a, 2b) and (-3a, -4b) is", ["(2a, 3b)", "(-2a, -b)", "(2a, b)", "(2a, -3b)"], ["(2a, 3b)", "(-2a, -b)", "(2a, b)", "(2a, -3b)"], 1, "நடுப்புள்ளி = $ \\left( \\frac{-a - 3a}{2}, \\frac{2b - 4b}{2} \\right) = \\left( \\frac{-4a}{2}, \\frac{-2b}{2} \\right) = (-2a, -b) $.", "Calculate midpoint averages: X is $ (-a - 3a) / 2 = -2a $. Y is $ (2b - 4b) / 2 = -b $. Result: (-2a, -b)."],
+            [5, "(-5,1) மற்றும் (2,3) ஆகிய புள்ளிகளை இணைக்கும் கோட்டை y-அச்சு உட்புறமாக எந்த விகிதத்தில் பிரிக்கிறது?", "In what ratio does the y-axis divide the line joining (-5,1) and (2,3) internally?", ["1:3", "2:5", "3:1", "5:2"], ["1:3", "2:5", "3:1", "5:2"], 3, "y-அச்சு பிரிக்கும் விகிதம் காண, x-ஆயத்தொலைவை 0 எனப் பயன்படுத்த வேண்டும். சுருக்குவழியாக, விகிதம் = $ -x_1 : x_2 = -(-5) : 2 = 5:2 $.", "A point on the y-axis has x=0. The shortcut for the y-axis ratio is $ -x_1 : x_2 $. Substituting gives $ -(-5) : 2 = 5:2 $."],
+            [5, "(1,-2), (3,6), (x, 10) மற்றும் (3,2) என்பன ஒரு இணைகரத்தின் உச்சிகள் எனில், x இன் மதிப்பு", "If (1,-2), (3,6), (x, 10) and (3,2) are vertices of a parallelogram, then x is", ["6", "5", "4", "3"], ["6", "5", "4", "3"], 1, "இணைகரத்தின் மூலைவிட்டங்கள் ஒன்றையொன்று இருசமக்கூறிடும். எனவே AC இன் நடுப்புள்ளி = BD இன் நடுப்புள்ளி. $ \\frac{1+x}{2} = \\frac{3+3}{2} \\implies 1+x = 6 \\implies x = 5 $.", "The diagonals of a parallelogram bisect each other, meaning their midpoints are identical. Equating the x-midpoints: $ (1+x)/2 = (3+3)/2 \\implies 1+x = 6 \\implies x = 5 $."],
+
+            // UNIT 6: Trigonometry (10 Qs)
+            [6, "$ \\sin 30^\\circ = x $ மற்றும் $ \\cos 60^\\circ = y $ எனில், $ x^2+y^2 $ இன் மதிப்பு", "If $ \\sin 30^\\circ = x $ and $ \\cos 60^\\circ = y $, then $ x^2+y^2 $ is", ["1/2", "0", "$ \\sin 90^\\circ $", "$ \\cos 90^\\circ $"], ["1/2", "0", "$ \\sin 90^\\circ $", "$ \\cos 90^\\circ $"], 0, "$ \\sin 30^\\circ = 1/2 $ மற்றும் $ \\cos 60^\\circ = 1/2 $. எனவே $ (1/2)^2 + (1/2)^2 = 1/4 + 1/4 = 2/4 = 1/2 $.", "Substitute standard trigonometric values: $ (1/2)^2 + (1/2)^2 = 1/4 + 1/4 = 1/2 $."],
+            [6, "$ \\tan \\theta = \\cot 37^\\circ $ எனில், $ \\theta $ இன் மதிப்பு", "If $ \\tan \\theta = \\cot 37^\\circ $ then the value of $ \\theta $ is", ["$ 37^\\circ $", "$ 53^\\circ $", "$ 90^\\circ $", "$ 1^\\circ $"], ["$ 37^\\circ $", "$ 53^\\circ $", "$ 90^\\circ $", "$ 1^\\circ $"], 1, "நிரப்புக் கோண விதியின்படி $ \\cot \\theta = \\tan(90^\\circ - \\theta) $. எனவே $ \\cot 37^\\circ = \\tan(90^\\circ - 37^\\circ) = \\tan 53^\\circ $. ஆகையால் $ \\theta = 53^\\circ $.", "Using complementary angle identities: $ \\cot 37^\\circ = \\tan(90^\\circ - 37^\\circ) = \\tan 53^\\circ $. Therefore, $ \\theta = 53^\\circ $."],
+            [6, "$ \\tan 72^\\circ \\tan 18^\\circ $ இன் மதிப்பு", "The value of $ \\tan 72^\\circ \\tan 18^\\circ $ is", ["0", "1", "$ 18^\\circ $", "$ 72^\\circ $"], ["0", "1", "$ 18^\\circ $", "$ 72^\\circ $"], 1, "$ \\tan 18^\\circ $ என்பதை $ \\cot(90^\\circ-18^\\circ) = \\cot 72^\\circ $ என எழுதலாம். $ \\tan 72^\\circ \\times \\cot 72^\\circ = 1 $.", "Apply complementary rule: $ \\tan 18^\\circ = \\cot 72^\\circ $. Since tan and cot are reciprocals, their product is precisely 1."],
+            [6, "$ \\frac{2\\tan 30^\\circ}{1-\\tan^2 30^\\circ} $ இன் மதிப்பு எதற்குச் சமம்", "The value of $ \\frac{2\\tan 30^\\circ}{1-\\tan^2 30^\\circ} $ is equal to", ["$ \\cos 60^\\circ $", "$ \\sin 60^\\circ $", "$ \\tan 60^\\circ $", "$ \\sin 30^\\circ $"], ["$ \\cos 60^\\circ $", "$ \\sin 60^\\circ $", "$ \\tan 60^\\circ $", "$ \\sin 30^\\circ $"], 2, "இது ஒரு நேரடி முக்கோணவியல் முற்றொருமை: $ \\frac{2\\tan \\theta}{1-\\tan^2 \\theta} = \\tan 2\\theta $. இங்கு $ \\theta = 30^\\circ $ என்பதால் விடை $ \\tan 60^\\circ $.", "This perfectly matches the double-angle tangent identity: $ \\tan(2\\theta) = \\frac{2\\tan \\theta}{1-\\tan^2 \\theta} $. For $ \\theta=30^\\circ $, the result is strictly $ \\tan 60^\\circ $."],
+            [6, "$ 2 \\sin 2\\theta = \\sqrt{3} $ எனில், $ \\theta $ இன் மதிப்பு", "If $ 2 \\sin 2\\theta = \\sqrt{3} $, then the value of $ \\theta $ is", ["$ 90^\\circ $", "$ 30^\\circ $", "$ 45^\\circ $", "$ 60^\\circ $"], ["$ 90^\\circ $", "$ 30^\\circ $", "$ 45^\\circ $", "$ 60^\\circ $"], 1, "$ \\sin 2\\theta = \\frac{\\sqrt{3}}{2} $. நமக்குத் தெரியும் $ \\sin 60^\\circ = \\frac{\\sqrt{3}}{2} $. எனவே $ 2\\theta = 60^\\circ \\implies \\theta = 30^\\circ $.", "Isolating the sine function gives $ \\sin 2\\theta = \\sqrt{3}/2 $. Since $ \\sin 60^\\circ = \\sqrt{3}/2 $, we equate $ 2\\theta = 60^\\circ $, which resolves to $ \\theta = 30^\\circ $."],
+            [6, "$ 3 \\sin 70^\\circ \\sec 20^\\circ + 2 \\sin 49^\\circ \\sec 51^\\circ $ இன் மதிப்பு", "The value of $ 3 \\sin 70^\\circ \\sec 20^\\circ + 2 \\sin 49^\\circ \\sec 51^\\circ $ is", ["2", "3", "5", "6"], ["2", "3", "5", "6"], 2, "$ \\sin 70^\\circ = \\cos 20^\\circ $. எனவே $ 3\\cos 20^\\circ \\sec 20^\\circ = 3(1) = 3 $. அதேபோல $ 2\\cos 51^\\circ \\sec 51^\\circ = 2(1) = 2 $. மொத்தம் $ 3+2=5 $.", "$ \\sin 70^\\circ $ converts to $ \\cos 20^\\circ $. Cosine and secant cancel out to 1. The expression simplifies effortlessly to $ 3(1) + 2(1) = 5 $."],
+            [6, "$ \\frac{1-\\tan^2 45^\\circ}{1+\\tan^2 45^\\circ} $ இன் மதிப்பு", "The value of $ \\frac{1-\\tan^2 45^\\circ}{1+\\tan^2 45^\\circ} $ is", ["2", "1", "0", "1/2"], ["2", "1", "0", "1/2"], 2, "$ \\tan 45^\\circ = 1 $. எனவே, தொகுதியில் $ 1 - 1^2 = 0 $ வரும். விடை $ 0/2 = 0 $.", "Substitute $ \\tan 45^\\circ = 1 $ directly into the expression. The numerator yields $ 1 - 1 = 0 $, reducing the entire fraction identically to 0."],
+            [6, "$ \\csc(70^\\circ+\\theta) - \\sec(20^\\circ-\\theta) + \\tan(65^\\circ+\\theta) - \\cot(25^\\circ-\\theta) $ இன் மதிப்பு", "The value of $ \\csc(70^\\circ+\\theta) - \\sec(20^\\circ-\\theta) + \\tan(65^\\circ+\\theta) - \\cot(25^\\circ-\\theta) $ is", ["0", "1", "2", "3"], ["0", "1", "2", "3"], 0, "நிரப்புக் கோண விதிகளின்படி $ \\csc(70+\\theta) = \\sec(90-(70+\\theta)) = \\sec(20-\\theta) $. இவை இரண்டும் கேன்சல் ஆகும். இதேபோல tan மற்றும் cot கேன்சல் ஆகி விடை 0 வரும்.", "Using complementary rules, $ \\csc(70+\\theta) $ exactly equals $ \\sec(20-\\theta) $. They negate each other. Similarly, the tan and cot terms perfectly cancel out, leaving exactly 0."],
+            [6, "$ \\tan 1^\\circ \\tan 2^\\circ \\tan 3^\\circ ... \\tan 89^\\circ $ இன் மதிப்பு", "The value of $ \\tan 1^\\circ \\tan 2^\\circ \\tan 3^\\circ ... \\tan 89^\\circ $ is", ["0", "1", "2", "$ \\frac{\\sqrt{3}}{2} $"], ["0", "1", "2", "$ \\frac{\\sqrt{3}}{2} $"], 1, "$ \\tan 89^\\circ = \\cot 1^\\circ $. $ \\tan 1^\\circ \\times \\cot 1^\\circ = 1 $. இப்படி அனைத்து சோடிகளும் கேன்சல் ஆகி, நடுவில் உள்ள $ \\tan 45^\\circ $ இன் மதிப்பு 1 என்பதால் இறுதி விடை 1.", "Terms pair up systematically from the outside in (e.g., $ \\tan 1^\\circ $ and $ \\tan 89^\\circ $). Since $ \\tan(90-x) = \\cot x $, each pair multiplies perfectly to 1. The unmatched middle term $ \\tan 45^\\circ $ is also 1."],
+            [6, "$ \\sin \\alpha = \\frac{1}{2} $ மற்றும் $ \\cos \\beta = \\frac{1}{2} $ எனில் $ \\alpha+\\beta $ இன் மதிப்பு", "Given $ \\sin \\alpha = \\frac{1}{2} $ and $ \\cos \\beta = \\frac{1}{2} $, then $ \\alpha+\\beta $ is", ["$ 0^\\circ $", "$ 90^\\circ $", "$ 30^\\circ $", "$ 60^\\circ $"], ["$ 0^\\circ $", "$ 90^\\circ $", "$ 30^\\circ $", "$ 60^\\circ $"], 1, "$ \\sin 30^\\circ = 1/2 \\implies \\alpha = 30^\\circ $. $ \\cos 60^\\circ = 1/2 \\implies \\beta = 60^\\circ $. எனவே $ \\alpha + \\beta = 30^\\circ + 60^\\circ = 90^\\circ $.", "From trigonometric tables, $ \\alpha = 30^\\circ $ and $ \\beta = 60^\\circ $. The direct summation yields strictly $ 90^\\circ $."],
+
+            // UNIT 7: Mensuration (10 Qs)
+            [7, "15 செ.மீ, 20 செ.மீ மற்றும் 25 செ.மீ அளவுகளைப் பக்கங்களாகக் கொண்ட முக்கோணத்தின் அரைச் சுற்றளவு", "The semi-perimeter of a triangle having sides 15 cm, 20 cm and 25 cm is", ["60 செ.மீ", "45 செ.மீ", "30 செ.மீ", "15 செ.மீ"], ["60 cm", "45 cm", "30 cm", "15 cm"], 2, "அரைச்சுற்றளவு (Semi-perimeter) $ s = \\frac{a+b+c}{2} = \\frac{15+20+25}{2} = \\frac{60}{2} = 30 $ செ.மீ.", "Formula for semi-perimeter $ s = (a+b+c)/2 $. Summing the sides yields 60. Dividing accurately by 2 results in 30 cm."],
+            [7, "ஒரு முக்கோணத்தின் பக்கங்கள் 3 செ.மீ, 4 செ.மீ மற்றும் 5 செ.மீ எனில், அதன் பரப்பளவு", "If the sides of a triangle are 3 cm, 4 cm and 5 cm, then the area is", ["$ 3 \\text{ செ.மீ}^2 $", "$ 6 \\text{ செ.மீ}^2 $", "$ 9 \\text{ செ.மீ}^2 $", "$ 12 \\text{ செ.மீ}^2 $"], ["$ 3 \\text{ cm}^2 $", "$ 6 \\text{ cm}^2 $", "$ 9 \\text{ cm}^2 $", "$ 12 \\text{ cm}^2 $"], 1, "இது ஒரு செங்கோண முக்கோணம் ($3^2 + 4^2 = 5^2$). எனவே பரப்பளவு = $ \\frac{1}{2} \\times \\text{அடிப்பக்கம்} \\times \\text{உயரம்} = \\frac{1}{2} \\times 3 \\times 4 = 6 $ ச.செ.மீ.", "Sides 3,4,5 constitute a classic Pythagorean right triangle. Using Area = 1/2 * base * height, we get 1/2 * 3 * 4 = 6 sq.cm."],
+            [7, "ஒரு சமபக்க முக்கோணத்தின் சுற்றளவு 30 செ.மீ. அதன் பரப்பளவு", "The perimeter of an equilateral triangle is 30 cm. The area is", ["$ 10\\sqrt{3} \\text{ செ.மீ}^2 $", "$ 12\\sqrt{3} \\text{ செ.மீ}^2 $", "$ 15\\sqrt{3} \\text{ செ.மீ}^2 $", "$ 25\\sqrt{3} \\text{ செ.மீ}^2 $"], ["$ 10\\sqrt{3} \\text{ cm}^2 $", "$ 12\\sqrt{3} \\text{ cm}^2 $", "$ 15\\sqrt{3} \\text{ cm}^2 $", "$ 25\\sqrt{3} \\text{ cm}^2 $"], 3, "சுற்றளவு 3a = 30 $\\implies$ பக்கம் a = 10 செ.மீ. சமபக்க முக்கோணத்தின் பரப்பளவு = $ \\frac{\\sqrt{3}}{4} a^2 = \\frac{\\sqrt{3}}{4} \\times 100 = 25\\sqrt{3} $ ச.செ.மீ.", "Perimeter is 30, meaning side 'a' is 10. Area of equilateral triangle is $ \\frac{\\sqrt{3}}{4} a^2 $. Substituting 10 gives $ \\frac{\\sqrt{3}}{4} \\times 100 = 25\\sqrt{3} $."],
+            [7, "12 செ.மீ பக்க அளவுள்ள ஒரு கனச்சதுரத்தின் பக்கப்பரப்பு", "The lateral surface area of a cube of side 12 cm is", ["$ 144 \\text{ செ.மீ}^2 $", "$ 196 \\text{ செ.மீ}^2 $", "$ 576 \\text{ செ.மீ}^2 $", "$ 664 \\text{ செ.மீ}^2 $"], ["$ 144 \\text{ cm}^2 $", "$ 196 \\text{ cm}^2 $", "$ 576 \\text{ cm}^2 $", "$ 664 \\text{ cm}^2 $"], 2, "கனச்சதுரத்தின் பக்கப்பரப்பு (LSA) = $ 4a^2 = 4 \\times 12^2 = 4 \\times 144 = 576 $ ச.செ.மீ.", "Lateral Surface Area (LSA) of a cube is strictly defined as $ 4a^2 $. Thus, $ 4 \\times (12)^2 = 4 \\times 144 = 576 $ sq.cm."],
+            [7, "ஒரு கனச்சதுரத்தின் பக்கப்பரப்பு 600 செ.மீ² எனில் அதன் மொத்தப்பரப்பு", "If the lateral surface area of a cube is 600 cm² then the total surface area is", ["$ 150 \\text{ செ.மீ}^2 $", "$ 400 \\text{ செ.மீ}^2 $", "$ 900 \\text{ செ.மீ}^2 $", "$ 1350 \\text{ செ.மீ}^2 $"], ["$ 150 \\text{ cm}^2 $", "$ 400 \\text{ cm}^2 $", "$ 900 \\text{ cm}^2 $", "$ 1350 \\text{ cm}^2 $"], 2, "பக்கப்பரப்பு $ 4a^2 = 600 \\implies a^2 = 150 $. மொத்தப்பரப்பு $ 6a^2 = 6 \\times 150 = 900 $ ச.செ.மீ.", "LSA formula guarantees $ 4a^2 = 600 $, which means $ a^2 = 150 $. The Total Surface Area (TSA) is $ 6a^2 $, yielding $ 6 \\times 150 = 900 $ sq.cm."],
+            [7, "10 செ.மீ × 6 செ.மீ × 5 செ.மீ அளவுகள் கொண்ட கனச்செவ்வகத்தின் மொத்தப்பரப்பு", "The total surface area of a cuboid with dimension 10 cm × 6 cm × 5 cm is", ["$ 280 \\text{ செ.மீ}^2 $", "$ 300 \\text{ செ.மீ}^2 $", "$ 360 \\text{ செ.மீ}^2 $", "$ 600 \\text{ செ.மீ}^2 $"], ["$ 280 \\text{ cm}^2 $", "$ 300 \\text{ cm}^2 $", "$ 360 \\text{ cm}^2 $", "$ 600 \\text{ cm}^2 $"], 0, "மொத்தப்பரப்பு (TSA) = $ 2(lb + bh + hl) = 2( (10\\times 6) + (6\\times 5) + (5\\times 10) ) = 2(60+30+50) = 2(140) = 280 $ ச.செ.மீ.", "Using the robust cuboid TSA formula $ 2(lb + bh + hl) $. Plugging in gives $ 2(60 + 30 + 50) = 2(140) = 280 $ sq.cm."],
+            [7, "இரண்டு கனச்சதுரங்களின் பக்கங்களின் விகிதம் 2:3 எனில், அவற்றின் புறப்பரப்புகளின் விகிதம்", "If the ratio of the sides of two cubes are 2:3, then ratio of their surface areas will be", ["4:6", "4:9", "6:9", "16:36"], ["4:6", "4:9", "6:9", "16:36"], 1, "புறப்பரப்புகளின் விகிதம் பக்கங்களின் வர்க்கத்திற்குச் (Squares) சமமாக இருக்கும். எனவே $ 2^2 : 3^2 = 4 : 9 $.", "Surface area invariably scales proportionately with the square of the linear dimensions. Squaring the ratio 2:3 elegantly yields 4:9."],
+            [7, "ஒரு கனச்செவ்வகத்தின் கனஅளவு 660 செ.மீ³ மற்றும் அதன் அடிப்பரப்பு 33 செ.மீ² எனில், அதன் உயரம்", "The volume of a cuboid is 660 cm³ and the area of the base is 33 cm². Its height is", ["10 செ.மீ", "12 செ.மீ", "20 செ.மீ", "22 செ.மீ"], ["10 cm", "12 cm", "20 cm", "22 cm"], 2, "கனஅளவு = அடிப்பரப்பு × உயரம் $\\implies 660 = 33 \\times h \\implies h = 660 / 33 = 20 $ செ.மீ.", "Volume flawlessly equals Base Area multiplied by Height. Isolating 'h' gives $ h = 660 / 33 $, which simplifies to exactly 20 cm."],
+            [7, "10 மீ × 5 மீ × 1.5 மீ அளவுகள் கொண்ட ஒரு தண்ணீர் தொட்டியின் கொள்ளளவு", "The capacity of a water tank of dimensions 10 m × 5 m × 1.5 m is", ["75 லிட்டர்கள்", "750 லிட்டர்கள்", "7500 லிட்டர்கள்", "75000 லிட்டர்கள்"], ["75 litres", "750 litres", "7500 litres", "75000 litres"], 3, "கனஅளவு = $ 10 \\times 5 \\times 1.5 = 75 \\text{ மீ}^3 $. 1 கன மீட்டர் = 1000 லிட்டர்கள். எனவே கொள்ளளவு = 75,000 லிட்டர்கள்.", "First find geometric volume: $ 10 \\times 5 \\times 1.5 = 75 $ cubic meters. Since $ 1 m^3 = 1000 $ liters, capacity is 75,000 liters."],
+            [7, "5 மீ × 3 மீ × 2 மீ சுவரைக் கட்ட, 50 செ.மீ × 30 செ.மீ × 20 செ.மீ செங்கற்கள் எத்தனை தேவைப்படும்?", "The number of bricks measuring 50 cm × 30 cm × 20 cm required to build a wall 5 m × 3 m × 2 m is", ["1000", "2000", "3000", "5000"], ["1000", "2000", "3000", "5000"], 0, "சுவரின் அளவை செ.மீ-க்கு மாற்றினால்: (500×300×200). செங்கற்களின் எண்ணிக்கை = $ \\frac{500 \\times 300 \\times 200}{50 \\times 30 \\times 20} = 10 \\times 10 \\times 10 = 1000 $.", "Convert wall dimensions to uniformly match the brick's cm units. Ratio of volumes: $ (500 \\times 300 \\times 200) / (50 \\times 30 \\times 20) = 1000 $ bricks."],
+
+            // UNIT 8: Statistics (10 Qs)
+            [8, "ஒரு தொடர்ச்சியான நிகழ்வெண் பரவலில், ஒரு பிரிவு இடைவெளியின் மையப்புள்ளி m மற்றும் மேல் எல்லை b எனில், அதன் கீழ் எல்லை", "Mid point m, upper limit b in continuous freq distribution. Lower limit is", ["2m-b", "2m+b", "m-b", "m-2b"], ["2m-b", "2m+b", "m-b", "m-2b"], 0, "மையப்புள்ளி $ m = \\frac{a+b}{2} $ (இங்கு a என்பது கீழ் எல்லை). $ 2m = a+b \\implies a = 2m-b $.", "The robust formula for the midpoint is $ m = (a+b)/2 $, where 'a' is lower limit. Solving for 'a' algebraically yields $ a = 2m-b $."],
+            [8, "7 எண்களின் சராசரி 81. ஒரு எண்ணை நீக்கினால் சராசரி 78. நீக்கப்பட்ட எண்", "Mean of 7 numbers is 81. If one discarded, mean is 78. Discarded number is", ["101", "100", "99", "98"], ["101", "100", "99", "98"], 2, "7 எண்களின் கூடுதல் = $ 7 \\times 81 = 567 $. 6 எண்களின் கூடுதல் = $ 6 \\times 78 = 468 $. நீக்கப்பட்ட எண் = 567 - 468 = 99.", "Sum of original 7 numbers = 567. Sum of remaining 6 numbers = 468. The distinctly discarded number is the difference: 567 - 468 = 99."],
+            [8, "கொடுக்கப்பட்ட தரவில் அதிக முறை தோன்றும் மதிப்பு அதன் ________ எனப்படும்", "A particular observation which occurs maximum number of times is called its", ["நிகழ்வெண்", "வீச்சு", "முகடு", "இடைநிலை"], ["Frequency", "Range", "Mode", "Median"], 2, "ஒரு தரவில் எந்த மதிப்பு அதிகமுறை வருகிறதோ அதுவே முகடு (Mode) எனப்படும்.", "In statistical nomenclature, the specific value that manifests with the highest frequency is universally called the Mode."],
+            [8, "எந்த எண்களின் தொகுப்பிற்கு சராசரி, இடைநிலை மற்றும் முகடு ஆகியவை சம மதிப்புகளைக் கொண்டிருக்கும்?", "For which set do the mean, median and mode all have the same values?", ["2,2,2,4", "1,3,3,3,5", "1,1,2,5,6", "1,1,2,1,5"], ["2,2,2,4", "1,3,3,3,5", "1,1,2,5,6", "1,1,2,1,5"], 1, "1,3,3,3,5 தொகுப்பிற்கு: கூடுதல் = 15, சராசரி = 15/5 = 3. ஏறுவரிசையில் நடுவில் உள்ள இடைநிலை = 3. அதிக முறை வந்த முகடு = 3.", "Analyzing set {1,3,3,3,5}: Mean is 15/5 = 3. Median (central value) is 3. Mode (most frequent) is 3. All perfectly coincide."],
+            [8, "n மதிப்புகளின் தரவுத் தொகுப்பிற்கு, அதன் சராசரியிலிருந்து விலக்கங்களின் இயற்கணிதக் கூடுதல்", "The algebraic sum of the deviations of a set of n values from their mean is", ["0", "n-1", "n", "n+1"], ["0", "n-1", "n", "n+1"], 0, "இது புள்ளியியலின் அடிப்படை விதி. எந்தவொரு தரவிற்கும் அதன் சராசரியிலிருந்து கணக்கிடப்படும் விலக்கங்களின் கூடுதல் எப்போதும் 0 ஆக மட்டுமே இருக்கும்.", "A fundamental theoretical property of the arithmetic mean strictly dictates that the sum of all deviations from it invariably equals exactly 0."],
+            [8, "a,b,c,d,e இன் சராசரி 28. a,c,e இன் சராசரி 24 எனில், b,d இன் சராசரி", "Mean of a,b,c,d,e is 28. Mean of a,c,e is 24, then mean of b,d is", ["24", "36", "26", "34"], ["24", "36", "26", "34"], 3, "5 எண்களின் கூடுதல் = 140. 3 எண்களின் கூடுதல் = 72. மீதமுள்ள b மற்றும் d இன் கூடுதல் = 140 - 72 = 68. இவற்றின் சராசரி = 68/2 = 34.", "Total sum = $ 5 \\times 28 = 140 $. Sum of a,c,e = $ 3 \\times 24 = 72 $. Remaining sum (b+d) = 140 - 72 = 68. Mean of b,d is 68/2 = 34."],
+            [8, "x, x+2, x+4, x+6, x+8 இன் சராசரி 11 எனில், முதல் மூன்று தரவுகளின் சராசரி", "Mean of x, x+2, x+4, x+6, x+8 is 11, then mean of first three is", ["9", "11", "13", "15"], ["9", "11", "13", "15"], 0, "$ 5x + 20 = 55 \\implies 5x = 35 \\implies x = 7 $. முதல் 3 தரவுகள் 7, 9, 11. இவற்றின் சராசரி = 9.", "Equation: $ 5x + 20 = 55 \\implies x=7 $. The first three sequence values are logically 7, 9, and 11. Their arithmetic mean is strictly 9."],
+            [8, "5, 9, x, 17 மற்றும் 21 ஆகியவற்றின் சராசரி 13 எனில், x இன் மதிப்பைக் காண்க", "The mean of 5, 9, x, 17 and 21 is 13, then find the value of x", ["9", "13", "17", "21"], ["9", "13", "17", "21"], 1, "கூடுதல் = $ 5+9+x+17+21 = 52+x $. சராசரி $ (52+x)/5 = 13 \\implies 52+x = 65 \\implies x = 13 $.", "The sum evaluates to $ 52 + x $. The mean formula yields $ (52+x)/5 = 13 $. Solving algebraically definitively confirms x = 13."],
+            [8, "முதல் 11 இயல் எண்களின் வர்க்கங்களின் சராசரி", "The mean of the square of first 11 natural numbers is", ["26", "46", "48", "52"], ["26", "46", "48", "52"], 1, "இயல் எண்களின் வர்க்கங்களின் சராசரி காணச் சூத்திரம் = $ \\frac{(n+1)(2n+1)}{6} $. n=11 எனில் $ \\frac{(12)(23)}{6} = 2 \\times 23 = 46 $.", "Employing the precise formula $ (n+1)(2n+1)/6 $ for squares. Substituting n=11 mathematically evaluates to $ (12 \\times 23)/6 = 46 $."],
+            [8, "எண்களின் தொகுப்பின் சராசரி $\\overline{X}$. ஒவ்வொரு எண்ணையும் z ஆல் பெருக்கினால், கிடைக்கும் புதிய சராசரி", "Mean is $\\overline{X}$. If each number is multiplied by z, the new mean is", ["$\\overline{X}+z$", "$\\overline{X}-z$", "$z\\overline{X}$", "$\\overline{X}$"], ["$\\overline{X}+z$", "$\\overline{X}-z$", "$z\\overline{X}$", "$\\overline{X}$"], 2, "புள்ளியியல் பண்பின்படி, தரவுகளில் செய்யப்படும் பெருக்கல் அல்லது வகுத்தல் நேரடியாக சராசரியையும் பாதிக்கும். புதிய சராசரி $ z \\overline{X} $.", "A rigid statistical property ensures that if every single data point is scaled by a factor z, the mean geometrically scales by the exact same factor z."],
+
+            // UNIT 9: Probability (10 Qs)
+            [9, "நிச்சயமற்ற தன்மையை அளவிடப் பயன்படும் 0 முதல் 1 வரையிலான ஒரு எண்", "A number between 0 and 1 that is used to measure uncertainty is called", ["சமவாய்ப்பு மாறி", "முயற்சி", "எளிய நிகழ்ச்சி", "நிகழ்தகவு"], ["Random variable", "Trial", "Simple event", "Probability"], 3, "நிகழ்தகவு (Probability) என்பது ஒரு நிகழ்வு நடப்பதற்கான சாத்தியத்தை 0 முதல் 1 வரை அளவிடும் கணித முறையாகும்.", "Probability is the defined mathematical metric, strictly bounded between 0 and 1, used universally to quantify absolute uncertainty."],
+            [9, "நிகழ்தகவு எவற்றுக்கு இடையே அமையும்", "Probability lies between", ["-1 மற்றும் +1", "0 மற்றும் 1", "0 மற்றும் 2", "0 மற்றும் 0.5"], ["-1 and +1", "0 and 1", "0 and 2", "0 and 0.5"], 1, "நிகழ்தகவு ஒருபோதும் மைனஸில் இருக்காது, 1-ஐ விட அதிகமாகவும் இருக்காது. அது எப்போதுமே 0-க்கும் 1-க்கும் இடையில்தான் (0 $\\le$ P $\\le$ 1) அமையும்.", "Axiomatically, the probability of any event cannot be negative nor exceed 100%. Therefore, it strictly lies between exactly 0 and exactly 1."],
+            [9, "சார்பு நிகழ்வெண் கோட்பாட்டின் அடிப்படையில் அமைந்த நிகழ்தகவு ________ எனப்படும்", "The probability based on the concept of relative frequency theory is called", ["அனுபவ நிகழ்தகவு", "மரபு நிகழ்தகவு", "(1) மற்றும் (2) இரண்டும்", "இரண்டும் அல்ல"], ["Empirical probability", "Classical probability", "Both (1) and (2)", "Neither (1) nor (2)"], 0, "செய்முறை அல்லது சோதனைகள் மூலம் கிடைக்கும் தரவுகளின் அடிப்படையில் கணக்கிடப்படும் நிகழ்தகவு அனுபவ நிகழ்தகவு (Empirical Probability) எனப்படும்.", "Probabilities formulated strictly from practically gathered relative frequency data from actual experimental trials define Empirical probability."],
+            [9, "ஒரு நிகழ்ச்சியின் நிகழ்தகவு எதாக இருக்க முடியாது", "The probability of an event cannot be", ["பூச்சியத்திற்குச் சமம்", "பூச்சியத்தை விட அதிகம்", "ஒன்றிற்குச் சமம்", "பூச்சியத்தை விடக் குறைவு"], ["Equal to zero", "Greater than zero", "Equal to one", "Less than zero"], 3, "நிகழ்தகவின் குறைந்தபட்ச மதிப்பே பூச்சியம் (0) தான். எனவே அது ஒருபோதும் பூச்சியத்தை விடக் குறைவாக (Negative) இருக்க முடியாது.", "As governed by Kolmogorov's rigorous axioms, probability metrics strictly cannot be negative under any mathematical circumstance."],
+            [9, "ஒரு சமவாய்ப்புச் சோதனையின் அனைத்து சாத்தியமான விளைவுகளின் நிகழ்தகவு எதற்குச் சமம்", "The probability of all possible outcomes of a random experiment is always equal to", ["ஒன்று", "பூச்சியம்", "முடிவிலி", "ஒன்றை விடக் குறைவு"], ["One", "Zero", "Infinity", "Less than one"], 0, "அனைத்து சாத்தியமான நிகழ்வுகளையும் கூட்டினால், மொத்த நிகழ்தகவு எப்போதுமே முழுமையாக 1 (100%) ஆக மட்டுமே இருக்கும்.", "The sum of the probabilities of all mutually exclusive and exhaustive sample space outcomes unconditionally and exactly equates to 1."],
+            [9, "S என்ற கூறுவெளியில் A என்பது ஏதேனும் ஒரு நிகழ்ச்சி, A' அதன் நிரப்பு நிகழ்ச்சி எனில், $ P(A') $ எதற்குச் சமம்", "If A is any event in S and its complement is A', then $ P(A') $ is equal to", ["1", "0", "1-A", "1-P(A)"], ["1", "0", "1-A", "1-P(A)"], 3, "ஒரு நிகழ்ச்சி நடப்பதற்கான நிகழ்தகவு P(A) எனில், அது நடக்காமல் இருப்பதற்கான நிகழ்தகவு $ P(A') = 1 - P(A) $ ஆகும்.", "The rigid complement rule of probability precisely dictates that the probability of an event NOT occurring is precisely 1 minus the probability it does occur."],
+            [9, "பின்வருவனவற்றில் எது ஒரு நிகழ்ச்சியின் நிகழ்தகவாக இருக்க முடியாது?", "Which of the following cannot be taken as probability of an event?", ["0", "0.5", "1", "-1"], ["0", "0.5", "1", "-1"], 3, "நிகழ்தகவு எப்போதுமே நேர்மறையாகவோ அல்லது பூச்சியமாகவோ தான் இருக்கும் (0 முதல் 1 வரை). மைனஸ் மதிப்பு (-1) நிகழ்தகவாக இருக்க முடியாது.", "Because probability represents a measurable likelihood, negative values like -1 contradict the fundamental bounded [0, 1] interval axiom."],
+            [9, "ஒரு சோதனையின் குறிப்பிட்ட முடிவு ________ எனப்படும்", "A particular result of an experiment is called", ["முயற்சி", "எளிய நிகழ்ச்சி", "கூட்டு நிகழ்ச்சி", "விளைவு"], ["Trial", "Simple event", "Compound event", "Outcome"], 3, "ஒரு நாணயத்தைச் சுண்டும்போது 'தலை' அல்லது 'பூ' கிடைப்பது ஒரு குறிப்பிட்ட 'விளைவு' (Outcome) என அழைக்கப்படுகிறது.", "In experimental terminology, every distinct, individual particular observation retrieved post-trial is technically classified as an Outcome."],
+            [9, "ஒரு சோதனையின் ஒன்று அல்லது அதற்கு மேற்பட்ட விளைவுகளின் தொகுப்பு ________ எனப்படும்", "A collection of one or more outcomes of an experiment is called", ["நிகழ்ச்சி", "விளைவு", "கூறுப்புள்ளி", "எதுவுமில்லை"], ["Event", "Outcome", "Sample point", "None of the above"], 0, "விளைவுகளின் தொகுப்பு 'நிகழ்ச்சி' (Event) என்று அழைக்கப்படுகிறது. எ.கா: பகடையில் இரட்டைப்படை எண் கிடைப்பது ஒரு நிகழ்ச்சி.", "Aggregating one or more specific outcomes from the defined sample space precisely constructs what statisticians term an Event."],
+            [9, "ஒரு பகடையின் ஆறு முகங்களும் சமவாய்ப்புள்ளவை என அழைக்கப்பட வேண்டும் எனில், பகடை எவ்வாறு இருக்க வேண்டும்", "The six faces of the dice are called equally likely if the dice is", ["சிறியது", "சீரானது", "ஆறு முகங்கள்", "உருண்டையானது"], ["Small", "Fair", "Six-faced", "Round"], 1, "ஒரு பகடை எவ்வித பக்கச்சார்பும் இன்றி 'சீரானதாக' (Fair) இருந்தால் மட்டுமே ஆறு எண்களும் கிடைப்பதற்கான வாய்ப்பு சமமாக (Equally likely) இருக்கும்.", "The strict condition for all outcomes to possess an identical 1/6 uniform probability is that the physical die itself must be mathematically 'Fair'."]
+        ];
+
+        let quizQuestions = [];
+        let currentIdx = 0; let score = 0; let timerInterval; let timeLeft = 30;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function wrapMathTokens(str) { return `<span class="math-wrap">${str}</span>`; }
+
+        let audioCtx;
+        function initAudio() {
+            try {
+                if (!audioCtx) {
+                    const AudioCtxt = window.AudioContext || window.webkitAudioContext;
+                    if(AudioCtxt) audioCtx = new AudioCtxt();
+                }
+                if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+            } catch (e) { console.warn(e); }
+        }
+
+        function playTone(freq, type, dur, timeOffset = 0) {
+            try {
+                initAudio();
+                if(!audioCtx) return;
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = type;
+                oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime + timeOffset);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + timeOffset + dur);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start(audioCtx.currentTime + timeOffset);
+                oscillator.stop(audioCtx.currentTime + timeOffset + dur);
+            } catch(e) {}
+        }
+        
+        function playSound(type) {
+            if (type === 'correct') {
+                playTone(1046.50, 'sine', 0.15, 0);       
+                playTone(1318.51, 'sine', 0.3, 0.1);     
+            } else {
+                playTone(150, 'sawtooth', 0.2, 0);
+                playTone(100, 'sawtooth', 0.3, 0.1);
+            }
+        }
+
+        function fireConfettiSafe() {
+            try {
+                if (typeof confetti === 'function') {
+                    var duration = 1500; var end = Date.now() + duration;
+                    (function frame() {
+                        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                        if (Date.now() < end) requestAnimationFrame(frame);
+                    }());
+                }
+            } catch (e) { console.warn(e); }
+        }
+
+        function renderMath() {
+            try {
+                if (window.MathJax) {
+                    if (typeof window.MathJax.typesetPromise === 'function') {
+                        window.MathJax.typesetPromise().catch((e) => console.log(e));
+                    } else if (typeof window.MathJax.typeset === 'function') {
+                        window.MathJax.typeset();
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function startQuiz() {
+            initAudio(); 
+            currentIdx = 0; score = 0;
+            
+            const units = Array.from(document.querySelectorAll('.unit-cb:checked')).map(cb => parseInt(cb.value));
+            if (units.length === 0) {
+                alert(uiDict[currentLang].selUnitErr); return;
+            }
+
+            quizQuestions = dbRaw.filter(row => units.includes(row[0])).map(row => ({
+                unitTa: uiDict.ta['u' + row[0]], unitEn: uiDict.en['u' + row[0]],
+                q: { ta: row[1], en: row[2] }, opts: { ta: row[3], en: row[4] },
+                ansIdx: row[5], exp: { ta: row[6], en: row[7] }
+            }));
+
+            const order = document.getElementById('order-select').value;
+            if (order === "shuffle") shuffleArray(quizQuestions);
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+
+            updateUITexts(); 
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 30; isAnswered = false;
+            updateTimerUI();
+            
+            document.getElementById('next-btn-wrapper').style.display = 'none';
+            document.getElementById('feedback-msg').style.display = 'none';
+            document.getElementById('explanation-box').style.display = 'none';
+            
+            const q = quizQuestions[currentIdx];
+            document.getElementById('unit-badge').innerText = currentLang === 'ta' ? q.unitTa : q.unitEn;
+            document.getElementById('question-text').innerHTML = (currentIdx + 1) + ". " + q.q[currentLang];
+            
+            const answerArea = document.getElementById('answer-area');
+            answerArea.innerHTML = "";
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = "options-grid";
+            
+            q.opts.ta.forEach((optStr, index) => {
+                const letter = String.fromCharCode(65 + index); 
+                const btn = document.createElement('button');
+                btn.className = "option-btn";
+                btn.dataset.idx = index;
+                btn.innerHTML = `<span class="opt-alpha">${letter}</span> <span class="opt-text">${wrapMathTokens(q.opts[currentLang][index])}</span>`;
+                btn.onclick = () => checkAnswer(index, btn); 
+                optsDiv.appendChild(btn);
+            });
+            answerArea.appendChild(optsDiv);
+
+            renderMath();
+
+            timerInterval = setInterval(() => {
+                timeLeft--; updateTimerUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const bar = document.getElementById('timer-bar');
+            const txt = document.getElementById('timer-text');
+            bar.style.width = ((timeLeft / 30) * 100) + "%";
+            txt.innerText = `⏳ ${timeLeft}s`;
+            if (timeLeft > 15) bar.style.background = "#2ecc71";
+            else if (timeLeft > 5) bar.style.background = "#f1c40f";
+            else bar.style.background = "#e74c3c";
+        }
+
+        function showGameOverlay(isCorrect) {
+            try {
+                const overlay = document.getElementById('game-overlay');
+                const box = document.getElementById('popup-box');
+                
+                box.className = 'popup-box'; 
+                if (isCorrect) {
+                    document.getElementById('popup-icon').innerHTML = "✅";
+                    document.getElementById('popup-text').innerHTML = uiDict[currentLang].correctPopup;
+                    document.getElementById('popup-text').className = "popup-text theme-correct";
+                    box.classList.add('correct-pop');
+                } else {
+                    document.getElementById('popup-icon').innerHTML = "❌";
+                    document.getElementById('popup-text').innerHTML = uiDict[currentLang].wrongPopup;
+                    document.getElementById('popup-text').className = "popup-text theme-wrong";
+                    box.classList.add('wrong-shake'); 
+                }
+                
+                overlay.classList.add('show');
+                setTimeout(() => { overlay.classList.remove('show'); }, 1000);
+            } catch(e) {}
+        }
+
+        function handleTimeOut() {
+            playSound('wrong');
+            isAnswered = true;
+            showGameOverlay(false);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.innerHTML = uiDict[currentLang].timeUp + " <b>" + wrapMathTokens(quizQuestions[currentIdx].opts[currentLang][quizQuestions[currentIdx].ansIdx]) + "</b>";
+            msg.style.color = "#e74c3c";
+            msg.style.display = "block";
+            msg.dataset.status = 'timeup';
+            
+            document.querySelectorAll('.option-btn').forEach((b) => {
+                if(parseInt(b.dataset.idx) === quizQuestions[currentIdx].ansIdx) b.classList.add('correct');
+            });
+            showExplanation();
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            if(isAnswered) return;
+            clearInterval(timerInterval);
+            isAnswered = true;
+            
+            const q = quizQuestions[currentIdx];
+            const isCorrect = (selectedIdx === q.ansIdx);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.style.display = "block";
+
+            if (isCorrect) {
+                score++; 
+                playSound('correct'); 
+                fireConfettiSafe(); 
+                showGameOverlay(true);
+                msg.innerText = uiDict[currentLang].correct;
+                msg.style.color = "#27ae60";
+                msg.dataset.status = 'correct';
+                btnElement.classList.add('correct');
+            } else {
+                playSound('wrong'); 
+                showGameOverlay(false);
+                msg.innerHTML = uiDict[currentLang].wrong + " <b>" + wrapMathTokens(q.opts[currentLang][q.ansIdx]) + "</b>";
+                msg.style.color = "#e74c3c";
+                msg.dataset.status = 'wrong';
+                btnElement.classList.add('wrong');
+                
+                document.querySelectorAll('.option-btn').forEach((b) => {
+                    if(parseInt(b.dataset.idx) === q.ansIdx) b.classList.add('correct');
+                });
+            }
+            showExplanation();
+        }
+
+        function showExplanation() {
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+            const q = quizQuestions[currentIdx];
+            document.getElementById('exp-text').innerHTML = q.exp[currentLang];
+            document.getElementById('explanation-box').style.display = 'block';
+            
+            const wrapper = document.getElementById('next-btn-wrapper');
+            wrapper.style.display = 'flex';
+            if (currentIdx === quizQuestions.length - 1) {
+                document.getElementById('ui-next-btn').innerText = uiDict[currentLang].showResBtn;
+            } else {
+                document.getElementById('ui-next-btn').innerText = uiDict[currentLang].nextBtn;
+            }
+            renderMath();
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizQuestions.length) loadQuestion();
+            else showResult();
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('final-score').innerText = score + " / " + quizQuestions.length;
+            if(score > (quizQuestions.length / 2)) {
+                fireConfettiSafe(); playSound('correct');
+            }
+        }
+    </script>
+</body>
+</html>

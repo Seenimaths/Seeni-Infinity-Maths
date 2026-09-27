@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12th Maths One Mark Master Quiz - 250 Questions</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] } };
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #0284c7; 
+            --primary-blue-dark: #0369a1;
+            --accent-orange: #f97316; 
+            --accent-orange-dark: #ea580c;
+            --card-bg: #ffffff;
+            --q-card-bg: #fdf8f5; 
+            --border-color: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --btn-green: #059669;
+            --btn-red: #dc2626;
+        }
+
+        body {
+            font-family: 'Cambria', 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f9ff; 
+            color: var(--text-main);
+            margin: 0; padding: 20px;
+            scroll-behavior: smooth;
+            font-size: 1.05rem;
+            position: relative; z-index: 1;
+            line-height: 1.6;
+        }
+
+        .math-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .math-bg i {
+            position: absolute; color: rgba(2, 132, 199, 0.07);
+            font-size: 5rem; animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .container { max-width: 980px; margin: 0 auto; }
+
+        .header-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            padding: 25px; border-radius: 15px; text-align: center; 
+            box-shadow: 0 8px 15px rgba(2, 132, 199, 0.1); margin-bottom: 25px; 
+            border-bottom: 6px solid var(--primary-blue); border-top: 6px solid var(--accent-orange);
+        }
+        .header-card h1 { color: var(--primary-blue-dark); font-size: 2.2em; margin: 0 0 10px 0; }
+        .header-card p { margin: 5px 0; font-size: 1.1em; }
+        .author-text { color: var(--accent-orange); font-weight: bold; background: #fff3e0; padding: 4px 12px; border-radius: 20px;}
+
+        .ramanujan-banner {
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(to right, rgba(3, 105, 161, 0.85), rgba(2, 132, 199, 0.75)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/c/c8/Srinivasa_Ramanujan_-_OPC_-_1.jpg');
+            background-size: cover; background-position: center 25%;
+            color: white; padding: 50px 30px; border-radius: 12px; margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center;
+        }
+        .quote-text {
+            font-size: 1.35em; font-style: italic; line-height: 1.6;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8); max-width: 800px; margin: 0 auto;
+        }
+        .quote-text span { display: block; margin-top: 15px; font-weight: bold; color: #fed7aa; font-style: normal; font-size: 0.9em; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);}
+
+        .card {
+            background-color: var(--card-bg); padding: 30px;
+            border-radius: 15px; border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 25px;
+        }
+        .card-title {
+            color: var(--primary-blue); text-align: center;
+            font-weight: bold; font-size: 1.6em; margin-bottom: 25px;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: bold; color: var(--primary-blue-dark);}
+        
+        input[type="text"], select {
+            width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0;
+            border-radius: 8px; font-size: 1.05em; font-family: 'Cambria', serif; background-color: #f8fafc;
+        }
+
+        .btn {
+            padding: 12px 20px; border: none; border-radius: 8px; font-size: 1.05em; 
+            cursor: pointer; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Cambria', serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-full { width: 100%; background: linear-gradient(to right, var(--accent-orange), var(--accent-orange-dark)); margin-top: 15px; justify-content: center;}
+        .btn-logout { background-color: var(--btn-red); padding: 8px 15px; font-size: 0.95em; }
+        .btn-report { background-color: var(--btn-green); }
+        .btn-restart { background-color: var(--primary-blue); }
+        .btn-print { background-color: #0d9488; }
+
+        .user-info-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+            padding: 15px 20px; border-radius: 10px; border-left: 5px solid var(--primary-blue);
+            margin-bottom: 25px; border: 1px solid var(--border-color);
+        }
+        .user-details { display: flex; flex-wrap: wrap; gap: 20px; }
+        .user-details span { font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .user-details i { color: var(--accent-orange); }
+
+        .controls-row { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .controls-row label { font-weight: bold; color: var(--accent-orange-dark); white-space: nowrap;}
+        .controls-row select { width: 100%; max-width: 450px; }
+        
+        .score-bar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            font-size: 1.3em; font-weight: bold; flex-wrap: wrap; gap: 15px;
+            background-color: var(--primary-blue); color: white;
+        }
+
+        .question-box {
+            border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 25px; 
+            background-color: var(--q-card-bg); transition: border-color 0.3s;
+        }
+        .question-box:hover { border-color: var(--primary-blue); }
+        .q-number { 
+            display: inline-block; background-color: var(--primary-blue); color: white; 
+            padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 15px;
+        }
+        .q-text { font-size: 1.2em; margin-bottom: 20px; color: #0f172a;}
+        
+        /* Table Styles for Math Questions */
+        .math-table {
+            border-collapse: collapse;
+            margin: 15px auto;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 1.1em;
+            width: fit-content;
+        }
+        .math-table th, .math-table td {
+            border: 2px solid var(--primary-blue);
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .math-table th {
+            background-color: #e0f2fe;
+            color: var(--primary-blue-dark);
+        }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-label {
+            display: flex; align-items: center; padding: 15px;
+            border: 2px solid var(--border-color); border-radius: 10px;
+            cursor: pointer; background-color: white; transition: all 0.2s; font-size: 1.1em;
+        }
+        .option-label:hover { background-color: #f0f9ff; border-color: #bae6fd; transform: scale(1.01); }
+        .option-label input { display: none; }
+        .custom-radio {
+            width: 20px; height: 20px; border: 2px solid var(--primary-blue);
+            border-radius: 50%; margin-right: 15px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .opt-letter { 
+            background-color: #e0f2fe; color: var(--primary-blue-dark); 
+            width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+            border-radius: 50%; font-weight: bold; margin-right: 12px;
+        }
+        
+        .status-icon { margin-left: auto; font-size: 1.3em; display: none; }
+        .correct-answer { background-color: #ecfdf5 !important; border-color: #10b981 !important; color: #065f46;}
+        .correct-answer .custom-radio { background-color: #10b981; border-color: #10b981; box-shadow: inset 0 0 0 4px white;}
+        .correct-answer .opt-letter { background-color: #10b981; color: white;}
+        .correct-answer .status-icon { display: block; color: #10b981; }
+        
+        .wrong-answer { background-color: #fef2f2 !important; border-color: #ef4444 !important; color: #991b1b;}
+        .wrong-answer .custom-radio { background-color: #ef4444; border-color: #ef4444; box-shadow: inset 0 0 0 4px white;}
+        .wrong-answer .opt-letter { background-color: #ef4444; color: white;}
+        .wrong-answer .status-icon { display: block; color: #ef4444; }
+
+        .report-header { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 20px; background: white; line-height: 1.8;}
+        .report-progress { display: flex; justify-content: center; margin: 30px 0; }
+        .progress-circle {
+            width: 140px; height: 140px; border-radius: 50%; border: 6px solid #b91c1c; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-weight: bold; color: var(--primary-blue-dark); text-align: center;
+        }
+        .progress-circle .perc { font-size: 2.2em; color: #b91c1c; line-height: 1;}
+        .progress-circle .text { font-size: 0.9em; margin-top: 5px;}
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 30px; text-align: center; }
+        .stat-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .stat-box .num { font-size: 2em; font-weight: bold; margin-bottom: 5px; }
+        .stat-box .lbl { color: var(--text-muted); font-size: 1em; font-weight: bold; }
+        
+        .review-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 15px; background: #fafafa; }
+        .review-q { font-size: 1.1em; font-weight: 500; margin-bottom: 15px; color: #0f172a;}
+        .review-ans { margin-bottom: 8px; font-size: 1.05em;}
+        .text-red { color: #dc2626; font-weight: bold;}
+        .text-green { color: #059669; font-weight: bold;}
+        .text-blue { color: var(--primary-blue-dark); font-weight: bold;}
+
+        .hidden { display: none !important; }
+        
+        @media print {
+            body { background: white; padding: 0; font-size: 12pt;}
+            .math-bg, .user-info-bar, .controls-card, .score-bar, .btn, #scrollTopBtn, #quiz-section, .ramanujan-banner { display: none !important; }
+            .card { border: none; box-shadow: none; margin: 0; padding: 0; }
+            #report-section { display: block !important; }
+            .review-box { break-inside: avoid; border: none; border-bottom: 1px solid #ccc; background: white; padding: 10px 0; }
+            .progress-circle { border-width: 4px; width: 100px; height: 100px;}
+            .progress-circle .perc { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="math-bg">
+        <i class="fa-solid fa-square-root-variable" style="top: 10%; left: 10%;"></i>
+        <i class="fa-solid fa-infinity" style="top: 25%; left: 85%; font-size: 6rem;"></i>
+        <i class="fa-solid fa-divide" style="top: 75%; left: 15%; font-size: 4rem;"></i>
+        <i class="fa-solid fa-calculator" style="top: 85%; left: 80%;"></i>
+        <i class="fa-solid fa-chart-pie" style="top: 45%; left: 90%; font-size: 5rem;"></i>
+        <i class="fa-solid fa-superscript" style="top: 50%; left: 5%;"></i>
+        <i class="fa-solid fa-plus-minus" style="top: 15%; left: 50%;"></i>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-card">
+            <h1><i class="fa-solid fa-graduation-cap"></i> 12th Standard Mathematics</h1>
+            <p>TN 12th Standard Mathematics One-Mark Practice (English Medium)</p>
+            <p>Prepared by <span class="author-text"><i class="fa-solid fa-chalkboard-user"></i> Y. SEENIVASAN. M.Sc, B.Ed MATHS TEACHER-8489880553</span></p>
+        </div>
+
+        <!-- Registration -->
+        <div id="registration-section">
+            <div class="ramanujan-banner">
+                <div class="quote-text">
+                    <i class="fa-solid fa-quote-left" style="color: #ea580c;"></i> An equation for me has no meaning, unless it expresses a thought of God. <i class="fa-solid fa-quote-right" style="color: #ea580c;"></i>
+                    <span>- Srinivasa Ramanujan (Father of Indian Mathematics)</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-id-card-clip"></i> Student Registration Form</div>
+                <div class="form-group">
+                    <label>Student Name *</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="studentClass"><option value="12th Standard">12th Standard</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <select id="studentGroup"><option value="Mathematics">Mathematics</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>School Name & Place *</label>
+                    <input type="text" id="schoolName" required>
+                </div>
+                <button class="btn btn-full" onclick="startQuiz()"><i class="fa-solid fa-rocket"></i> Start Quiz &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-section" class="hidden">
+            <div class="user-info-bar">
+                <div class="user-details">
+                    <span><i class="fa-solid fa-user-graduate"></i> <b id="display-name"></b></span>
+                    <span><i class="fa-solid fa-school"></i> <span id="display-school"></span></span>
+                    <span><i class="fa-solid fa-book-open"></i> <span id="display-class"></span></span>
+                </div>
+                <button class="btn btn-logout" onclick="location.reload()"><i class="fa-solid fa-power-off"></i> Logout</button>
+            </div>
+
+            <div class="card controls-card">
+                <div class="controls-row">
+                    <label>Practice Test:</label>
+                    <select id="chapterSelect" onchange="renderQuestions()">
+                        <option value="master">🏆 Master Test (All 250 Questions)</option>
+                        <option value="vol1">📚 Volume 1 (Chapters 1 to 6 - 130 Q)</option>
+                        <option value="vol2">📚 Volume 2 (Chapters 7 to 12 - 120 Q)</option>
+                        <option value="1">Chapter 1: Applications of Matrices (25 Q)</option>
+                        <option value="2">Chapter 2: Complex Numbers (25 Q)</option>
+                        <option value="3">Chapter 3: Theory of Equations (10 Q)</option>
+                        <option value="4">Chapter 4: Inverse Trigonometric Functions (20 Q)</option>
+                        <option value="5">Chapter 5: Two Dimensional Analytical Geometry-II (25 Q)</option>
+                        <option value="6">Chapter 6: Applications of Vector Algebra (25 Q)</option>
+                        <option value="7">Chapter 7: Applications of Differential Calculus (20 Q)</option>
+                        <option value="8">Chapter 8: Differentials and Partial Derivatives (15 Q)</option>
+                        <option value="9">Chapter 9: Applications of Integration (20 Q)</option>
+                        <option value="10">Chapter 10: Ordinary Differential Equations (25 Q)</option>
+                        <option value="11">Chapter 11: Probability Distributions (20 Q)</option>
+                        <option value="12">Chapter 12: Discrete Mathematics (20 Q)</option>
+                    </select>
+                </div>
+                <div class="controls-row">
+                    <label>Question Order:</label>
+                    <select id="orderSelect" onchange="renderQuestions()">
+                        <option value="sequential">📖 Book Back Order</option>
+                        <option value="shuffled">🎲 Shuffled (Randomized)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card score-bar">
+                <div><i class="fa-solid fa-trophy"></i> Score: <span id="score-display">0 / 0</span></div>
+                <div class="score-actions">
+                    <button class="btn btn-report" onclick="generateReport()"><i class="fa-solid fa-chart-pie"></i> Report</button>
+                    <button class="btn btn-restart" onclick="renderQuestions()"><i class="fa-solid fa-rotate-right"></i> Restart Test</button>
+                </div>
+            </div>
+
+            <div id="questions-container"></div>
+        </div>
+
+        <!-- Detailed Report Section -->
+        <div id="report-section" class="card hidden">
+            <h2 style="text-align:center; color: var(--primary-blue);"><i class="fa-solid fa-file-contract"></i> Student Performance Report</h2>
+            <div class="report-header">
+                <div><b>Attempt ID:</b> <span id="rep-attempt"></span></div>
+                <div><b>Class & Subject:</b> <span id="rep-class"></span></div>
+                <div><b>School:</b> <span id="rep-school"></span> | <b>Student:</b> <span id="rep-name"></span></div>
+            </div>
+
+            <div class="report-progress">
+                <div class="progress-circle" id="rep-circle">
+                    <span class="perc" id="rep-perc">0%</span>
+                    <span class="text" id="rep-remark">Needs Practice</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="num text-green" id="rep-correct">0</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num text-red" id="rep-wrong">0</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num text-blue" id="rep-total">0</div>
+                    <div class="lbl">Total</div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary-blue-dark); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;"><i class="fa-solid fa-pen-to-square"></i> Answer Key & Review</h3>
+            <div id="review-container"></div>
+
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="btn btn-print btn-full" onclick="window.print()" style="margin-top:0;"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
+                <button class="btn btn-restart btn-full" onclick="document.getElementById('report-section').classList.add('hidden'); document.getElementById('quiz-section').classList.remove('hidden'); renderQuestions();" style="margin-top:0;"><i class="fa-solid fa-rotate-left"></i> Retake Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio Initialization
+let audioCtx;
+function initAudio() {
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playSound(isCorrect) {
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    const now = audioCtx.currentTime;
+    
+    if (isCorrect) {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.setValueAtTime(1200, now + 0.1);
+        gainNode.gain.setValueAtTime(0.5, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+        osc.start(now); osc.stop(now + 0.25);
+    } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        gainNode.gain.setValueAtTime(0.3, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now); osc.stop(now + 0.4);
+    }
+}
+
+// -------------------------------------------------------------
+// FULL 250 QUESTIONS COMPRESSED DATABASE WITH TABLES INJECTED
+// -------------------------------------------------------------
+const rawDB = {
+    "1": [
+        ["If $|adj(adj A)|=|A|^9$, then the order of the square matrix A is", "3|4|2|5", 1],
+        ["If A is a $3\\times3$ non-singular matrix such that $AA^T=A^TA$ and $B=A^{-1}A^T$, then $BB^T=$", "A|B|$I_3$|$B^T$", 2],
+        ["If $A=\\begin{pmatrix}3&5\\\\1&2\\end{pmatrix}$, $B=adj A$ and $C=3A$, then $\\frac{|adj B|}{|C|}=$", "$\\frac{1}{3}$|$\\frac{1}{9}$|$\\frac{1}{4}$|1", 1],
+        ["If $A\\begin{pmatrix}1&-2\\\\1&4\\end{pmatrix}=\\begin{pmatrix}6&0\\\\0&6\\end{pmatrix}$, then $A=$", "$\\begin{pmatrix}1&-2\\\\1&4\\end{pmatrix}$|$\\begin{pmatrix}1&2\\\\-1&4\\end{pmatrix}$|$\\begin{pmatrix}4&2\\\\-1&1\\end{pmatrix}$|$\\begin{pmatrix}4&-1\\\\2&1\\end{pmatrix}$", 2],
+        ["If $A=\\begin{pmatrix}7&3\\\\4&2\\end{pmatrix}$, then $9I_2-A=$", "$A^{-1}$|$\\frac{A^{-1}}{2}$|$3A^{-1}$|$2A^{-1}$", 3],
+        ["If $A=\\begin{pmatrix}2&0\\\\1&5\\end{pmatrix}$ and $B=\\begin{pmatrix}1&4\\\\2&0\\end{pmatrix}$ then $|adj(AB)|=$", "$-40$|$-80$|$-60$|$-20$", 1],
+        ["If $P=\\begin{pmatrix}1&x&0\\\\1&3&0\\\\2&4&-2\\end{pmatrix}$ is the adjoint of $3\\times3$ matrix A and $|A|=4$, then x is", "15|12|14|11", 3],
+        ["If $A=\\begin{pmatrix}3&1&-1\\\\2&-2&0\\\\1&2&-1\\end{pmatrix}$ and $A^{-1}=\\begin{pmatrix}a_{11}&a_{12}&a_{13}\\\\a_{21}&a_{22}&a_{23}\\\\a_{31}&a_{32}&a_{33}\\end{pmatrix}$ then the value of $a_{23}$ is", "0|$-2$|$-3$|$-1$", 3],
+        // FIXED LINE BELOW (\vert instead of |)
+        ["If A, B and C are invertible matrices of some order, then which one of the following is not true?", "$adj A=\\vert A\\vert A^{-1}$|$adj(AB)=(adj A)(adj B)$|$det A^{-1}=(det A)^{-1}$|$(ABC)^{-1}=C^{-1}B^{-1}A^{-1}$", 1],
+        ["If $(AB)^{-1}=\\begin{pmatrix}12&-17\\\\-19&27\\end{pmatrix}$ and $A^{-1}=\\begin{pmatrix}1&-1\\\\-2&3\\end{pmatrix}$ then $B^{-1}=$", "$\\begin{pmatrix}2&-5\\\\-3&8\\end{pmatrix}$|$\\begin{pmatrix}8&5\\\\3&2\\end{pmatrix}$|$\\begin{pmatrix}3&1\\\\2&1\\end{pmatrix}$|$\\begin{pmatrix}8&-5\\\\-3&2\\end{pmatrix}$", 0],
+        ["If $A^TA^{-1}$ is symmetric, then $A^2=$", "$A^{-1}$|$(A^T)^2$|$A^T$|$(A^{-1})^2$", 1],
+        ["If A is a non-singular matrix such that $A^{-1}=\\begin{pmatrix}5&3\\\\-2&-1\\end{pmatrix}$ then $(A^T)^{-1}=$", "$\\begin{pmatrix}-5&3\\\\2&1\\end{pmatrix}$|$\\begin{pmatrix}5&3\\\\-2&-1\\end{pmatrix}$|$\\begin{pmatrix}-1&-3\\\\2&5\\end{pmatrix}$|$\\begin{pmatrix}5&-2\\\\3&-1\\end{pmatrix}$", 3],
+        ["If $A=\\begin{pmatrix}3/5&4/5\\\\x&3/5\\end{pmatrix}$ and $A^T=A^{-1}$, then the value of x is", "$\\frac{-4}{5}$|$\\frac{-3}{5}$|$\\frac{3}{5}$|$\\frac{4}{5}$", 0],
+        ["If $A=\\begin{pmatrix}1&\\tan\\frac{\\theta}{2}\\\\-\\tan\\frac{\\theta}{2}&1\\end{pmatrix}$ and $AB=I_2$, then $B=$", "$(\\cos^2\\frac{\\theta}{2})A$|$(\\cos^2\\frac{\\theta}{2})A^T$|$(\\cos^2\\theta)I$|$(\\sin^2\\frac{\\theta}{2})A$", 1],
+        ["If $A=\\begin{pmatrix}\\cos\\theta&\\sin\\theta\\\\-\\sin\\theta&\\cos\\theta\\end{pmatrix}$ and $A(adj A)=\\begin{pmatrix}k&0\\\\0&k\\end{pmatrix}$, then $k=$", "0|$\\sin\\theta$|$\\cos\\theta$|1", 3],
+        ["If $A=\\begin{pmatrix}2&3\\\\5&-2\\end{pmatrix}$ be such that $\\lambda A^{-1}=A$, then $\\lambda$ is", "17|14|19|21", 2],
+        ["If $adj A=\\begin{pmatrix}2&3\\\\4&-1\\end{pmatrix}$ and $adj B=\\begin{pmatrix}1&-2\\\\-3&1\\end{pmatrix}$ then $adj(AB)$ is", "$\\begin{pmatrix}-7&-1\\\\7&-9\\end{pmatrix}$|$\\begin{pmatrix}-6&5\\\\-2&-10\\end{pmatrix}$|$\\begin{pmatrix}-7&7\\\\-1&-9\\end{pmatrix}$|$\\begin{pmatrix}-6&-2\\\\5&-10\\end{pmatrix}$", 1],
+        ["The rank of the matrix $\\begin{pmatrix}1&2&3&4\\\\2&4&6&8\\\\-1&-2&-3&-4\\end{pmatrix}$ is", "1|2|4|3", 0],
+        ["If $x^ay^b=e^m, x^cy^d=e^n, \\Delta_1=\\begin{vmatrix}m&b\\\\n&d\\end{vmatrix}, \\Delta_2=\\begin{vmatrix}a&m\\\\c&n\\end{vmatrix}, \\Delta_3=\\begin{vmatrix}a&b\\\\c&d\\end{vmatrix}$, then the values of x and y are respectively,", "$e^{(\\Delta_1/\\Delta_3)}, e^{(\\Delta_2/\\Delta_3)}$|$\\log(\\Delta_1/\\Delta_3), \\log(\\Delta_2/\\Delta_3)$|$\\log(\\Delta_2/\\Delta_1), \\log(\\Delta_3/\\Delta_1)$|$e^{(\\Delta_2/\\Delta_1)}, e^{(\\Delta_3/\\Delta_1)}$", 0],
+        ["Which of the following is/are correct?<br>(i) Adjoint of a symmetric matrix is also a symmetric matrix.<br>(ii) Adjoint of a diagonal matrix is also a diagonal matrix.<br>(iii) If A is a square matrix of order n and $\\lambda$ is a scalar, then $adj(\\lambda A)=\\lambda^n adj(A)$.<br>(iv) $A(adj A)=(adj A)A=|A|I$", "Only (i)|(ii) and (iii)|(iii) and (iv)|(i), (ii) and (iv)", 3],
+        ["If $\\rho(A)=\\rho([A|B])$, then the system $AX=B$ of linear equations is", "consistent and has a unique solution|consistent|consistent and has infinitely many solutions|inconsistent", 1],
+        ["If $0\\le\\theta\\le\\pi$ and the system of equations $x+(\\sin\\theta)y-(\\cos\\theta)z=0, (\\cos\\theta)x-y+z=0, (\\sin\\theta)x+y-z=0$ has a non-trivial solution then $\\theta$ is", "$\\frac{2\\pi}{3}$|$\\frac{3\\pi}{4}$|$\\frac{5\\pi}{6}$|$\\frac{\\pi}{4}$", 3],
+        ["The augmented matrix of a system of linear equations is $\\begin{pmatrix}1&2&7&3\\\\0&1&4&6\\\\0&0&\\lambda-7&\\mu+5\\end{pmatrix}$. The system has infinitely many solutions if", "$\\lambda=7, \\mu\\ne-5$|$\\lambda=-7, \\mu=5$|$\\lambda\\ne7, \\mu\\ne-5$|$\\lambda=7, \\mu=-5$", 3],
+        ["Let $A=\\begin{pmatrix}2&-1&1\\\\-1&2&-1\\\\1&-1&2\\end{pmatrix}$ and $4B=\\begin{pmatrix}3&1&-1\\\\1&3&x\\\\-1&1&3\\end{pmatrix}$. If B is the inverse of A, then the value of x is", "2|4|3|1", 0],
+        ["If $A=\\begin{pmatrix}3&-3&4\\\\2&-3&4\\\\0&-1&1\\end{pmatrix}$, then $adj(adj A)$ is", "$\\begin{pmatrix}3&-3&4\\\\2&-3&4\\\\0&-1&1\\end{pmatrix}$|$\\begin{pmatrix}6&-6&8\\\\4&-6&8\\\\0&-2&2\\end{pmatrix}$|$\\begin{pmatrix}-3&3&-4\\\\-2&3&-4\\\\0&1&-1\\end{pmatrix}$|$\\begin{pmatrix}3&-3&4\\\\0&-1&1\\\\2&-3&4\\end{pmatrix}$", 0]
+    ],
+    "2": [
+        ["$i^n+i^{n+1}+i^{n+2}+i^{n+3}$ is", "0|1|$-1$|i", 0],
+        ["The value of $\\sum_{n=1}^{13}(i^n+i^{n-1})$ is", "$1+i$|i|1|0", 0],
+        // FIXED LINE BELOW (\vert instead of |)
+        ["The area of the triangle formed by the complex numbers $z, iz$, and $z+iz$ in the Argand’s diagram is", "$\\frac{1}{2}\\vert z\\vert^2$|$\\vert z\\vert^2$|$\\frac{3}{2}\\vert z\\vert^2$|$2\\vert z\\vert^2$", 0],
+        ["The conjugate of a complex number is $\\frac{1}{i-2}$. Then, the complex number is", "$\\frac{1}{i+2}$|$\\frac{-1}{i+2}$|$\\frac{-1}{i-2}$|$\\frac{1}{i-2}$", 1],
+        ["If $z=\\frac{(\\sqrt{3}+i)^3(3i+4)^2}{(8+6i)^2}$, then $|z|$ is equal to", "0|1|2|3", 2],
+        ["If z is a non zero complex number, such that $2iz^2=\\bar{z}$ then $|z|$ is", "$\\frac{1}{2}$|1|2|3", 0],
+        ["If $|z-2+i|\\le2$, then the greatest value of $|z|$ is", "$\\sqrt{3}-2$|$\\sqrt{3}+2$|$\\sqrt{5}-2$|$\\sqrt{5}+2$", 3],
+        ["If $|z-\\frac{3}{z}|=2$, then the least value of $|z|$ is", "1|2|3|5", 0],
+        ["If $|z|=1$, then the value of $\\frac{1+z}{1+\\bar{z}}$ is", "z|$\\bar{z}$|$\\frac{1}{z}$|1", 0],
+        ["The solution of the equation $|z|-z=1+2i$ is", "$\\frac{3}{2}-2i$|$-\\frac{3}{2}+2i$|$2-\\frac{3}{2}i$|$2+\\frac{3}{2}i$", 0],
+        ["If $|z_1|=1, |z_2|=2, |z_3|=3$ and $|9z_1z_2+4z_1z_3+z_2z_3|=12$, then the value of $|z_1+z_2+z_3|$ is", "1|2|3|4", 1],
+        ["If z is a complex number such that $z\\in\\mathbb{C}\\setminus\\mathbb{R}$ and $z+\\frac{1}{z}\\in\\mathbb{R}$, then $|z|$ is", "0|1|2|3", 1],
+        ["$z_1, z_2$ and $z_3$ are complex numbers such that $z_1+z_2+z_3=0$ and $|z_1|=|z_2|=|z_3|=1$ then $z_1^2+z_2^2+z_3^2$ is", "3|2|1|0", 3],
+        ["If $\\frac{z-1}{z+1}$ is purely imaginary, then $|z|$ is", "$\\frac{1}{2}$|1|2|3", 1],
+        ["If $z=x+iy$ is a complex number such that $|z+2|=|z-2|$, then the locus of z is", "real axis|imaginary axis|ellipse|circle", 1],
+        ["The principal argument of $\\frac{3}{-1+i}$ is", "$-\\frac{5\\pi}{6}$|$-\\frac{2\\pi}{3}$|$-\\frac{3\\pi}{4}$|$-\\frac{\\pi}{2}$", 2],
+        ["The principal argument of $(\\sin 40^\\circ+i\\cos 40^\\circ)^5$ is", "$-110^\\circ$|$-70^\\circ$|$70^\\circ$|$110^\\circ$", 0],
+        ["If $(1+i)(1+2i)(1+3i)\\dots(1+ni)=x+iy$, then $2\\cdot5\\cdot10\\dots(1+n^2)$ is", "1|i|$x^2+y^2$|$1+n^2$", 2],
+        ["If $\\omega\\ne1$ is a cubic root of unity and $(1+\\omega)^7=A+B\\omega$, then (A, B) equals", "(1, 0)|(-1, 1)|(0, 1)|(1, 1)", 3],
+        ["The principal argument of the complex number $\\frac{(1+i\\sqrt{3})^2}{4i(1-i\\sqrt{3})}$ is", "$\\frac{2\\pi}{3}$|$\\frac{\\pi}{6}$|$\\frac{5\\pi}{6}$|$\\frac{\\pi}{2}$", 3],
+        ["If $\\alpha$ and $\\beta$ are the roots of $x^2+x+1=0$, then $\\alpha^{2020}+\\beta^{2020}$ is", "$-2$|$-1$|1|2", 1],
+        ["The product of all four values of $(\\cos\\frac{\\pi}{3}+i\\sin\\frac{\\pi}{3})^{\\frac{3}{4}}$ is", "$-2$|$-1$|1|2", 2],
+        ["If $\\omega\\ne1$ is a cubic root of unity and $\\begin{vmatrix}1&1&1\\\\1&-\\omega^2-1&\\omega^2\\\\1&\\omega^2&\\omega^7\\end{vmatrix}=3k$, then k is equal to", "1|$-1$|$3i$|$-3i$", 0],
+        ["The value of $(\\frac{1+\\sqrt{3}i}{1-\\sqrt{3}i})^{10}$ is", "$\\text{cis }\\frac{2\\pi}{3}$|$\\text{cis }\\frac{4\\pi}{3}$|$-\\text{cis }\\frac{2\\pi}{3}$|$-\\text{cis }\\frac{4\\pi}{3}$", 1],
+        ["If $\\omega=\\text{cis }\\frac{2\\pi}{3}$, then the number of distinct roots of $\\begin{vmatrix}z+1&\\omega&\\omega^2\\\\\\omega&z+\\omega^2&1\\\\\\omega^2&1&z+\\omega\\end{vmatrix}=0$", "1|2|3|4", 0]
+    ],
+    "3": [
+        ["A zero of $x^3+64$ is", "0|4|$4i$|$-4$", 3],
+        ["If f and g are polynomials of degrees m and n respectively, and if $h(x)=(f\\circ g)(x)$, then the degree of h is", "$mn$|$m+n$|$m^n$|$n^m$", 0],
+        ["A polynomial equation in x of degree n always has", "n distinct roots|n real roots|n complex roots|at most one root", 2],
+        ["If $\\alpha,\\beta$ and $\\gamma$ are the zeros of $x^3+px^2+qx+r$, then $\\sum\\frac{1}{\\alpha}$ is", "$-\\frac{q}{r}$|$-\\frac{p}{r}$|$\\frac{q}{r}$|$-\\frac{q}{p}$", 0],
+        ["According to the rational root theorem, which number is not possible rational zero of $4x^7+2x^4-10x^3-5$? ", "$-1$|$\\frac{5}{4}$|$\\frac{4}{5}$|5", 2],
+        // FIXED LINE BELOW (\vert instead of |)
+        ["The polynomial $x^3-kx^2+9x$ has three real zeros if and only if, k satisfies", "$\\vert k\\vert\\le6$|$k=0$|$\\vert k\\vert \\gt 6$|$\\vert k\\vert\\ge6$", 3],
+        ["The number of real numbers in $[0, 2\\pi]$ satisfying $\\sin^4x-2\\sin^2x+1$ is", "2|4|1|$\\infty$", 0],
+        ["If $x^3+12x^2+10ax+1999$ definitely has a positive zero, if and only if", "$a\\ge0$|$a \\gt 0$|$a \\lt 0$|$a\\le0$", 2],
+        ["The polynomial $x^3+2x+3$ has", "one negative and two imaginary zeros|one positive and two imaginary zeros|three real zeros|no zeros", 0],
+        ["The number of positive zeros of the polynomial $\\sum_{r=0}^n {^nC_r} (-1)^r x^r$ is", "0|n|$\\lt n$|r", 1]
+    ],
+    "4": [
+        ["The value of $\\sin^{-1}(\\cos x), 0\\le x\\le\\pi$ is", "$\\pi-x$|$x-\\frac{\\pi}{2}$|$\\frac{\\pi}{2}-x$|$x-\\pi$", 2],
+        ["If $\\sin^{-1}x+\\sin^{-1}y=\\frac{2\\pi}{3}$; Then $\\cos^{-1}x+\\cos^{-1}y$ is equal to", "$\\frac{2\\pi}{3}$|$\\frac{\\pi}{3}$|$\\frac{\\pi}{6}$|$\\pi$", 1],
+        ["$\\sin^{-1}\\frac{3}{5}-\\cos^{-1}\\frac{12}{13}+\\sec^{-1}\\frac{5}{3}-\\csc^{-1}\\frac{13}{12}$ is equal to", "$2\\pi$|$\\pi$|0|$\\tan^{-1}\\frac{12}{65}$", 2],
+        // FIXED LINE BELOW (\vert instead of |)
+        ["If $\\sin^{-1}x=2\\sin^{-1}\\alpha$ has a solution, then", "$\\vert\\alpha\\vert\\le\\frac{1}{\\sqrt{2}}$|$\\vert\\alpha\\vert\\ge\\frac{1}{\\sqrt{2}}$|$\\alpha \\lt \\frac{1}{\\sqrt{2}}$|$\\alpha \\gt \\frac{1}{\\sqrt{2}}$", 0],
+        ["$\\sin^{-1}(\\cos x)=\\frac{\\pi}{2}-x$ is valid for", "$-\\pi\\le x\\le 0$|$0\\le x\\le \\pi$|$-\\frac{\\pi}{2}\\le x\\le \\frac{\\pi}{2}$|$-\\frac{\\pi}{4}\\le x\\le \\frac{3\\pi}{4}$", 1],
+        ["If $\\sin^{-1}x+\\sin^{-1}y+\\sin^{-1}z=\\frac{3\\pi}{2}$, the value of $x^{2017}+y^{2018}+z^{2019}-\\frac{9}{x^{101}+y^{101}+z^{101}}$ is", "0|1|2|3", 0],
+        ["If $\\cot^{-1}x=\\frac{2\\pi}{5}$ for some $x\\in\\mathbb{R}$, the value of $\\tan^{-1}x$ is", "$-\\frac{\\pi}{10}$|$\\frac{\\pi}{5}$|$\\frac{\\pi}{10}$|$-\\frac{\\pi}{5}$", 2],
+        ["The domain of the function defined by $f(x)=\\sin^{-1}\\sqrt{x-1}$ is", "$[1, 2]$|$[-1, 1]$|$[0, 1]$|$[-1, 0]$", 0],
+        ["If $x=\\frac{1}{5}$, the value of $\\cos(\\cos^{-1}x+2\\sin^{-1}x)$ is", "$-\\sqrt{\\frac{24}{25}}$|$\\sqrt{\\frac{24}{25}}$|$\\frac{1}{5}$|$-\\frac{1}{5}$", 3],
+        ["$\\tan^{-1}(\\frac{1}{4})+\\tan^{-1}(\\frac{2}{9})$ is equal to", "$\\frac{1}{2}\\cos^{-1}(\\frac{3}{5})$|$\\frac{1}{2}\\sin^{-1}(\\frac{3}{5})$|$\\frac{1}{2}\\tan^{-1}(\\frac{3}{5})$|$\\tan^{-1}(\\frac{1}{2})$", 0],
+        ["If the function $f(x)=\\sin^{-1}(x^2-3)$, then x belongs to", "$[-1, 1]$|$[\\sqrt{2}, 2]$|$[-2, -\\sqrt{2}]\\cup[\\sqrt{2}, 2]$|$[-2, -\\sqrt{2}]$", 2],
+        ["If $\\cot^{-1}2$ and $\\cot^{-1}3$ are two angles of a triangle, then the third angle is", "$\\frac{\\pi}{4}$|$\\frac{3\\pi}{4}$|$\\frac{\\pi}{6}$|$\\frac{\\pi}{3}$", 1],
+        ["$\\sin^{-1}(\\tan\\frac{\\pi}{4})-\\sin^{-1}(\\sqrt{\\frac{3}{x}})=\\frac{\\pi}{6}$. then x is a root of the equation", "$x^2-x-6=0$|$x^2-x-12=0$|$x^2+x-12=0$|$x^2+x-6=0$", 1],
+        ["$\\sin^{-1}(2\\cos^2x-1)+\\cos^{-1}(1-2\\sin^2x) =$", "$\\frac{\\pi}{2}$|$\\frac{\\pi}{3}$|$\\frac{\\pi}{4}$|$\\frac{\\pi}{6}$", 0],
+        ["If $\\cot^{-1}(\\sqrt{\\sin\\alpha})+\\tan^{-1}(\\sqrt{\\sin\\alpha})=u$, then $\\cos 2u$ is equal to", "$\\tan^2\\alpha$|0|$-1$|$\\tan 2\\alpha$", 2],
+        ["If $|x|\\le1$, then $2\\tan^{-1}x-\\sin^{-1}(\\frac{2x}{1+x^2})$ is equal to", "$\\tan^{-1}x$|$\\sin^{-1}x$|0|$\\pi$", 2],
+        ["The equation $\\tan^{-1}x-\\cot^{-1}x=\\tan^{-1}(\\frac{1}{\\sqrt{3}})$ has", "no solution|unique solution|two solutions|infinite number of solutions", 1],
+        ["If $\\sin^{-1}x+\\cot^{-1}(\\frac{1}{2})=\\frac{\\pi}{2}$, then x is equal to", "$\\frac{1}{2}$|$\\frac{1}{\\sqrt{5}}$|$\\frac{2}{\\sqrt{5}}$|$\\frac{\\sqrt{3}}{2}$", 1],
+        ["If $\\sin^{-1}(\\frac{x}{5})+\\csc^{-1}(\\frac{5}{4})=\\frac{\\pi}{2}$, then the value of x is", "4|5|2|3", 3],
+        ["$\\sin(\\tan^{-1}x), |x| \\lt 1$ is equal to", "$\\frac{x}{\\sqrt{1-x^2}}$|$\\frac{1}{\\sqrt{1-x^2}}$|$\\frac{1}{\\sqrt{1+x^2}}$|$\\frac{x}{\\sqrt{1+x^2}}$", 3]
+    ],
+    "5": [
+        ["The equation of the circle passing through (1, 5) and (4, 1) and touching y-axis is $x^2+y^2-5x-6y+9+\\lambda(4x+3y-19)=0$ where $\\lambda$ is equal to", "0, $-\\frac{40}{9}$|0|$\\frac{40}{9}$|$-\\frac{40}{9}$", 0],
+        ["The eccentricity of the hyperbola whose latus rectum is 8 and conjugate axis is equal to half the distance between the foci is", "$\\frac{4}{3}$|$\\frac{4}{\\sqrt{3}}$|$\\frac{2}{\\sqrt{3}}$|$\\frac{3}{2}$", 1],
+        ["The circle $x^2+y^2=4x+8y+5$ intersects the line $3x-4y=m$ at two distinct points if", "$15 \\lt m \\lt 65$|$35 \\lt m \\lt 85$|$-85 \\lt m \\lt -35$|$-35 \\lt m \\lt 15$", 3],
+        ["The length of the diameter of the circle which touches the x-axis at the point (1, 0) and passes through the point (2, 3)", "$\\frac{6}{5}$|$\\frac{5}{3}$|$\\frac{10}{3}$|$\\frac{3}{5}$", 2],
+        ["The radius of the circle $3x^2+by^2+4bx-6by+b^2=0$ is", "1|3|$\\sqrt{10}$|$\\sqrt{11}$", 2],
+        ["The centre of the circle inscribed in a square formed by the lines $x^2-8x-12=0$ and $y^2-14y+45=0$ is", "(4, 7)|(7, 4)|(9, 4)|(4, 9)", 0],
+        ["The equation of the normal to the circle $x^2+y^2-2x-2y+1=0$ which is parallel to the line $2x+4y=3$ is", "$x+2y=3$|$x+2y+3=0$|$2x+4y+3=0$|$x-2y+3=0$", 0],
+        ["If $P(x, y)$ be any point on $16x^2+25y^2=400$ with foci $F_1(3, 0)$ and $F_2(-3, 0)$ then $PF_1+PF_2$ is", "8|6|10|12", 2],
+        ["The radius of the circle passing through the point (6, 2) two of whose diameter are $x+y=6$ and $x+2y=4$ is", "10|$\\sqrt{20}$|6|4", 1],
+        ["The area of quadrilateral formed with foci of the hyperbolas $\\frac{x^2}{a^2}-\\frac{y^2}{b^2}=1$ and $\\frac{x^2}{a^2}-\\frac{y^2}{b^2}=-1$ is", "$4(a^2+b^2)$|$2(a^2+b^2)$|$a^2+b^2$|$\\frac{1}{2}(a^2+b^2)$", 1],
+        ["If the normals of the parabola $y^2=4x$ drawn at the end points of its latus rectum are tangents to the circle $(x-3)^2+(y+2)^2=r^2$, then the value of $r^2$ is", "2|3|1|4", 0],
+        ["If $x+y=k$ is a normal to the parabola $y^2=12x$, then the value of k is", "3|$-1$|1|9", 3],
+        ["The ellipse $E_1 :\\frac{x^2}{9}+\\frac{y^2}{4}=1$ is inscribed in a rectangle R whose sides are parallel to the coordinate axes. Another ellipse $E_2$ passing through the point (0, 4) circumscribes the rectangle R. The eccentricity of the ellipse is", "$\\frac{\\sqrt{2}}{2}$|$\\frac{\\sqrt{3}}{2}$|$\\frac{1}{2}$|$\\frac{3}{4}$", 2],
+        ["Tangents are drawn to the hyperbola $\\frac{x^2}{9}-\\frac{y^2}{4}=1$ parallel to the straight line $2x-y=1$. One of the points of contact of tangents on the hyperbola is", "$(\\frac{9}{2\\sqrt{2}}, \\frac{-1}{\\sqrt{2}})$|$(-\\frac{9}{2\\sqrt{2}}, \\frac{1}{\\sqrt{2}})$|$(\\frac{9}{2\\sqrt{2}}, \\frac{1}{\\sqrt{2}})$|$(3\\sqrt{3}, -2\\sqrt{2})$", 0],
+        ["The equation of the circle passing through the foci of the ellipse $\\frac{x^2}{16}+\\frac{y^2}{9}=1$ having centre at (0, 3) is", "$x^2+y^2-6y-7=0$|$x^2+y^2-6y+7=0$|$x^2+y^2-6y-5=0$|$x^2+y^2-6y+5=0$", 0],
+        ["Let C be the circle with centre at (1, 1) and radius = 1. If T is the circle centered at (0, y) passing through the origin and touching the circle C externally, then the radius of T is equal to", "$\\frac{\\sqrt{3}}{\\sqrt{2}}$|$\\frac{\\sqrt{3}}{2}$|$\\frac{1}{2}$|$\\frac{1}{4}$", 3],
+        ["Consider an ellipse whose centre is of the origin and its major axis is along x-axis. If its eccentricity is $\\frac{3}{5}$ and the distance between its foci is 6, then the area of the quadrilateral inscribed in the ellipse with diagonals as major and minor axis of the ellipse is", "8|32|80|40", 3],
+        ["Area of the greatest rectangle inscribed in the ellipse $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$ is", "$2ab$|$ab$|$\\sqrt{ab}$|$\\frac{a}{b}$", 0],
+        ["An ellipse has OB as semi minor axes, F and F' its foci and the angle FBF' is a right angle. Then the eccentricity of the ellipse is", "$\\frac{1}{\\sqrt{2}}$|$\\frac{1}{2}$|$\\frac{1}{4}$|$\\frac{1}{\\sqrt{3}}$", 0],
+        ["The eccentricity of the ellipse $(x-3)^2+(y-4)^2=\\frac{y^2}{9}$ is", "$\\frac{\\sqrt{3}}{2}$|$\\frac{1}{3}$|$\\frac{1}{3\\sqrt{2}}$|$\\frac{1}{\\sqrt{3}}$", 1],
+        ["If the two tangents drawn from a point P to the parabola $y^2=4x$ are at right angles then the locus of P is", "$2x+1=0$|$x=-1$|$2x-1=0$|$x=1$", 1],
+        ["The circle passing through $(1, -2)$ and touching the axis of x at $(3, 0)$ passing through the point", "$(-5, 2)$|$(2, -5)$|$(5, -2)$|$(-2, 5)$", 2],
+        ["The locus of a point whose distance from $(-2, 0)$ is $\\frac{2}{3}$ times its distance from the line $x=\\frac{-9}{2}$ is", "a parabola|a hyperbola|an ellipse|a circle", 2],
+        ["The values of m for which the line $y=mx+2\\sqrt{5}$ touches the hyperbola $16x^2-9y^2=144$ are the roots of $x^2-(a+b)x-4=0$, then the value of $(a+b)$ is", "2|4|0|$-2$", 2],
+        ["If the coordinates at one end of a diameter of the circle $x^2+y^2-8x-4y+c=0$ are $(11, 2)$, the coordinates of the other end are", "$(-5, 2)$|$(2, -5)$|$(5, -2)$|$(-2, 5)$", 0]
+    ],
+    "6": [
+        ["If $\\vec{a}$ and $\\vec{b}$ are parallel vectors, then $[\\vec{a}, \\vec{c}, \\vec{b}]$ is equal to", "2|$-1$|1|0", 3],
+        ["If a vector $\\vec{\\alpha}$ lies in the plane of $\\vec{\\beta}$ and $\\vec{\\gamma}$, then", "$[\\vec{\\alpha},\\vec{\\beta},\\vec{\\gamma}]=1$|$[\\vec{\\alpha},\\vec{\\beta},\\vec{\\gamma}]=-1$|$[\\vec{\\alpha},\\vec{\\beta},\\vec{\\gamma}]=0$|$[\\vec{\\alpha},\\vec{\\beta},\\vec{\\gamma}]=2$", 2],
+        // FIXED LINE BELOW (\vert instead of |)
+        ["If $\\vec{a}\\cdot\\vec{b}=\\vec{b}\\cdot\\vec{c}=\\vec{c}\\cdot\\vec{a}=0$, then the value of $[\\vec{a}, \\vec{b}, \\vec{c}]$ is", "$\\vert\\vec{a}\\vert\\vert\\vec{b}\\vert\\vert\\vec{c}\\vert$|$\\frac{1}{3}\\vert\\vec{a}\\vert\\vert\\vec{b}\\vert\\vert\\vec{c}\\vert$|1|$-1$", 0],
+        ["If $\\vec{a}, \\vec{b}, \\vec{c}$ are three unit vectors such that $\\vec{a}$ is perpendicular to $\\vec{b}$ and is parallel to $\\vec{c}$ then $\\vec{a}\\times(\\vec{b}\\times\\vec{c})$ is equal to", "$\\vec{a}$|$\\vec{b}$|$\\vec{c}$|$\\vec{0}$", 1],
+        ["If $[\\vec{a}, \\vec{b}, \\vec{c}]=1$, then the value of $\\frac{\\vec{a}\\cdot(\\vec{b}\\times\\vec{c})}{(\\vec{c}\\times\\vec{a})\\cdot\\vec{b}}+\\frac{\\vec{b}\\cdot(\\vec{c}\\times\\vec{a})}{(\\vec{a}\\times\\vec{b})\\cdot\\vec{c}}+\\frac{\\vec{c}\\cdot(\\vec{a}\\times\\vec{b})}{(\\vec{c}\\times\\vec{b})\\cdot\\vec{a}}$ is", "1|$-1$|2|3", 0],
+        ["The volume of the parallelepiped with its edges represented by the vectors $\\hat{i}+\\hat{j}$, $\\hat{i}+2\\hat{j}$, $\\hat{i}+\\hat{j}+\\pi\\hat{k}$ is", "$\\frac{\\pi}{2}$|$\\frac{\\pi}{3}$|$\\pi$|$\\frac{\\pi}{4}$", 2],
+        ["If $\\vec{a}$ and $\\vec{b}$ are unit vectors such that $[\\vec{a}, \\vec{b}, \\vec{a}\\times\\vec{b}]=\\frac{1}{4}$, then the angle between $\\vec{a}$ and $\\vec{b}$ is", "$\\frac{\\pi}{6}$|$\\frac{\\pi}{4}$|$\\frac{\\pi}{3}$|$\\frac{\\pi}{2}$", 0],
+        ["If $\\vec{a}=\\hat{i}+\\hat{j}+\\hat{k}$, $\\vec{b}=\\hat{i}+\\hat{j}$, $\\vec{c}=\\hat{i}$ and $(\\vec{a}\\times\\vec{b})\\times\\vec{c}=\\lambda\\vec{a}+\\mu\\vec{b}$, then the value of $\\lambda+\\mu$ is", "0|1|6|3", 0],
+        ["If $\\vec{a}, \\vec{b}, \\vec{c}$ are three non-coplanar, non-zero vectors such that $[\\vec{a}, \\vec{b}, \\vec{c}]=3$, then $[\\vec{a}\\times\\vec{b}, \\vec{b}\\times\\vec{c}, \\vec{c}\\times\\vec{a}]^2$ is equal to", "81|9|27|18", 0],
+        ["If $\\vec{a}, \\vec{b}, \\vec{c}$ are three non-coplanar unit vectors such that $\\vec{a}\\times(\\vec{b}\\times\\vec{c})=\\frac{\\vec{b}+\\vec{c}}{\\sqrt{2}}$, then the angle between $\\vec{a}$ and $\\vec{b}$ is", "$\\frac{\\pi}{2}$|$\\frac{3\\pi}{4}$|$\\frac{\\pi}{4}$|$\\pi$", 1],
+        ["If the volume of the parallelepiped with $\\vec{a}\\times\\vec{b}, \\vec{b}\\times\\vec{c}, \\vec{c}\\times\\vec{a}$ as coterminous edges is 8 cubic units, then the volume of the parallelepiped with $(\\vec{a}\\times\\vec{b})\\times(\\vec{b}\\times\\vec{c}), (\\vec{b}\\times\\vec{c})\\times(\\vec{c}\\times\\vec{a})$ and $(\\vec{c}\\times\\vec{a})\\times(\\vec{a}\\times\\vec{b})$ as coterminous edges is", "8 cubic units|512 cubic units|64 cubic units|24 cubic units", 2],
+        ["Consider the vectors $\\vec{a},\\vec{b}, \\vec{c}, \\vec{d}$ such that $(\\vec{a}\\times\\vec{b})\\times(\\vec{c}\\times\\vec{d})=\\vec{0}$. Let $P_1$ and $P_2$ be the planes determined by the pairs of vectors $\\vec{a}, \\vec{b}$ and $\\vec{c}, \\vec{d}$ respectively. Then the angle between $P_1$ and $P_2$ is", "$0^\\circ$|$45^\\circ$|$60^\\circ$|$90^\\circ$", 0],
+        ["If $\\vec{a}\\times(\\vec{b}\\times\\vec{c})=(\\vec{a}\\times\\vec{b})\\times\\vec{c}$, where $\\vec{a}, \\vec{b}, \\vec{c}$ are any three vectors such that $\\vec{b}\\cdot\\vec{c}\\ne0$ and $\\vec{a}\\cdot\\vec{b}\\ne0$, then $\\vec{a}$ and $\\vec{c}$ are", "perpendicular|parallel|inclined at an angle $\\frac{\\pi}{3}$|inclined at an angle $\\frac{\\pi}{6}$", 1],
+        ["If $\\vec{a}=2\\hat{i}+3\\hat{j}-\\hat{k}, \\vec{b}=\\hat{i}+2\\hat{j}-5\\hat{k}, \\vec{c}=3\\hat{i}+5\\hat{j}-\\hat{k}$, then a vector perpendicular to $\\vec{a}$ and lies in the plane containing $\\vec{b}$ and $\\vec{c}$ is", "$-17\\hat{i}+21\\hat{j}-97\\hat{k}$|$17\\hat{i}+21\\hat{j}-123\\hat{k}$|$-17\\hat{i}-21\\hat{j}+97\\hat{k}$|$-17\\hat{i}-21\\hat{j}-97\\hat{k}$", 0],
+        ["The angle between the lines $\\frac{x-2}{3}=\\frac{y+1}{-2}, z=2$ and $\\frac{x-1}{1}=\\frac{2y+3}{3}=\\frac{z+5}{2}$ is", "$\\frac{\\pi}{6}$|$\\frac{\\pi}{4}$|$\\frac{\\pi}{3}$|$\\frac{\\pi}{2}$", 3],
+        ["If the line $\\frac{x-2}{3}=\\frac{y-1}{-5}=\\frac{z+2}{2}$ lies in the plane $x+3y-\\alpha z+\\beta=0$, then $(\\alpha,\\beta)$ is", "$(-5, 5)$|$(-6, 7)$|$(5, -5)$|$(6, -7)$", 1],
+        ["The angle between the line $\\vec{r}=(\\hat{i}+2\\hat{j}-3\\hat{k})+t(2\\hat{i}+\\hat{j}-2\\hat{k})$ and the plane $\\vec{r}\\cdot(\\hat{i}+\\hat{j})+4=0$ is", "$0^\\circ$|$30^\\circ$|$45^\\circ$|$90^\\circ$", 2],
+        ["The coordinates of the point where the line $\\vec{r}=(6\\hat{i}-\\hat{j}-3\\hat{k})+t(-\\hat{i}+4\\hat{k})$ meets the plane $\\vec{r}\\cdot(\\hat{i}+\\hat{j}-\\hat{k})=3$ are", "$(2, 1, 0)$|$(7, -1, -7)$|$(1, 2, -6)$|$(5, -1, 1)$", 3],
+        ["Distance from the origin to the plane $3x-6y+2z+7=0$ is", "0|1|2|3", 1],
+        ["The distance between the planes $x+2y+3z+7=0$ and $2x+4y+6z+7=0$ is", "$\\frac{\\sqrt{7}}{2\\sqrt{2}}$|$\\frac{7}{2}$|$\\frac{\\sqrt{7}}{2}$|$\\frac{7}{2\\sqrt{2}}$", 0],
+        ["If the direction cosines of a line are $\\frac{1}{c}, \\frac{1}{c}, \\frac{1}{c}$, then", "$c=\\pm3$|$c=\\pm\\sqrt{3}$|$c \\gt 0$|$0 \\lt c \\lt 1$", 1],
+        ["The vector equation $\\vec{r}=(\\hat{i}-2\\hat{j}-\\hat{k})+t(6\\hat{j}-\\hat{k})$ represents a straight line passing through the points", "$(0, 6, -1)$ and $(1, -2, -1)$|$(0, 6, -1)$ and $(-1, -4, -2)$|$(1, -2, -1)$ and $(1, 4, -2)$|$(1, -2, -1)$ and $(0, -6, 1)$", 2],
+        ["If the distance of the point (1, 1, 1) from the origin is half of its distance from the plane $x+y+z+k=0$, then the values of k are", "$\\pm3$|$\\pm6$|$-3, 9$|$3, -9$", 3],
+        ["If the planes $\\vec{r}\\cdot(2\\hat{i}-\\lambda\\hat{j}+\\hat{k})=3$ and $\\vec{r}\\cdot(4\\hat{i}+\\hat{j}-\\mu\\hat{k})=5$ are parallel, then the value of $\\lambda$ and $\\mu$ are", "$\\frac{1}{2}, -2$|$-\\frac{1}{2}, 2$|$-\\frac{1}{2}, -2$|$\\frac{1}{2}, 2$", 2],
+        ["If the length of the perpendicular from the origin to the plane $2x+3y+\\lambda z=1, \\lambda \\gt 0$ is $\\frac{1}{5}$, then the value of $\\lambda$ is", "$2\\sqrt{3}$|$3\\sqrt{2}$|0|1", 0]
+    ],
+    "7": [
+        ["The volume of a sphere is increasing in volume at the rate of $3\\pi \\text{ cm}^3/\\text{sec}$. The rate of change of its radius when radius is $\\frac{1}{2}$ cm", "$3 \\text{ cm/s}$|$2 \\text{ cm/s}$|$1 \\text{ cm/s}$|$\\frac{1}{2} \\text{ cm/s}$", 0],
+        ["A balloon rises straight up at 10 m/s. An observer is 40 m away from the spot where the balloon left the ground. Find the rate of change of the balloon’s angle of elevation in radian per second when the balloon is 30 metres above the ground.", "$\\frac{3}{25}$ radians/sec|$\\frac{4}{25}$ radians/sec|$\\frac{1}{5}$ radians/sec|$\\frac{1}{3}$ radians/sec", 1],
+        ["The position of a particle moving along a horizontal line of any time t is given by $s(t)=3t^2-2t-8$. The time at which the particle is at rest is", "$t=0$|$t=\\frac{1}{3}$|$t=1$|$t=3$", 1],
+        ["A stone is thrown up vertically. The height it reaches at time t seconds is given by $x=80t-16t^2$. The stone reaches the maximum height in time t seconds is given by", "2|2.5|3|3.5", 1],
+        ["Find the point on the curve $6y=x^3+2$ at which y-coordinate changes 8 times as fast as x-coordinate is", "$(4, 11)$|$(4, -11)$|$(-4, 11)$|$(-4, -11)$", 0],
+        ["The abscissa of the point on the curve $f(x)=\\sqrt{8-2x}$ at which the slope of the tangent is $-0.25$?", "$-8$|$-4$|$-2$|0", 1],
+        ["The slope of the line normal to the curve $f(x)=2\\cos 4x$ at $x=\\frac{\\pi}{12}$ is", "$-4\\sqrt{3}$|$-4$|$\\frac{\\sqrt{3}}{12}$|$\\frac{4}{\\sqrt{3}}$", 2],
+        ["The tangent to the curve $y^2-xy+9=0$ is vertical when", "$y=0$|$y=\\pm\\sqrt{3}$|$y=\\frac{1}{2}$|$y=\\pm3$", 3],
+        ["Angle between $y^2=x$ and $x^2=y$ at the origin is", "$\\tan^{-1}(\\frac{3}{4})$|$\\tan^{-1}(\\frac{4}{3})$|$\\frac{\\pi}{2}$|$\\frac{\\pi}{4}$", 2],
+        ["The value of the limit $\\lim_{x\\to 0} (\\cot x - \\frac{1}{x})$ is", "0|1|2|$\\infty$", 0],
+        ["The function $\\sin^4x+\\cos^4x$ is increasing in the interval", "$[\\frac{5\\pi}{8}, \\frac{3\\pi}{4}]$|$[\\frac{\\pi}{2}, \\frac{5\\pi}{8}]$|$[\\frac{\\pi}{4}, \\frac{\\pi}{2}]$|$[0, \\frac{\\pi}{4}]$", 2],
+        ["The number given by the Rolle’s theorem for the function $x^3-3x^2, x\\in[0, 3]$ is", "1|$\\sqrt{2}$|$\\frac{3}{2}$|2", 3],
+        ["The number given by the Mean value theorem for the function $\\frac{1}{x}, x\\in[1, 9]$ is", "2|2.5|3|3.5", 2],
+        ["The minimum value of the function $|3-x|+9$ is", "0|3|6|9", 3],
+        ["The maximum slope of the tangent to the curve $y=e^x\\sin x, x\\in[0, 2\\pi]$ is at", "$x=\\frac{\\pi}{4}$|$x=\\frac{\\pi}{2}$|$x=\\pi$|$x=\\frac{3\\pi}{2}$", 1],
+        ["The maximum value of the function $x^2e^{-2x}, x \\gt 0$ is", "$\\frac{1}{e}$|$\\frac{1}{2e}$|$\\frac{1}{e^2}$|$\\frac{4}{e^4}$", 2],
+        ["One of the closest points on the curve $x^2-y^2=4$ to the point (6, 0) is", "$(2, 0)$|$(\\sqrt{5}, 1)$|$(3, \\sqrt{5})$|$(\\sqrt{13}, -\\sqrt{3})$", 2],
+        ["The maximum value of the product of two positive numbers, when their sum of the squares is 200, is", "100|$25\\sqrt{7}$|28|$24\\sqrt{14}$", 0],
+        ["The curve $y=ax^4+bx^2$ with $ab \\gt 0$", "has no horizontal tangent|is concave up|is concave down|has no points of inflection", 3],
+        ["The point of inflection of the curve $y=(x-1)^3$ is", "(0, 0)|(0, 1)|(1, 0)|(1, 1)", 2]
+    ],
+    "8": [
+        ["A circular template has a radius of 10 cm. The measurement of radius has an approximate error 0.02 cm. Then the percentage error in calculating area of this template is", "0.2%|0.4%|0.04%|0.08%", 1],
+        ["The percentage error of fifth root of 31 is approximately how many times the percentage error in 31?", "$\\frac{1}{31}$|$\\frac{1}{5}$|5|31", 1],
+        ["If $u(x, y)=e^{x^2+y^2}$, then $\\frac{\\partial u}{\\partial x}$ is equal to", "$e^{x^2+y^2}$|$2xu$|$x^2u$|$y^2u$", 1],
+        ["If $v(x, y)=\\log(e^x+e^y)$ then $\\frac{\\partial v}{\\partial x}+\\frac{\\partial v}{\\partial y}$ is equal to", "$e^x+e^y$|$\\frac{1}{e^x+e^y}$|2|1", 3],
+        ["If $w(x, y)=x^y, x \\gt 0$, then $\\frac{\\partial w}{\\partial x}$ is equal to", "$x^y\\log x$|$y\\log x$|$yx^{y-1}$|$x\\log y$", 2],
+        ["If $f(x, y)=e^{xy}$, then $\\frac{\\partial^2 f}{\\partial x\\partial y}$ is equal to", "$xye^{xy}$|$(1+xy)e^{xy}$|$(1+y)e^{xy}$|$(1+x)e^{xy}$", 1],
+        ["If we measure the side of a cube to be 4 cm with an error of 0.1 cm, then the error in our calculation of the volume is", "0.4 cu. cm|0.45 cu.cm|2 cu. cm|4.8 cu. cm", 3],
+        ["The change in the surface area $S=6x^2$ of a cube when the edge length varies from $x_0$ to $x_0+dx$ is", "$12x_0+dx$|$12x_0dx$|$6x_0dx$|$6x_0+dx$", 1],
+        ["The approximate change in the volume V of a cube of side x metres caused by increasing the side by 1% is", "$0.3xdx \\text{ m}^3$|$0.03x \\text{ m}^3$|$0.03x^2 \\text{ m}^3$|$0.03x^3 \\text{ m}^3$", 3],
+        ["If $g(x, y)=3x^2-5y+2y^2, x(t)=e^t$ and $y(t)=\\cos t$, then $\\frac{dg}{dt}$ is equal to", "$6e^{2t}+5\\sin t-4\\cos t\\sin t$|$6e^{2t}-5\\sin t+4\\cos t\\sin t$|$3e^{2t}+5\\sin t+4\\cos t\\sin t$|$3e^{2t}-5\\sin t+4\\cos t\\sin t$", 0],
+        ["If $f(x)=\\frac{x}{x+1}$, then its differential is given by", "$\\frac{-1}{(x+1)^2}dx$|$\\frac{1}{(x+1)^2}dx$|$\\frac{1}{x+1}dx$|$\\frac{-1}{x+1}dx$", 1],
+        ["If $u(x, y)=x^2+3xy+y-2019$, then $\\frac{\\partial u}{\\partial x}|_{(4, -5)}$ is equal to", "$-4$|$-3$|$-7$|13", 2],
+        ["Linear approximation for $g(x)=\\cos x$ at $x=\\frac{\\pi}{2}$ is", "$x+\\frac{\\pi}{2}$|$-x+\\frac{\\pi}{2}$|$x-\\frac{\\pi}{2}$|$-x-\\frac{\\pi}{2}$", 1],
+        ["If $w(x, y, z)=x^2(y-z)+y^2(z-x)+z^2(x-y)$, then $\\frac{\\partial w}{\\partial x}+\\frac{\\partial w}{\\partial y}+\\frac{\\partial w}{\\partial z}$ is", "$xy+yz+zx$|$x(y+z)$|$y(z+x)$|0", 3],
+        ["If $f(x, y, z)=xy+yz+zx$, then $f_x-f_z$ is equal to", "$z-x$|$y-z$|$x-z$|$y-x$", 1]
+    ],
+    "9": [
+        ["The value of $\\int_0^{\\frac{2}{3}}\\frac{dx}{\\sqrt{4-9x^2}}$ is", "$\\frac{\\pi}{6}$|$\\frac{\\pi}{2}$|$\\frac{\\pi}{4}$|$\\pi$", 0],
+        ["The value of $\\int_{-1}^2|x|dx$ is", "$\\frac{1}{2}$|$\\frac{3}{2}$|$\\frac{5}{2}$|$\\frac{7}{2}$", 2],
+        ["For any value of $n\\in\\mathbb{Z}$, $\\int_0^\\pi e^{\\cos^2x}\\cos^3[(2n+1)x]dx$ is", "$\\frac{\\pi}{2}$|$\\pi$|0|2", 2],
+        ["The value of $\\int_{-\\frac{\\pi}{2}}^{\\frac{\\pi}{2}}\\sin^2x \\cos xdx$ is", "$\\frac{3}{2}$|$\\frac{1}{2}$|0|$\\frac{2}{3}$", 3],
+        ["The value of $\\int_{-4}^4[\\tan^{-1}(\\frac{x^2}{x^4+1})+\\tan^{-1}(\\frac{x^4+1}{x^2})]dx$ is", "$\\pi$|$2\\pi$|$3\\pi$|$4\\pi$", 1],
+        ["The value of $\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}(\\frac{2x^7-3x^5+7x^3-x+1}{\\cos^2x})dx$ is", "4|3|2|0", 2],
+        ["If $f(x)=\\int_0^xt \\cos t dt$ then $\\frac{df}{dx}=$", "$\\cos x-x \\sin x$|$\\sin x+x \\cos x$|$x \\cos x$|$x \\sin x$", 2],
+        ["The area between $y^2=4x$ and its latus rectum is", "$\\frac{2}{3}$|$\\frac{4}{3}$|$\\frac{8}{3}$|$\\frac{5}{3}$", 2],
+        ["The value of $\\int_0^1x(1-x)^{99}dx$ is", "$\\frac{1}{11000}$|$\\frac{1}{10100}$|$\\frac{1}{10010}$|$\\frac{1}{10001}$", 2],
+        ["The value of $\\int_0^\\pi\\frac{dx}{1+5^{\\cos x}}$ is", "$\\frac{\\pi}{2}$|$\\pi$|$\\frac{3\\pi}{2}$|$2\\pi$", 0],
+        ["If $\\frac{\\Gamma(n+2)}{\\Gamma(n)}=90$ then n is", "10|5|8|9", 3],
+        ["The value of $\\int_0^{\\frac{\\pi}{6}}\\cos^3 3x dx$ is", "$\\frac{2}{3}$|$\\frac{2}{9}$|$\\frac{1}{9}$|$\\frac{1}{3}$", 1],
+        ["The Value of $\\int_0^\\pi\\sin^4x dx$ is", "$\\frac{3\\pi}{10}$|$\\frac{3\\pi}{8}$|$\\frac{3\\pi}{4}$|$\\frac{3\\pi}{2}$", 1],
+        ["The value of $\\int_0^\\infty e^{-3x}x^2dx$ is", "$\\frac{7}{27}$|$\\frac{5}{27}$|$\\frac{4}{27}$|$\\frac{2}{27}$", 3],
+        ["If $\\int_0^a\\frac{1}{4+x^2}dx=\\frac{\\pi}{8}$ then a is", "4|1|3|2", 3],
+        ["The volume of solid of revolution of the region bounded by $y^2=x(a-x)$ about x-axis is", "$\\pi a^3$|$\\frac{\\pi a^3}{4}$|$\\frac{\\pi a^3}{5}$|$\\frac{\\pi a^3}{6}$", 3],
+        ["If $f(x)=\\int_1^x\\frac{e^{\\sin u}}{u}du, x \\gt 1$ and $\\int_1^3\\frac{e^{\\sin x^2}}{x}dx=\\frac{1}{2}[f(a)-f(1)]$, then one of the possible value of a is", "3|6|9|5", 2],
+        ["The value of $\\int_0^1(\\sin^{-1}x)^2 dx$ is", "$\\frac{\\pi^2}{4}-1$|$\\frac{\\pi^2}{4}+2$|$\\frac{\\pi^2}{4}+1$|$\\frac{\\pi^2}{4}-2$", 3],
+        ["The value of $\\int_0^a(\\sqrt{a^2-x^2})^3dx$ is", "$\\frac{\\pi a^3}{16}$|$\\frac{3\\pi a^4}{16}$|$\\frac{3\\pi a^2}{8}$|$\\frac{3\\pi a^4}{8}$", 1],
+        ["If $\\int_0^xf(t)dt=x+\\int_x^1tf(t)dt$, then the value of $f(1)$ is", "$\\frac{1}{2}$|2|1|$\\frac{3}{4}$", 0]
+    ],
+    "10": [
+        ["The order and degree of the differential equation $\\frac{d^2y}{dx^2}+(\\frac{dy}{dx})^{1/3}+x^{1/4}=0$ are respectively", "2, 3|3, 3|2, 6|2, 4", 0],
+        ["The differential equation representing the family of curves $y=A\\cos(x+B)$, where A and B are parameters, is", "$\\frac{d^2y}{dx^2}-y=0$|$\\frac{d^2y}{dx^2}+y=0$|$\\frac{d^2y}{dx^2}=0$|$\\frac{d^2x}{dy^2}=0$", 1],
+        ["The order and degree of the differential equation $\\sqrt{\\sin x}(dx+dy)=\\sqrt{\\cos x}(dx-dy)$ is", "1, 2|2, 2|1, 1|2, 1", 2],
+        ["The order of the differential equation of all circles with centre at (h, k) and radius 'a' is", "2|3|4|1", 0],
+        ["The differential equation of the family of curves $y=Ae^x+Be^{-x}$, where A and B are arbitary constants is", "$\\frac{d^2y}{dx^2}+y=0$|$\\frac{d^2y}{dx^2}-y=0$|$\\frac{dy}{dx}+y=0$|$\\frac{dy}{dx}-y=0$", 1],
+        ["The general solution of the differential equation $\\frac{dy}{dx}=\\frac{y}{x}$ is", "$xy=k$|$y=k\\log x$|$y=kx$|$\\log y=kx$", 2],
+        ["The solution of the differential equation $2x\\frac{dy}{dx}-y=3$ represents", "straight lines|circles|parabola|ellipse", 2],
+        ["The solution of $\\frac{dy}{dx}+P(x)y=0$ is", "$y=ce^{\\int Pdx}$|$y=ce^{-\\int Pdx}$|$x=ce^{-\\int Pdy}$|$x=ce^{\\int Pdy}$", 1],
+        ["The integrating factor of the differential equation $\\frac{dy}{dx}+y=\\frac{1+y}{\\lambda}$ is", "$\\frac{x}{e^\\lambda}$|$\\frac{e^x}{x}$|$\\lambda e^x$|$e^x$", 3],
+        ["The integrating factor of the differential equation $\\frac{dy}{dx}+P(x)y=Q(x)$ is x, then $P(x)$", "x|$\\frac{x^2}{2}$|$\\frac{1}{x}$|$\\frac{1}{x^2}$", 2],
+        ["The degree of the differential equation $y(x)=1+\\frac{dy}{dx}+\\frac{1}{1\\cdot 2}(\\frac{dy}{dx})^2+\\frac{1}{1\\cdot 2\\cdot 3}(\\frac{dy}{dx})^3+\\dots$ is", "2|3|1|4", 2],
+        ["If p and q are the order and degree of the differential equation $y\\frac{dy}{dx}+x^3(\\frac{d^2y}{dx^2})+xy=\\cos x$ when", "$p \\lt q$|$p=q$|$p \\gt q$|p exists and q does not exist", 3],
+        ["The solution of the differential equation $\\frac{dy}{dx}+\\frac{1}{\\sqrt{1-x^2}}=0$ is", "$y+\\sin^{-1}x=c$|$x+\\sin^{-1}y=0$|$y^2+2\\sin^{-1}x=C$|$x^2+2\\sin^{-1}y=0$", 0],
+        ["The solution of the differential equation $\\frac{dy}{dx}=2xy$ is", "$y=Ce^{x^2}$|$y=2x^2+C$|$y=Ce^{-x^2}+C$|$y=x^2+C$", 0],
+        ["The general solution of the differential equation $\\log(\\frac{dy}{dx})=x+y$ is", "$e^x+e^y=C$|$e^x+e^{-y}=C$|$e^{-x}+e^y=C$|$e^{-x}+e^{-y}=C$", 1],
+        ["The solution of $\\frac{dy}{dx}=2^{y-x}$ is", "$2^x+2^y=C$|$2^x-2^y=C$|$\\frac{1}{2^x}-\\frac{1}{2^y}=C$|$x+y=C$", 2],
+        ["The solution of the differential equation $\\frac{dy}{dx}=\\frac{y}{x}+\\frac{\\phi(\\frac{y}{x})}{\\phi^{\\prime}(\\frac{y}{x})}$ is", "$x\\phi(\\frac{y}{x})=k$|$\\phi(\\frac{y}{x})=kx$|$y\\phi(\\frac{y}{x})=k$|$\\phi(\\frac{y}{x})=ky$", 1],
+        ["If $\\sin x$ is the integrating factor of the linear differential equation $\\frac{dy}{dx}+Py=Q$, then P is", "$\\log\\sin x$|$\\cos x$|$\\tan x$|$\\cot x$", 3],
+        ["The number of arbitrary constants in the general solution of order n and n+1 are respectively", "n-1, n|n, n+1|n+1, n+2|n+1, n", 1],
+        ["The number of arbitrary constants in the particular solution of a differential equation of third order is", "3|2|1|0", 3],
+        ["Integrating factor of the differential equation $\\frac{dy}{dx}=\\frac{x+y+1}{x+1}$ is", "$\\frac{1}{x+1}$|$x+1$|$\\frac{1}{\\sqrt{x+1}}$|$\\sqrt{x+1}$", 0],
+        ["The population P in any year t is such that the rate of increase in the population is proportional to the population. Then", "$P=Ce^{kt}$|$P=Ce^{-kt}$|$P=Ckt$|$P=C$", 0],
+        ["P is the amount of certain substance left in after time t. If the rate of evaporation of the substance is proportional to the amount remaining, then", "$P=Ce^{kt}$|$P=Ce^{-kt}$|$P=Ckt$|$Pt=C$", 1],
+        ["If the solution of the differential equation $\\frac{dy}{dx}=\\frac{ax+3}{2y+f}$ represents a circle, then the value of a is", "2|$-2$|1|$-1$", 1],
+        ["The slope at any point of a curve $y=f(x)$ is given by $\\frac{dy}{dx}=3x^2$ and it passes through $(-1, 1)$. Then the equation of the curve is", "$y=x^3+2$|$y=3x^2+4$|$y=3x^3+4$|$y=x^3+5$", 0]
+    ],
+    "11": [
+        ["Let X be random variable with probability density function $f(x)=\\begin{cases}\\frac{2}{x^3}&x\\ge 1\\\\0&x \\lt 1\\end{cases}$. Which of the following statement is correct?", "both mean and variance exist|mean exists but variance does not exist|both mean and variance do not exist|variance exists but Mean does not exist", 1],
+        ["A rod of length 2l is broken into two pieces at random. The probability density function of the shorter of the two pieces is $f(x)=\\begin{cases}\\frac{1}{l}&0 \\lt x \\lt l\\\\0&l\\le x \\lt 2l\\end{cases}$. The mean and variance of the shorter of the two pieces are respectively", "$\\frac{l}{2},\\frac{l^2}{3}$|$\\frac{l}{2},\\frac{l^2}{6}$|$l,\\frac{l^2}{12}$|$\\frac{l}{2},\\frac{l^2}{12}$", 3],
+        ["Consider a game where the player tosses a six-sided fair die. If the face that comes up is 6 the player wins ₹36, other wise he loses ₹$k^2$, where k is the face that comes up $k=\\{1, 2, 3, 4, 5\\}$. The expected amount to win at this game in ₹ is", "$\\frac{19}{6}$|$-\\frac{19}{6}$|$\\frac{3}{2}$|$-\\frac{3}{2}$", 1],
+        ["A pair of dice numbered 1, 2, 3, 4, 5, 6 of a six-sided die and 1, 2, 3, 4 of a four-sided die is rolled and the sum is determined. Let the random variable X denote this sum. Then the number of elements in the inverse image of 7 is", "1|2|3|4", 3],
+        ["A random variable X has binomial distribution with $n=25$ and $p=0.8$ then standard deviation of X is", "6|4|3|2", 3],
+        ["Let X represent the difference between the number of heads and the number of tails obtained when a coin is tossed n times. Then the possible values of X are", "$i+2n, i=0, 1, 2\\dots n$|$2i-n, i=0, 1, 2, \\dots n$|$n-i, i=0,2, \\dots n$|$2i+2n, i=0, 1,2, \\dots n$", 1],
+        ["If the function $f(x)=\\frac{1}{12}$ for $a \\lt x \\lt b$, represents a probability density function of a continuous random variable X, then which of the following cannot be the value of a and b?", "0 and 12|5 and 17|7 and 19|16 and 24", 3],
+        ["Four buses carrying 160 students from the same school arrive at a football stadium. The buses carry, respectively, 42, 36, 34, and 48 students. One of the students is randomly selected. Let X denote the number of students that were on the bus carrying the randomly selected student. One of the 4 bus drivers is also randomly selected. Let Y denote the number of students on that bus. Then E(X) and E(Y) respectively are", "50, 40|40, 50|40.75, 40|41, 41", 2],
+        ["Two coins are to be flipped. The first coin will land on heads with probability 0.6, the second with Probability 0.5. Assume that the results of the flips are independent, and let X equal the total number of heads that result. The value of E(X) is", "0.11|1.1|11|1", 1],
+        ["On a multiple-choice exam with 3 possible destructives for each of the 5 questions, then probability that a student will get 4 or more correct answers just by guessing is", "$\\frac{11}{243}$|$\\frac{3}{8}$|$\\frac{1}{243}$|$\\frac{5}{243}$", 0],
+        ["If $P(X=0)=1-P(X=1)$. If $E(X)=3 Var(X)$, then P(X=0) is", "$\\frac{2}{3}$|$\\frac{2}{5}$|$\\frac{1}{5}$|$\\frac{1}{3}$", 0],
+        ["If X is a binomial random variable with expected value 6 and variance 2.4, then P(X=5) is", "$\\binom{10}{5}(\\frac{3}{5})^6(\\frac{2}{5})^4$|$\\binom{10}{5}(\\frac{3}{5})^{10}$|$\\binom{10}{5}(\\frac{3}{5})^4(\\frac{2}{5})^6$|$\\binom{10}{5}(\\frac{3}{5})^5(\\frac{2}{5})^5$", 0],
+        ["The random variable X has the probability density function $f(x)=\\begin{cases}ax+b&0 \\lt x \\lt 1\\\\0&\\text{otherwise}\\end{cases}$ and $E(X)=\\frac{7}{12}$, then a and b are respectively", "1 and $\\frac{1}{2}$|$\\frac{1}{2}$ and 1|2 and 1|1 and 2", 0],
+        ["Suppose that X takes on one of the values 0,1, and 2. If for some constant k, $P(X=i)=kP(X=i-1)$ for i=1,2 and $P(X=0)=\\frac{1}{7}$, then the value of k is", "1|2|3|4", 1],
+        ["Which of the following is a discrete random variable?<br>I. The number of cars crossing a particular signal in a day.<br>II. The number of customers in a queue to buy train tickets at a moment.<br>III. The time taken to complete a telephone call", "I and II|II only|III only|II and III", 0],
+        ["If $f(x)=\\begin{cases}2x&0\\le x\\le a\\\\0&\\text{otherwise}\\end{cases}$ is a probability density function of a random variable, then the value of a is", "1|2|3|4", 0],
+        ["The probability mass function of a random variable is defined as:<br><br><table class='math-table'><tr><th>$x$</th><td>$-2$</td><td>$-1$</td><td>$0$</td><td>$1$</td><td>$2$</td></tr><tr><th>$f(x)$</th><td>$k$</td><td>$2k$</td><td>$3k$</td><td>$4k$</td><td>$5k$</td></tr></table><br>Then $E(X)$ is equal to:", "$\\frac{1}{15}$|$\\frac{1}{10}$|$\\frac{1}{3}$|$\\frac{2}{3}$", 2],
+        ["Let X have a Bernoulli distribution with mean 0.4, then the variance of (2X-3) is", "0.24|0.48|0.6|0.96", 3],
+        ["If in 6 trails, X is a binomial variable which follows the relation $9P(X=4)=P(X=2)$, then the probability of success is", "0.125|0.25|0.375|0.75", 1],
+        ["A computer salesperson knows from his past experience that he sells computers to one in every twenty customers who enter the showroom. What is the probability that he will sell a computer to exactly two of the next three customers?", "$\\frac{57}{20^3}$|$\\frac{57}{20^2}$|$\\frac{19^3}{20^3}$|$\\frac{57}{20}$", 0]
+    ],
+    "12": [
+        ["A binary operation on a set S is a function from", "$S\\to S$|$(S\\times S)\\to S$|$S\\to (S\\times S)$|$(S\\times S)\\to (S\\times S)$", 1],
+        ["Subtraction is not a binary operation in", "$\\mathbb{R}$|$\\mathbb{Z}$|$\\mathbb{N}$|$\\mathbb{Q}$", 2],
+        ["Which one of the following is a binary operation on $\\mathbb{N}$?", "Subtraction|Multiplication|Division|All the above", 1],
+        ["In the set $\\mathbb{R}$ of real numbers '*' is defined as follows. Which one of the following is not a binary operation on $\\mathbb{R}$?", "$a*b=\\min(a,b)$|$a*b=\\max(a,b)$|$a*b=a$|$a*b=a^b$", 3],
+        ["The operation $*$ defined by $a*b=\\frac{ab}{7}$ is not a binary operation on", "$\\mathbb{Q}^+$|$\\mathbb{Z}$|$\\mathbb{R}$|$\\mathbb{C}$", 1],
+        ["In the set $\\mathbb{Q}$ define $a\\odot b=a+b+ab$. For what value of y, $3\\odot(y\\odot 5)=7$?", "$y=\\frac{2}{3}$|$y=-\\frac{2}{3}$|$y=-\\frac{3}{2}$|$y=4$", 1],
+        ["If $a*b=\\sqrt{a^2+b^2}$ on the real numbers then * is", "commutative but not associative|associative but not commutative|both commutative and associative|neither commutative nor associative", 2],
+        ["Which one of the following statements has the truth value T?", "sin x is an even function.|Every square matrix is non-singular|The product of complex number and its conjugate is purely imaginary|$\\sqrt{5}$ is an irrational number", 3],
+        ["Which one of the following statements has truth value F?", "Chennai is in India or $\\sqrt{2}$ is an integer|Chennai is in India or $\\sqrt{2}$ is an irrational number|Chennai is in China or $\\sqrt{2}$ is an integer|Chennai is in China or $\\sqrt{2}$ is an irrational number", 2],
+        ["If a compound statement involves 3 simple statements, then the number of rows in the truth table is", "9|8|6|3", 1],
+        ["Which one is the inverse of the statement $(p\\vee q)\\to(p\\wedge q)$?", "$(p\\wedge q)\\to(p\\vee q)$|$\\neg(p\\vee q)\\to(p\\wedge q)$|$(\\neg p\\vee\\neg q)\\to(\\neg p\\wedge\\neg q)$|$(\\neg p\\wedge\\neg q)\\to(\\neg p\\vee\\neg q)$", 3],
+        ["Which one is the contrapositive of the statement $(p\\vee q)\\to r$?", "$\\neg r\\to(\\neg p\\wedge\\neg q)$|$\\neg r\\to(p\\vee q)$|$r\\to(p\\wedge q)$|$p\\to(q\\vee r)$", 0],
+        ["The truth table for $(p\\wedge q)\\vee\\neg q$ is given below:<br><br><table class='math-table'><tr><th>$p$</th><th>$q$</th><th>$(p\\wedge q)\\vee(\\neg q)$</th></tr><tr><td>$T$</td><td>$T$</td><td>(a)</td></tr><tr><td>$T$</td><td>$F$</td><td>(b)</td></tr><tr><td>$F$</td><td>$T$</td><td>(c)</td></tr><tr><td>$F$</td><td>$F$</td><td>(d)</td></tr></table><br>Which one of the following is true?", "TTTT|TFTT|TTFT|TFFF", 1],
+        ["In the last column of the truth table for $\\neg(p\\vee\\neg q)$ the number of final outcomes of the truth value 'F' are", "1|2|3|4", 2],
+        ["Which one of the following is incorrect? For any two propositions p and q, we have", "$\\neg(p\\vee q)\\equiv\\neg p\\wedge\\neg q$|$\\neg(p\\wedge q)\\equiv\\neg p\\vee\\neg q$|$\\neg(p\\vee q)\\equiv\\neg p\\vee\\neg q$|$\\neg(\\neg p)\\equiv p$", 2],
+        ["<table class='math-table'><tr><th>$p$</th><th>$q$</th><th>$(p\\wedge q)\\to\\neg p$</th></tr><tr><td>$T$</td><td>$T$</td><td>(a)</td></tr><tr><td>$T$</td><td>$F$</td><td>(b)</td></tr><tr><td>$F$</td><td>$T$</td><td>(c)</td></tr><tr><td>$F$</td><td>$F$</td><td>(d)</td></tr></table><br>Which one of the following is correct for the truth value of $(p\\wedge q)\\to\\neg p$?", "TTTT|FTTT|FFTT|TTTF", 1],
+        ["The dual of $\\neg(p\\vee q)\\vee[p\\vee(p\\wedge\\neg r)]$ is", "$\\neg(p\\wedge q)\\wedge[p\\vee(p\\wedge\\neg r)]$|$(\\neg p\\vee\\neg q)\\wedge[p\\wedge(p\\vee\\neg r)]$|$\\neg(p\\wedge q)\\wedge[p\\wedge(p\\wedge r)]$|$\\neg(p\\wedge q)\\wedge[p\\wedge(p\\vee\\neg r)]$", 3],
+        ["The proposition $p\\wedge(\\neg p\\vee q)$ is", "a tautology|a contradiction|logically equivalent to $p\\wedge q$|logically equivalent to $p\\vee q$", 2],
+        ["Determine the truth value of each of the following statements:<br><br>(a) 4+2=5 and 6+3=9<br>(b) 3+2=5 and 6+1=7<br>(c) 4+5=9 and 1+2=4<br>(d) 3+2=5 and 4+7=11", "FTFT|TFTF|TTFF|FFTT", 0],
+        ["Which one of the following is not true?", "Negation of a negation of a statement is the statement itself.|If the last column of the truth table contains only T then it is a tautology.|If the last column of its truth table contains only F then it is a contradiction|If p and q are any two statements then $p\\leftrightarrow q$ is a tautology.", 3]
+    ]
+};
+
+// Aggregation Arrays
+let masterTest = []; let volume1 = []; let volume2 = [];
+
+for (let i = 1; i <= 12; i++) {
+    let chapterQs = rawDB[i.toString()] || [];
+    let formattedQs = chapterQs.map(q => ({ q: q[0], o: q[1].split('|'), a: q[2] }));
+    masterTest = masterTest.concat(formattedQs);
+    if (i <= 6) volume1 = volume1.concat(formattedQs);
+    if (i > 6)  volume2 = volume2.concat(formattedQs);
+    rawDB[i.toString()] = formattedQs;
+}
+
+let currentQuestions = [];
+let userResponses = [];
+let currentTotal = 0;
+
+function startQuiz() {
+    initAudio();
+
+    const name = document.getElementById('studentName').value;
+    const school = document.getElementById('schoolName').value;
+    const cls = document.getElementById('studentClass').value;
+    const grp = document.getElementById('studentGroup').value;
+
+    if (!name || !school) { alert("Please fill in your Name and School details."); return; }
+
+    document.getElementById('display-name').innerText = name;
+    document.getElementById('display-school').innerText = school;
+    document.getElementById('display-class').innerText = cls + ' - ' + grp;
+    document.getElementById('rep-name').innerText = name;
+    document.getElementById('rep-school').innerText = school;
+    document.getElementById('rep-class').innerText = cls + ' - ' + grp;
+    document.getElementById('rep-attempt').innerText = "TN-12-MAT-" + Math.floor(100000 + Math.random() * 900000);
+
+    document.getElementById('registration-section').classList.add('hidden');
+    document.getElementById('quiz-section').classList.remove('hidden');
+
+    renderQuestions();
+}
+
+function shuffleArray(array) {
+    let shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questions-container');
+    const chapterKey = document.getElementById('chapterSelect').value;
+    const orderMode = document.getElementById('orderSelect').value;
+
+    container.innerHTML = '';
+    userResponses = [];
+
+    if (chapterKey === "master") currentQuestions = [...masterTest];
+    else if (chapterKey === "vol1") currentQuestions = [...volume1];
+    else if (chapterKey === "vol2") currentQuestions = [...volume2];
+    else currentQuestions = rawDB[chapterKey] ? [...rawDB[chapterKey]] : [];
+
+    if (orderMode === 'shuffled') currentQuestions = shuffleArray(currentQuestions);
+    
+    currentTotal = currentQuestions.length;
+    
+    for(let i=0; i<currentTotal; i++){
+        userResponses.push({ attempted: false, selectedIdx: -1, correctIdx: parseInt(currentQuestions[i].a), isCorrect: false });
+    }
+
+    updateScoreUI();
+
+    const optionLabels = ['a', 'b', 'c', 'd'];
+
+    currentQuestions.forEach((qObj, index) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question-box';
+        
+        let optionsHtml = '';
+        qObj.o.forEach((opt, optIndex) => {
+            optionsHtml += `
+                <label class="option-label" id="lbl-q${index}-o${optIndex}">
+                    <input type="radio" name="q${index}" value="${optIndex}" 
+                        onclick="handleAnswer(${index}, ${optIndex})">
+                    <div class="custom-radio"></div>
+                    <span class="opt-letter">(${optionLabels[optIndex]})</span>
+                    <span>${opt}</span>
+                    <i id="icon-q${index}-o${optIndex}" class="fa-solid status-icon"></i>
+                </label>
+            `;
+        });
+
+        qDiv.innerHTML = `
+            <div class="q-number"><i class="fa-solid fa-clipboard-question"></i> Question No: ${index + 1}</div>
+            <div class="q-text">${qObj.q}</div>
+            <div class="options-grid">${optionsHtml}</div>
+        `;
+        container.appendChild(qDiv);
+    });
+
+    MathJax.typesetPromise();
+}
+
+function handleAnswer(qIndex, optIndex) {
+    if (userResponses[qIndex].attempted) return; 
+    
+    const qObj = currentQuestions[qIndex];
+    const correctIndex = parseInt(qObj.a);
+
+    userResponses[qIndex].attempted = true;
+    userResponses[qIndex].selectedIdx = optIndex;
+    
+    let isAnsCorrect = (optIndex === correctIndex);
+    userResponses[qIndex].isCorrect = isAnsCorrect;
+
+    playSound(isAnsCorrect);
+
+    qObj.o.forEach((opt, idx) => {
+        const radio = document.querySelector(`input[name="q${qIndex}"][value="${idx}"]`);
+        radio.disabled = true;
+        
+        const label = document.getElementById(`lbl-q${qIndex}-o${idx}`);
+        const icon = document.getElementById(`icon-q${qIndex}-o${idx}`);
+        
+        if (idx === correctIndex) {
+            label.classList.add('correct-answer');
+            icon.classList.add('fa-check');
+        }
+        if (idx === optIndex && optIndex !== correctIndex) {
+            label.classList.add('wrong-answer');
+            icon.classList.add('fa-xmark');
+        }
+    });
+
+    updateScoreUI();
+}
+
+function updateScoreUI() {
+    let correctCount = userResponses.filter(r => r.isCorrect).length;
+    let answeredCount = userResponses.filter(r => r.attempted).length;
+    document.getElementById('score-display').innerText = `${correctCount} / ${currentTotal} (${answeredCount} Completed)`;
+}
+
+function generateReport() {
+    document.getElementById('quiz-section').classList.add('hidden');
+    document.getElementById('report-section').classList.remove('hidden');
+
+    let correctCount = userResponses.filter(r => r.isCorrect).length;
+    let wrongCount = userResponses.filter(r => r.attempted && !r.isCorrect).length;
+    let percent = currentTotal > 0 ? Math.round((correctCount / currentTotal) * 100) : 0;
+
+    document.getElementById('rep-correct').innerText = correctCount;
+    document.getElementById('rep-wrong').innerText = wrongCount;
+    document.getElementById('rep-total').innerText = currentTotal;
+    document.getElementById('rep-perc').innerText = percent + "%";
+
+    let ringColor = "#b91c1c"; let remark = "Needs Practice";
+    if(percent >= 80) { ringColor = "#059669"; remark = "Excellent"; }
+    else if(percent >= 50) { ringColor = "#ea580c"; remark = "Good"; }
+    
+    document.getElementById('rep-circle').style.borderColor = ringColor;
+    document.getElementById('rep-perc').style.color = ringColor;
+    document.getElementById('rep-remark').innerText = remark;
+
+    let revContainer = document.getElementById('review-container');
+    revContainer.innerHTML = '';
+
+    currentQuestions.forEach((qObj, i) => {
+        let r = userResponses[i];
+        let userStr = r.attempted ? qObj.o[r.selectedIdx] : "Not Attempted";
+        let markStr = "";
+        
+        if(r.attempted) {
+            markStr = r.isCorrect ? `<span class="text-green"><i class="fa-solid fa-check"></i> (Correct)</span>` : `<span class="text-red"><i class="fa-solid fa-xmark"></i> (Wrong)</span>`;
+        } else {
+            markStr = `<span class="text-red"><i class="fa-solid fa-xmark"></i> (Wrong)</span>`;
+        }
+
+        let boxHtml = `
+            <div class="review-box">
+                <div class="review-q">Question No: ${i+1}. ${qObj.q}</div>
+                <div class="review-ans"><b class="text-red">Your Answer:</b> ${userStr} ${markStr}</div>
+                <div class="review-ans"><b class="text-blue">Correct Answer:</b> ${qObj.o[qObj.a]}</div>
+            </div>
+        `;
+        revContainer.innerHTML += boxHtml;
+    });
+
+    MathJax.typesetPromise();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let topBtn = document.getElementById("scrollTopBtn");
+window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) topBtn.style.display = "block";
+    else topBtn.style.display = "none";
+};
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>

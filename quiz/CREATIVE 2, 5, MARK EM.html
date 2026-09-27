@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Questions Compilation - Complete</title>
+    
+    <!-- MathJax Configuration -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          packages: {'[+]': ['cases', 'amsmath']}
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Times New Roman', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Print Button Styles */
+        .print-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .print-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        table.main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        .main-table th, .main-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e6ed;
+            text-align: left;
+            line-height: 1.6;
+            vertical-align: top;
+        }
+        .main-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.95em;
+        }
+        .main-table tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
+        .main-table tr:hover {
+            background-color: #f1f5f9;
+        }
+        .q-num {
+            font-weight: bold;
+            color: #34495e;
+            width: 5%;
+        }
+        .question {
+            width: 80%;
+        }
+        .tag-container {
+            width: 15%;
+            text-align: right;
+        }
+        .year-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            color: #d63031;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+        .alt-tag {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #4a235a;
+        }
+        .partial-tag {
+            background: #e0e0e0;
+            color: #555;
+            font-size: 0.75em;
+        }
+
+        /* Inner Table Styles for Statistics Questions */
+        table.inner-table {
+            border-collapse: collapse;
+            margin: 10px 0;
+            background-color: #fff;
+            width: auto;
+        }
+        .inner-table th, .inner-table td {
+            border: 1px solid #bdc3c7;
+            padding: 8px 15px;
+            text-align: center;
+        }
+        .inner-table th {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            font-weight: 500;
+            text-transform: none;
+        }
+
+        .footer-banner {
+            margin-top: 30px;
+            padding: 15px 25px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: Center;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Print Specific CSS */
+        @media print {
+            body {
+                /* Forces background colors and gradients to print */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background-color: #f4f7fa;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+            /* Removes the default border fallback you had to preserve the colorful tags */
+            .year-tag {
+                box-shadow: none;
+                border: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    <h1>10 TH MATHEMATICS PUBLIC EXAM PREPARATION-2026</h1>
+    <h2>Creative Questions Bank (SEP-2020 to JULY-2025)</h2>
+    <h2>2 MARK AND 5 MARK COMPLETE QUESTIONS</h2>
+    
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th class="q-num">S.No.</th>
+                <th class="question">CREATIVE QUESTIONS</th>
+                <th class="tag-container">YEAR / EXAM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Sets & Relations -->
+            <tr>
+                <td class="q-num">1.</td>
+                <td class="question">Let $A = \{0,1,2,3\}$ and $B = \{1,3,5,7,9\}$ be two sets. Let $f:A \rightarrow B$ be a function given by $f(x) = 2x + 1$. Represent this function i) by arrow diagram ii) in a table form iii) as a set of ordered pairs iv) in a graphical form.</td>
+                <td class="tag-container"><span class="year-tag">[APR-24]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">2.</td>
+                <td class="question">Let $A = \{x \in W / x < 3\}, B = \{x \in N / 1 < x \le 5\}$ and $C = \{3,5,7\}$ verify that $A \times (B \cup C) = (A \times B) \cup (A \times C)$</td>
+                <td class="tag-container"><span class="year-tag">[APR-23]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">3.</td>
+                <td class="question">Let $A = \{x \in W / 0 < x < 5\}, B = \{x \in W / 0 \le x < 2\}, C = \{x \in W / x < 3\}$ then verify that $A \times (B \cap C) = (A \times B) \cap (A \times C)$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+
+            <!-- Sequences and Series -->
+            <tr>
+                <td class="q-num">4.</td>
+                <td class="question">Check whether the sequence $\sqrt{2}, \sqrt{8}, \sqrt{18}, \sqrt{32}, \sqrt{50} \dots$ is an A.P or not? If it is an A.P, then find the common difference.</td>
+                <td class="tag-container"><span class="year-tag">[APR-25]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">5.</td>
+                <td class="question">Find the value of $1^2 + 2^2 + 3^2 + \dots + 10^2$ and hence deduce $2^2 + 4^2 + 6^2 + \dots + 20^2$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">6.</td>
+                <td class="question">Find the common difference of an A.P in which $t_{18} - t_{14} = 32$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">7.</td>
+                <td class="question">Which term of the A.P. $21, 18, 15, \dots$ is $-81$? State with reason is there any term $0$ in this A.P.?</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">8.</td>
+                <td class="question">If $1^3 + 2^3 + 3^3 + \dots + k^3 = 16900$ then find $1 + 2 + 3 + \dots + k$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">9.</td>
+                <td class="question">In a G.P $\frac{1}{4}, -\frac{1}{2}, 1, -2 \dots$, find $t_{10}$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">10.</td>
+                <td class="question">Find the $3^{\text{rd}}$ and $4^{\text{th}}$ terms of a sequence, if $a_n = \begin{cases} n^2, & \text{if } n \text{ is odd} \\ \frac{n^2}{2}, & \text{if } n \text{ is even} \end{cases}$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">11.</td>
+                <td class="question">An organization plans to plant saplings in 25 streets in a town in such a way that one sapling for the first street, three for the second, nine for the third and so on. How many saplings are needed to complete the work?</td>
+                <td class="tag-container"><span class="year-tag">[MDL, PTA-1]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">12.</td>
+                <td class="question">If $p^2 \times q^1 \times r^4 \times s^3 = 3,15,000$, then find $p, q, r$ and $s$.</td>
+                <td class="tag-container"><span class="year-tag">[APR-23]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">13.</td>
+                <td class="question">find the HCF of (i) 90,15 (ii) 80,25 (iii) 40,16 (iv) 23,12 (v) 93,13</td>
+                <td class="tag-container"><span class="year-tag">[APR-24]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">14.</td>
+                <td class="question">Find the sum to n terms of the series $7 + 77 + 777 + \dots \text{to } n \text{ terms}$</td>
+                <td class="tag-container"><span class="year-tag">[APR-24]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">15.</td>
+                <td class="question">If the sum of the first $p$ terms of an A.P. is $ap^2 + bp$, find its common difference.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">16.</td>
+                <td class="question">Find the sum of all natural numbers between 100 and 1000 which are divisible by 11?</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">17.</td>
+                <td class="question">Find the sum of all 3 digit natural numbers which are divisible by 9.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+
+            <!-- Algebra and Quadratics -->
+            <tr>
+                <td class="q-num">18.</td>
+                <td class="question">Find the value of $p$, when $px^2 + (\sqrt{3} - \sqrt{2})x - 1 = 0$ and $x = \frac{1}{\sqrt{3}}$ is one root of the equation.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">19.</td>
+                <td class="question">If two positive integers $p$ and $q$ are written as $p = a^2b^3$ and $q = a^3b$; $a, b$ are prime numbers, then verify $LCM(p,q) \times HCF(p,q) = pq$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">20.</td>
+                <td class="question">Find the value of $k$ for which the equation $9x^2 + 3kx + 4 = 0$ has real and equal roots.</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">21.</td>
+                <td class="question">Find the sum and product of the roots of equation $8x^2 - 25 = 0$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">22.</td>
+                <td class="question">If $P = \frac{x}{x+y}, Q = \frac{y}{x+y}$ then find $\frac{1}{P^2-Q^2}$</td>
+                <td class="tag-container"><span class="year-tag">[APR-22]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">23.</td>
+                <td class="question">Find the value of $x$, in $x^2 - 4x - 12$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-22]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">24.</td>
+                <td class="question">Determine the nature of roots for the following quadratic equation. $2x^2 - x - 1 = 0$</td>
+                <td class="tag-container"><span class="year-tag">[APR-23]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">25.</td>
+                <td class="question">Determine the nature of the roots of the equation. $(x - 1)^2 + (x - 2)^2 + (x - 3)^2 = 0$</td>
+                <td class="tag-container"><span class="year-tag">[APR-25]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">26.</td>
+                <td class="question">A motor boat whose speed is $18 \text{ km/hr}$ in still water takes 1 hour more to go to $24 \text{ km}$ upstream than to return downstream to the same spot. Find the speed of the stream.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">27.</td>
+                <td class="question">Find two consecutive positive integers, sum of whose squares is 365.</td>
+                <td class="tag-container"><span class="year-tag">[MDL]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">28.</td>
+                <td class="question">A car left 30 minutes later than the scheduled time. In order to reach its destination 150 km away in time, it has to increase its speed by 25 km/hr from its usual speed. Find its usual speed.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">29.</td>
+                <td class="question">If $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}, B = \begin{bmatrix} 0 & 3 \\ -1 & 5 \end{bmatrix}, C = \begin{bmatrix} -1 & 5 \\ 1 & 3 \end{bmatrix}$, prove that $A(BC) = (AB)C$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">30.</td>
+                <td class="question">A train covered a certain distance at a uniform speed. If the train would have been 10km/hr faster it would have taken 2 hour less than the scheduled time and if the train were slower by 10km/hr, it would have taken 3 hour more than the scheduled time. Find the distance covered by the train.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">31.</td>
+                <td class="question">If $A = \begin{bmatrix} 1 & -1 \\ 2 & 3 \end{bmatrix}$, show that $A^2 - 4A + 5I_2 = 0$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">32.</td>
+                <td class="question">Simplify $\frac{a^2-16}{a^3-8} \times \frac{2a^2-3a-2}{2a^2+9a+4} \div \frac{3a^2-11a-4}{a^2-2a+4}$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">33.</td>
+                <td class="question">Solve the equation $\frac{1}{x+1} + \frac{2}{x+2} = \frac{4}{x+4}$ where $x + 1 \neq 0, x + 2 \neq 0$ and $x + 4 \neq 0$ using quadratic formula.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">34.</td>
+                <td class="question">Find the values of $a$ and $b$ if $16x^4 - 24x^3 + (a - 1)x^2 + (b + 1)x + 49$ is a perfect square.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">35.</td>
+                <td class="question">The base of a triangle is 4 cm longer than its altitude. If the area of the triangle is 48 sq.cm, then find its base and altitude.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-1]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">36.</td>
+                <td class="question">Solve: $2x + y + 4z = 15, x - 2y + 3z = 13, 3x + y - z = 2$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-1]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">37.</td>
+                <td class="question">Find the square root of the following polynomials by division method $\frac{1}{x^4} - \frac{6}{x^3} + \frac{13}{x^2} + \frac{m}{x} + n$. find the values of $m, n$.</td>
+                <td class="tag-container"><span class="year-tag">[MDL]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">38.</td>
+                <td class="question">Find the square root of the expression $\frac{x^2}{y^2} - \frac{10x}{y} + 27 - \frac{10y}{x} + \frac{y^2}{x^2}$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">39.</td>
+                <td class="question">Find the square root of the expression $\frac{4x^2}{y^2} + \frac{20x}{y} + 13 - \frac{30y}{x} + \frac{9y^2}{x^2}$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3, MDL]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">40.</td>
+                <td class="question">If the equation $(1 + m^2)x^2 + 2mcx + c^2 - a^2 = 0$ has equal roots, then prove that $c^2 = a^2(1 + m^2)$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-21]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">41.</td>
+                <td class="question">Solve: $6x + 2y - 5z = 13, 3x + 3y - 2z = 13, 7x + 5y - 3z = 26$</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+
+            <!-- Geometry -->
+            <tr>
+                <td class="q-num">42.</td>
+                <td class="question">$P$ and $Q$ are points on sides $AB$ and $AC$ respectively of $\Delta ABC$. If $AP = 3\text{cm}, PB = 6\text{cm}, AQ = 5\text{cm}$ and $QC = 10\text{cm}$. Show that $BC = 3PQ$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">43.</td>
+                <td class="question">In $\Delta ABC$, with $\angle B = 90^\circ, BC = 6\text{cm} \ \& \ AB = 8\text{cm}$. $D$ is a point on $AC$ such that $AD = 2\text{cm} \ \& \ E$ is the midpoint of $AB$. Join $D$ to $E$ and extend it to meet at $F$. Find $BF$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-1]</span></td>
+            </tr>
+
+            <!-- Coordinate Geometry & Lines -->
+            <tr>
+                <td class="q-num">44.</td>
+                <td class="question">The vertices of a triangle are $A(-1,3), B(1,-1)$ and $C(5,1)$. Find the length of the median through the vertex $C$.</td>
+                <td class="tag-container"><span class="year-tag">[MDL]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">45.</td>
+                <td class="question">Show that the straight lines $3x - 5y + 7 = 0 \ \& \ 15x + 9y + 4 = 0$ are perpendicular.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">46.</td>
+                <td class="question">Find the equation of a line passing through the point $(-4,3)$ and having slope $-\frac{7}{5}$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-1]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">47.</td>
+                <td class="question">$PQRS$ is a rhombus. Its diagonals $PR$ and $QS$ intersect at the point $M \ \&$ satisfy $QS = 2PR$. if the coordinates of $S$ and $M$ are $(1,1)$ and $(2,-1)$ respectively. Find the coordinates of $P$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">48.</td>
+                <td class="question">A straight line $AB$ cuts the co-ordinate axes at $A$ and $B$. If the mid-point of $AB$ is $(2,3)$, find the equation of $AB$.</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">49.</td>
+                <td class="question">A cat is located at the point $(6,4)$ in $xy$- plane. A bottle of milk is kept at $(-5,-11)$. The cat wish to consume the milk travelling through shortest possible distance. Find the equation of the path it needs to take its milk.</td>
+                <td class="tag-container"><span class="year-tag">[JUL-22]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">50.</td>
+                <td class="question">Find the equation of a straight line parallel to X-axis and passing through the point of intersection of the lines $7x - 3y = -12$ and $2y = x + 3$.</td>
+                <td class="tag-container"><span class="year-tag">[APR-23]</span></td>
+            </tr>
+
+            <!-- Trigonometry -->
+            <tr>
+                <td class="q-num">51.</td>
+                <td class="question">Show that $\sqrt{\frac{\sec \theta - \tan \theta}{\sec \theta + \tan \theta}} = \frac{1 - \sin \theta}{\cos \theta}$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">52.</td>
+                <td class="question">A 1.2m tall girls spots a balloon moving with the wind in a horizontal line at a height of 88.2m from the ground. The angle of elevation of the balloon from the eyes of the girl at an instant is $60^\circ$. After some time the angle of elevation reduces to $30^\circ$. find the distance travelled by the balloon during the interval.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+
+            <!-- Mensuration -->
+            <tr>
+                <td class="q-num">53.</td>
+                <td class="question">A cylindrical bucket, $32cm$ high and with radius of base $18cm$, is filled with sand completely. This bucket is emtied on the ground and a conical heap of sand is formed. If the height of the conical heap is $24cm$, find the radius and slant height of the heap.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[MDL, PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">54.</td>
+                <td class="question">Find the number of spherical lead shots, each of diameter $6cm$ that can be made from a solid cuboids of lead having dimensions $24cm \times 22cm \times 12cm$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">55.</td>
+                <td class="question">A solid right circular cylinder has radius 7 cm and height 10 cm. Find its (i) curved surface area and (ii) total surface area.</td>
+                <td class="tag-container"></td>
+            </tr>
+            <tr>
+                <td class="q-num">56.</td>
+                <td class="question">If the total surface area of a solid right circular cylinder is 880 sq.cm and its radius is 10m, find its height.</td>
+                <td class="tag-container"></td>
+            </tr>
+            <tr>
+                <td class="q-num">57.</td>
+                <td class="question">The surface area of a sphere is $616 \text{ cm}^2$. find its height.</td>
+                <td class="tag-container"></td>
+            </tr>
+            <tr>
+                <td class="q-num">58.</td>
+                <td class="question">Find the volume of the iron used to make a hollow cylinder of height 9 cm and whose internal and external radii are 3 cm and 5 cm respectively.</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">59.</td>
+                <td class="question">If the slant height of the frustum cone is 10cm and perimeters of its circular base are 18cm and 28cm respectively. What is the curved surface area of the frustum?</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">60.</td>
+                <td class="question">A well of diameter 3m is dug 14m deep. The earth, taken out of it has been spread evenly all around it in the shape of a circular ring of width 4m to form an embankment. Find the height of the embankment.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">61.</td>
+                <td class="question">A shuttle cock used for playing badminton has the shape of a frustum of a cone is mounted on a hemisphere. The diameters of the frustum are $5 \ cm$ and $2 \ cm$. The height of the entire shuttle cock is $7 \ cm$. Find its external surface area.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">62.</td>
+                <td class="question">If the base area of a hemispherical solid is 1386 sq. metres, then find its (i) Curved surface area (ii) Total surface Area</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">63.</td>
+                <td class="question">If the radii of the ends of a bucket 24 cm high are 5 cm and 15 cm. Find the surface area of the bucket.</td>
+                <td class="tag-container"></td>
+            </tr>
+            <tr>
+                <td class="q-num">64.</td>
+                <td class="question">The heights of two right circular cones are in the ratio $1:2$ and the perimeters of their bases are in the ratio $3:4$. Find the ratio of their volumes.</td>
+                <td class="tag-container"><span class="year-tag">[JUL-21]</span></td>
+            </tr>
+
+            <!-- Statistics and Probability -->
+            <tr>
+                <td class="q-num">65.</td>
+                <td class="question">The standard deviation of 20 observations is $\sqrt{6}$. Is each observation is multiplied by 3, find the standard deviation and variance of the resulting observations.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-1]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">66.</td>
+                <td class="question">If $A$ is an event of a random experiment such that $P(A): P(\bar{A}) = 13:5$ and $n(S) = 180$ then find (i) $P(A)$ (ii) $n(\bar{A})$</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">67.</td>
+                <td class="question">The scores of a cricketer in 7 matches are 70, 80, 60, 50, 40, 90, 95. Find the S.D</td>
+                <td class="tag-container"><span class="year-tag">[JUL-20]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">68.</td>
+                <td class="question">Find the co-efficient of variation of the data 18, 20, 15, 12, 25.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-3]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">69.</td>
+                <td class="question">
+                    The consumption of number of guava and orange on a particular week by a family are given below.
+                    <table class="inner-table">
+                        <tr>
+                            <th>Number of Guavas</th><td>3</td><td>5</td><td>6</td><td>4</td><td>3</td><td>5</td><td>4</td>
+                        </tr>
+                        <tr>
+                            <th>Number of Oranges</th><td>1</td><td>3</td><td>7</td><td>9</td><td>2</td><td>6</td><td>2</td>
+                        </tr>
+                    </table>
+                    Which fruit is consistently consumed by the family?
+                </td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">70.</td>
+                <td class="question">
+                    The temperature of two cities $A$ and $B$ in a winter season are given below.
+                    <table class="inner-table">
+                        <tr>
+                            <th>Temperature of city A (in degree Celsius)</th><td>18</td><td>20</td><td>22</td><td>24</td><td>26</td>
+                        </tr>
+                        <tr>
+                            <th>Temperature of city B (in degree Celsius)</th><td>11</td><td>14</td><td>15</td><td>17</td><td>18</td>
+                        </tr>
+                    </table>
+                    Find which city is more consistent in temperature changes?
+                </td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">71.</td>
+                <td class="question">Two dice, one blue and one grey, are thrown at the same time. Write down all the possible outcomes. What is the probability that the sum of the two numbers appearing on the top of the dice is (i) 8 (ii) 13 (iii) less than or equal to 12</td>
+                <td class="tag-container"><span class="year-tag">[MDL]</span></td>
+            </tr>
+
+            <!-- Relations and Functions -->
+            <tr>
+                <td class="q-num">72.</td>
+                <td class="question">$R = \{(x, -2), (-5, y)\}$ represents the identity function, find the values of $x$ and $y$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-6]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">73.</td>
+                <td class="question">Let $A = \{1,2,3,4\}$ and $B = \mathbb{N}$. Let $f: A \rightarrow B$ be defined by $f(x) = x^2$. Find (i) The range of $f$ (ii) Identify the type of function</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-5]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">74.</td>
+                <td class="question">Let $A = \{1,2,3, \dots 100\}$ and $R$ be the relation defined as "is cube of" on $A$. Find the domain and range of $R$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-4]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">75.</td>
+                <td class="question">A relation $R$ is given by the set $\{(x,y) / y = x^2 + 3, x \in \{0,1,2,3,4,5\}\}$. Determine its domain and range.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[PTA-2]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">76.</td>
+                <td class="question">Given that $A = \begin{bmatrix} -1 & 1 \\ a & b \end{bmatrix}$ where $a,b \ge 0$ Find Value of $a$ and $b$ if $A^2=I$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[JULY-25]</span></td>
+            </tr>
+            <tr>
+                <td class="q-num">77.</td>
+                <td class="question">Find the Equation of a Straight line Perpendicular to $2x-3y+6=0$ and Passes through the mid point of the Line segment Joining the points $(-4,-7)$ and $(6,5)$.</td>
+                <td class="tag-container"><span class="year-tag alt-tag">[JULY-25]</span></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <div class="footer-banner">
+        Prepared by : <span class="highlight">Y.SEENIVASAN, M.SC, B.Ed, MATHS TEACHER - 8489880553</span>
+    </div>
+</div>
+
+</body>
+</html>

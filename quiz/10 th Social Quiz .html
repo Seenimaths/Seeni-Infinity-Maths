@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Social Science - Master Quiz Template</title>
+    
+    <!-- Modern Web Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering Math Equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Canvas Confetti for Burst Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            /* Social Science Related Background (Vintage Map) */
+            background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            /* Dark overlay to make the card stand out */
+            background: rgba(15, 23, 42, 0.75); 
+            z-index: -2;
+        }
+
+        /* --- Background Animation Icons --- */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-animation span {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatUp 15s linear infinite;
+            bottom: -100px;
+        }
+        .bg-animation span:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; }
+        .bg-animation span:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; font-size: 2rem; }
+        .bg-animation span:nth-child(3) { left: 50%; animation-duration: 15s; animation-delay: 5s; font-size: 4rem; }
+        .bg-animation span:nth-child(4) { left: 70%; animation-duration: 20s; animation-delay: 1s; font-size: 2.5rem; }
+        .bg-animation span:nth-child(5) { left: 85%; animation-duration: 14s; animation-delay: 4s; }
+        .bg-animation span:nth-child(6) { left: 20%; animation-duration: 16s; animation-delay: 7s; }
+        .bg-animation span:nth-child(7) { left: 60%; animation-duration: 19s; animation-delay: 8s; font-size: 3.5rem; }
+        .bg-animation span:nth-child(8) { left: 40%; animation-duration: 13s; animation-delay: 3s; font-size: 2.8rem; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Main Card Styling --- */
+        .card {
+            /* Lite Brown Background Color */
+            background: #f4ead5; 
+            width: 100%;
+            max-width: 850px;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            overflow: hidden;
+            position: relative;
+            margin-top: 60px; 
+            margin-bottom: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.95), rgba(178, 31, 31, 0.95), rgba(253, 187, 45, 0.95));
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid #f39c12;
+            position: relative;
+        }
+
+        .header h1 { margin: 0; font-size: 28px; font-weight: 800; line-height: 1.3; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); letter-spacing: 0.5px; }
+        .header h2 { margin: 8px 0 0; font-size: 14px; color: #f1c40f; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* --- Creator Profile Tag --- */
+        .prepared-by {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            width: max-content;
+            margin: 20px auto 0;
+            padding: 10px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 2px solid #f39c12;
+        }
+
+        .prepared-by .icon {
+            background: linear-gradient(135deg, #e67e22, #d35400); color: white; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 24px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .prepared-by div { text-align: left; }
+        .prepared-by div h4 { margin: 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+        .prepared-by div p { margin: 2px 0 0; font-weight: 800; color: #2c3e50; font-size: 18px; }
+
+        .content { padding: 35px; }
+
+        /* --- New Attractive Next Button --- */
+        .next-btn-container { display: flex; justify-content: flex-end; margin-top: 25px; display: none; }
+        .next-btn-small { 
+            background: linear-gradient(45deg, #1abc9c, #2ecc71); 
+            color: white; 
+            border: none; 
+            padding: 14px 35px; 
+            border-radius: 50px; 
+            font-size: 16px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-family: 'Poppins', sans-serif; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .next-btn-small::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .next-btn-small:hover::after { left: 100%; }
+        .next-btn-small:hover { 
+            background: linear-gradient(45deg, #16a085, #27ae60); 
+            transform: translateY(-4px) scale(1.05); 
+            box-shadow: 0 12px 25px rgba(46, 204, 113, 0.6); 
+        }
+
+        /* --- Other Common Styles --- */
+        .input-group { margin-bottom: 25px; }
+        .input-group label.main-label { display: block; font-weight: 700; font-size: 17px; color: #2c3e50; margin-bottom: 12px; border-bottom: 2px dashed #bdc3c7; padding-bottom: 5px;}
+        
+        .checkbox-group {
+            background: rgba(255, 255, 255, 0.7); border: 2px solid #e0e6ed; padding: 15px; border-radius: 12px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .checkbox-group label { font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 10px; margin: 0; color: #34495e; font-weight: 600; transition: 0.2s;}
+        .checkbox-group label:hover { color: #d35400; }
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: #d35400; cursor: pointer;}
+
+        .subject-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;
+            background: rgba(255, 255, 255, 0.7); border: 2px solid #e0e6ed; padding: 15px; border-radius: 12px;
+        }
+        .subject-col h4 { margin-top: 0; margin-bottom: 10px; color: #d35400; font-weight: 800; border-bottom: 2px solid #e0e6ed; padding-bottom: 5px; font-size: 15px; text-transform: uppercase;}
+        .subject-col label { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; cursor: pointer; margin-bottom: 8px; color: #2c3e50; font-weight: 600; line-height: 1.2; }
+        .subject-col input[type="checkbox"] { width: 16px; height: 16px; accent-color: #d35400; cursor: pointer; flex-shrink: 0; margin-top: 1px;}
+
+        .select-box { width: 100%; padding: 15px; border: 2px solid #e0e6ed; border-radius: 10px; font-size: 15px; background: #fff; outline: none; font-family: 'Poppins', sans-serif; font-weight: 600; color: #2c3e50; cursor: pointer;}
+        .select-box:focus { border-color: #e67e22; box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2); }
+
+        .btn {
+            width: 100%; background: linear-gradient(135deg, #f39c12, #d35400); color: white; border: none; padding: 18px; border-radius: 12px;
+            font-size: 18px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Poppins', sans-serif;
+        }
+        .btn:hover { background: linear-gradient(135deg, #e67e22, #c0392b); transform: translateY(-3px); box-shadow: 0 12px 25px rgba(230, 126, 34, 0.6); }
+
+        #quiz-screen, #result-screen { display: none; }
+        
+        .timer-container { width: 100%; background: #ecf0f1; height: 10px; }
+        .timer-bar { height: 100%; width: 100%; background: #2ecc71; transition: width 1s linear, background 0.3s; }
+        .timer-text { text-align: right; font-size: 15px; font-weight: 800; padding: 10px 25px; color: #e74c3c; background: rgba(255, 255, 255, 0.7); border-bottom: 2px solid #e0e6ed; }
+
+        .quiz-content { padding: 30px 35px 40px; }
+        
+        .badges-wrap { margin-bottom: 25px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .badge { display: inline-block; background: #3498db; color: white; padding: 6px 15px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        .unit-badge { background: #8e44ad; }
+        
+        .question-text { font-size: 22px; font-weight: bold; color: #2c3e50; margin-bottom: 25px; line-height: 1.6; font-family: 'Cambria', Georgia, serif; }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        
+        .option-btn {
+            background: #ffffff; border: 2px solid #bdc3c7; padding: 15px 20px; border-radius: 12px;
+            text-align: left; cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 15px; width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        
+        .opt-alpha {
+            background: #e0e6ed; color: #2c3e50; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px;
+            width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            flex-shrink: 0; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .opt-text {
+            font-size: 18px; font-weight: 600; color: #2c3e50; font-family: 'Cambria', Georgia, serif; line-height: 1.4;
+            word-wrap: break-word; overflow-wrap: break-word;
+        }
+        
+        .math-wrap { display: inline-block; white-space: normal; }
+
+        .option-btn:hover:not(:disabled) { background: #fdfbf7; border-color: #e67e22; transform: translateX(5px); box-shadow: 0 6px 15px rgba(230, 126, 34, 0.15);}
+        .option-btn:hover:not(:disabled) .opt-alpha { background: #e67e22; color: white; }
+        .option-btn:disabled { cursor: not-allowed; }
+        
+        .option-btn.correct { background: #d4edda; border-color: #28a745; }
+        .option-btn.correct .opt-alpha { background: #28a745; color: white; }
+        
+        .option-btn.wrong { background: #f8d7da; border-color: #dc3545; }
+        .option-btn.wrong .opt-alpha { background: #dc3545; color: white; }
+
+        .fill-input-group { display: flex; gap: 12px; margin-bottom: 20px; }
+        .fill-input { flex: 1; padding: 18px; border: 2px solid #bdc3c7; border-radius: 12px; font-size: 18px; font-family: 'Cambria', serif; font-weight: 600; outline: none; transition: 0.3s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);}
+        .fill-input:focus { border-color: #e67e22; box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);}
+        .submit-btn { background: #e67e22; color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 16px; font-family: 'Poppins', sans-serif; transition: 0.3s; box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);}
+        .submit-btn:hover { background: #d35400; transform: translateY(-2px);}
+
+        .score-display { text-align: center; font-size: 50px; font-weight: 800; color: #e67e22; margin: 25px 0; font-family: 'Poppins', sans-serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+
+        /* Game Overlay Animation */
+        .game-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85);
+            display: flex; justify-content: center; align-items: center; z-index: 10000; visibility: hidden; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .game-overlay.show { visibility: visible; opacity: 1; }
+        .popup-box {
+            background: #fff; padding: 40px 70px; border-radius: 30px; text-align: center;
+            transform: scale(0.5); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 50px rgba(0,0,0,0.6); font-family: 'Poppins', sans-serif; border: 4px solid #f4ead5;
+        }
+        .game-overlay.show .popup-box { transform: scale(1); }
+        
+        @keyframes popup-shake {
+            0%, 100% { transform: scale(1) translateX(0); }
+            20%, 60% { transform: scale(1) translateX(-12px) rotate(-4deg); }
+            40%, 80% { transform: scale(1) translateX(12px) rotate(4deg); }
+        }
+        .game-overlay.show .popup-box.wrong-shake { animation: popup-shake 0.4s ease-in-out; }
+
+        .popup-icon { font-size: 90px; margin-bottom: 15px; line-height: 1; text-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .popup-text { font-size: 32px; font-weight: 800; letter-spacing: 1px; }
+        .theme-correct { color: #27ae60; }
+        .theme-wrong { color: #e74c3c; }
+        
+        #google_translate_wrapper {
+            position: absolute; top: 15px; right: 20px; z-index: 9999; background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #e0e6ed;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Social Science Background Elements -->
+    <div class="bg-animation">
+        <span>🌍</span>
+        <span>📜</span>
+        <span>🏛️</span>
+        <span>⚖️</span>
+        <span>🧭</span>
+        <span>🗺️</span>
+        <span>👑</span>
+        <span>⚓</span>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <!-- Game Overlay Popup -->
+    <div class="game-overlay" id="game-overlay">
+        <div class="popup-box" id="popup-box">
+            <div class="popup-icon" id="popup-icon"></div>
+            <div class="popup-text" id="popup-text"></div>
+        </div>
+    </div>
+
+    <div class="card" id="quiz-card">
+        <!-- Setup Screen -->
+        <div id="setup-screen">
+            <div class="header">
+                <h1>10th Social Science<br>Interactive One Mark Quiz 2026</h1>
+                <h2>TN State Board One Mark Quiz</h2>
+                <!-- NAME TAG ADDED HERE -->
+                <div class="prepared-by">
+                    <div class="icon">S</div>
+                    <div>
+                        <h4>Prepared by</h4>
+                        <p>Y. SEENIVASAN.M.Sc, B.Ed - MATHS TEACHER 8489880553</p>
+                    </div>
+                </div>
+            </div>
+            
+<div class="content">
+                <div class="input-group">
+                    <label class="main-label">📚 1. Select Subjects & Units:</label>
+                    <div class="subject-grid">
+                        <!-- HISTORY -->
+                        <div class="subject-col">
+                            <h4>📜 History</h4>
+                            <label><input type="checkbox" class="unit-cb" value="H1" checked> 1. Outbreak of WWI</label>
+                            <label><input type="checkbox" class="unit-cb" value="H2" checked> 2. World B/W Two Wars</label>
+                            <label><input type="checkbox" class="unit-cb" value="H3" checked> 3. World War II</label>
+                            <label><input type="checkbox" class="unit-cb" value="H4" checked> 4. World After WWII</label>
+                            <label><input type="checkbox" class="unit-cb" value="H5" checked> 5. Social & Rel. Reform</label>
+                            <label><input type="checkbox" class="unit-cb" value="H6" checked> 6. Early Revolts in TN</label>
+                            <label><input type="checkbox" class="unit-cb" value="H7" checked> 7. Anti-Colonial Movements</label>
+                            <label><input type="checkbox" class="unit-cb" value="H8" checked> 8. Nationalism Gandhian</label>
+                            <label><input type="checkbox" class="unit-cb" value="H9" checked> 9. Freedom Struggle TN</label>
+                            <label><input type="checkbox" class="unit-cb" value="H10" checked> 10. Social Transform TN</label>
+                        </div>
+                        <!-- GEOGRAPHY -->
+                        <div class="subject-col">
+                            <h4>🌍 Geography</h4>
+                            <label><input type="checkbox" class="unit-cb" value="G1" checked> 1. India Location</label>
+                            <label><input type="checkbox" class="unit-cb" value="G2" checked> 2. Climate & Vegetation</label>
+                            <label><input type="checkbox" class="unit-cb" value="G3" checked> 3. Agriculture</label>
+                            <label><input type="checkbox" class="unit-cb" value="G4" checked> 4. Resources & Industries</label>
+                            <label><input type="checkbox" class="unit-cb" value="G5" checked> 5. Population & Transport</label>
+                            <label><input type="checkbox" class="unit-cb" value="G6" checked> 6. Physical Geo of TN</label>
+                            <label><input type="checkbox" class="unit-cb" value="G7" checked> 7. Human Geo of TN</label>
+                        </div>
+                        <!-- CIVICS -->
+                        <div class="subject-col">
+                            <h4>🏛️ Civics</h4>
+                            <label><input type="checkbox" class="unit-cb" value="C1" checked> 1. Indian Constitution</label>
+                            <label><input type="checkbox" class="unit-cb" value="C2" checked> 2. Central Government</label>
+                            <label><input type="checkbox" class="unit-cb" value="C3" checked> 3. State Government</label>
+                            <label><input type="checkbox" class="unit-cb" value="C4" checked> 4. India's Foreign Policy</label>
+                            <label><input type="checkbox" class="unit-cb" value="C5" checked> 5. India's Int. Relations</label>
+                        </div>
+                        <!-- ECONOMICS -->
+                        <div class="subject-col">
+                            <h4>💰 Economics</h4>
+                            <label><input type="checkbox" class="unit-cb" value="E1" checked> 1. GDP & Its Growth</label>
+                            <label><input type="checkbox" class="unit-cb" value="E2" checked> 2. Globalization & Trade</label>
+                            <label><input type="checkbox" class="unit-cb" value="E3" checked> 3. Food Security & Nutrition</label>
+                            <label><input type="checkbox" class="unit-cb" value="E4" checked> 4. Government and Taxes</label>
+                            <label><input type="checkbox" class="unit-cb" value="E5" checked> 5. Industrial Clusters TN</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="main-label">🧩 2. Select Question Types:</label>
+                    <div class="checkbox-group" style="grid-template-columns: 1fr 1fr;">
+                        <label><input type="checkbox" class="type-cb" value="mcq" checked> Choose the Correct Answer</label>
+                        <label><input type="checkbox" class="type-cb" value="fill" checked> Fill in the Blanks</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="main-label">🔀 3. Question Order:</label>
+                    <select id="order-select" class="select-box">
+                        <option value="book" selected>Book Order (Sequential)</option>
+                        <option value="shuffle">Shuffled Order (Random)</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="startQuiz()">Start Quiz 🚀</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div class="header" style="padding: 25px; border-radius: 20px 20px 0 0;">
+                <h1 style="font-size: 22px;">10th Social Science Quiz</h1>
+            </div>
+            <div class="timer-container">
+                <div class="timer-bar" id="timer-bar"></div>
+            </div>
+            <div class="timer-text" id="timer-text">⏳ 30s</div>
+
+            <div class="quiz-content">
+                <div class="badges-wrap">
+                    <span class="badge" id="part-badge">Part</span>
+                    <span class="badge unit-badge" id="unit-badge" style="background:#e67e22;">Unit</span>
+                </div>
+                
+                <div class="question-text" id="question-text">Question goes here?</div>
+                
+                <div id="answer-area"></div>
+                
+                <div id="feedback-msg" style="font-weight:800; margin-top:20px; display:none; font-size: 17px; font-family:'Poppins', sans-serif;"></div>
+
+                <!-- ATTRACTIVE NEXT BUTTON -->
+                <div class="next-btn-container" id="next-btn-wrapper">
+                    <button class="next-btn-small" onclick="nextQuestion()">Next Question ➡️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <div class="header" style="border-radius: 20px 20px 0 0;">
+                <h1>🎉 Quiz Completed!</h1>
+            </div>
+            <div class="content" style="text-align: center; font-family: 'Poppins', sans-serif;">
+                <h3 style="color:#2c3e50; font-size: 28px; margin-top: 15px; font-weight: 800;">Outstanding Effort!</h3>
+                <div class="score-display" id="final-score">0 / 0</div>
+                <p style="color:#7f8c8d; margin-bottom: 40px; font-weight: 600; font-size: 18px;">Keep practicing and scoring high marks.</p>
+                <button class="btn" onclick="location.reload()">Play Again 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ta,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // --- Web Audio API Setup ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) { audioCtx = new AudioContext(); }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+        }
+
+        function playTone(freq, type, dur, timeOffset = 0) {
+            initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime + timeOffset);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + timeOffset + dur);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start(audioCtx.currentTime + timeOffset);
+            oscillator.stop(audioCtx.currentTime + timeOffset + dur);
+        }
+
+        function playSound(type) {
+            if (type === 'correct') {
+                playTone(1046.50, 'sine', 0.2, 0);       
+                playTone(1318.51, 'sine', 0.4, 0.1);     
+            } else {
+                playTone(150, 'sawtooth', 0.3, 0);
+                playTone(100, 'sawtooth', 0.4, 0.1);
+            }
+        }
+
+        // --- FULL SOCIAL DATABASE COMPRESSED ARRAY ---
+        // Format for MCQ: "UnitID|UnitName|mcq|Question|Option1|Option2|Option3|Option4|AnswerIndex"
+        // Format for Fill: "UnitID|UnitName|fill|Question|Answer"
+        const rawData = [
+            // HISTORY - MCQs
+            "H1|His 1: Outbreak of WWI|mcq|What were the three major empires shattered by the end of First World War?|Germany, Austria-Hungary, and the Ottomans|Germany, Austria-Hungary, and Russia|Spain, Portugal and Italy|Germany, Austria-Hungary, Italy|0",
+            "H1|His 1: Outbreak of WWI|mcq|Which country emerged as the strongest in East Asia towards the close of nineteenth century?|China|Japan|Korea|Mongolia|1",
+            "H1|His 1: Outbreak of WWI|mcq|Who said \"imperialism is the highest stage of capitalism\"?|Lenin|Marx|Sun Yat-sen|Mao Tsetung|0",
+            "H1|His 1: Outbreak of WWI|mcq|What is the Battle of Marne remembered for?|air warfare|trench warfare|submarine warfare|ship warfare|1",
+            "H1|His 1: Outbreak of WWI|mcq|To which country did the first Secretary General of League of Nations belong?|Britain|France|Dutch|USA|0",
+            "H1|His 1: Outbreak of WWI|mcq|Which country was expelled from the League of Nations for attacking Finland?|Germany|Russia|Italy|France|1",
+            "H2|His 2: World B/W Two Wars|mcq|With whom of the following was the Lateran Treaty signed by Italy?|Germany|Russia|Pope|Spain|2",
+            "H2|His 2: World B/W Two Wars|mcq|With whose conquest did the Mexican civilization collapse?|Hernan Cortes|Francisco Pizarro|Toussaint Louverture|Pedro I|0",
+            "H2|His 2: World B/W Two Wars|mcq|Who made Peru as part of their dominions?|English|Spaniards|Russians|French|1",
+            "H2|His 2: World B/W Two Wars|mcq|Which President of the USA pursued \"Good Neighbour\" policy towards Latin America?|Franklin D. Roosevelt|Truman|Woodrow Wilson|Eisenhower|0",
+            "H2|His 2: World B/W Two Wars|mcq|Which part of the world disliked dollar imperialism?|Europe|Latin America|India|China|1",
+            "H3|His 3: World War II|mcq|When did the Japanese formally sign of their surrender?|2 September, 1945|2 October, 1945|15 August, 1945|12 October, 1945|0",
+            "H3|His 3: World War II|mcq|Who initiated the formation of League of Nations?|Roosevelt|Chamberlain|Woodrow Wilson|Baldwin|2",
+            "H3|His 3: World War II|mcq|Where was the Japanese Navy defeated by the US Navy?|Battle of Guadalcanal|Battle of Midway|Battle of Leningrad|Battle of El Alamein|1",
+            "H3|His 3: World War II|mcq|Where did the US drop its first atomic bomb?|Kavashaki|Tokyo|Hiroshima|Nagasaki|2",
+            "H3|His 3: World War II|mcq|Who were mainly persecuted by Hitler?|Russians|Arabs|Turks|Jews|3",
+            "H3|His 3: World War II|mcq|Which Prime Minister of England who signed the Munich Pact with Germany?|Chamberlain|Winston Churchill|Lloyd George|Stanley Baldwin|0",
+            "H3|His 3: World War II|mcq|When was the Charter of the UN signed?|June 26, 1942|June 26, 1945|January 1, 1942|January 1, 1945|1",
+            "H4|His 4: World After WWII|mcq|Which American President followed the policy of containment of Communism?|Woodrow Wilson|Truman|Theodore Roosevelt|Franklin Roosevelt|1",
+            "H4|His 4: World After WWII|mcq|When was People's Political Consultative Conference held in China?|September 1959|September 1948|September 1954|September 1949|3",
+            "H4|His 4: World After WWII|mcq|The United States and European allies formed ________ to resist any Soviet aggression in Europe.|SEATO|NATO|CENTO|Warsaw Pact|1",
+            "H4|His 4: World After WWII|mcq|Who became the Chairman of the PLO's Executive Committee in 1969?|Hafez al-Assad|Yasser Arafat|Nasser|Saddam Hussein|1",
+            "H4|His 4: World After WWII|mcq|When was North and South Vietnam united?|1975|1976|1973|1974|1",
+            "H4|His 4: World After WWII|mcq|When was the Warsaw Pact dissolved?|1979|1989|1990|1991|3",
+            "H5|His 5: Social & Rel. Reform|mcq|In which year was Sati abolished?|1827|1829|1826|1927|1",
+            "H5|His 5: Social & Rel. Reform|mcq|What was the name of the Samaj founded by Dayanand Saraswati?|Arya Samaj|Brahmo Samaj|Prarthana Samaj|Adi Brahmo Samaj|0",
+            "H5|His 5: Social & Rel. Reform|mcq|Whose campaign and work led to the enactment of Widow Remarriage Reform Act of 1856?|Iswar Chandra Vidyasagar|Raja Rammohan Roy|Annie Besant|Jyotiba Phule|0",
+            "H5|His 5: Social & Rel. Reform|mcq|Whose voice was Rast Goftar?|Parsi Movement|Aligarh Movement|Ramakrishna Mission|Dravida Mahajana Sabha|0",
+            "H5|His 5: Social & Rel. Reform|mcq|Who was the founder of Namdhari Movement?|Baba Dayal Das|Baba Ramsingh|Gurunanak|Jyotiba Phule|1",
+            "H5|His 5: Social & Rel. Reform|mcq|Who was the founder of Widow Remarriage Association?|Mahadev Govind Ranade|Devendranath Tagore|Jyotiba Phule|Ayyankali|0",
+            "H5|His 5: Social & Rel. Reform|mcq|Who was the author of the book Satyarthaprakash?|Dayananda Saraswathi|Iyothee Thassar|Annie Besant|Narayana Guru|0",
+            "H6|His 6: Early Revolts in TN|mcq|Who was the first Palayakkarars to resist the East India Company's policy of territorial aggrandizement?|Marudhu brothers|Puli Thevar|Velunachiyar|Veerapandya Kattabomman|1",
+            "H6|His 6: Early Revolts in TN|mcq|Who had established close relationship with the three agents of Chanda Sahib?|Velunachiyar|Kattabomman|Puli Thevar|Oomai thurai|2",
+            "H6|His 6: Early Revolts in TN|mcq|Where was Sivasubramanianar executed?|Kayathar|Nagalapuram|Virupachi|Panchalamkurichi|1",
+            "H6|His 6: Early Revolts in TN|mcq|Who issued the Tiruchirappalli proclamation of Independence?|Marudhu brothers|Puli Thevar|Veerapandya Kattabomman|Gopala Nayak|0",
+            "H6|His 6: Early Revolts in TN|mcq|When did the Vellore Revolt breakout?|24 May 1805|10 July 1805|10 July 1806|10 September 1806|2",
+            "H6|His 6: Early Revolts in TN|mcq|Who was the Commander-in-Chief responsible for the new military regulations in Vellore fort?|Col. Fancourt|Major Armstrong|Sir John Cradock|Colonel Agnew|2",
+            "H6|His 6: Early Revolts in TN|mcq|Where were the sons of Tipu Sultan sent after the Vellore Revolt?|Calcutta|Mumbai|Delhi|Mysore|0",
+            "H7|His 7: Anti-Colonial Movements|mcq|Which one of the following was launched by Haji Shariatullah in 1818 in East Bengal?|Wahhabi Rebellion|Farazi Movement|Tribal uprising|Kol Revolt|1",
+            "H7|His 7: Anti-Colonial Movements|mcq|Who declared that \"Land belongs to God\" and collecting rent or tax on it was against divine law?|Titu Mir|Sidhu|Dudu Mian|Shariatullah|3",
+            "H7|His 7: Anti-Colonial Movements|mcq|Who were driven out of their homeland during the process of creation of Zamins under Permanent Settlement?|Santhals|Titu Mir|Munda|Kol|0",
+            "H7|His 7: Anti-Colonial Movements|mcq|Find out the militant nationalist from the following.|Dadabhai Naoroji|Justice Govind Ranade|Bipin Chandra pal|Romesh Chandra|2",
+            "H7|His 7: Anti-Colonial Movements|mcq|When did the Partition of Bengal come into effect?|19 June 1905|18 July 1906|19 August 1907|16 October 1905|3",
+            "H7|His 7: Anti-Colonial Movements|mcq|What was the context in which the Chotanagpur Tenancy Act was passed?|Kol Revolt|Indigo Revolt|Munda Rebellion|Deccan Riots|2",
+            "H7|His 7: Anti-Colonial Movements|mcq|Who set up the first Home Rule League in April 1916|Annie Basant|Bipin Chandra Pal|Lala Lajpat Rai|Tilak|3",
+            "H7|His 7: Anti-Colonial Movements|mcq|Who drew the attention of the British to the suffering of Indigo cultivation through his play Nil darpan?|Dina Bandhu Mitra|Romesh Chandra Dutt|Dadabhai Naoroji|Birsa Munda|0",
+            "H8|His 8: Nationalism Gandhian|mcq|Who was arrested during the anti-Rowlatt protests in Amritsar?|Motilal Nehru|Dr.Saifuddin Kitchlew|Mohamed Ali|Raj Kumar Shukla|1",
+            "H8|His 8: Nationalism Gandhian|mcq|In which session of the Indian National Congress was Non-Cooperation approved?|Bombay|Madras|Calcutta|Lucknow|2",
+            "H8|His 8: Nationalism Gandhian|mcq|Which among the following was declared as 'Independence Day'?|26th January 1930|26th December 1929|16th June 1946|15th January 1947|0",
+            "H8|His 8: Nationalism Gandhian|mcq|When was the first Forest Act enacted?|1858|1911|1865|1936|2",
+            "H8|His 8: Nationalism Gandhian|mcq|On 8 January 1933 which day was observed?|Temple Entry Day|Day of Deliverance|Direct Action Day|Independence Day|0",
+            "H8|His 8: Nationalism Gandhian|mcq|Which Act introduced Provincial Autonomy?|1858 Act|Indian Councils Act, 1909|Government of India Act, 1919|Government of India Act, 1935|3",
+            "H9|His 9: Freedom Struggle TN|mcq|Who was the first President of the Madras Mahajana Sabha?|T.M. Nair|P. Rangaiah|G. Subramaniam|G.A. Natesan|1",
+            "H9|His 9: Freedom Struggle TN|mcq|Where was the third session of the Indian National Congress held?|Marina|Mylapore|Fort St. George|Thousand Lights|1",
+            "H9|His 9: Freedom Struggle TN|mcq|Who said \"Better bullock carts and freedom than a train de luxe with subjection\"?|Annie Besant|M. Veeraraghavachari|B.P. Wadia|G.S. Arundale|0",
+            "H9|His 9: Freedom Struggle TN|mcq|Who among the following were Swarajists?|S. Satyamurti|Kasturirangar|P. Subbarayan|Periyar EVR|0",
+            "H9|His 9: Freedom Struggle TN|mcq|Who set up the satyagraha camp in Udyavanam near Madras?|K. Kamaraj|C. Rajaji|K. Santhanam|T. Prakasam|3",
+            "H9|His 9: Freedom Struggle TN|mcq|Where was the anti-Hindi Conference held?|Erode|Madras|Salem|Madurai|2",
+            "H10|His 10: Social Transform TN|mcq|________ established a full-fledged printing press in 1709, at Tranquebar.|Caldwell|F.W. Ellis|Ziegenbalg|Meenakshisundaram|2",
+            "H10|His 10: Social Transform TN|mcq|________ founded Adi Dravida Mahajana Sabha in 1893.|Rettaimalai Srinivasan|B. R. Ambedkar|Rajaji|M. C. Rajah|0",
+            "H10|His 10: Social Transform TN|mcq|India's first organised trade union, the Madras Labour Union was formed in|1918|1917|1916|1914|0",
+            "H10|His 10: Social Transform TN|mcq|________ was established by the Justice Party Government for the selection of Government officials.|Staff Selection Board|Public Service Commission|Provincial Staff Recruitment Board|Staff Selection Commission|0",
+            "H10|His 10: Social Transform TN|mcq|________ was the first elected Legislative Council Member from the depressed class in Madras Province.|M. C. Rajah|Rettaimalai Srinivasan|T.M. Nair|P. Varadarajulu|0",
+
+            // GEOGRAPHY - MCQs
+            "G1|Geo 1: India Location|mcq|The north-south extent of India is|2,500 km|2,933 km|3,214 km|2,814 km|2",
+            "G1|Geo 1: India Location|mcq|River ________ is known as 'Sorrow of Bihar'.|Narmada|Godavari|Kosi|Damodar|2",
+            "G1|Geo 1: India Location|mcq|A landmass bounded by sea on three sides is referred to as|Coast|Island|Peninsula|Strait|2",
+            "G1|Geo 1: India Location|mcq|The Palk Strait and Gulf of Mannar separates India from|Goa|West Bengal|Sri Lanka|Maldives|2",
+            "G1|Geo 1: India Location|mcq|The highest peak in South India is|Ooty|Kodaikanal|Anaimudi|Jindhagada|2",
+            "G1|Geo 1: India Location|mcq|________ Plains are formed by the older alluviums.|Bhabar|Tarai|Bhangar|Khadar|2",
+            "G1|Geo 1: India Location|mcq|Pulicat Lake is located between the states of|West Bengal and Odisha|Karnataka and Kerala|Odisha and Andhra Pradesh|Tamil Nadu and Andhra Pradesh|3",
+            "G2|Geo 2: Climate & Vegetation|mcq|Western disturbances cause rainfall in|Tamil Nadu|Kerala|Punjab|Madhya Pradesh|2",
+            "G2|Geo 2: Climate & Vegetation|mcq|________ helps in quick ripening of mangoes along the coast of Kerala and Karnataka.|Loo|Norwester|Mango showers|Jet stream|2",
+            "G2|Geo 2: Climate & Vegetation|mcq|________ is a line joining the places of equal rainfall.|Isohyets|Isobar|Isotherm|Latitudes|0",
+            "G2|Geo 2: Climate & Vegetation|mcq|Climate of India is labelled as|Tropical humid|Equatorial Climate|Tropical Monsoon Climate|Temperate Climate|2",
+            "G2|Geo 2: Climate & Vegetation|mcq|The monsoon forests are otherwise called as|Tropical evergreen forest|Deciduous forest|Mangrove forest|Mountain forest|1",
+            "G2|Geo 2: Climate & Vegetation|mcq|Sesahachalam hills, a Biosphere reserve is situated in|Tamil Nadu|Andhra Pradesh|Madhya Pradesh|Karnataka|1",
+            "G2|Geo 2: Climate & Vegetation|mcq|________ is not a part of the world network biosphere reserves of UNESCO|The Nilgiri|Agasthiyamalai|Great Nicobar|Kachch|3",
+            "G3|Geo 3: Agriculture|mcq|The soil which is rich in iron oxides is|Alluvial|Black|Red|Alkaline|2",
+            "G3|Geo 3: Agriculture|mcq|Which of the following organization has divided the Indian soils into 8 major groups?|Indian Council of Agricultural Research|Indian Meteorological Department|Soil Survey of India|Indian Institute of Soil Science|0",
+            "G3|Geo 3: Agriculture|mcq|The soils formed by the rivers are:|Red soils|Black soils|Desert soils|Alluvial soils|3",
+            "G3|Geo 3: Agriculture|mcq|________ dam is the highest gravity dam in India.|Hirakud dam|Bhakra Nangal dam|Mettur dam|Nagarjuna Sagar dam|1",
+            "G3|Geo 3: Agriculture|mcq|________ is a cash crop.|Cotton|Wheat|Rice|Maize|0",
+            "G3|Geo 3: Agriculture|mcq|Black soils are also called as:|Arid soils|Saline soils|Regur soils|Mountain soils|2",
+            "G3|Geo 3: Agriculture|mcq|The longest dam in the world is|Mettur dam|Kosi dam|Hirakud dam|Bhakra-Nangal dam|2",
+            "G3|Geo 3: Agriculture|mcq|Which crop is called as \"Golden Fibre\" in India?|Cotton|Wheat|Jute|Tobacco|2",
+            "G4|Geo 4: Resources & Industries|mcq|Manganese is used in|Paper industry|Steel Making|Copper smelting|Petroleum Refining|1",
+            "G4|Geo 4: Resources & Industries|mcq|The Anthracite coal has|80 to 90% Carbon|Above 70% Carbon|60 to 70% Carbon|Below 50% Carbon|0",
+            "G4|Geo 4: Resources & Industries|mcq|The most important constituents of petroleum are hydrogen and|Oxygen|Water|Carbon|Nitrogen|2",
+            "G4|Geo 4: Resources & Industries|mcq|The city which is called as the Manchester of South India is|Chennai|Salem|Madurai|Coimbatore|3",
+            "G4|Geo 4: Resources & Industries|mcq|The first Nuclear Power station was commissioned in|Gujarat|Rajasthan|Maharashtra|Tamil Nadu|2",
+            "G4|Geo 4: Resources & Industries|mcq|The most abundant source of energy is|Bio mass|Sun|Coal|Oil|1",
+            "G4|Geo 4: Resources & Industries|mcq|The nucleus for the development of the chotanagpur plateau region is|Transport|Mineral Deposits|Large demand|Power Availability|1",
+            "G5|Geo 5: Population & Transport|mcq|The scientific study of different aspects of population is called|cartography|Demography|Anthropology|Epigraphy|1",
+            "G5|Geo 5: Population & Transport|mcq|________ transport provides door to door services.|Railways|Roadways|Airways|Waterways|1",
+            "G5|Geo 5: Population & Transport|mcq|The length of Golden Quadrilateral superhighways in India is|5846 km|5942 km|5630 km|5800 km|0",
+            "G5|Geo 5: Population & Transport|mcq|The National Remote sensing Centre (NRSC) is located at|Bengaluru|Chennai|Delhi|Hyderabad|3",
+            "G5|Geo 5: Population & Transport|mcq|The transport useful in the inaccessible areas is|Roadways|Railways|Airways|Waterways|2",
+            "G5|Geo 5: Population & Transport|mcq|Which of the following is associated with helicopter service?|Air India|Indian Airlines|Vayudoot|Pavan Hans|3",
+            "G5|Geo 5: Population & Transport|mcq|The major import item of India is|Cement|Jewells|Tea|Petroleum|3",
+            "G6|Geo 6: Physical Geo of TN|mcq|The latitudinal extent of Tamil Nadu is|8°4'N to 13°35'N|8°5'S to 13°35'S|8°0'N to 13°5'N|8°0'S to 13°05'S|0",
+            "G6|Geo 6: Physical Geo of TN|mcq|The longitudinal extent of Tamil Nadu is|76°18' E to 80°20'E|76°18' W to 80°20'W|86°18' E to 10°20'E|86°18' W to 10°20'W|0",
+            "G6|Geo 6: Physical Geo of TN|mcq|The highest peak in Tamil Nadu is|Anaimudi|Doddabetta|Mahendragiri|Servarayan|1",
+            "G6|Geo 6: Physical Geo of TN|mcq|Which of the following passes is not located in the Western Ghats of Tamil Nadu?|Palghat|Shencottah|Bhorghat|Achankoil|2",
+            "G6|Geo 6: Physical Geo of TN|mcq|Which one of the following rivers is flow into the Arabian Sea?|Periyar|Cauvery|Chittar|Bhavani|0",
+            "G6|Geo 6: Physical Geo of TN|mcq|The district with largest mangrove forest cover in Tamil Nadu is|Ramanathapuram|Nagapattinam|Cuddalore|Theni|2",
+            "G6|Geo 6: Physical Geo of TN|mcq|Retreating monsoon wind picks up moisture from|Arabian sea|Bay of Bengal|Indian Ocean|Timor sea|1",
+            "G6|Geo 6: Physical Geo of TN|mcq|The district which has the largest forest cover in Tamil Nadu is|Dharmapuri|Vellore|Dindigul|Erode|0",
+            "G7|Geo 7: Human Geo of TN|mcq|The delta which is known as Granary of South India is|Cauvery delta|Mahanadi delta|Godavari delta|Krishna delta|0",
+            "G7|Geo 7: Human Geo of TN|mcq|Second staple food of the people of Tamil Nadu is|Pulses|Millets|Oilseeds|Rice|1",
+            "G7|Geo 7: Human Geo of TN|mcq|A major hydro-electric power project of Tamil Nadu is|Mettur|Papanasam|Sathanur|Thungabahdra|0",
+            "G7|Geo 7: Human Geo of TN|mcq|Number of major and minor ports in Tamil Nadu are|3 and 15|4 and 16|3 and 16|4 and 15|0",
+
+            // CIVICS - MCQs
+            "C1|Civ 1: Indian Constitution|mcq|Which of the following sequences in right regarding the Preamble?|Republic, democratic, secular, socialist, sovereign|Sovereign, socialist, secular, republic, democratic|Sovereign, republic, secular, socialist, democratic|Sovereign, socialist, secular, democratic, republic|3",
+            "C1|Civ 1: Indian Constitution|mcq|How many times has the Preamble to the Constitution of India amended?|Once|Twice|Thrice|Never|0",
+            "C1|Civ 1: Indian Constitution|mcq|A foreigner can acquire Indian citizenship through|Descent|Registration|Naturalisation|All of the above|2",
+            "C1|Civ 1: Indian Constitution|mcq|Find the odd one out.|Right to Equality|Right against Exploitation|Right to Property|Cultural and Educational Rights|2",
+            "C1|Civ 1: Indian Constitution|mcq|One of the following is not an instance of an exercise of a fundamental right?|Workers from Karnataka go to Kerala to work on the farms|Christian missions set up a chain of missionary schools|Men and Women government employees got the same salary.|Parents property is inherited by their children|3",
+            "C1|Civ 1: Indian Constitution|mcq|Which one of the following rights was described by Dr. B.R. Ambedkar as the heart and soul of the Constitution?|Right to freedom of religion|Right to equality|Right to Constitutional remedies|Right to property|2",
+            "C1|Civ 1: Indian Constitution|mcq|How can the Fundamental Rights be suspended?|If the Supreme Court so desires|If the Prime Minister orders to this effect|If the President orders it during the national emergency|All of the above|2",
+            "C1|Civ 1: Indian Constitution|mcq|We borrowed the Fundamental Duties from the|American Constitution|Canadian Constitution|Russian Constitution|Irish Constitution|2",
+            "C1|Civ 1: Indian Constitution|mcq|Under which Article financial emergency can be proclaimed?|Article 352|Article 356|Article 360|Article 368|2",
+            "C1|Civ 1: Indian Constitution|mcq|Which of the following committees/commissions made recommendations about the Centre-State Relations? 1. Sarkaria Commission 2. Rajamannar Committee 3. M.N.Venkatachaliah Commission|1, 2 & 3|1 & 2|1 & 3|2 & 3|1",
+            "C2|Civ 2: Central Government|mcq|The Constitutional Head of the Union is|The President|The Chief Justice|The Prime Minister|Council of Ministers|0",
+            "C2|Civ 2: Central Government|mcq|Who among the following decides whether a Bill is a Money Bill or not?|The President|Attorney General|Parliamentary Affairs Minister|Speaker of Lok Sabha|3",
+            "C2|Civ 2: Central Government|mcq|The Council of Ministers is collectively responsible to the:|The President|Lok Sabha|The Prime Minister|Rajya Sabha|1",
+            "C2|Civ 2: Central Government|mcq|What is minimum age laid down for a candidate to seek election to the Lok Sabha?|18 years|21 years|25 years|30 years|2",
+            "C2|Civ 2: Central Government|mcq|The authority to alter the boundaries of state in India rest with?|The President|The Prime Minister|State Government|Parliament|3",
+            "C2|Civ 2: Central Government|mcq|Under which Article the President is vested with the power to proclaim Financial Emergency|Article 352|Article 360|Article 356|Article 365|1",
+            "C2|Civ 2: Central Government|mcq|The Chief Justice and other Judges of the Supreme court are appointed by|The President|The Attorney General|The Governor|The Prime Minister|0",
+            "C3|Civ 3: State Government|mcq|The Governor of the State is appointed by the|Prime Minister|Chief Minister|President|Chief Justice|2",
+            "C3|Civ 3: State Government|mcq|The Speaker of a State is a|Head of State|Head of government|President's agent|None of these|3",
+            "C3|Civ 3: State Government|mcq|Which among the following is not one of the powers of the Governor?|Legislative|Executive|Judicial|Diplomatic|3",
+            "C3|Civ 3: State Government|mcq|Who can nominate one representative of the Anglo-Indian Community to the State Legislative Assembly?|The President|The Governor|The Chief Minister|The Speaker of State legislature|1",
+            "C3|Civ 3: State Government|mcq|The Governor does not appoint|Chief Minister|Chairman of the State Public Service Commission|Advocate General of the State|Judges of the High Court|3",
+            "C3|Civ 3: State Government|mcq|The State Council of Ministers is headed by|The Chief Minister|The Governor|The Speaker|The Prime Minister|0",
+            "C3|Civ 3: State Government|mcq|The minimum age for the membership of the Legislative Council is|25 years|21 years|30 years|35 years|2",
+            "C3|Civ 3: State Government|mcq|Which one of the following States does not possess a bicameral legislature?|Andhra Pradesh|Telangana|Tamil Nadu|Uttar Pradesh|2",
+            "C3|Civ 3: State Government|mcq|The High Courts in India were first started at|Calcutta, Bombay, Madras|Delhi and Calcutta|Delhi, Calcutta, Madras|Calcutta, Madras, Delhi|0",
+            "C3|Civ 3: State Government|mcq|Which of the following States have a common High Court?|Tamil Nadu and Andhra Pradesh|Kerala and Telangana|Punjab and Haryana|Maharashtra and Gujarat|2",
+            "C4|Civ 4: India's Foreign Policy|mcq|The Panchsheel treaty has been signed between|India and Nepal|India and Pakistan|India and China|India and Sri Lanka|2",
+            "C4|Civ 4: India's Foreign Policy|mcq|Which article of Indian constitution directs to adopt foreign policy?|Article 50|Article 51|Article 52|Article 53|1",
+            "C4|Civ 4: India's Foreign Policy|mcq|The Agreement signed by India and China in 1954 related to|Trade and Commerce|Restoration of normal relations|Cultural exchange programmes|The Five Principles of Co-existence|3",
+            "C4|Civ 4: India's Foreign Policy|mcq|Which is not related to our foreign policy?|World co-operation|World peace|Racial equality|Colonialism|3",
+            "C4|Civ 4: India's Foreign Policy|mcq|Which of the following country is not the founder member of NAM?|Yugoslavia|Indonesia|Egypt|Pakistan|3",
+            "C4|Civ 4: India's Foreign Policy|mcq|Non Alliance means|being neutral|freedom to decide on issues independently|demilitarisation|none of the above|1",
+            "C4|Civ 4: India's Foreign Policy|mcq|Non military issues are|Energy security|Water security|Pandemics|All the above|3",
+            "C5|Civ 5: India's Int. Relations|mcq|McMahon Line is a border between|India and Burma|India and Nepal|India and China|India and Bhutan|2",
+            "C5|Civ 5: India's Int. Relations|mcq|India is not a member of which of the following 1) G20  2) ASEAN  3) SAARC  4) BRICS|2 only|2 and 4|2, 4 and 1|1, 2 and 3|0",
+            "C5|Civ 5: India's Int. Relations|mcq|OPEC is|An international insurance Company|An international sports Club|An Organisation of Oil Exporting Countries|An international company|2",
+            "C5|Civ 5: India's Int. Relations|mcq|With which country does India share its longest land border?|Bangladesh|Myanmar|Afghanistan|China|0",
+            "C5|Civ 5: India's Int. Relations|mcq|Match the following: i) Salma Dam - 1. Bangladesh, ii) Farakka accord - 2. Nepal, iii) Chukha hydro project - 3. Afghanistan, iv) Sharda River project - 4. Bhutan|3142|3124|3412|4321|0",
+            "C5|Civ 5: India's Int. Relations|mcq|How many countries share its border with India?|5|6|7|8|2",
+            "C5|Civ 5: India's Int. Relations|mcq|Which two island countries are India's neighbours?|Sri Lanka and Andaman island|Maldives and Lakshadweep island|Maldives and Nicobar island|Sri Lanka and Maldives|3",
+            "C5|Civ 5: India's Int. Relations|mcq|Which Indian state is surrounded by three countries?|Arunachal Pradesh|Meghalaya|Mizoram|Assam|0",
+            "C5|Civ 5: India's Int. Relations|mcq|How many Indian states have their boundary with Nepal?|Five|Four|Three|Two|0",
+            "C5|Civ 5: India's Int. Relations|mcq|Who drew up the borders for newly independent Pakistan?|Lord Mountbatten|Sir Cyril Radcliffe|Clement Atlee|None of the above|1",
+
+            // ECONOMICS - MCQs
+            "E1|Eco 1: GDP & Its Growth|mcq|GNP equals|NNP adjusted for inflation|GDP adjusted for inflation|GDP plus net property income from abroad|NNP plus net property income or abroad|2",
+            "E1|Eco 1: GDP & Its Growth|mcq|National Income is a measure of|Total value of money|Total value of producer goods|Total value of consumption goods|Total value of goods and services|3",
+            "E1|Eco 1: GDP & Its Growth|mcq|Primary sector consist of|Agriculture|Automobiles|Trade|Banking|0",
+            "E1|Eco 1: GDP & Its Growth|mcq|________ approach is the value added by each intermediate good is summed to estimate the value of the final good.|Expenditure approach|Value added approach|income approach|National Income|1",
+            "E1|Eco 1: GDP & Its Growth|mcq|Gross value added at current prices for services sector is estimated at ________ lakh crore in 2018-19.|91.06|92.26|80.07|98.29|1",
+            "E1|Eco 1: GDP & Its Growth|mcq|India is ________ larger producer in agricultural product.|1st|3rd|4th|2nd|3",
+            "E1|Eco 1: GDP & Its Growth|mcq|India's life expectancy at birth is ________ years.|65|60|70|55|0",
+            "E1|Eco 1: GDP & Its Growth|mcq|Which one is a trade policy?|irrigation policy|import and export policy|land-reform policy|wage policy|1",
+            "E2|Eco 2: Globalization & Trade|mcq|Who is the head of the World Trade Organisation (WTO)?|Ministerial conference|Director General|Deputy Director General|None of these|1",
+            "E2|Eco 2: Globalization & Trade|mcq|Colonial advent in India|Portuguese, Dutch, English, Danish, French|Dutch, English, Danish, French|Portuguese, Danish, Dutch, French, English|Danish, French, English, Dutch|0",
+            "E2|Eco 2: Globalization & Trade|mcq|GATT's first round held in|Tokyo|Uruguay|Torquay|Geneva|3",
+            "E2|Eco 2: Globalization & Trade|mcq|India signed the Dunkel proposal in|1984|1976|1950|1994|3",
+            "E2|Eco 2: Globalization & Trade|mcq|Who granted the English \"Golden Fireman\" in 1632|Jahangir|Sultan of Golconda|Akbar|Aurangzeb|1",
+            "E2|Eco 2: Globalization & Trade|mcq|Foreign Investment policy (FIP) announced in|June 1991|July 1991|July-Aug-1991|Aug 1991|1",
+            "E3|Eco 3: Food Security & Nutr.|mcq|Buffer stock is the stock of food grains, namely wheat and rice, procured by the government through the|FCI|Consumer Cooperatives|ICICI|IFCI|0",
+            "E3|Eco 3: Food Security & Nutr.|mcq|Which is correct? i) HYV- High Yielding Varieties ii) MSP - Minimum Support Price iii) PDS - Public Distribution System iv) FCI - Food Corporation of India|i & ii are correct|iii & iv are correct|ii & iii are correct|all are correct|3",
+            "E3|Eco 3: Food Security & Nutr.|mcq|________ extended assistance through its Public Law 480.|United States of America|India|Singapore|UK|0",
+            "E3|Eco 3: Food Security & Nutr.|mcq|________ revolution was born in India paving way for self sufficiency in food grain production.|Blue Revolution|White Revolution|Green Revolution|Grey Revolution|2",
+            "E3|Eco 3: Food Security & Nutr.|mcq|________ is the only state in India to adopt universal PDS.|Kerala|Andhra Pradesh|Tamil Nadu|Karnataka|2",
+            "E3|Eco 3: Food Security & Nutr.|mcq|________ is the process of providing or obtaining the food necessary for health and growth.|Health|Nutrition|Sanitation|Security|1",
+            "E4|Eco 4: Government and Taxes|mcq|The three levels of governments in India are|Union, state and local|Union, state and village|Union, municipality and panchayat|None of the above|0",
+            "E4|Eco 4: Government and Taxes|mcq|In India, taxes are including|Direct taxes|Indirect taxes|Both (a) and (b)|None of these|2",
+            "E4|Eco 4: Government and Taxes|mcq|Which is the role of government and development policies?|Defence|Foreign policy|Regulate the economy|all of above|3",
+            "E4|Eco 4: Government and Taxes|mcq|The most common and important tax levied on an individual in India is|Service tax|Excise duty|Income tax|Central sales tax|2",
+            "E4|Eco 4: Government and Taxes|mcq|Under which tax one nation, one uniform tax is ensured|Value added tax (VAT)|Income tax|Goods and service tax|Sales tax|2",
+            "E4|Eco 4: Government and Taxes|mcq|Income tax was introduced in India for the first time in the year|1860|1870|1880|1850|0",
+            "E4|Eco 4: Government and Taxes|mcq|________ tax is charged on the benefits derived from property ownership.|Income tax|Wealth tax|Corporate tax|Excise duty|1",
+            "E4|Eco 4: Government and Taxes|mcq|What are identified as causes of black money?|Shortage of goods|High tax rate|Smuggling|All of above|3",
+            "E5|Eco 5: Industrial Clusters TN|mcq|'The Detroit of Asia' is|Tuticorin|Coimbatore|Chennai|Madurai|2",
+            "E5|Eco 5: Industrial Clusters TN|mcq|Pumpsets and motors are produced mostly in|Salem|Coimbatore|Chennai|Dharampuri|1",
+            "E5|Eco 5: Industrial Clusters TN|mcq|________ are an essential aspect of a nation's development.|Agriculture|Industry|Railway|None of these|1",
+            "E5|Eco 5: Industrial Clusters TN|mcq|Tiruppur is known for|Leather tanning|Lock making|Knitwear|Agro-processing|2",
+            "E5|Eco 5: Industrial Clusters TN|mcq|A successful industrial cluster entirely created by the Tamil Nadu is|Hosur|Dindigul|Kovilpatti|Tirunelveli|0",
+
+            // FILL IN THE BLANKS
+            "H1|His 1: Outbreak of WWI|fill|Japan forced a war on China in the year ________.|1894",
+            "H1|His 1: Outbreak of WWI|fill|The new state of Albania was created according to the Treaty of ________ signed in May 1913.|London",
+            "H1|His 1: Outbreak of WWI|fill|Japan entered into an alliance with England in the year ________.|1902",
+            "H1|His 1: Outbreak of WWI|fill|In the Balkans ________ had mixed population.|Macedonia",
+            "H1|His 1: Outbreak of WWI|fill|In the battle of Tannenberg ________ suffered heavy losses.|Russia",
+            "H1|His 1: Outbreak of WWI|fill|________ as Prime Minister represented France in Paris Peace Conference.|Clemenceau",
+            "H1|His 1: Outbreak of WWI|fill|Locarno Treaty was signed in the year ________.|1925",
+            "H2|His 2: World B/W Two Wars|fill|The founder of the Social Democratic Party was ________.|Ferdinand Lassalle",
+            "H2|His 2: World B/W Two Wars|fill|The Nazi Party's propaganda was led by ________.|Josef Goebbels",
+            "H2|His 2: World B/W Two Wars|fill|The Vietnam Nationalist Party was formed in ________.|1927",
+            "H2|His 2: World B/W Two Wars|fill|The Secret State Police in Nazi Germany was known as ________.|Gestapo",
+            "H2|His 2: World B/W Two Wars|fill|The Union of South Africa came into being in May ________.|1910",
+            "H2|His 2: World B/W Two Wars|fill|The ANC leader Nelson Mandela was put behind the bars for ________ years.|27",
+            "H2|His 2: World B/W Two Wars|fill|Boers were also known as ________.|Afrikaners",
+            "H3|His 3: World War II|fill|Hitler attacked ________ which was a demilitarised zone.|Rhineland",
+            "H3|His 3: World War II|fill|The alliance between Italy, Germany and Japan is known as ________ Axis powers.|Rome-Berlin-Tokyo",
+            "H3|His 3: World War II|fill|Britain Prime Minister ________ resigned in 1940.|Chamberlain",
+            "H3|His 3: World War II|fill|________ is a device used to find out the enemy aircraft from a distance.|Radar",
+            "H4|His 4: World After WWII|fill|Dr. Sun Yat-sen was known as the \"Father of modern ________\".|China",
+            "H4|His 4: World After WWII|fill|In 1918, the society for the study of Marxism was formed in ________ University.|Peking",
+            "H4|His 4: World After WWII|fill|After the death of Dr. Sun Yat Sen, the leader of the Kuomintang party was ________.|Chiang Kai-shek",
+            "H4|His 4: World After WWII|fill|CENTO/Baghdad Pact treaty is open to any ________ nation desiring peace and security in the region.|Arab",
+            "H4|His 4: World After WWII|fill|The treaty of ________ provided for mandates in Turkish-Arab Empire.|Versailles",
+            "H4|His 4: World After WWII|fill|Germany joined the NATO in ________.|1955",
+            "H4|His 4: World After WWII|fill|________ was the Headquarters of the Council of Europe.|Strasbourg",
+            "H4|His 4: World After WWII|fill|The Maastricht treaty signed on February 7, 1992 created the ________.|European Union",
+            "H5|His 5: Social & Rel. Reform|fill|Ramalinga Swamigal / Vallalar founded the ________.|Samarasa Vedha Sanmarga Sangam",
+            "H5|His 5: Social & Rel. Reform|fill|The founder of Poona Sarvajanik Sabha was ________.|Mahadev Govind Ranade",
+            "H5|His 5: Social & Rel. Reform|fill|Gulamgiri was written by ________.|Jyotiba Phule",
+            "H5|His 5: Social & Rel. Reform|fill|Ramakrishna Mission was established by ________.|Swami Vivekananda",
+            "H5|His 5: Social & Rel. Reform|fill|Singh Sabha was the forerunner of ________ Movement.|Akali",
+            "H5|His 5: Social & Rel. Reform|fill|Oru Paisa Tamilan was started by ________.|Iyothee Thassar",
+            "H6|His 6: Early Revolts in TN|fill|The Palayakkarars system was put in place in Tamil Nadu by ________.|Viswanatha Nayak",
+            "H6|His 6: Early Revolts in TN|fill|Velunachiyar and her daughter were under the protection of ________ for eight years.|Gopala Nayak",
+            "H6|His 6: Early Revolts in TN|fill|Bannerman deputed ________ to convey his message, asking Kattabomman to surrender.|Ramalinganar",
+            "H6|His 6: Early Revolts in TN|fill|Kattabomman was hanged to death at ________.|Kayathar",
+            "H6|His 6: Early Revolts in TN|fill|The Rebellion of Marudhu Brothers was categorized in the British records as the ________.|Second Palayakarar War",
+            "H6|His 6: Early Revolts in TN|fill|________ was declared the new Sultan by the rebels in Vellore Fort.|Fateh Hyder",
+            "H7|His 7: Anti-Colonial Movements|fill|Wahhabi rebellion was an anti-imperial and anti-landlord movement which originated in and around ________.|1827",
+            "H7|His 7: Anti-Colonial Movements|fill|The major tribal revolt which took place in Chotanagpur region was ________ revolt.|Kol",
+            "H7|His 7: Anti-Colonial Movements|fill|Chota Nagpur Act was passed in the year ________.|1908",
+            "H7|His 7: Anti-Colonial Movements|fill|________ was elected the president of Indian National Congress in the year 1885.|Womesh Chandra Bannerjee",
+            "H8|His 8: Nationalism Gandhian|fill|Gandhi regarded ________ as his political guru.|Gopala Krishna Gokhale",
+            "H8|His 8: Nationalism Gandhian|fill|Khilafat Movement was led by ________.|Mohamed Ali & Shaukat Ali (Ali brothers)",
+            "H8|His 8: Nationalism Gandhian|fill|Government of India Act 1919 introduced ________ in the provinces.|Dyarchy",
+            "H8|His 8: Nationalism Gandhian|fill|The Civil Disobedience Movement in North West Frontier Province was led by ________.|Khan Abdul Ghaffar Khan",
+            "H8|His 8: Nationalism Gandhian|fill|Ramsay Macdonald announced ________ which provided separate electorates to the minorities and the depressed classes.|Communal Award",
+            "H8|His 8: Nationalism Gandhian|fill|________ established Congress Radio underground during the Quit India Movement.|Usha Mehta",
+            "H9|His 9: Freedom Struggle TN|fill|________ was appointed the first Indian Judge of the Madras High Court.|T. Muthuswami",
+            "H9|His 9: Freedom Struggle TN|fill|Nilakanta Brahmachari started the secret society named ________.|Bharata Matha Society",
+            "H9|His 9: Freedom Struggle TN|fill|________ formed the first Congress Ministry in Madras.|Rajaji",
+            "H9|His 9: Freedom Struggle TN|fill|________ was the founder of the Madras branch of the Muslim League.|Yakub Hasan",
+            "H9|His 9: Freedom Struggle TN|fill|________ hoisted the national flag atop Fort St. George on 26 January 1932.|Bhashyam",
+            "H10|His 10: Social Transform TN|fill|________ was the first non-European language that went into print.|Tamil",
+            "H10|His 10: Social Transform TN|fill|The College of Fort St. George was founded by ________.|F.W. Ellis",
+            "H10|His 10: Social Transform TN|fill|________ is considered the father of Tamil linguistic purism.|Maraimalai Adigal",
+            "H10|His 10: Social Transform TN|fill|________ Government was the first to approve participation of women in the electoral politics.|Justice Party",
+            "H10|His 10: Social Transform TN|fill|The name Suriyanarayana Sastri changed in Tamil as ________.|Parithimar Kalaignar",
+            "H10|His 10: Social Transform TN|fill|________ gave prominence to Tamil music.|Abraham Pandithar",
+            "H10|His 10: Social Transform TN|fill|The first Woman Legislator in India was ________.|Muthulakshmi Ammaiyar",
+            "G6|Geo 6: Physical Geo of TN|fill|The plateau which lies between the Nilgiris and Dharmapuri districts is ________.|Coimbatore",
+            "G6|Geo 6: Physical Geo of TN|fill|________ is the highest peak in the southern most part of the Eastern Ghats|Solaikaradu",
+            "G6|Geo 6: Physical Geo of TN|fill|The riverine Island of Srirangam is located between ________ branches of cauvery.|Kollidam and Kaveri",
+            "G6|Geo 6: Physical Geo of TN|fill|________ is the Tamil Nadu state animal.|Nilgiri tahr",
+            "G7|Geo 7: Human Geo of TN|fill|Agriculture of Tamil Nadu constitutes ________ of its economy.|21%",
+            "G7|Geo 7: Human Geo of TN|fill|Sathanur dam is constructed across the river ________.|Thenpennai",
+            "G7|Geo 7: Human Geo of TN|fill|Chennai is the third largest airport in India after ________.|Mumbai and Delhi",
+            "G7|Geo 7: Human Geo of TN|fill|The difference between the value of exports and imports is called ________.|balance of trade",
+            "C1|Civ 1: Indian Constitution|fill|The concept of constitution first originated in ________.|USA",
+            "C1|Civ 1: Indian Constitution|fill|________ was elected as the temporary President of the Constituent Assembly.|Dr. Sachchidananda Sinha",
+            "C1|Civ 1: Indian Constitution|fill|The Constitution of India was adopted on ________.|November 26, 1949",
+            "C1|Civ 1: Indian Constitution|fill|________ kinds writs are mentioned in Article 32.|Five",
+            "C1|Civ 1: Indian Constitution|fill|Fundamental duties have been given to the citizen of India under Article ________.|51A",
+            "C2|Civ 2: Central Government|fill|Money Bill cannot be introduced in the Parliament without ________ approval.|President's",
+            "C2|Civ 2: Central Government|fill|The ________ is the leader of the nation and chief spokesperson of the country.|Prime Minister",
+            "C2|Civ 2: Central Government|fill|The ________ is the Ex-officio Chairperson of the Rajya Sabha.|Vice President",
+            "C2|Civ 2: Central Government|fill|The ________ has the right to speak and to take part in the proceedings of both Houses of the Parliament.|Attorney General",
+            "C2|Civ 2: Central Government|fill|The Chief Justice and other judges of the Supreme Court hold the office up to the age of ________ years.|65",
+            "C2|Civ 2: Central Government|fill|The ________ is the Guardian of the Constitution.|Supreme Court",
+            "C3|Civ 3: State Government|fill|Governor of the state government surrenders his resignation to ________.|President",
+            "C3|Civ 3: State Government|fill|Members of the Legislative assembly (MLAs) elected by the ________.|People",
+            "C3|Civ 3: State Government|fill|________ acts as the chancellor of universities in the state.|Governor",
+            "C3|Civ 3: State Government|fill|The Chairman and Members of the State Public Service Commission can be removed only by the ________.|President",
+            "C4|Civ 4: India's Foreign Policy|fill|India conducted its first nuclear test at ________.|Pokhran (Rajasthan)",
+            "C4|Civ 4: India's Foreign Policy|fill|________ is the instrument for implementing foreign policy of a state.|Diplomacy",
+            "C4|Civ 4: India's Foreign Policy|fill|________ was India's policy in the face of the bipolar order of the cold war.|Non-Aligned Movement",
+            "C5|Civ 5: India's Int. Relations|fill|________ is a small Himalayan kingdom.|Bhutan",
+            "C5|Civ 5: India's Int. Relations|fill|India's gateway to South East Asia is ________.|Myanmar/Burma",
+            "C5|Civ 5: India's Int. Relations|fill|A strip of land ________ belongs to India on West Bengal and Bangladesh border.|Teen Bigha Corridor",
+            "C5|Civ 5: India's Int. Relations|fill|Bhutan is known as the ________.|Land of thunderbolt",
+            "E1|Eco 1: GDP & Its Growth|fill|Agricultural sector is the ________ sector in India.|primary",
+            "E1|Eco 1: GDP & Its Growth|fill|________ is an indicator to show the living standard of people.|Per Capita Income",
+            "E1|Eco 1: GDP & Its Growth|fill|Secondary sector otherwise called as ________ sector.|Industrial",
+            "E2|Eco 2: Globalization & Trade|fill|A better economy introduce rapid development of the ________ market.|Capital",
+            "E2|Eco 2: Globalization & Trade|fill|WTO agreement came into force from ________.|January 1, 1995",
+            "E2|Eco 2: Globalization & Trade|fill|The term globalization invented by ________.|Prof. Theodore Levitt",
+            "E3|Eco 3: Food Security & Nutr.|fill|________ growth is an important indicator of nutrition deficiency.|Underweight / Anaemic / Stunted",
+            "E3|Eco 3: Food Security & Nutr.|fill|In the year ________ National Food Security Act was passed by the Indian Parliament.|2013",
+            "E3|Eco 3: Food Security & Nutr.|fill|________ play an important role in the supply of quality goods at responsible rates to common people.|Consumer cooperatives",
+            "E4|Eco 4: Government and Taxes|fill|Tax is levied by ________ for the development of the state's economy.|government",
+            "E4|Eco 4: Government and Taxes|fill|The origin of the word 'tax' is from the word ________.|taxation",
+            "E4|Eco 4: Government and Taxes|fill|The burden of the ________ tax cannot be shifted to others.|direct",
+            "E4|Eco 4: Government and Taxes|fill|The Goods and Service Tax act came into effect on ________.|1, July 2017",
+            "E4|Eco 4: Government and Taxes|fill|The unaccounted money that is concealed from the tax administrator is called ________.|black money",
+            "E5|Eco 5: Industrial Clusters TN|fill|Hundred of leather and tannery facilities are located around ________ district in Tamil Nadu.|Vellore",
+            "E5|Eco 5: Industrial Clusters TN|fill|Special Economic Zones policy was introduced in ________.|April 2000"
+        ];
+
+        // Decoder
+        const allQuestions = rawData.map(row => {
+            let p = row.split('|');
+            if(p[2] === 'mcq') {
+                return { unit: p[0], unitName: p[1], type: p[2], question: p[3], options: [p[4], p[5], p[6], p[7]], answer: p[4 + parseInt(p[8])] };
+            } else {
+                return { unit: p[0], unitName: p[1], type: p[2], question: p[3], answer: p[4] };
+            }
+        });
+
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let score = 0;
+        let timerInterval;
+        let timeLeft = 30;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function wrapMathTokens(str) {
+            return `<span class="math-wrap">${str}</span>`;
+        }
+
+        function startQuiz() {
+            initAudio(); 
+            
+            const units = Array.from(document.querySelectorAll('.unit-cb:checked')).map(cb => cb.value);
+            const types = Array.from(document.querySelectorAll('.type-cb:checked')).map(cb => cb.value);
+            const order = document.getElementById('order-select').value;
+
+            if (units.length === 0 || types.length === 0) {
+                alert("Please select at least one Unit and one Question Type!");
+                return;
+            }
+
+            quizQuestions = allQuestions.filter(q => units.includes(q.unit) && types.includes(q.type));
+
+            if (quizQuestions.length === 0) {
+                alert("No questions found for this selection!");
+                return;
+            }
+
+            if (order === "shuffle") shuffleArray(quizQuestions);
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            updateTimerUI();
+            
+            document.getElementById('next-btn-wrapper').style.display = 'none';
+            document.getElementById('feedback-msg').style.display = 'none';
+            
+            const q = quizQuestions[currentIdx];
+            
+            document.getElementById('unit-badge').innerText = q.unitName;
+            let partText = q.type === 'mcq' ? "Choose the Correct Answer" : "Fill in the Blanks";
+            document.getElementById('part-badge').innerText = partText;
+
+            let qText = (currentIdx + 1) + ". " + q.question;
+            document.getElementById('question-text').innerHTML = qText;
+
+            const answerArea = document.getElementById('answer-area');
+            answerArea.innerHTML = "";
+
+            if (q.type === "mcq") {
+                const optsDiv = document.createElement('div');
+                optsDiv.className = "options-grid";
+                
+                let opts = [...q.options];
+                shuffleArray(opts); 
+
+                opts.forEach((opt, index) => {
+                    const letter = String.fromCharCode(65 + index); 
+                    const btn = document.createElement('button');
+                    btn.className = "option-btn";
+                    btn.innerHTML = `<span class="opt-alpha">${letter}</span> <span class="opt-text">${wrapMathTokens(opt)}</span>`;
+                    btn.onclick = () => checkAnswer(opt, btn); 
+                    optsDiv.appendChild(btn);
+                });
+                answerArea.appendChild(optsDiv);
+            } else if (q.type === "fill") {
+                const group = document.createElement('div');
+                group.className = "fill-input-group";
+                
+                const input = document.createElement('input');
+                input.type = "text";
+                input.id = "fill-input";
+                input.className = "fill-input";
+                input.placeholder = "Type your answer here...";
+                
+                const subBtn = document.createElement('button');
+                subBtn.className = "submit-btn";
+                subBtn.innerText = "Check Answer";
+                subBtn.onclick = () => checkAnswer(input.value.trim(), null);
+
+                group.appendChild(input);
+                group.appendChild(subBtn);
+                answerArea.appendChild(group);
+            }
+
+            if (window.MathJax) {
+                MathJax.typesetPromise().catch((err) => console.log('MathJax error: ', err));
+            }
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const bar = document.getElementById('timer-bar');
+            const txt = document.getElementById('timer-text');
+            let pct = (timeLeft / 30) * 100;
+            bar.style.width = pct + "%";
+            txt.innerText = `⏳ ${timeLeft}s`;
+            
+            if (timeLeft > 15) bar.style.background = "#2ecc71";
+            else if (timeLeft > 5) bar.style.background = "#f1c40f";
+            else bar.style.background = "#e74c3c";
+        }
+
+        function fireConfetti() {
+            var duration = 1500;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function showGameOverlay(isCorrect) {
+            const overlay = document.getElementById('game-overlay');
+            const box = document.getElementById('popup-box');
+            const icon = document.getElementById('popup-icon');
+            const text = document.getElementById('popup-text');
+            
+            box.className = 'popup-box'; 
+            
+            if (isCorrect) {
+                icon.innerHTML = "✅";
+                text.innerHTML = "மிகச் சரி! (CORRECT)";
+                text.className = "popup-text theme-correct";
+            } else {
+                icon.innerHTML = "❌";
+                text.innerHTML = "தவறு! (WRONG)";
+                text.className = "popup-text theme-wrong";
+                box.classList.add('wrong-shake'); 
+            }
+            
+            overlay.classList.add('show');
+            setTimeout(() => { overlay.classList.remove('show'); }, 1300);
+        }
+
+        function handleTimeOut() {
+            initAudio();
+            playSound('wrong');
+            showGameOverlay(false);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.innerHTML = "❌ Time's Up! The correct answer is: <br><br><span style='background:#f4ead5; padding: 5px 10px; border-radius: 5px; color:#c0392b;'>" + wrapMathTokens(quizQuestions[currentIdx].answer) + "</span>";
+            msg.style.color = "#e74c3c";
+            msg.style.display = "block";
+            
+            disableAllInputs();
+            showNextBtn();
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function checkAnswer(userAns, btnElement) {
+            clearInterval(timerInterval);
+            initAudio(); 
+            
+            const q = quizQuestions[currentIdx];
+            
+            const cleanUser = userAns.replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+            const cleanAns = q.answer.replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+            
+            const isCorrect = cleanUser === cleanAns || cleanUser.includes(cleanAns) || cleanAns.includes(cleanUser);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.style.display = "block";
+
+            disableAllInputs();
+
+            if (isCorrect) {
+                score++;
+                playSound('correct');
+                fireConfetti();
+                showGameOverlay(true);
+                
+                msg.innerText = "✅ Excellent! Correct Answer!";
+                msg.style.color = "#27ae60";
+
+                if (btnElement) {
+                    btnElement.classList.add('correct');
+                } else {
+                    document.getElementById('fill-input').style.borderColor = "#27ae60";
+                    document.getElementById('fill-input').style.backgroundColor = "#d4edda";
+                }
+            } else {
+                playSound('wrong');
+                showGameOverlay(false);
+                
+                msg.innerHTML = "❌ Wrong! Correct answer is: <br><br><span style='background:#f4ead5; padding: 5px 10px; border-radius: 5px; color:#c0392b;'>" + wrapMathTokens(q.answer) + "</span>";
+                msg.style.color = "#e74c3c";
+                
+                if (btnElement) {
+                    btnElement.classList.add('wrong');
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        let btnContent = b.querySelector('.opt-text').innerHTML.replace(/<span class="math-wrap">|<\/span>/g, '').replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+                        if (btnContent === cleanAns || btnContent.includes(cleanAns)) {
+                            b.classList.add('correct');
+                        }
+                    });
+                } else {
+                    document.getElementById('fill-input').style.borderColor = "#e74c3c";
+                    document.getElementById('fill-input').style.backgroundColor = "#f8d7da";
+                }
+            }
+
+            if (window.MathJax) MathJax.typesetPromise();
+            showNextBtn();
+        }
+
+        function disableAllInputs() {
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+            const fillInput = document.getElementById('fill-input');
+            const submitBtn = document.querySelector('.submit-btn');
+            if (fillInput) fillInput.disabled = true;
+            if (submitBtn) submitBtn.disabled = true;
+        }
+
+        function showNextBtn() {
+            const wrapper = document.getElementById('next-btn-wrapper');
+            wrapper.style.display = 'flex';
+            if (currentIdx === quizQuestions.length - 1) {
+                wrapper.querySelector('button').innerText = "Show Results 🏆";
+            }
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('final-score').innerText = score + " / " + quizQuestions.length;
+            if(score > (quizQuestions.length / 2)) {
+                fireConfetti();
+                playSound('correct');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Maths One Mark Practice - Full 125 Questions</title>
+    
+    <!-- MathJax for Mathematical Formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] } };
+    </script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #0284c7; 
+            --primary-blue-dark: #0369a1;
+            --accent-orange: #f97316; 
+            --accent-orange-dark: #ea580c;
+            --card-bg: #ffffff;
+            --q-card-bg: #fdf8f5; 
+            --border-color: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --btn-green: #059669;
+            --btn-red: #dc2626;
+        }
+
+        body {
+            font-family: 'Cambria', Georgia, serif;
+            background-color: #f0f9ff; 
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            scroll-behavior: smooth;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .math-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .math-bg i {
+            position: absolute; color: rgba(2, 132, 199, 0.07);
+            font-size: 5rem; animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .container { max-width: 950px; margin: 0 auto; }
+
+        .header-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            padding: 25px; border-radius: 15px; text-align: center; 
+            box-shadow: 0 8px 15px rgba(2, 132, 199, 0.1); margin-bottom: 25px; 
+            border-bottom: 6px solid var(--primary-blue); border-top: 6px solid var(--accent-orange);
+        }
+        .header-card h1 { color: var(--primary-blue-dark); font-size: 2em; margin: 0 0 10px 0; }
+        .header-card p { margin: 5px 0; font-size: 1.1em; }
+        .author-text { color: var(--accent-orange); font-weight: bold; background: #fff3e0; padding: 4px 10px; border-radius: 20px;}
+
+        /* Ramanujan Banner Fix */
+        .ramanujan-banner {
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(to right, rgba(3, 105, 161, 0.95), rgba(2, 132, 199, 0.85)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Srinivasa_Ramanujan_-_OPC_-_1.jpg/800px-Srinivasa_Ramanujan_-_OPC_-_1.jpg');
+            background-size: cover; background-position: center 25%;
+            color: white; padding: 45px 30px; border-radius: 12px; margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center;
+        }
+        .quote-text {
+            font-size: 1.35em; font-style: italic; line-height: 1.6;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); max-width: 800px;
+        }
+        .quote-text span { display: block; margin-top: 12px; font-weight: bold; color: #fed7aa; font-style: normal; font-size: 0.9em; }
+
+        .card {
+            background-color: var(--card-bg); padding: 30px;
+            border-radius: 15px; border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 25px;
+        }
+        .card-title {
+            color: var(--primary-blue); text-align: center;
+            font-weight: bold; font-size: 1.5em; margin-bottom: 25px;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: bold; color: var(--primary-blue-dark);}
+        
+        input[type="text"], select {
+            width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0;
+            border-radius: 8px; font-size: 1.05em; font-family: 'Cambria', serif; background-color: #f8fafc;
+        }
+
+        .btn {
+            padding: 12px 20px; border: none; border-radius: 8px; font-size: 1.05em; 
+            cursor: pointer; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Cambria', serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-full { width: 100%; background: linear-gradient(to right, var(--accent-orange), var(--accent-orange-dark)); margin-top: 15px; justify-content: center;}
+        .btn-logout { background-color: var(--btn-red); padding: 8px 15px; font-size: 0.95em; }
+        .btn-report { background-color: var(--btn-green); }
+        .btn-restart { background-color: var(--primary-blue); }
+        .btn-print { background-color: #0d9488; }
+
+        .user-info-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+            padding: 15px 20px; border-radius: 10px; border-left: 5px solid var(--primary-blue);
+            margin-bottom: 25px; border: 1px solid var(--border-color);
+        }
+        .user-details { display: flex; flex-wrap: wrap; gap: 20px; }
+        .user-details span { font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .user-details i { color: var(--accent-orange); }
+
+        .controls-row { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .controls-row label { font-weight: bold; color: var(--accent-orange-dark);}
+        
+        .score-bar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            font-size: 1.3em; font-weight: bold; flex-wrap: wrap; gap: 15px;
+            background-color: var(--primary-blue); color: white;
+        }
+
+        .question-box {
+            border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 25px; 
+            background-color: var(--q-card-bg); transition: border-color 0.3s;
+        }
+        .question-box:hover { border-color: var(--primary-blue); }
+        .q-number { 
+            display: inline-block; background-color: var(--primary-blue); color: white; 
+            padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 15px;
+        }
+        .q-text { font-size: 1.2em; margin-bottom: 20px; color: #0f172a;}
+        
+        .svg-container { text-align: center; margin: 20px 0; background: white; padding: 15px; border-radius: 8px; border: 1px dashed var(--border-color);}
+        .svg-container svg { max-width: 100%; height: auto; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-label {
+            display: flex; align-items: center; padding: 15px;
+            border: 2px solid var(--border-color); border-radius: 10px;
+            cursor: pointer; background-color: white; transition: all 0.2s; font-size: 1.1em;
+        }
+        .option-label:hover { background-color: #f0f9ff; border-color: #bae6fd; transform: scale(1.01); }
+        .option-label input { display: none; }
+        .custom-radio {
+            width: 20px; height: 20px; border: 2px solid var(--primary-blue);
+            border-radius: 50%; margin-right: 15px; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .opt-letter { 
+            background-color: #e0f2fe; color: var(--primary-blue-dark); 
+            width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-weight: bold; margin-right: 12px;
+        }
+        
+        .status-icon { margin-left: auto; font-size: 1.3em; display: none; }
+        .correct-answer { background-color: #ecfdf5 !important; border-color: #10b981 !important; color: #065f46;}
+        .correct-answer .custom-radio { background-color: #10b981; border-color: #10b981; box-shadow: inset 0 0 0 4px white;}
+        .correct-answer .opt-letter { background-color: #10b981; color: white;}
+        .correct-answer .status-icon { display: block; color: #10b981; }
+        
+        .wrong-answer { background-color: #fef2f2 !important; border-color: #ef4444 !important; color: #991b1b;}
+        .wrong-answer .custom-radio { background-color: #ef4444; border-color: #ef4444; box-shadow: inset 0 0 0 4px white;}
+        .wrong-answer .opt-letter { background-color: #ef4444; color: white;}
+        .wrong-answer .status-icon { display: block; color: #ef4444; }
+
+        .report-header { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 20px; background: white; line-height: 1.8;}
+        .report-progress { display: flex; justify-content: center; margin: 30px 0; }
+        .progress-circle {
+            width: 130px; height: 130px; border-radius: 50%; border: 6px solid #b91c1c; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-weight: bold; color: var(--primary-blue-dark); text-align: center;
+        }
+        .progress-circle .perc { font-size: 2em; color: #b91c1c; line-height: 1;}
+        .progress-circle .text { font-size: 0.85em; margin-top: 5px;}
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 30px; text-align: center; }
+        .stat-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .stat-box .num { font-size: 2em; font-weight: bold; margin-bottom: 5px; }
+        .stat-box .lbl { color: var(--text-muted); font-size: 1em; font-weight: bold; }
+        
+        .review-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 15px; background: #fafafa; }
+        .review-q { font-size: 1.1em; font-weight: 500; margin-bottom: 15px; color: #0f172a;}
+        .review-ans { margin-bottom: 8px; font-size: 1.05em;}
+        .text-red { color: #dc2626; font-weight: bold;}
+        .text-green { color: #059669; font-weight: bold;}
+        .text-blue { color: var(--primary-blue-dark); font-weight: bold;}
+
+        .hidden { display: none !important; }
+        
+        @media print {
+            body { background: white; padding: 0; font-size: 12pt;}
+            .math-bg, .user-info-bar, .controls-card, .score-bar, .btn, #scrollTopBtn, #quiz-section, .ramanujan-banner { display: none !important; }
+            .card { border: none; box-shadow: none; margin: 0; padding: 0; }
+            #report-section { display: block !important; }
+            .review-box { break-inside: avoid; border: none; border-bottom: 1px solid #ccc; background: white; padding: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="math-bg">
+        <i class="fa-solid fa-square-root-variable" style="top: 10%; left: 10%;"></i>
+        <i class="fa-solid fa-infinity" style="top: 25%; left: 85%; font-size: 6rem;"></i>
+        <i class="fa-solid fa-divide" style="top: 75%; left: 15%; font-size: 4rem;"></i>
+        <i class="fa-solid fa-calculator" style="top: 85%; left: 80%;"></i>
+        <i class="fa-solid fa-chart-pie" style="top: 45%; left: 90%; font-size: 5rem;"></i>
+        <i class="fa-solid fa-superscript" style="top: 50%; left: 5%;"></i>
+        <i class="fa-solid fa-plus-minus" style="top: 15%; left: 50%;"></i>
+        <i class="fa-solid fa-shapes" style="top: 90%; left: 45%;"></i>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-card">
+            <h1><i class="fa-solid fa-graduation-cap"></i> 10th Standard Mathematics</h1>
+            <p>TN 10th Standard Mathematics One-Mark Practice</p>
+            <p>Prepared by <span class="author-text"><i class="fa-solid fa-chalkboard-user"></i> Y. SEENIVASAN. M.Sc, B.Ed MATHS TEACHER-8489880553</span></p>
+        </div>
+
+        <!-- Registration -->
+        <div id="registration-section">
+            <div class="ramanujan-banner">
+                <div class="quote-text">
+                    <i class="fa-solid fa-quote-left" style="color: #ea580c;"></i> An equation for me has no meaning, unless it expresses a thought of God. <i class="fa-solid fa-quote-right" style="color: #ea580c;"></i>
+                    <span>- Srinivasa Ramanujan (Father of Indian Mathematics)</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-id-card-clip"></i> Student Registration Form</div>
+                <div class="form-group">
+                    <label>Student Name *</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="studentClass"><option value="10th Standard">10th Standard</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <select id="studentGroup"><option value="Mathematics">Mathematics</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>School Name & Place *</label>
+                    <input type="text" id="schoolName" required>
+                </div>
+                <button class="btn btn-full" onclick="startQuiz()"><i class="fa-solid fa-rocket"></i> Start Quiz &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Quiz Interface -->
+        <div id="quiz-section" class="hidden">
+            <div class="user-info-bar">
+                <div class="user-details">
+                    <span><i class="fa-solid fa-user-graduate"></i> <b id="display-name"></b></span>
+                    <span><i class="fa-solid fa-school"></i> <span id="display-school"></span></span>
+                    <span><i class="fa-solid fa-book-open"></i> <span id="display-class"></span></span>
+                </div>
+                <button class="btn btn-logout" onclick="location.reload()"><i class="fa-solid fa-power-off"></i> Logout</button>
+            </div>
+
+            <div class="card controls-card">
+                <div class="controls-row">
+                    <label>Practice Test:</label>
+                    <select id="chapterSelect" onchange="renderQuestions()">
+                        <option value="master">🏆 Master Test (All 125 Questions)</option>
+                        <option value="1">Chapter 1: Relations and Functions (15 Q)</option>
+                        <option value="2">Chapter 2: Numbers and Sequences (15 Q)</option>
+                        <option value="3">Chapter 3: Algebra (20 Q)</option>
+                        <option value="4">Chapter 4: Geometry (15 Q)</option>
+                        <option value="5">Chapter 5: Coordinate Geometry (15 Q)</option>
+                        <option value="6">Chapter 6: Trigonometry (15 Q)</option>
+                        <option value="7">Chapter 7: Mensuration (15 Q)</option>
+                        <option value="8">Chapter 8: Statistics and Probability (15 Q)</option>
+                    </select>
+                </div>
+                <div class="controls-row">
+                    <label>Question Order:</label>
+                    <select id="orderSelect" onchange="renderQuestions()">
+                        <option value="sequential">📖 Book Back Order</option>
+                        <option value="shuffled">🎲 Shuffled (Randomized)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card score-bar">
+                <div><i class="fa-solid fa-trophy"></i> Score: <span id="score-display">0 / 0</span></div>
+                <div class="score-actions">
+                    <button class="btn btn-report" onclick="generateReport()"><i class="fa-solid fa-chart-pie"></i> Report</button>
+                    <button class="btn btn-restart" onclick="renderQuestions()"><i class="fa-solid fa-rotate-right"></i> Restart Test</button>
+                </div>
+            </div>
+
+            <div id="questions-container"></div>
+        </div>
+
+        <!-- Detailed Report Section -->
+        <div id="report-section" class="card hidden">
+            <h2 style="text-align:center; color: var(--primary-blue);"><i class="fa-solid fa-file-contract"></i> Student Performance Report</h2>
+            <div class="report-header">
+                <div><b>Attempt ID:</b> <span id="rep-attempt"></span></div>
+                <div><b>Class & Subject:</b> <span id="rep-class"></span></div>
+                <div><b>School:</b> <span id="rep-school"></span> | <b>Student:</b> <span id="rep-name"></span></div>
+            </div>
+
+            <div class="report-progress">
+                <div class="progress-circle" id="rep-circle">
+                    <span class="perc" id="rep-perc">0%</span>
+                    <span class="text" id="rep-remark">Needs Practice</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="num text-green" id="rep-correct">0</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num text-red" id="rep-wrong">0</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num text-blue" id="rep-total">0</div>
+                    <div class="lbl">Total</div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary-blue-dark); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;"><i class="fa-solid fa-pen-to-square"></i> Answer Key & Review</h3>
+            <div id="review-container"></div>
+
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="btn btn-print btn-full" onclick="window.print()" style="margin-top:0;"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
+                <button class="btn btn-restart btn-full" onclick="document.getElementById('report-section').classList.add('hidden'); document.getElementById('quiz-section').classList.remove('hidden'); renderQuestions();" style="margin-top:0;"><i class="fa-solid fa-rotate-left"></i> Retake Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Proper Audio Initialization & Fixing Delay Bug
+        let audioCtx;
+        function initAudio() {
+            if(!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if(audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+        
+        function playSound(isCorrect) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            const now = audioCtx.currentTime;
+            if (isCorrect) {
+                // Correct Sound: Pleasant Beep up
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.setValueAtTime(1200, now + 0.1);
+                gainNode.gain.setValueAtTime(0.5, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now); osc.stop(now + 0.25);
+            } else {
+                // Wrong Sound: Buzz down
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                gainNode.gain.setValueAtTime(0.3, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now); osc.stop(now + 0.4);
+            }
+        }
+
+        // -------------------------------------------------------------
+        // FULL 125 QUESTIONS DATABASE 
+        // (Ch3 has 20 questions, all others 15)
+        // -------------------------------------------------------------
+        const quizDatabase = {
+            "1": [
+                { q: "If $n(A\\times B)=6$ and $A=\\{1,3\\}$, then $n(B)$ is", opts: ["1", "2", "3", "6"], ans: "3" },
+                { q: "$A=\\{a,b,p\\}$, $B=\\{2,3\\}$, $C=\\{p,q,r,s\\}$ then $n[(A\\cup C)\\times B]$ is", opts: ["8", "20", "12", "16"], ans: "12" },
+                { q: "If $A=\\{1,2\\}$, $B=\\{1,2,3,4\\}$, $C=\\{5,6\\}$ and $D=\\{5,6,7,8\\}$ then state which of the following statement is true.", opts: ["$(A\\times C)\\subset(B\\times D)$", "$(B\\times D)\\subset(A\\times C)$", "$(A\\times B)\\subset(A\\times D)$", "$(D\\times A)\\subset(B\\times A)$"], ans: "$(A\\times C)\\subset(B\\times D)$" },
+                { q: "If there are 1024 relations from a set $A=\\{1,2,3,4,5\\}$ to a set B, then the number of elements in B is", opts: ["3", "2", "4", "8"], ans: "2" },
+                { q: "The range of the relation $\\mathbb{R}=\\{(x,x^2)|x$ is a prime number less than $13\\}$ is", opts: ["$\\{2,3,5,7\\}$", "$\\{2,3,5,7,11\\}$", "$\\{4,9,25,49,121\\}$", "$\\{1,4,9,25,49,121\\}$"], ans: "$\\{4,9,25,49,121\\}$" },
+                { q: "If the ordered pairs $(a+2,4)$ and $(5,2a+b)$ are equal then (a, b) is", opts: ["$(2,-2)$", "$(5,1)$", "$(2,3)$", "$(3,-2)$"], ans: "$(3,-2)$" },
+                { q: "Let $n(A)=m$ and $n(B)=n$ then the total number of non empty relations that can be defined from A to B is", opts: ["$m^n$", "$n^m$", "$2^{mn}-1$", "$2^{mn}$"], ans: "$2^{mn}-1$" },
+                { q: "If $\\{(a, 8), (6, b)\\}$ represents an identity function, then the value of a and b are respectively", opts: ["(8,6)", "(8,8)", "(6,8)", "(6,6)"], ans: "(8,6)" },
+                { q: "Let $A=\\{1,2,3,4\\}$ and $B=\\{4,8,9,10\\}$. A function $f:A\\rightarrow B$ given by $f=\\{(1,4), (2,8), (3,9), (4,10)\\}$ is a", opts: ["Many One Function", "Identity Function", "One to One Function", "Into Function"], ans: "One to One Function" },
+                { q: "If $f(x)=2x^2$ and $g(x)=\\frac{1}{3x}$, then $f\\circ g$ is", opts: ["$\\frac{3}{2x^2}$", "$\\frac{2}{3x^2}$", "$\\frac{2}{9x^2}$", "$\\frac{1}{6x^2}$"], ans: "$\\frac{2}{9x^2}$" },
+                { q: "If $f:A\\rightarrow B$ is a bijective function and if $n(B)=7$, then $n(A)$ is equal to.", opts: ["7", "49", "1", "14"], ans: "7" },
+                { q: "Let f and g be two functions given by $f=\\{(0,1), (2,0), (3,4), (4,2), (5,7)\\}$ $g=\\{(0,2), (1,0), (2,4), (-4,2), (7,0)\\}$ then the range of $f\\circ g$ is", opts: ["$\\{0,2,3,4,5\\}$", "$\\{-4,1,0,2,7\\}$", "$\\{1,2,3,4,5\\}$", "$\\{0,1,2\\}$"], ans: "$\\{0,1,2\\}$" },
+                { q: "Let $f(x)=\\sqrt{1+x^2}$ then", opts: ["$f(xy)=f(x).f(y)$", "$f(xy)\\ge f(x).f(y)$", "$f(xy)\\le f(x).f(y)$", "None of these"], ans: "$f(xy)\\le f(x).f(y)$" },
+                { q: "If $g=\\{(1,1),(2,3), (3,5), (4,7)\\}$ is a function given by $g(x)=\\alpha x+\\beta$ then the value of a and $\\beta$ are", opts: ["$(-1,2)$", "$(2,-1)$", "$(-1,-2)$", "$(1,2)$"], ans: "$(2,-1)$" },
+                { q: "$f(x)=(x+1)^3-(x-1)^3$ represents a function which is", opts: ["Linear", "Cubic", "Reciprocal", "Quadratic"], ans: "Quadratic" }
+            ],
+            "2": [
+                { q: "Euclid's division lemma states that for positive integers a and b, there exist unique integers q and r such that $a=bq+r$, where r must satisfy:", opts: [ "$1 \\lt r \\lt b$","$0 \\lt r \\lt b$", "$0 \\le r \\lt b$", "$0 \\lt r \\le b$"],ans: "$0 \\le r \\lt b$"},
+                { q: "Using Euclid's division lemma, if the cube of any positive integer is divided by 9 then the possible remainders are.", opts: ["0,1,8", "1,4,8", "0,1,3", "1,3,5"], ans: "0,1,8" },
+                { q: "If the HCF of 65 and 117 is expressible in the form of $65m-117$, then the value of m is", opts: ["4", "2", "1", "3"], ans: "2" },
+                { q: "The sum of the exponents of the prime factors in the prime factorization of 1729 is", opts: ["1", "2", "3", "4"], ans: "3" },
+                { q: "The least number that is divisible by all the numbers from 1 to 10 (both exclusive) is", opts: ["2025", "5220", "5025", "2520"], ans: "2520" },
+                { q: "$7^{4k}\\equiv$ ____ (mod 100)", opts: ["1", "2", "3", "4"], ans: "1" },
+                { q: "Given $F_1=1$, $F_2=3$ and $F_n=F_{n-1}+F_{n-2}$ then $F_5$ is", opts: ["3", "5", "8", "11"], ans: "11" },
+                { q: "The first term of an arithmetic progression is unity and the common difference is 4. Which of the following will be a term of this A. P.", opts: ["4551", "10091", "7881", "13531"], ans: "7881" },
+                { q: "If 6 times of $6^{th}$ term of an A.P is equal to 7 times the $7^{th}$ term, then the $13^{th}$ term of the A.P is", opts: ["0", "6", "7", "13"], ans: "0" },
+                { q: "An A.P consists of 31 terms. If its $16^{th}$ term is m, then the sum of all the terms of this A.P is", opts: ["16 m", "62 m", "31 m", "$\\frac{31}{2}m$"], ans: "31 m" },
+                { q: "In an A.P the first term is 1 and the common difference is 4. How many terms of the A.P must be taken for their sum to be equal to 120?.", opts: ["6", "7", "8", "9"], ans: "8" },
+                { q: "If $A=2^{65}$ and $B=2^{64}+2^{63}+2^{62}+\\cdot\\cdot\\cdot+2^0$ which of the following is true?.", opts: ["B is $2^{64}$ more than A", "A and B are Equal", "B is larger than A by 1", "A is larger than B by 1"], ans: "A is larger than B by 1" },
+                { q: "The next term of the sequence $\\frac{3}{16},\\frac{1}{8},\\frac{1}{12},\\frac{1}{18},...$ is", opts: ["$\\frac{1}{24}$", "$\\frac{1}{27}$", "$\\frac{2}{3}$", "$\\frac{1}{81}$"], ans: "$\\frac{1}{27}$" },
+                { q: "If the sequence $t_1,t_2,t_3,...$ are in A.P then the sequence $t_6, t_{12}, t_{18}, ...$ is", opts: ["A Geometric Progression", "An Arithmetic Progression", "Neither an AP nor a GP", "a constant sequence"], ans: "An Arithmetic Progression" },
+                { q: "The value of $(1^3+2^3+3^3+\\cdot\\cdot\\cdot+15^3)-(1+2+3+\\cdot\\cdot\\cdot+15)$ is", opts: ["14400", "14200", "14280", "14520"], ans: "14280" }
+            ],
+            "3": [
+                { q: "A system of three linear equations in three variables is inconsistent if their planes.", opts: ["Intersect only at a point", "Intersect in a line", "Coincides with each other", "do not intersect"], ans: "do not intersect" },
+                { q: "The solution of the system $x+y-3z=-6$, $-7y+7z=7$, $3z=9$ is", opts: ["$x=1,y=2, z=3$", "$x=-1, y=2, z=3$", "$x=-1, y=-2, z=3$", "$x=1, y=-2, z=3$"], ans: "$x=1,y=2, z=3$" },
+                { q: "If $(x-6)$ is the HCF of $x^2-2x-24$ and $x^2-kx-6$ then the value of k is", opts: ["3", "5", "6", "8"], ans: "5" },
+                { q: "$\\frac{3y-3}{y}\\div\\frac{7y-7}{3y^2}$ is", opts: ["$\\frac{9y}{7}$", "$\\frac{9y^3}{(21y-21)}$", "$\\frac{21y^2-42y+21}{3y^3}$", "$\\frac{7(y^2-2y+1)}{y^2}$"], ans: "$\\frac{9y}{7}$" },
+                { q: "$y^2+\\frac{1}{y^2}$ is not equal to", opts: ["$\\frac{y^4+1}{y^2}$", "$(y+\\frac{1}{y})^2$", "$(y-\\frac{1}{y})^2+2$", "$(y+\\frac{1}{y})^2-2$"], ans: "$(y+\\frac{1}{y})^2$" },
+                { q: "$\\frac{x}{x^2-25}-\\frac{x}{x^2+6x+5}$ gives", opts: ["$\\frac{x^2-7x+40}{(x-5)(x+5)}$", "$\\frac{x^2+7x+40}{(x-5)(x+5)(x+1)}$", "$\\frac{x^2-7x+40}{(x^2-25)(x+1)}$", "$\\frac{x^2+10}{(x^2-25)(x+1)}$"], ans: "$\\frac{x^2-7x+40}{(x^2-25)(x+1)}$" },
+                { q: "The square root of $\\frac{256x^8y^4z^{10}}{25x^6y^6z^6}$ is equal to", opts: ["$\\frac{16}{5}|\\frac{x^2z^4}{y^2}|$", "$16|\\frac{y^2}{x^2z^4}|$", "$\\frac{16}{5}|\\frac{y}{xz^2}|$", "$\\frac{16}{5}|\\frac{xz^2}{y}|$"], ans: "$\\frac{16}{5}|\\frac{xz^2}{y}|$" },
+                { q: "Which of the following should be added to make $x^4+64$ a perfect square", opts: ["$4x^2$", "$16x^2$", "$8x^2$", "$-8x^2$"], ans: "$16x^2$" },
+                { q: "The solution of $(2x-1)^2=9$ is equal to", opts: ["-1", "2", "-1,2", "None of these"], ans: "-1,2" },
+                { q: "The value of a and b if $4x^4-24x^3+76x^2+ax+b$ is a perfect square are", opts: ["100, 120", "10, 12", "- 120, 100", "12, 10"], ans: "- 120, 100" },
+                { q: "If the roots of the equation $q^2x^2+p^2x+r^2=0$ are the squares of the roots of the equation $qx^2+px+r=0$ then q, p, r are in", opts: ["A.P", "G.P", "Both A.P and G.P", "None of these"], ans: "G.P" },
+                { q: "Graph of a linear equation is a", opts: ["Straight line", "Circle", "Parabola", "Hyperbola"], ans: "Straight line" },
+                { q: "The number of points of intersection of the quadratic polynomial $x^2+4x+4$ with the X axis is", opts: ["0", "1", "0 or 1", "2"], ans: "1" },
+                { q: "For the given matrix $A=\\begin{pmatrix}1&3&5&7\\\\2&4&6&8\\\\9&11&13&15\\end{pmatrix}$ the order of the matrix $A^T$ is", opts: ["2x3", "3x2", "3x4", "4x3"], ans: "4x3" },
+                { q: "If A is a 2x3 matrix and B is a 3x4 matrix how many columns does AB have", opts: ["3", "4", "2", "5"], ans: "4" },
+                { q: "If number of columns and rows are not equal in a matrix then it is said to be a", opts: ["Diagonal matrix", "Rectangular matrix", "Square matrix", "Identity matrix"], ans: "Rectangular matrix" },
+                { q: "Transpose of a column matrix is", opts: ["Unit matrix", "Diagonal matrix", "Column matrix", "Row matrix"], ans: "Row matrix" },
+                { q: "Find the matrix X if $2X+\\begin{pmatrix}1&3\\\\5&7\\end{pmatrix}=\\begin{pmatrix}5&7\\\\9&5\\end{pmatrix}$", opts: ["$\\begin{pmatrix}-2&-2\\\\2&-1\\end{pmatrix}$", "$\\begin{pmatrix}2&2\\\\2&-1\\end{pmatrix}$", "$\\begin{pmatrix}1&2\\\\2&2\\end{pmatrix}$", "$\\begin{pmatrix}2&1\\\\2&2\\end{pmatrix}$"], ans: "$\\begin{pmatrix}2&2\\\\2&-1\\end{pmatrix}$" },
+                { q: "Which of the following can be calculated from the given matrices $A=\\begin{pmatrix}1&2\\\\3&4\\\\5&6\\end{pmatrix}$, $B=\\begin{pmatrix}1&2&3\\\\4&5&6\\\\7&8&9\\end{pmatrix}$ (i) $A^2$ (ii) $B^2$ (iii) AB (iv) BA", opts: ["(i) and (ii) only", "(ii) and (iii) only", "(ii) and (iv) only", "All of these"], ans: "(ii) and (iv) only" },
+                { q: "If $A=\\begin{pmatrix}1&2&3\\\\3&2&1\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\2&-1\\\\0&2\\end{pmatrix}$ and $C=\\begin{pmatrix}0&1\\\\-2&5\\end{pmatrix}$ which of the following statements are correct? (i) $AB+C=\\begin{pmatrix}5&5\\\\5&5\\end{pmatrix}$", opts: ["(i) and (ii) only", "(ii) and (iii) only", "(iii) and (iv) only", "All of these"], ans: "(i) and (ii) only" }
+            ],
+            "4": [
+                { q: "If in triangles ABC and EDF, $\\frac{AB}{DE}=\\frac{BC}{FD}$ then they will be similar, when", opts: ["$\\angle B=\\angle E$", "$\\angle A=\\angle D$", "$\\angle B=\\angle D$", "$\\angle A=\\angle F$"], ans: "$\\angle B=\\angle D$" },
+                { q: "In $\\Delta LMN$, $\\angle L=60^\\circ$, $\\angle M=50^\\circ$. If $\\Delta LMN\\sim\\Delta PQR$ then the value of $\\angle R$ is.", opts: ["$40^\\circ$", "$70^\\circ$", "$30^\\circ$", "$110^\\circ$"], ans: "$70^\\circ$" },
+                { q: "If $\\Delta ABC$ is an isosceles triangle with $\\angle C=90^\\circ$ and $AC=5$ cm then AB is", opts: ["2.5 cm", "5 cm", "10 cm", "$5\\sqrt{2}$ cm"], ans: "$5\\sqrt{2}$ cm" },
+                { 
+                    q: "In a given figure $ST \\parallel QR$, $PS=2$ cm and $SQ=3$ cm. Then the ratio of the area of $\\Delta PQR$ to the area of $\\Delta PST$ is", 
+                    svg: `<svg width="250" height="150" viewBox="0 0 250 150">
+                            <polygon points="10,130 240,130 180,20" fill="#38bdf8" stroke="#1e293b" stroke-width="2.5"/>
+                            <line x1="80" y1="85" x2="135" y2="130" stroke="#1e293b" stroke-width="2.5"/>
+                            <text x="5" y="148" font-family="Cambria" font-size="20" font-style="italic">P</text>
+                            <text x="235" y="148" font-family="Cambria" font-size="20" font-style="italic">R</text>
+                            <text x="185" y="18" font-family="Cambria" font-size="20" font-style="italic">Q</text>
+                            <text x="60" y="75" font-family="Cambria" font-size="20" font-style="italic">S</text>
+                            <text x="125" y="148" font-family="Cambria" font-size="20" font-style="italic">T</text>
+                          </svg>`,
+                    opts: ["25:4", "25:7", "25:11", "25:13"], ans: "25:4" 
+                },
+                { q: "The perimeters of two similar triangles $\\Delta ABC$ and $\\Delta PQR$ are 36 cm and 24 cm respectively. If $PQ=10$ cm, then the length of AB is", opts: ["$6\\frac{2}{3}$ cm", "$\\frac{10\\sqrt{6}}{3}$ cm", "66 cm", "15 cm"], ans: "15 cm" },
+                { q: "If in $\\Delta ABC$, $DE\\parallel BC$, $AB=3.6$ cm, $AC=2.4$ cm and $AD=2.1$ cm then the length of AE is", opts: ["1.4 cm", "1.8 cm", "1.2 cm", "1.05 cm"], ans: "1.4 cm" },
+                { q: "In a $\\Delta ABC$, AD is the bisector of $\\angle BAC$ If $AB=8$ cm, $BD=6$ cm and $DC=3$ cm. The length of the side AC is", opts: ["6 cm", "4 cm", "3 cm", "8 cm"], ans: "4 cm" },
+                { 
+                    q: "In the adjacent figure $\\angle BAC=90^\\circ$ and $AD\\perp BC$ then", 
+                    svg: `<svg width="250" height="150" viewBox="0 0 250 150">
+                            <polygon points="20,130 90,30 90,130" fill="#f472b6" stroke="#1e293b" stroke-width="2.5"/>
+                            <polygon points="90,30 230,130 90,130" fill="#fef08a" stroke="#1e293b" stroke-width="2.5"/>
+                            <polygon points="20,130 90,30 230,130" fill="none" stroke="#ec4899" stroke-width="3.5"/>
+                            <line x1="90" y1="30" x2="90" y2="130" stroke="#ec4899" stroke-width="3"/>
+                            <polyline points="75,130 75,115 90,115" fill="none" stroke="black" stroke-width="2"/>
+                            <polyline points="105,130 105,115 90,115" fill="none" stroke="black" stroke-width="2"/>
+                            <polyline points="78,45 88,52 100,42" fill="none" stroke="black" stroke-width="2"/>
+                            <text x="10" y="150" font-family="Cambria" font-size="20" font-style="italic">B</text>
+                            <text x="85" y="150" font-family="Cambria" font-size="20" font-style="italic">D</text>
+                            <text x="230" y="150" font-family="Cambria" font-size="20" font-style="italic">C</text>
+                            <text x="90" y="20" font-family="Cambria" font-size="20" font-style="italic">A</text>
+                          </svg>`,
+                    opts: ["$BD \\cdot CD = BC^2$", "$AB \\cdot AC = BC^2$", "$BD \\cdot CD = AD^2$", "$AB \\cdot AC = AD^2$"], ans: "$BD \\cdot CD = AD^2$" 
+                },
+                { q: "Two poles of heights 6 m and 11 m stand vertically on a plane ground. If the distance between their feet is 12 m, what is the distance between their tops?.", opts: ["13 m", "14 m", "15 m", "12.8 m"], ans: "13 m" },
+                { 
+                    q: "In the given figure, $PR=26$ cm, $QR=24$ cm, $\\angle PAQ=90^\\circ$, $PA=6$ cm and $QA=8$ cm. Find $\\angle PQR$", 
+                    svg: `<svg width="250" height="150" viewBox="0 0 250 150">
+                            <polygon points="10,130 220,130 220,20" fill="#bef264" stroke="#1e293b" stroke-width="2.5"/>
+                            <polygon points="220,20 160,60 220,130" fill="#fde047" stroke="#1e293b" stroke-width="2.5"/>
+                            <text x="0" y="148" font-family="Cambria" font-size="20" font-style="italic">R</text>
+                            <text x="225" y="148" font-family="Cambria" font-size="20" font-style="italic">Q</text>
+                            <text x="230" y="25" font-family="Cambria" font-size="20" font-style="italic">P</text>
+                            <text x="140" y="65" font-family="Cambria" font-size="20" font-style="italic">A</text>
+                            <polyline points="152,50 162,45 170,55" fill="none" stroke="black" stroke-width="2"/>
+                            <text x="175" y="75" font-family="Cambria" font-size="18">90°</text>
+                          </svg>`,
+                    opts: ["$80^\\circ$", "$85^\\circ$", "$75^\\circ$", "$90^\\circ$"], ans: "$90^\\circ$" 
+                },
+                { q: "A tangent is perpendicular to the radius at the", opts: ["Centre", "Point of contact", "Infinity", "Chord"], ans: "Point of contact" },
+                { q: "How many tangents can be drawn to the circle from an exterior point?.", opts: ["One", "Two", "Infinite", "Zero"], ans: "Two" },
+                { q: "The two tangents from an external points P to a circle with centre at O are PA and PB. If $\\angle APB=70^\\circ$ then the value of $\\angle AOB$ is", opts: ["$100^\\circ$", "$110^\\circ$", "$120^\\circ$", "$130^\\circ$"], ans: "$110^\\circ$" },
+                { 
+                    q: "In figure CP and CQ are tangents to a circle with centre at O. ARB is another tangent touching the circle at R. If $CP=11$ cm and $BC=7$ cm, then the length of BR is",
+                    svg: `<svg width="300" height="180" viewBox="0 0 300 180">
+                            <circle cx="90" cy="90" r="65" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
+                            <circle cx="90" cy="90" r="3" fill="black"/>
+                            <text x="85" y="115" font-family="Cambria" font-size="22" font-style="italic">O</text>
+                            <text x="280" y="95" font-family="Cambria" font-size="22" font-style="italic">C</text>
+                            <line x1="270" y1="90" x2="30" y2="15" stroke="#ec4899" stroke-width="2.5"/>
+                            <line x1="270" y1="90" x2="30" y2="165" stroke="#ec4899" stroke-width="2.5"/>
+                            <polygon points="30,15 45,15 35,25" fill="#ec4899"/>
+                            <polygon points="30,165 45,165 35,155" fill="#ec4899"/>
+                            <line x1="155" y1="35" x2="155" y2="145" stroke="#0ea5e9" stroke-width="2.5"/>
+                            <circle cx="65" cy="25" r="3" fill="black"/>
+                            <text x="50" y="15" font-family="Cambria" font-size="20" font-style="italic">P</text>
+                            <circle cx="65" cy="155" r="3" fill="black"/>
+                            <text x="50" y="175" font-family="Cambria" font-size="20" font-style="italic">Q</text>
+                            <circle cx="155" cy="90" r="3" fill="black"/>
+                            <text x="165" y="95" font-family="Cambria" font-size="20" font-style="italic">R</text>
+                            <text x="165" y="30" font-family="Cambria" font-size="20" font-style="italic">A</text>
+                            <text x="165" y="155" font-family="Cambria" font-size="20" font-style="italic">B</text>
+                          </svg>`,
+                    opts: ["6 cm", "5 cm", "8 cm", "4 cm"], ans: "4 cm" 
+                },
+                { 
+                    q: "In figure if PR is tangent to the circle at P and O is the centre of the circle, then $\\angle POQ$ is", 
+                    svg: `<svg width="250" height="220" viewBox="0 0 250 220">
+                            <circle cx="120" cy="120" r="90" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+                            <circle cx="120" cy="120" r="3" fill="black"/>
+                            <text x="100" y="135" font-family="Cambria" font-size="22" font-style="italic">O</text>
+                            <line x1="120" y1="120" x2="120" y2="30" stroke="#ec4899" stroke-width="2.5"/>
+                            <line x1="120" y1="120" x2="198" y2="165" stroke="#ec4899" stroke-width="2.5"/>
+                            <line x1="120" y1="30" x2="198" y2="165" stroke="#ec4899" stroke-width="2.5"/>
+                            <line x1="120" y1="30" x2="230" y2="30" stroke="#0ea5e9" stroke-width="2.5"/>
+                            <polygon points="230,30 215,25 215,35" fill="#0ea5e9"/>
+                            <circle cx="120" cy="30" r="3" fill="black"/>
+                            <text x="100" y="20" font-family="Cambria" font-size="22" font-style="italic">P</text>
+                            <circle cx="198" cy="165" r="3" fill="black"/>
+                            <text x="210" y="175" font-family="Cambria" font-size="22" font-style="italic">Q</text>
+                            <text x="210" y="20" font-family="Cambria" font-size="22" font-style="italic">R</text>
+                            <path d="M 120 55 A 25 25 0 0 0 135 45" fill="none" stroke="black" stroke-width="2"/>
+                            <text x="135" y="70" font-family="Cambria" font-size="18" transform="rotate(15 135 70)">60°</text>
+                          </svg>`,
+                    opts: ["$120^\\circ$", "$100^\\circ$", "$110^\\circ$", "$90^\\circ$"], ans: "$120^\\circ$" 
+                }
+            ],
+            "5": [
+                { q: "The area of triangle formed by the points $(-5,0)$, $(0,-5)$ and $(5,0)$ is.", opts: ["0 sq. units", "25 sq. units", "5 sq. units", "None of these"], ans: "25 sq. units" },
+                { q: "A man walks near a wall, such that the distance between him and the wall is 10 units. Consider the wall to be the Y axis. The path travelled by the man is", opts: ["$x=10$", "$y=10$", "$x=0$", "$y=0$"], ans: "$x=10$" },
+                { q: "The straight line given by the equation $x=11$ is", opts: ["Parallel to X axis", "Parallel to Y axis", "Passing through the origin", "Passing through the point (0,11)"], ans: "Parallel to Y axis" },
+                { q: "If $(5,7)$, $(3,p)$ and $(6,6)$ are collinear, then the value of p is", opts: ["3", "6", "9", "12"], ans: "9" },
+                { q: "The point of intersection of $3x-y=4$ and $x+y=8$ is", opts: ["$(5,3)$", "$(2,4)$", "$(3,5)$", "$(4,4)$"], ans: "$(3,5)$" },
+                { q: "The slope of the line joining $(12,3)$ $(4,a)$ is $\\frac{1}{8}$. The vale of 'a' is", opts: ["1", "4", "$-5$", "2"], ans: "2" },
+                { q: "The slope of the line which is perpendicular to a line joining the points $(0,0)$ and $(-8,8)$ is", opts: ["$-1$", "1", "$\\frac{1}{3}$", "$-8$"], ans: "1" },
+                { q: "If slope of the line PQ is $\\frac{1}{\\sqrt{3}}$ then slope of the perpendicular bisector of PQ is", opts: ["$\\sqrt{3}$", "$-\\sqrt{3}$", "$\\frac{1}{\\sqrt{3}}$", "0"], ans: "$-\\sqrt{3}$" },
+                { q: "If A is a point on the Y axis whose ordinate is 8 and B is a point on the X axis whose abscissae is 5 then the equation of the line AB is", opts: ["$8x+5y=40$", "$8x-5y=40$", "$x=8$", "$y=5$"], ans: "$8x+5y=40$" },
+                { q: "The equation of a line passing through the origin and perpendicular to the line $7x-3y+4=0$ is", opts: ["$7x-3y+4=0$", "$3x-7y+4=0$", "$3x+7y=0$", "$7x-3y=0$"], ans: "$3x+7y=0$" },
+                { q: "Consider four straight lines (i) $l_1$: $3y=4x+5$ (ii) $l_2$: $4y=3x-1$ (iii) $l_3$: $4y+6x=7$ (iv) $l_4$: $4x+3y=2$ Which of the following statement is true?.", opts: ["$l_1$ and $l_2$ are perpendicular", "$l_1$ and $l_4$ are parallel", "$l_2$ and $l_4$ are perpendicular", "$l_2$ and $l_3$ are parallel"], ans: "$l_2$ and $l_4$ are perpendicular" }, 
+                { q: "A straight line has equation $8y=4x+21$ Which of the following is true", opts: ["The slope is 0.5 and the y intercept is 2.6", "The slope is 5 and the y intercept is 1.6", "The slope is 0.5 and the y intercept is 1.6", "The slope is 5 and the y intercept is 2.6"], ans: "The slope is 0.5 and the y intercept is 2.6" },
+                { q: "When proving that a quadrilateral is a trapezium, it is necessary to show", opts: ["Two sides are parallel", "Two parallel and two non - parallel sides", "Opposite sides are parallel", "All sides are of equal length"], ans: "Two parallel and two non - parallel sides" },
+                { q: "When proving that a quadrilateral is a parallelogram by using slopes you must find", opts: ["The slopes of two sides", "The slopes of two pair of opposite sides", "The lengths of all sides", "Both the lengths and slopes of two sides"], ans: "The slopes of two pair of opposite sides" },
+                { q: "$(2,1)$ is the point of intersection of two lines", opts: ["$x-y-3=0; 3x-y-7=0$", "$x+y=3; 3x+y=7$", "$3x+y=3; x+y=7$", "$x+3y-3=0; x-y-7=0$"], ans: "$x+y=3; 3x+y=7$" }
+            ],
+            "6": [
+                { q: "The value of $sin^2\\theta+\\frac{1}{1+tan^2\\theta}$ is equal to", opts: ["$tan^2\\theta$", "1", "$cot^2\\theta$", "0"], ans: "1" },
+                { q: "$tan\\theta~cosec^2\\theta-tan\\theta$ is equal to", opts: ["$sec \\theta$", "$cot^2\\theta$", "$sin \\theta$", "$cot \\theta$"], ans: "$cot \\theta$" },
+                { q: "If $(sin\\alpha+cosec\\alpha)^2+(cos\\alpha+sec\\alpha)^2=k+tan^2\\alpha+cot^2\\alpha$, then the value of k is equal to", opts: ["9", "7", "5", "3"], ans: "7" },
+                { q: "If $sin\\theta+cos\\theta=a$ and $sec\\theta+cosec\\theta=b$, then the value of $b(a^2-1)$ is equal to", opts: ["$2a$", "$3a$", "0", "$2ab$"], ans: "$2a$" },
+                { q: "If $5x=sec\\theta$ and $\\frac{5}{y}=tan\\theta$, then $x^2-\\frac{1}{y^2}$ is equal to", opts: ["25", "$\\frac{1}{25}$", "5", "1"], ans: "$\\frac{1}{25}$" },
+                { q: "If $sin\\theta=cos\\theta$ then $2tan^2\\theta+sin^2\\theta-1$ is equal to", opts: ["$\\frac{-3}{2}$", "$\\frac{3}{2}$", "$\\frac{2}{3}$", "$\\frac{-2}{3}$"], ans: "$\\frac{3}{2}$" },
+                { q: "If $x=a~tan\\theta$ and $y=b~sec\\theta$ then", opts: ["$\\frac{y^2}{b^2}-\\frac{x^2}{a^2}=1$", "$\\frac{x^2}{a^2}-\\frac{y^2}{b^2}=1$", "$\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$", "$\\frac{x^2}{a^2}-\\frac{y^2}{b^2}=0$"], ans: "$\\frac{y^2}{b^2}-\\frac{x^2}{a^2}=1$" },
+                { q: "$(1+tan\\theta+sec\\theta)(1+cot\\theta-cosec\\theta)$ is equal to", opts: ["0", "1", "2", "-1"], ans: "2" },
+                { q: "$a \\cot \\theta + b \\csc \\theta = p$ and $b \\cot \\theta + a \\csc \\theta = q$ then $p^2-q^2$ is equal to", opts: ["$a^2-b^2$", "$b^2-a^2$", "$a^2+b^2$", "$b-a$"], ans: "$b^2-a^2$" },
+                { q: "If the ratio of the height of a tower and the length of its shadow is $\\sqrt{3}:1$ then the angle of elevation of the sun has measure", opts: ["$45^\\circ$", "$30^\\circ$", "$90^\\circ$", "$60^\\circ$"], ans: "$60^\\circ$" },
+                { q: "The electric pole subtends an angle of $30^\\circ$ at a point on the same level as its foot. At a second point 'b' metres above the first, the depression of the foot of the pole is $60^\\circ$. The height of the pole (in metres) is equal to", opts: ["$\\sqrt{3}b$", "$\\frac{b}{3}$", "$\\frac{b}{2}$", "$\\frac{b}{\\sqrt{3}}$"], ans: "$\\frac{b}{3}$" },
+                { q: "A tower is 60 m heigh. Its shadow reduces by x metres when the angle of elevation of the sun increases from $30^\\circ$ to $45^\\circ$ then x is equal to", opts: ["41.92 m", "43.92 m", "43 m", "45.6 m"], ans: "43.92 m" },
+                { q: "The angle of depression of the top and bottom of 20 m tall building from the top of a multistoried building are $30^\\circ$ and $60^\\circ$ respectively. The height of the multistoried building and the distance between two building (in metres) is", opts: ["$20, 10\\sqrt{3}$", "$5\\sqrt{3}$", "$20, 10$", "$30, 10\\sqrt{3}$"], ans: "$30, 10\\sqrt{3}$" },
+                { q: "Two persons are standing 'x' metres apart from each other and the height of the first person is double that of the other. If from the middle point of the line joining their feet an observer finds the angular elevations of their tops to be complementary, then the height of the shorter person (in metres) is", opts: ["$\\sqrt{2}x$", "$\\frac{x}{2\\sqrt{2}}$","$\\frac{x}{\\sqrt{2}}$","$2x$"], ans: "$\\frac{x}{2\\sqrt{2}}$" },
+                { q: "The angle of elevation of a cloud from a point h metres above a lake is $\\beta$. The angle of depression of its reflection in the lake is $45^\\circ$. The height of location of the cloud from the lake is", opts: ["$\\frac{h(1+\\tan\\beta)}{1-\\tan\\beta}$", "$\\frac{h(1-\\tan\\beta)}{1+\\tan\\beta}$", "$h~\\tan(45^\\circ-\\beta)$", "None of these"], ans: "$\\frac{h(1+\\tan\\beta)}{1-\\tan\\beta}$" }
+            ],
+            "7": [
+                { q: "The curved surface area of a right circular cone of height 15 cm and base diameter 16 cm is", opts: ["$60\\pi$ cm²", "$68\\pi$ cm²", "$120\\pi$ cm²", "$136\\pi$ cm²"], ans: "$136\\pi$ cm²" },
+                { q: "If two solid hemispheres of same base radius r units are joined together along their bases, then curved surface area of this new solid is", opts: ["$4\\pi r^2$ sq. units", "$6\\pi r^2$ sq. units", "$3\\pi r^2$ sq. units", "$8\\pi r^2$ sq. units"], ans: "$4\\pi r^2$ sq. units" },
+                { q: "The height of a right circular cone whose radius is 5 cm and slant height is 13 cm will be", opts: ["12 cm", "10 cm", "13 cm", "5 cm"], ans: "12 cm" },
+                { q: "If the radius of the base of a right circular cylinder is halved keeping the same height, then the ratio of the volume of the cylinder thus obtained to the volume of original cylinder is", opts: ["1:2", "1:4", "1:6", "1:8"], ans: "1:4" },
+                { q: "The total surface area of a cylinder whose radius is $\\frac{1}{3}$ of its height is", opts: ["$\\frac{9\\pi h^2}{8}$ sq. units", "$24\\pi h^2$ sq. units", "$\\frac{8\\pi h^2}{9}$ sq. units", "$\\frac{56\\pi h^2}{9}$ sq. units"], ans: "$\\frac{8\\pi h^2}{9}$ sq. units" },
+                { q: "In a hollow cylinder, the sum of the external and internal radii is 14 cm and the width is 4 cm. If its height is 20 cm, the volume of the material in it is", opts: ["$5600\\pi$ cm³", "$1120\\pi$ cm³", "$56\\pi$ cm³", "$3600\\pi$ cm³"], ans: "$1120\\pi$ cm³" },
+                { q: "If the radius of the base of a cone is tripled and the height is doubled then the volume is", opts: ["Made 6 times", "Made 12 times", "Made 18 times", "Unchanged"], ans: "Made 18 times" },
+                { q: "The total surface area of a hemi - sphere is how much times the square of its radius.", opts: ["$\\pi$", "$4\\pi$", "$3\\pi$", "$2\\pi$"], ans: "$3\\pi$" },
+                { q: "A solid sphere of radius x cm is melted and cast into a shape of a solid cone of same radius. The height of the cone is", opts: ["$3x$ cm", "$x$ cm", "$4x$ cm", "$2x$ cm"], ans: "$4x$ cm" },
+                { q: "A frustrum of a right circular cone is of height 16 cm with radii of its as 8 cm and 20 cm. Then, the volume of the frustrum is", opts: ["$3328\\pi$ cm³", "$3228\\pi$ cm³", "$3240\\pi$ cm³", "$3340\\pi$ cm³"], ans: "$3328\\pi$ cm³" },
+                { q: "A shuttle cock used for playing badminton has the shape of the combination of", opts: ["A cylinder and a sphere", "A hemisphere and a cone", "A sphere and a cone", "Frustrum of a cone and a hemisphere"], ans: "Frustrum of a cone and a hemisphere" },
+                { q: "A spherical ball of radius $r_1$ units is melted to make 8 new identical balls each of radius $r_2$ units. Then $r_1:r_2$ is", opts: ["2:1", "1:2", "4:1", "1:4"], ans: "2:1" },
+                { q: "The volume (in cm³) of the greatest sphere that can be cut off from a cylindrical log of wood of base radius 1 cm and height 5 cm is", opts: ["$\\frac{4}{3}\\pi$", "$\\frac{10}{3}\\pi$", "$5\\pi$", "$\\frac{20}{3}\\pi$"], ans: "$\\frac{4}{3}\\pi$" },
+                { q: "The height and radius of the cone of which the frustrum is a part are $h_1$ units and $r_1$ units respectively. Height of the frustrum is $h_2$ units and radius of the smaller base is $r_2$ units. If $h_2:h_1=1:2$ then $r_2:r_1$ is", opts: ["1:3", "1:2", "2:1", "3:1"], ans: "1:2" },
+                { q: "The ratio of the volumes of a cylinder, a cone and a sphere, if each has the same diameter and same height is", opts: ["1:2:3", "2:1:3", "1:3:2", "3:1:2"], ans: "3:1:2" }
+            ],
+            "8": [
+                { q: "Which of the following is not a measure of dispersion?.", opts: ["Range", "Standard deviation", "Arithmetic Mean", "Variance"], ans: "Arithmetic Mean" },
+                { q: "The range of the data 8, 8, 8, 8, 8...8 is", opts: ["0", "1", "8", "3"], ans: "0" },
+                { q: "The sum of all deviations of the data from its mean is", opts: ["Always positive", "Always negative", "Zero", "Non - Zero integer"], ans: "Zero" },
+                { q: "The mean of 100 observations is 40 and their standard deviation is 3. The sum of squares of all observations is", opts: ["40000", "160900", "160000", "30000"], ans: "160900" },
+                { q: "Variance of first 20 natural numbers is", opts: ["32.25", "44.25", "33.25", "30"], ans: "33.25" },
+                { q: "The standard deviation of a data is 3. If each value is multiplied by 5 then the new variance is", opts: ["3", "15", "5", "225"], ans: "225" },
+                { q: "If the standard deviation of x, y, z is p then the standard deviation of $3x+5$, $3y+5$, $3z+5$ is", opts: ["$3p+5$", "$3p$", "$p+5$", "$9p+15$"], ans: "$3p$" },
+                { q: "If the mean and coefficient of variation of a data are 4 and 87.5% then the standard deviation is", opts: ["3.5", "3", "4.5", "2.5"], ans: "3.5" },
+                { q: "Which of the following is incorrect?.", opts: ["$P(A)>1$", "$0\\le P(A)\\le1$", "$P(\\phi)=0$", "$P(A)+P(\\overline{A})=1$"], ans: "$P(A)>1$" },
+                { q: "The probability a red marble selected at random from a jar containing p red, q blue and r green marbles is", opts: ["$\\frac{q}{p+q+r}$", "$\\frac{p}{p+q+r}$", "$\\frac{p+q}{p+q+r}$", "$\\frac{p+r}{p+q+r}$"], ans: "$\\frac{p}{p+q+r}$" },
+                { q: "A page is selected at random from a book. The probability that the digit at units place of the page number chosen is less than 7 is", opts: ["$\\frac{3}{10}$", "$\\frac{7}{10}$", "$\\frac{3}{9}$", "$\\frac{7}{9}$"], ans: "$\\frac{7}{10}$" },
+                { q: "The probability of getting a job for a person is $\\frac{x}{3}$. If the probability of not getting the job is $\\frac{2}{3}$ then the value of x is", opts: ["2", "1", "3", "1.5"], ans: "1" },
+                { q: "Kamalan went to play a lucky draw contest. 135 tickets of the lucky draw were sold. If the probability of Kamalan winning is $\\frac{1}{9}$ then the number of tickets bought by Kamalan is", opts: ["5", "10", "15", "20"], ans: "15" },
+                { q: "If a letter is chosen at random from the English alphabets $\\{a,b,...z\\}$, then the probability that the letter chosen precedes x", opts: ["$\\frac{12}{13}$", "$\\frac{1}{13}$", "$\\frac{23}{26}$", "$\\frac{3}{26}$"], ans: "$\\frac{23}{26}$" },
+                { q: "A purse contains 10 notes of ₹2000, 15 notes of ₹500, and 25 notes of ₹200. One note is drawn at random. What is the probability that the note is either a ₹500 note or ₹200 note?", opts: ["$\\frac{1}{5}$", "$\\frac{3}{10}$", "$\\frac{2}{3}$", "$\\frac{4}{5}$"], ans: "$\\frac{4}{5}$" }
+            ]
+        };
+
+        let allQuestions = [];
+        for (let key in quizDatabase) {
+            allQuestions = allQuestions.concat(quizDatabase[key]);
+        }
+
+        let currentQuestions = [];
+        let userResponses = [];
+        let currentTotal = 0;
+
+        function startQuiz() {
+            // Trigger audio context immediately on user interaction
+            initAudio();
+
+            const name = document.getElementById('studentName').value;
+            const school = document.getElementById('schoolName').value;
+            const cls = document.getElementById('studentClass').value;
+            const grp = document.getElementById('studentGroup').value;
+
+            if (!name || !school) { alert("Please fill in your Name and School details."); return; }
+
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('display-school').innerText = school;
+            document.getElementById('display-class').innerText = cls + ' - ' + grp;
+
+            document.getElementById('rep-name').innerText = name;
+            document.getElementById('rep-school').innerText = school;
+            document.getElementById('rep-class').innerText = cls + ' - ' + grp;
+            document.getElementById('rep-attempt').innerText = "TN-MAT-" + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById('registration-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+
+            renderQuestions();
+        }
+
+        function shuffleArray(array) {
+            let shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            const chapterKey = document.getElementById('chapterSelect').value;
+            const orderMode = document.getElementById('orderSelect').value;
+
+            container.innerHTML = '';
+            userResponses = [];
+
+            if(chapterKey === "master") {
+                currentQuestions = [...allQuestions];
+            } else {
+                currentQuestions = quizDatabase[chapterKey] ? [...quizDatabase[chapterKey]] : [];
+            }
+
+            if (orderMode === 'shuffled') currentQuestions = shuffleArray(currentQuestions);
+            
+            currentTotal = currentQuestions.length;
+            
+            for(let i=0; i<currentTotal; i++){
+                userResponses.push({ attempted: false, selected: '', correct: currentQuestions[i].ans, isCorrect: false });
+            }
+
+            updateScoreUI();
+
+            const optionLabels = ['a', 'b', 'c', 'd'];
+
+            currentQuestions.forEach((qObj, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-box';
+                
+                let optionsHtml = '';
+                qObj.opts.forEach((opt, optIndex) => {
+                    // Safe string handling using purely index references for onclick
+                    optionsHtml += `
+                        <label class="option-label" id="lbl-q${index}-o${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" 
+                                onclick="handleAnswer(${index}, ${optIndex})">
+                            <div class="custom-radio"></div>
+                            <span class="opt-letter">(${optionLabels[optIndex]})</span>
+                            <span>${opt}</span>
+                            <i id="icon-q${index}-o${optIndex}" class="fa-solid status-icon"></i>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="q-number"><i class="fa-solid fa-clipboard-question"></i> Question No: ${index + 1}</div>
+                    <div class="q-text">${qObj.q}</div>
+                    ${qObj.svg ? `<div class="svg-container">${qObj.svg}</div>` : ''}
+                    <div class="options-grid">${optionsHtml}</div>
+                `;
+                container.appendChild(qDiv);
+            });
+
+            MathJax.typesetPromise();
+        }
+
+        function handleAnswer(qIndex, optIndex) {
+            if (userResponses[qIndex].attempted) return; 
+            
+            // Extract the actual selected and correct text safely
+            const qObj = currentQuestions[qIndex];
+            const selectedValue = qObj.opts[optIndex];
+            const correctValue = qObj.ans;
+
+            userResponses[qIndex].attempted = true;
+            userResponses[qIndex].selected = selectedValue;
+            
+            let isAnsCorrect = (selectedValue === correctValue);
+            userResponses[qIndex].isCorrect = isAnsCorrect;
+
+            playSound(isAnsCorrect);
+
+            // Update UI visuals
+            qObj.opts.forEach((opt, idx) => {
+                const radio = document.querySelector(`input[name="q${qIndex}"][value="${idx}"]`);
+                radio.disabled = true;
+                
+                const label = document.getElementById(`lbl-q${qIndex}-o${idx}`);
+                const icon = document.getElementById(`icon-q${qIndex}-o${idx}`);
+                
+                if (opt === correctValue) {
+                    label.classList.add('correct-answer');
+                    icon.classList.add('fa-check');
+                }
+                if (idx === optIndex && opt !== correctValue) {
+                    label.classList.add('wrong-answer');
+                    icon.classList.add('fa-xmark');
+                }
+            });
+
+            updateScoreUI();
+        }
+
+        function updateScoreUI() {
+            let correctCount = userResponses.filter(r => r.isCorrect).length;
+            let answeredCount = userResponses.filter(r => r.attempted).length;
+            document.getElementById('score-display').innerText = `${correctCount} / ${currentTotal} (${answeredCount} Completed)`;
+        }
+
+        function generateReport() {
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('report-section').classList.remove('hidden');
+
+            let correctCount = userResponses.filter(r => r.isCorrect).length;
+            let wrongCount = userResponses.filter(r => r.attempted && !r.isCorrect).length;
+            let percent = currentTotal > 0 ? Math.round((correctCount / currentTotal) * 100) : 0;
+
+            document.getElementById('rep-correct').innerText = correctCount;
+            document.getElementById('rep-wrong').innerText = wrongCount;
+            document.getElementById('rep-total').innerText = currentTotal;
+            document.getElementById('rep-perc').innerText = percent + "%";
+
+            let ringColor = "#b91c1c"; let remark = "Needs Practice";
+            if(percent >= 80) { ringColor = "#059669"; remark = "Excellent"; }
+            else if(percent >= 50) { ringColor = "#ea580c"; remark = "Good"; }
+            
+            document.getElementById('rep-circle').style.borderColor = ringColor;
+            document.getElementById('rep-perc').style.color = ringColor;
+            document.getElementById('rep-remark').innerText = remark;
+
+            let revContainer = document.getElementById('review-container');
+            revContainer.innerHTML = '';
+
+            currentQuestions.forEach((qObj, i) => {
+                let r = userResponses[i];
+                let userStr = r.attempted ? r.selected : "Not Attempted";
+                let markStr = "";
+                
+                if(r.attempted) {
+                    markStr = r.isCorrect ? `<span class="text-green"><i class="fa-solid fa-check"></i> (Correct)</span>` : `<span class="text-red"><i class="fa-solid fa-xmark"></i> (Wrong)</span>`;
+                } else {
+                    markStr = `<span class="text-red"><i class="fa-solid fa-xmark"></i> (Wrong)</span>`;
+                }
+
+                let boxHtml = `
+                    <div class="review-box">
+                        <div class="review-q">${i+1}. ${qObj.q}</div>
+                        ${qObj.svg ? `<div class="svg-container" style="margin-bottom:10px; max-width:250px;">${qObj.svg}</div>` : ''}
+                        <div class="review-ans"><b class="text-red">Your Answer:</b> ${userStr} ${markStr}</div>
+                        <div class="review-ans"><b class="text-blue">Correct Answer:</b> ${qObj.ans}</div>
+                    </div>
+                `;
+                revContainer.innerHTML += boxHtml;
+            });
+
+            MathJax.typesetPromise();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let topBtn = document.getElementById("scrollTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) topBtn.style.display = "block";
+            else topBtn.style.display = "none";
+        };
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>

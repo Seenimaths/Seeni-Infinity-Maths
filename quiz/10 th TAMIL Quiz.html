@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMIL NADU STATE BOARD தமிழ் — 10ஆம் வகுப்பு தமிழ் வினாடி வினா</title>
+    
+    <!-- Traditional Tamil Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- PURE CUSTOM CSS -->
+    <style>
+        :root {
+            --primary-font: 'Mukta Malar', sans-serif;
+            --title-font: 'Tiro Tamil', serif;
+            --card-bg: rgba(251, 245, 232, 0.95);
+            --text-dark: #35190f;
+            --text-brown: #78350f;
+            --accent-orange: #ea580c;
+            --accent-green: #16a34a;
+            --accent-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 1. SOLID BLUE BACKGROUND */
+        body {
+            font-family: var(--primary-font);
+            background-color: #7dd3fc; /* Sky Blue Background */
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* SVG Pattern Overlay for texture */
+        body::before {
+            content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='.7'%3E%3Cpath d='M60 8c8 16 20 28 36 36-16 8-28 20-36 36-8-16-20-28-36-36 16-8 28-20 36-36Z'/%3E%3Ccircle cx='60' cy='44' r='18'/%3E%3Cpath d='M12 96c16-8 32-8 48 0s32 8 48 0'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* 2. THIRUVALLUVAR IMAGES ON LEFT AND RIGHT */
+        .side-img {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 22%; /* Takes up 22% of the screen on sides */
+            z-index: 0;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/Thiruvalluvar_Statue%2C_Kanyakumari%2C_Tamil_Nadu%2C_India.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.85;
+            box-shadow: inset 0 0 40px #7dd3fc; /* Blends edge into blue background */
+        }
+        .side-left {
+            left: 0;
+            border-right: 4px solid rgba(255,255,255,0.4);
+        }
+        .side-right {
+            right: 0;
+            border-left: 4px solid rgba(255,255,255,0.4);
+            transform: scaleX(-1); /* Flips the image horizontally for symmetry */
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .flex { display: flex; }
+        
+        /* Main Container */
+        .main-wrapper {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Card Style */
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 50, 100, 0.4);
+            border: 2px solid rgba(255, 200, 100, 0.8);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Math & Tamil Animation Header */
+        .header-section {
+            background-color: #592e1f;
+            background-image: url("data:image/svg+xml,%3Csvg width='250' height='250' viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3Etext { font-family: sans-serif; font-weight: bold; fill: rgba(255, 255, 255, 0.15); }%3C/style%3E%3Ctext x='20' y='40' font-size='28'%3Eஅ%3C/text%3E%3Ctext x='100' y='30' font-size='24'%3E%E2%88%91%3C/text%3E%3Ctext x='180' y='60' font-size='28'%3Eக்%3C/text%3E%3Ctext x='40' y='110' font-size='26'%3E%CF%80%3C/text%3E%3Ctext x='110' y='130' font-size='24'%3E%E0%AE%A4%E0%AE%AE%E0%AE%BF%E0%AE%B4%E0%AF%8D%3C/text%3E%3Ctext x='190' y='110' font-size='22'%3E%E2%88%9Ax%3C/text%3E%3Ctext x='50' y='190' font-size='28'%3E%E0%AE%87%3C/text%3E%3Ctext x='150' y='210' font-size='26'%3E%E2%88%AB%3C/text%3E%3Ctext x='220' y='180' font-size='24'%3E%E2%88%9E%3C/text%3E%3C/svg%3E"), linear-gradient(135deg, #35190f 0%, #6d2f1d 50%, #263f34 100%);
+            background-size: 250px 250px, cover;
+            animation: scrollMathTamil 20s linear infinite;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #f59e0b;
+            color: white;
+            position: relative;
+        }
+
+        /* 10th TAMIL BOOK IMAGE (CSS Design) */
+        .book-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .tamil-book {
+            width: 90px;
+            height: 120px;
+            background: linear-gradient(to bottom right, #fde047, #eab308);
+            border-radius: 4px 10px 10px 4px;
+            box-shadow: -5px 0 10px rgba(0,0,0,0.3) inset, 5px 10px 15px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-left: 6px solid #b45309;
+            transition: transform 0.3s;
+        }
+        .tamil-book:hover { transform: scale(1.05); }
+        .book-title {
+            font-family: var(--title-font);
+            font-size: 20px;
+            font-weight: bold;
+            color: #78350f;
+            margin-bottom: 5px;
+        }
+        .book-class {
+            font-size: 10px;
+            font-weight: bold;
+            background: #78350f;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* Header Texts */
+        .subtitle { font-size: 14px; color: #fcd34d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
+        .main-title { font-family: var(--title-font); font-size: 3.5rem; font-weight: bold; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin-bottom: 10px; }
+        .desc-title { font-size: 1.2rem; color: #fef3c7; margin-bottom: 25px; }
+
+        /* Author Badge */
+        .author-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 2px solid var(--accent-orange);
+            color: var(--text-dark);
+        }
+        .author-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f97316, #b45309);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .author-details { text-align: left; }
+        .author-role { font-size: 11px; color: #b45309; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .author-name { font-size: 16px; font-weight: bold; }
+        .author-phone { font-size: 13px; color: #78350f; font-weight: bold; margin-top: 2px; }
+
+        /* Form Controls */
+        .content-section { padding: 40px; }
+        .section-label { display: block; text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--text-brown); border-bottom: 2px dashed #fcd34d; padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: rgba(254, 243, 199, 0.6); padding: 20px; border-radius: 15px; margin-bottom: 30px; border: 1px solid #fde68a; }
+        .check-item { display: flex; align-items: center; gap: 10px; background: white; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.1rem; border: 1px solid #fef3c7; transition: all 0.2s; }
+        .check-item:hover { border-color: var(--accent-orange); }
+        .check-item input { width: 22px; height: 22px; accent-color: var(--accent-orange); cursor: pointer; }
+
+        .select-box { width: 100%; padding: 15px; border: 2px solid #fde68a; border-radius: 12px; font-size: 1.1rem; font-weight: bold; color: var(--text-brown); background: white; margin-bottom: 30px; outline: none; cursor: pointer; }
+        .select-box:focus { border-color: var(--accent-orange); }
+
+        /* Buttons */
+        .primary-btn {
+            width: 100%;
+            background: linear-gradient(to right, #ea580c, #f59e0b, #ea580c);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 18px;
+            border: 2px solid #fdba74;
+            border-radius: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.4);
+            transition: all 0.3s;
+        }
+        .primary-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(234, 88, 12, 0.6); }
+
+        .next-btn {
+            background: linear-gradient(to right, #10b981, #059669);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .next-btn:hover { transform: translateY(-2px); }
+        .next-btn-wrapper { display: flex; justify-content: flex-end; margin-top: 30px; }
+
+        /* Quiz Screen Elements */
+        .quiz-header { background: linear-gradient(to right, #78350f, #92400e, #78350f); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d97706; }
+        .quiz-title { font-family: var(--title-font); font-size: 1.5rem; font-weight: bold; }
+        .quiz-progress { color: #fde68a; font-weight: bold; }
+        
+        .timer-container { width: 100%; background: #fef3c7; height: 12px; }
+        .timer-bar { height: 100%; background: #22c55e; transition: width 1s linear, background-color 1s; }
+        .timer-text { text-align: right; padding: 5px 20px; font-weight: bold; color: #b91c1c; background: rgba(254, 243, 199, 0.8); border-bottom: 1px solid #fde68a; font-size: 0.9rem; }
+
+        .tags-area { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tag { padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; color: white; }
+        .tag-type { background: var(--accent-orange); border: 1px solid #c2410c; }
+        .tag-unit { background: #92400e; font-family: var(--title-font); border: 1px solid #78350f; }
+
+        .poem-box { background: #fffbeb; border-left: 5px solid var(--accent-orange); padding: 20px; border-radius: 0 15px 15px 0; font-family: var(--title-font); font-size: 1.2rem; color: var(--text-brown); font-style: italic; white-space: pre-line; margin-bottom: 25px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        
+        .question-text { font-family: var(--title-font); font-size: 1.8rem; font-weight: bold; color: #451a03; margin-bottom: 30px; line-height: 1.5; }
+
+        /* Options */
+        .options-list { display: flex; flex-direction: column; gap: 15px; }
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            background: #ffffff;
+            border: 2px solid #fde68a;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .option-btn:hover:not(:disabled) { border-color: var(--accent-orange); background: #fff7ed; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        .opt-badge { width: 45px; height: 45px; flex-shrink: 0; background: #fef3c7; color: #92400e; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: bold; border: 1px solid #fde68a; transition: all 0.2s; }
+        .option-btn:hover:not(:disabled) .opt-badge { background: var(--accent-orange); color: white; border-color: transparent; }
+        
+        .opt-text { font-family: var(--title-font); font-size: 1.3rem; font-weight: bold; color: #451a03; }
+
+        /* Answer States */
+        .option-btn:disabled { opacity: 0.8; cursor: not-allowed; }
+        .option-btn.correct { border-color: #22c55e; background: #f0fdf4; box-shadow: 0 4px 10px rgba(34,197,94,0.2); }
+        .option-btn.correct .opt-badge { background: #16a34a; color: white; border-color: #15803d; }
+        .option-btn.wrong { border-color: #ef4444; background: #fef2f2; }
+        .option-btn.wrong .opt-badge { background: #dc2626; color: white; border-color: #b91c1c; }
+
+        /* Feedback Message */
+        .feedback-msg { margin-top: 25px; padding: 20px; border-radius: 15px; font-weight: bold; font-family: var(--title-font); font-size: 1.2rem; }
+        .feedback-correct { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .feedback-wrong { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .correct-ans-highlight { display: block; margin-top: 10px; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 8px; border: 1px solid #fca5a5; }
+
+        /* Result Screen */
+        .result-header { background: linear-gradient(to bottom right, #78350f, #92400e); padding: 40px; text-align: center; color: white; border-bottom: 5px solid var(--accent-orange); font-family: var(--title-font); font-size: 2.5rem; font-weight: bold; }
+        .result-content { padding: 40px; text-align: center; }
+        .result-score { font-size: 5rem; font-weight: 900; color: var(--accent-orange); margin: 30px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .result-msg { font-size: 1.2rem; font-weight: bold; color: var(--text-brown); background: #fef3c7; display: inline-block; padding: 10px 25px; border-radius: 30px; border: 1px solid #fde68a; margin-bottom: 40px; }
+
+        /* Overlay Popup */
+        .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 100; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .popup-box { background: #fffbeb; padding: 40px 60px; border-radius: 30px; text-align: center; border: 4px solid #fcd34d; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform: scale(0.5); opacity: 0; }
+        .popup-icon { font-size: 5rem; margin-bottom: 10px; }
+        .popup-text { font-family: var(--title-font); font-size: 3rem; font-weight: bold; }
+        
+        .popup-success { border-color: #4ade80; background: #f0fdf4; }
+        .popup-success .popup-text { color: #16a34a; }
+        .popup-error { border-color: #f87171; background: #fef2f2; }
+        .popup-error .popup-text { color: #dc2626; }
+
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes scrollMathTamil { 0% { background-position: 0 0, 0 0; } 100% { background-position: 250px 250px, 0 0; } }
+        @keyframes popupAnim { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0) scale(1); opacity: 1; } 25% { transform: translateX(-10px) scale(1); } 75% { transform: translateX(10px) scale(1); } }
+        
+        .animate-popup { animation: popupAnim 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-shake { animation: shake 0.4s ease-in-out forwards; }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .side-img { width: 15%; opacity: 0.5; }
+        }
+        @media (max-width: 768px) {
+            .side-img { display: none; /* Hide side images on mobile for clear reading */ }
+            .checkbox-grid { grid-template-columns: 1fr; }
+            .main-title { font-size: 2.5rem; }
+            .header-section { padding: 30px 15px; }
+            .content-section { padding: 25px 15px; }
+            .author-badge { flex-direction: column; text-align: center; gap: 10px; }
+            .author-details { text-align: center; }
+            .question-text { font-size: 1.4rem; }
+            .opt-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THIRUVALLUVAR IMAGES ON LEFT AND RIGHT BORDER -->
+    <div class="side-img side-left"></div>
+    <div class="side-img side-right"></div>
+
+    <!-- Game Overlay Popup -->
+    <div id="game-overlay" class="overlay hidden">
+        <div id="popup-box" class="popup-box">
+            <div id="popup-icon" class="popup-icon"></div>
+            <div id="popup-text" class="popup-text"></div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="main-wrapper" aria-label="10ஆம் வகுப்பு தமிழ் வினாடி வினா-2026">
+        
+        <div class="quiz-card">
+            
+            <!-- SETUP SCREEN -->
+            <div id="setup-screen">
+                
+                <!-- Animated Header -->
+                <div class="header-section">
+                    
+                    <!-- 10th Tamil Book Image (CSS Based to ensure it never breaks) -->
+                    <div class="book-container">
+                        <div class="tamil-book">
+                            <div class="book-title">தமிழ்</div>
+                            <div class="book-class">10ஆம் வகுப்பு</div>
+                        </div>
+                    </div>
+
+                    <p class="subtitle">தமிழ்நாடு மாநிலப் பாடத்திட்டம் • 10ஆம் வகுப்பு</p>
+                    <h1 class="main-title">தமிழ் தேர்வு </h1>
+                    <h2 class="desc-title">ஒரு மதிப்பெண் வினாக்கள் — பயிற்சியும் முன்னேற்றமும்</h2>
+                    
+                    <!-- Creator Badge -->
+                    <div class="author-badge">
+                        <div class="author-icon">Y</div>
+                        <div class="author-details">
+                            <h4 class="author-role">கணித ஆசிரியர் </h4>
+                            <p class="author-name">யோ.சீனிவாசன் M.Sc., B.Ed</p>
+                            <p class="author-phone">📞 8489880553</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Setup Form -->
+                <div class="content-section">
+                    <label class="section-label">01 — வினாப் பகுதிகளைத் தேர்ந்தெடுக்கவும்</label>
+                    <div class="checkbox-grid">
+                        <label class="check-item">
+                            <input type="checkbox" class="unit-cb" value="general" checked> 
+                            <span>அனைத்து இயல்கள் (1 - 35 வினாக்கள்)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" class="unit-cb" value="poem" checked> 
+                            <span>செய்யுள் பாடல்பகுதி வினாக்கள்</span>
+                        </label>
+                    </div>
+
+                    <label class="section-label">02 — வினாக்களின் வரிசை</label>
+                    <select id="order-select" class="select-box">
+                        <option value="book" selected>புத்தக வரிசை (Sequential Order)</option>
+                        <option value="shuffle">கலைக்கப்பட்ட வரிசை (Shuffled Order)</option>
+                    </select>
+
+                    <button onclick="startQuiz()" class="primary-btn">
+                        வினாடி வினாவைத் தொடங்கு →
+                    </button>
+                </div>
+            </div>
+
+            <!-- QUIZ SCREEN -->
+            <div id="quiz-screen" class="hidden">
+                
+                <div class="quiz-header">
+                    <h1 class="quiz-title">தமிழ் டிப்ஸ்</h1>
+                    <span id="question-progress" class="quiz-progress">வினா 1</span>
+                </div>
+                
+                <div class="timer-container">
+                    <div id="timer-bar" class="timer-bar"></div>
+                </div>
+                <div id="timer-text" class="timer-text">நேரம்: 30 வி</div>
+
+                <div class="content-section">
+                    
+                    <div class="tags-area">
+                        <span class="tag tag-type">பலவுள் தெரிக</span>
+                        <span id="unit-badge" class="tag tag-unit">இயல்</span>
+                    </div>
+                    
+                    <div id="poem-box" class="poem-box hidden"></div>
+
+                    <div id="question-text" class="question-text">கேள்வி இங்கே வரும்?</div>
+                    
+                    <div id="answer-area" class="options-list"></div>
+                    
+                    <div id="feedback-msg" class="feedback-msg hidden"></div>
+
+                    <div id="next-btn-wrapper" class="next-btn-wrapper hidden">
+                        <button onclick="nextQuestion()" class="next-btn">
+                            <span id="next-btn-text">அடுத்த வினா</span> →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN -->
+            <div id="result-screen" class="hidden">
+                <div class="result-header">
+                    வினாடி வினா நிறைவு!
+                </div>
+                <div class="result-content">
+                    <h3 style="font-family: var(--title-font); font-size: 2rem; color: #78350f;">சிறப்பான முயற்சி!</h3>
+                    <div id="final-score" class="result-score">0 / 0</div>
+                    <p class="result-msg">தொடர்ந்து பயிற்சி செய்யுங்கள், அதிக மதிப்பெண்கள் பெறுங்கள்.</p>
+                    <br>
+                    <button onclick="location.reload()" class="primary-btn">
+                        மீண்டும் பயிற்சி செய்
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- Web Audio API Setup ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) { audioCtx = new AudioContext(); }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+        }
+
+        function playTone(freq, type, dur, timeOffset = 0) {
+            initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime + timeOffset);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + timeOffset + dur);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start(audioCtx.currentTime + timeOffset);
+            oscillator.stop(audioCtx.currentTime + timeOffset + dur);
+        }
+
+        function playSound(type) {
+            if (type === 'correct') {
+                playTone(1046.50, 'sine', 0.2, 0);       
+                playTone(1318.51, 'sine', 0.4, 0.1);     
+            } else {
+                playTone(150, 'sawtooth', 0.3, 0);
+                playTone(100, 'sawtooth', 0.4, 0.1);
+            }
+        }
+
+        // TAMIL ONE MARK QUESTIONS
+        const rawData = [
+            // --- இயல் 1 முதல் 7 வரையிலான வினாக்கள் (1-35) ---
+            "general|இயல் 1|mcq|காலக்கணிதம் கவிதையில் இடம்பெற்ற தொடர் எது?|இகழ்ந்தால் என்மனம் இறந்து விடாது|என்மனம் இகழ்ந்தால் இறந்து விடாது|இகழ்ந்தால் இறந்து விடாது என்மனம்|என்மனம் இறந்து விடாது இகழ்ந்தால்|1",
+            "general|இயல் 1|mcq|'காய்ந்த இலையும் காய்ந்த தோகையும்' நிலத்துக்கு நல்ல உரங்கள். இத்தொடரில் அடிக்கோடிட்ட பகுதி குறிப்பிடுவது-|இலையும் சருகும்|தோகையும் சண்டும்|தாளும் ஓலையும்|சருகும் சண்டும்|3",
+            "general|இயல் 1|mcq|எந்தமிழ்நா என்பதைப் பிரித்தால் இவ்வாறு வரும்-|எந்+தமிழ்+நா|எந்த+தமிழ்+நா|எம்+தமிழ்+நா|எந்தம்+தமிழ்+நா|2",
+            "general|இயல் 1|mcq|'கேட்டவர் மகிழப் பாடிய பாடல் இது'- தொடரில் இடம்பெற்றுள்ள தொழிற்பெயரும் வினையாலணையும் பெயரும் முறையே-|பாடிய; கேட்டவர்|பாடல்; பாடிய|கேட்டவர்; பாடிய|பாடல்; கேட்டவர்|3",
+            "general|இயல் 1|mcq|வேர்க்கடலை, மிளகாய் விதை, மாங்கொட்டை ஆகியவற்றைக் குறிப்பது-|குலைப்பெயர் வகை|மணிப்பெயர் வகை|கிளைப்பெயர் வகை|இலைப்பெயர் வகை|1",
+            
+            "general|இயல் 2|mcq|பரிபாடல் அடியில் 'விசும்பில், இசையில்' ஆகிய சொற்கள் குறிப்பவை எவை?|வானத்தையும் பாட்டையும்|வான்வெளியில், பேரொலியில்|வானத்தில், பூமியையும்|வானத்தையும் பேரொலியையும்|3",
+            "general|இயல் 2|mcq|செய்தி 1 -சூன் 15ஐ உலகக் காற்று நாளாகக் கொண்டாடி வருகிறோம்.<br>செய்தி 2 - காற்றாலை மின் உற்பத்தியில் இந்தியாவில் தமிழ்நாடு இரண்டாமிடம்.<br>செய்தி 3 -எழுபது விழுக்காடு மழையைத் தென்மேற்குப் பருவக்காற்றாகக் கொடுக்கின்றேன்.|செய்தி 1 மட்டும் சரி|செய்தி 1, 2 ஆகியன சரி|செய்தி 3 மட்டும் சரி|செய்தி 1, 3 ஆகியன சரி|3",
+            "general|இயல் 2|mcq|பொருந்தும் விடைவரிசையைத் தேர்ந்தெடுக்க.<br>அ) கொண்டல் - 1) மேற்கு<br>ஆ) கோடை - 2) தெற்கு<br>இ) வாடை - 3) கிழக்கு<br>ஈ) தென்றல் - 4) வடக்கு|1 2 3 4|3 1 4 2|4 3 2 1|3 4 1 2|1",
+            "general|இயல் 2|mcq|'மகிழுந்து வருமா?' என்பது|விளித்தொடர்|எழுவாய்த்தொடர்|வினையெச்சத்தொடர்|பெயரெச்சத்தொடர்|1",
+            "general|இயல் 2|mcq|அறிஞருக்கு நூல், அறிஞரது நூல் ஆகிய சொற்றொடர்களில் பொருளை வேறுபடுத்தக் காரணமாக அமைந்தது-|வேற்றுமை உருபு|எழுவாய்|உவம உருபு|உரிச்சொல்|0",
+            
+            "general|இயல் 3|mcq|பின்வருவனவற்றுள் முறையான தொடர் எது?|தமிழர் பண்பாட்டில் தனித்த வாழை இலைக்கு இடமுண்டு.|தமிழர் வாழை இலைக்குப் பண்பாட்டில் தனித்த இடமுண்டு.|தமிழர் பண்பாட்டில் வாழை இலைக்குத் தனித்த இடமுண்டு.|தமிழர் வாழை பண்பாட்டில் தனித்த இலைக்கு இடமுண்டு.|2",
+            "general|இயல் 3|mcq|காலில் அணியும் அணிகலனைக் குறிப்பது|சுட்டி|கிண்கிணி|குழை|சூழி|1",
+            "general|இயல் 3|mcq|காசிக்காண்டம் என்பது -|காசி நகரத்தின் வரலாற்றைப் பாடும் நூல்|காசி நகரத்தைக் குறிக்கும் மறுபெயர்|காசி நகரத்தின் பெருமையைப் பாடும் நூல்|காசி நகரத்திற்கு வழிப்படுத்தும் நூல்|2",
+            "general|இயல் 3|mcq|'விருந்தினரைப் பேணுவதற்குப் பொருள் தேவைப்பட்டதால், தன் கருங்கோட்டுச் சீறியாழைப் பணையம் வைத்து விருந்தளித்தான்' இச்செய்தி உணர்த்தும் விருந்து போற்றிய நிலை-|நிலத்திற்கேற்ற விருந்து|இன்மையிலும் விருந்து|அல்லிலும் விருந்து|உற்றாரின் விருந்து|1",
+            "general|இயல் 3|mcq|நன்மொழி என்பது -|பண்புத்தொகை|உவமைத்தொகை|அன்மொழித்தொகை|உம்மைத்தொகை|0",
+            
+            "general|இயல் 4|mcq|கீழ்க்காண்பனவற்றுள் எந்த இலக்கியம் பிறமொழிப் படைப்பினைத் தழுவித் தமிழில் படைக்கப்பட்டது?|திருக்குறள்|கம்பராமாயணம்|கலித்தொகை|சிலப்பதிகாரம்|1",
+            "general|இயல் 4|mcq|இடைக்காடனாரின் பாடலை இகழ்ந்தவர், இடைக்காடனாரிடம் அன்பு வைத்தவர் முறையே|அமைச்சர், மன்னன்|அமைச்சர், இறைவன்|இறைவன், மன்னன்|மன்னன், இறைவன்|3",
+            "general|இயல் 4|mcq|உவப்பின் காரணமாக அஃறிணையை உயர்திணையாகக் கொள்வது|இட வழுவமைதி|பால் வழுவமைதி|திணை வழுவமைதி|கால வழுவமைதி|2",
+            "general|இயல் 4|mcq|இரவீந்திரநாத தாகூர் ________ மொழியில் எழுதிய கீதாஞ்சலியை ________ மொழியில் மொழிபெயர்த்த பிறகுதான் நோபல்பரிசு கிடைத்தது.|ஆங்கில, வங்காளம்|வங்காள, ஆங்கில|வங்காள, தெலுங்கு|தெலுங்கு, ஆங்கில|1",
+            "general|இயல் 4|mcq|படர்க்கைப் பெயரைக் குறிப்பது எது?|யாம்|நீவிர்|அவர்|நாம்|2",
+            
+            "general|இயல் 5|mcq|கூற்று 1: போராட்டப் பண்புடனே வளர்ந்தவர் கலைஞர்.<br>கூற்று 2: அவருக்குள் இருந்த கலைத்தன்மை வளர அது உதவியது.|கூற்று 1 சரி 2 தவறு|கூற்று 1 மற்றும் 2 தவறு|கூற்று 1 தவறு 2 சரி|கூற்று 1 மற்றும் 2 சரி|3",
+            "general|இயல் 5|mcq|\"மையோமர கதமோமறி கடலோ மழைமுகிலோ\" இப்பாடல் அடியில் குறிப்பிடப்படாத நிறத்தைக் கண்டறிக.|கருமை|பச்சை|பழுப்பு|நீலம்|1",
+            "general|இயல் 5|mcq|'தூக்குமேடை என்னும் நாடகத்தின் பாராட்டுவிழாவில்தான், கலைஞர் என்ற சிறப்புப்பெயர் வழங்கப்பட்டது' இத்தொடருக்கான வினா எது?|தூக்குமேடை என்னும் நாடகத்தில் நடித்தவர் யார்?|கலைஞர் என்ற சிறப்புப்பெயர் எப்போது வழங்கப்பட்டது?|தூக்குமேடை என்பது திரைப்படமா? நாடகமா?|யாருக்குப் பாராட்டுவிழா நடத்தப்பட்டது?|1",
+            "general|இயல் 5|mcq|சித்திரை, வைகாசி மாதங்களை ________ காலம் என்பர்.|முதுவேனில்|பின்பனி|முன்பனி|இளவேனில்|3",
+            "general|இயல் 5|mcq|குளிர்காலத்தைப் பொழுதாகக் கொண்ட நிலங்கள்|முல்லை, குறிஞ்சி, மருத நிலங்கள்|குறிஞ்சி, பாலை, நெய்தல் நிலங்கள்|குறிஞ்சி, மருதம், நெய்தல் நிலங்கள்|மருதம், நெய்தல், பாலை நிலங்கள்|2",
+            
+            "general|இயல் 6|mcq|சரியான அகரவரிசையைத் தேர்ந்தெடுக்க.|உழவு, மண், ஏர், மாடு|மண், மாடு, ஏர், உழவு|உழவு, ஏர், மண், மாடு|ஏர், உழவு, மாடு, மண்|2",
+            "general|இயல் 6|mcq|தமிழினத்தை ஒன்றுபடுத்தும் இலக்கியமாக ம.பொ.சி. கருதியது|திருக்குறள்|புறநானூறு|கம்பராமாயணம்|சிலப்பதிகாரம்|3",
+            "general|இயல் 6|mcq|நச்சிலைவேல் கோக்கோதை நாடு, நல்யானைக் கோக்கிள்ளி நாடு - இத்தொடர்களில் குறிப்பிடப்படுகின்ற நாடுகள் முறையே,|பாண்டிய நாடு, சேர நாடு|சோழ நாடு, சேர நாடு|சேர நாடு, சோழ நாடு|சோழ நாடு, பாண்டிய நாடு|2",
+            "general|இயல் 6|mcq|இருநாட்டு அரசர்களும் தும்பைப் பூவைச் சூடிப் போரிடுவதன் காரணம்|நாட்டைக் கைப்பற்றல்|ஆநிரை கவர்தல்|வலிமையை நிலைநாட்டல்|கோட்டையை முற்றுகையிடல்|2",
+            "general|இயல் 6|mcq|'மாலவன் குன்றம் போனாலென்ன? வேலவன் குன்றமாவது எங்களுக்கு வேண்டும்' - மாலவன் குன்றமும் வேலவன் குன்றமும் குறிப்பவை முறையே|திருப்பதியும் திருத்தணியும்|திருத்தணியும் திருப்பதியும்|திருப்பதியும் திருச்செந்தூரும்|திருப்பரங்குன்றமும் பழனியும்|0",
+            
+            "general|இயல் 7|mcq|மேன்மை தரும் அறம் என்பது.....|கைம்மாறு கருதாமல் அறம் செய்வது|மறுபிறப்பில் பயன் பெறலாம் என்ற நோக்கில் அறம் செய்வது|புகழ் கருதி அறம் செய்வது|பதிலுதவி பெறுவதற்காக அறம் செய்வது|0",
+            "general|இயல் 7|mcq|உலகமே வறுமையுற்றாலும் கொடுப்பவன் என்றும் பொருள்களின் இருப்பைக் கூட அறியாமல் கொடுப்பவன் என்றும் பாராட்டப்படுவோர் யாவர்?|உதியன்; சேரலாதன்|அதியன்; பெருஞ்சாத்தன்|பேகன்; கிள்ளிவளவன்|நெடுஞ்செழியன்; திருமுடிக்காரி|1",
+            "general|இயல் 7|mcq|வண்ணதாசனுக்குச் சாகித்திய அகாதெமி விருது பெற்றுத் தந்த நூல் எது?|ஒரு சிறு இசை|முன்பின்|அந்நியமற்ற நதி|உயரப் பறத்தல்|0",
+            "general|இயல் 7|mcq|'பூக்கையைக் குவித்துப் பூவே புரிவொடு காக்க' என்று ________ ________ வேண்டினார்.|கருணையன், எலிசபெத்துக்காக|எலிசபெத், தமக்காக|கருணையன், பூக்களுக்காக|எலிசபெத், பூமிக்காக|0",
+            "general|இயல் 7|mcq|சிலப்பதிகாரத்திலும் மணிமேகலையிலும் அமைந்த பாவினம்|அகவற்பா|வெண்பா|வஞ்சிப்பா|கலிப்பா|0",
+
+            // --- பாடல்பகுதி வினாக்கள் (Poem Based Questions) ---
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|இவ்வடிகள் இடம்பெற்ற நூல் எது?|நீதிவெண்பா|புறநானூறு|மணிமேகலை|சிலப்பதிகாரம்|3",
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|பாடலில் அமைந்த மோனையை எடுத்து எழுதுக.|பகர்வனர்; பட்டினும்|பட்டினும்; கட்டினும்|கட்டும்; தூசும்|பட்டினும் - மயிரினும்|1",
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|காருகர் பொருள் தருக.|உழவர்|நெய்பவர்|பொற்கொல்லர்|காவலர்|1",
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|இப்பாடலில் குறிப்பிடப்படும் நறுமணப் பொருள்கள் யாவை?|பூக்களும்; சந்தனமும்|பூக்களும்; அகிலும்|அகிலும்; சந்தனம்|பட்டும்; சந்தனமும்|0",
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|வண்ணமும் சுண்ணமும் - இலக்கணக் குறிப்பைத்தேர்க.|வினைத்தொகை|பண்புத்தொகை|உம்மைத்தொகை|எண்ணும்மை|3",
+            "poem|சிலப்பதிகாரம் (பாடல் 1)|mcq|இப்பாடலின் ஆசிரியர் யார்?|இளங்கோவடிகள்|கம்பர்|அதிவீராம பாண்டியர்|பரஞ்சோதி முனிவர்|0",
+
+            "poem|பரிபாடல் (பாடல் 2)|mcq|பாடல் இடம்பெற்ற நூலைத் தேர்க.|நற்றிணை|பரிபாடல்|முல்லைப்பாட்டு|மலைபடுகடாம்|1",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|பாடலில் இடம்பெற்றுள்ள அடிமோனையைத் தேர்க.|உருஅறி - உந்துவளி|கருவளர் - உருஅறி|விசும்பில் - கருவளர்|உருஅறி - கிளர்ந்த|0",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|'ஊழ் ஊழ்' - இச்சொல்லின் இலக்கணக் குறிப்பைத் தேர்க.|உரிச்சொல்தொடர்|பெயரெச்சத்தொடர்|வினையெச்சத்தொடர்|அடுக்குத்தொடர்|3",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|பாடலின் ஆசிரியரைத் தேர்க.|இளங்கோவடிகள்|பரஞ்சோதி முனிவர்|கீரந்தையார்|பெருங்கௌசிகனார்|2",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|பாடலில் உணர்த்தப்படும் கருத்து|தத்துவக் கருத்து|அறிவியல் செய்தி|நிலையாமை|அரசியல் அறம்|1",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|விசும்பு, இசை, ஊழி - பாடலில் இச்சொற்கள் உணர்த்தும் பொருள்கள் முறையே|காற்று, ஓசை, கடல்|மேகம், இடி, ஆழம்|வானம், பேரொலி, யுகம்|வானம், காற்று, காலம்|2",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|வளர்வானம் - இலக்கணக்குறிப்பு|பண்புத்தொகை|வினைத்தொகை|உவமைத்தொகை|அன்மொழித்தொகை|1",
+            "poem|பரிபாடல் (பாடல் 2)|mcq|பாடலில் இடம்பெற்றுள்ள மோனைச் சொற்களைத் தேர்ந்தெடுக்க.|கரு வளர் - வானத்து|ஊழி ஊழ்|விசும்பில் - கிளர்ந்த|இசையில் - ஊழியும்|1"
+        ];
+
+        const poemTexts = {
+            "சிலப்பதிகாரம் (பாடல் 1)": `"வண்ணமும் சுண்ணமும் தன்நறுஞ் சாந்தமும்
+பூவும் புகையும் மேவிய விரையும்
+பகர்வனர் திரிதிரு நகரவீதியும்;
+பட்டினும் மயிரினும் பருத்தி நூலினும்
+கட்டு நுண்வினைக் காருகர் இருக்கையும்;
+தூசும் துகிரும் ஆரமும் அகிலும்"`,
+            "பரிபாடல் (பாடல் 2)": `"விசும்பில் ஊழி ஊழ் ஊழ் செல்லக்
+கரு வளர் வானத்து இசையில் தோன்றி,
+உரு அறி வாரா ஒன்றன் ஊழியும்,
+உந்து வளி கிளர்ந்த ஊழி ஊழ் ஊழியும்"`
+        };
+
+        const allQuestions = rawData.map(row => {
+            let p = row.split('|');
+            return { category: p[0], unitName: p[1], type: p[2], question: p[3], options: [p[4], p[5], p[6], p[7]], answer: p[4 + parseInt(p[8])] };
+        });
+
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let score = 0;
+        let timerInterval;
+        let timeLeft = 30;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            initAudio(); 
+            
+            const selectedCategories = Array.from(document.querySelectorAll('.unit-cb:checked')).map(cb => cb.value);
+            const order = document.getElementById('order-select').value;
+
+            if (selectedCategories.length === 0) {
+                alert("குறைந்தது ஒரு வினாப் பகுதியையாவது தேர்ந்தெடுக்கவும்!");
+                return;
+            }
+
+            quizQuestions = allQuestions.filter(q => selectedCategories.includes(q.category));
+
+            if (quizQuestions.length === 0) {
+                alert("வினாக்கள் கிடைக்கவில்லை!");
+                return;
+            }
+
+            if (order === "shuffle") shuffleArray(quizQuestions);
+
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            updateTimerUI();
+            
+            document.getElementById('next-btn-wrapper').classList.add('hidden');
+            document.getElementById('feedback-msg').classList.add('hidden');
+            
+            const q = quizQuestions[currentIdx];
+            document.getElementById('question-progress').innerText = `வினா ${currentIdx + 1} / ${quizQuestions.length}`;
+            document.getElementById('unit-badge').innerText = q.unitName;
+
+            const poemBox = document.getElementById('poem-box');
+            if (q.category === 'poem' && poemTexts[q.unitName]) {
+                poemBox.innerText = poemTexts[q.unitName];
+                poemBox.classList.remove('hidden');
+            } else {
+                poemBox.classList.add('hidden');
+            }
+
+            document.getElementById('question-text').innerHTML = (currentIdx + 1) + ". " + q.question;
+            const answerArea = document.getElementById('answer-area');
+            answerArea.innerHTML = "";
+
+            let opts = [...q.options];
+            if(!opts[0].match(/^[0-9 ]+$/)) { shuffleArray(opts); }
+
+            const tamilLetters = ['அ', 'ஆ', 'இ', 'ஈ'];
+
+            opts.forEach((opt, index) => {
+                const badge = tamilLetters[index];
+                const btn = document.createElement('button');
+                btn.className = "option-btn";
+                
+                btn.innerHTML = `
+                    <span class="opt-badge">${badge}</span> 
+                    <span class="opt-text">${opt}</span>
+                `;
+                btn.onclick = () => checkAnswer(opt, btn); 
+                answerArea.appendChild(btn);
+            });
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const bar = document.getElementById('timer-bar');
+            const txt = document.getElementById('timer-text');
+            let pct = (timeLeft / 30) * 100;
+            bar.style.width = pct + "%";
+            txt.innerText = `நேரம்: ${timeLeft} வி`;
+            
+            if (timeLeft > 15) bar.style.backgroundColor = "#22c55e";
+            else if (timeLeft > 5) bar.style.backgroundColor = "#eab308";
+            else bar.style.backgroundColor = "#dc2626";
+        }
+
+        function fireConfetti() {
+            var duration = 1500;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#2ecc71', '#f1c40f', '#e67e22', '#e74c3c'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#2ecc71', '#f1c40f', '#e67e22', '#e74c3c'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function showGameOverlay(isCorrect) {
+            const overlay = document.getElementById('game-overlay');
+            const box = document.getElementById('popup-box');
+            const icon = document.getElementById('popup-icon');
+            const text = document.getElementById('popup-text');
+            
+            box.className = "popup-box"; // reset classes
+            
+            if (isCorrect) {
+                icon.innerHTML = "✓";
+                text.innerHTML = "மிகச் சரி!";
+                box.classList.add('animate-popup', 'popup-success');
+            } else {
+                icon.innerHTML = "×";
+                text.innerHTML = "தவறு!";
+                box.classList.add('animate-shake', 'popup-error');
+            }
+            
+            overlay.classList.remove('hidden');
+            setTimeout(() => { overlay.classList.add('hidden'); }, 1400);
+        }
+
+        function handleTimeOut() {
+            initAudio();
+            playSound('wrong');
+            showGameOverlay(false);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.innerHTML = "நேரம் முடிந்தது. சரியான விடை: <span class='correct-ans-highlight'>" + quizQuestions[currentIdx].answer + "</span>";
+            msg.className = "feedback-msg feedback-wrong";
+            
+            disableAllInputs();
+            highlightCorrectAnswer();
+            showNextBtn();
+        }
+
+        function checkAnswer(userAns, btnElement) {
+            clearInterval(timerInterval);
+            initAudio(); 
+            
+            const q = quizQuestions[currentIdx];
+            const isCorrect = (userAns.trim() === q.answer.trim());
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.classList.remove('hidden');
+            disableAllInputs();
+
+            if (isCorrect) {
+                score++;
+                playSound('correct');
+                fireConfetti();
+                showGameOverlay(true);
+                
+                msg.innerText = "சிறப்பு! சரியான விடை.";
+                msg.className = "feedback-msg feedback-correct";
+                if (btnElement) btnElement.classList.add('correct');
+            } else {
+                playSound('wrong');
+                showGameOverlay(false);
+                
+                msg.innerHTML = "தவறான விடை. சரியான விடை: <span class='correct-ans-highlight'>" + q.answer + "</span>";
+                msg.className = "feedback-msg feedback-wrong";
+                
+                if (btnElement) btnElement.classList.add('wrong');
+                highlightCorrectAnswer();
+            }
+
+            showNextBtn();
+        }
+
+        function highlightCorrectAnswer() {
+            const q = quizQuestions[currentIdx];
+            document.querySelectorAll('.option-btn').forEach(b => {
+                let btnText = b.querySelector('.opt-text').innerText.trim();
+                if (btnText === q.answer.trim()) { b.classList.add('correct'); }
+            });
+        }
+
+        function disableAllInputs() {
+            document.querySelectorAll('.option-btn').forEach(b => { b.disabled = true; });
+        }
+
+        function showNextBtn() {
+            const wrapper = document.getElementById('next-btn-wrapper');
+            wrapper.classList.remove('hidden');
+            if (currentIdx === quizQuestions.length - 1) {
+                document.getElementById('next-btn-text').innerText = "முடிவுகளைக் காட்டு";
+            }
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score + " / " + quizQuestions.length;
+            if(score > (quizQuestions.length / 2)) {
+                fireConfetti();
+                playSound('correct');
+            }
+        }
+    </script>
+</body>
+</html>

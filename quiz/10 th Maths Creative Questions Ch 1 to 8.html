@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Maths - Complete Creative Question Bank (Units 1-8)</title>
+    
+    <!-- MathJax for Formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- FontAwesome for Tick/Cross Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            
+            /* Unit Themes */
+            --u1: #0ea5e9; --u2: #f59e0b; --u3: #be123c; --u4: #059669;
+            --u5: #8b5cf6; --u6: #db2777; --u7: #ea580c; --u8: #4f46e5;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding-bottom: 50px; scroll-behavior: smooth; }
+
+        /* Sticky Navigation */
+        .navbar { background: #1e293b; position: sticky; top: 0; z-index: 1000; padding: 10px 0; overflow-x: auto; white-space: nowrap; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1000px; margin: 0 auto; padding: 0 15px; display: flex; gap: 8px; justify-content: center; }
+        .nav-btn { color: white; text-decoration: none; padding: 6px 12px; border-radius: 15px; font-size: 0.85em; font-weight: 600; transition: transform 0.2s; }
+        .nav-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+        /* Container */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 15px; }
+
+        /* Unit Headers */
+        .unit-header { text-align: center; padding: 25px; margin: 40px 0 25px; border-radius: 12px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .u1-bg { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+        .u2-bg { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .u3-bg { background: linear-gradient(135deg, #be123c, #9f1239); }
+        .u4-bg { background: linear-gradient(135deg, #059669, #047857); }
+        .u5-bg { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .u6-bg { background: linear-gradient(135deg, #db2777, #be185d); }
+        .u7-bg { background: linear-gradient(135deg, #ea580c, #c2410c); }
+        .u8-bg { background: linear-gradient(135deg, #4f46e5, #4338ca); }
+
+        h2 { margin: 0; font-size: 1.8em; }
+
+        /* Question Cards */
+        .card { background: white; padding: 25px; margin-bottom: 20px; border-radius: 10px; border-left: 6px solid #ccc; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .u1-border { border-left-color: var(--u1); }
+        .u2-border { border-left-color: var(--u2); }
+        .u3-border { border-left-color: var(--u3); }
+        .u4-border { border-left-color: var(--u4); }
+        .u5-border { border-left-color: var(--u5); }
+        .u6-border { border-left-color: var(--u6); }
+        .u7-border { border-left-color: var(--u7); }
+        .u8-border { border-left-color: var(--u8); }
+
+        .q-text { font-weight: 600; margin-bottom: 20px; font-size: 1.15em; line-height: 1.5; }
+        
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px; }
+        @media (max-width: 600px) { .options { grid-template-columns: 1fr; } }
+        
+        /* Interactive Quiz Options */
+        .opt { 
+            background: #f8fafc; padding: 12px 18px; border-radius: 8px; 
+            border: 2px solid #e2e8f0; cursor: pointer; font-size: 1em; 
+            transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .opt:hover:not(.disabled) { background: #f1f5f9; border-color: #cbd5e1; transform: translateX(5px); }
+        
+        /* State Classes added by JS */
+        .opt.disabled { pointer-events: none; }
+        .opt.correct { background: #ecfdf5; border-color: #10b981; color: #065f46; font-weight: bold; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15); }
+        .opt.wrong { background: #fef2f2; border-color: #ef4444; color: #991b1b; }
+        
+        .opt i { font-size: 1.3em; margin-left: 10px; }
+        .opt.correct i { color: #10b981; }
+        .opt.wrong i { color: #ef4444; }
+
+        /* Answer Explanation Section */
+        .ans-box { 
+            display: none; margin-top: 20px; padding: 18px; 
+            background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; 
+            border-radius: 8px; color: #0f172a; font-size: 1em; line-height: 1.6;
+        }
+        .ans-box.show { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .title-block { text-align: center; padding: 40px 15px; background: white; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .title-block h1 { color: #0f172a; margin-bottom: 10px; }
+        .title-block p { color: #475569; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#u1" class="nav-btn" style="background:var(--u1)">Unit 1</a>
+        <a href="#u2" class="nav-btn" style="background:var(--u2)">Unit 2</a>
+        <a href="#u3" class="nav-btn" style="background:var(--u3)">Unit 3</a>
+        <a href="#u4" class="nav-btn" style="background:var(--u4)">Unit 4</a>
+        <a href="#u5" class="nav-btn" style="background:var(--u5)">Unit 5</a>
+        <a href="#u6" class="nav-btn" style="background:var(--u6)">Unit 6</a>
+        <a href="#u7" class="nav-btn" style="background:var(--u7)">Unit 7</a>
+        <a href="#u8" class="nav-btn" style="background:var(--u8)">Unit 8</a>
+    </div>
+</nav>
+
+<div class="title-block">
+    <h1>10th Mathematics Interactive Quiz Bank</h1>
+    <p>Complete Creative One Mark Questions (Units 1-8)</p>
+    <p><i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Click on an option to check your answer and view the explanation.</p>
+</div>
+
+<div class="container">
+
+    <!-- UNIT 1 -->
+    <div id="u1">
+        <div class="unit-header u1-bg"><h2>1. Relations & Functions</h2></div>
+        
+        <div class="card u1-border">
+            <div class="q-text">1. The function \( f: N \to R \) is defined by \( f(x)=2^n \). The range of the function is</div>
+            <div class="options">
+                <div class="opt">(1) Set of all even positive integers</div>
+                <div class="opt">(2) N</div>
+                <div class="opt">(3) R</div>
+                <div class="opt">(4) Subset of all even positive integers</div>
+            </div>
+            <div class="ans-box"><strong>(4) Subset of all even positive integers</strong><br> Range is {2, 4, 8, 16...}, which misses numbers like 6, 10.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">2. Let \( f: N \to N \) be defined by \( f(x)=3x+2 \). The preimage of 29 is</div>
+            <div class="options">
+                <div class="opt">(1) 89</div>
+                <div class="opt">(2) 87</div>
+                <div class="opt">(3) 9</div>
+                <div class="opt">(4) 31/3</div>
+            </div>
+            <div class="ans-box"><strong>(3) 9</strong><br> \( 3x+2=29 \Rightarrow 3x=27 \Rightarrow x=9 \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">3. If { (7, 11), (5, a), (3, b) } represents a constant function then (a, b) is</div>
+            <div class="options">
+                <div class="opt">(1) (5, 3)</div>
+                <div class="opt">(2) (3, 5)</div>
+                <div class="opt">(3) (11, 11)</div>
+                <div class="opt">(4) (7, 7)</div>
+            </div>
+            <div class="ans-box"><strong>(3) (11, 11)</strong><br> Constant function means all outputs are the same (11).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">4. The domain of a function \( f(x)=\frac{1}{x(x+1)} \) is</div>
+            <div class="options">
+                <div class="opt">(1) {0, -1}</div>
+                <div class="opt">(2) R - {0, -1}</div>
+                <div class="opt">(3) R - {0}</div>
+                <div class="opt">(4) R - {-1}</div>
+            </div>
+            <div class="ans-box"><strong>(2) R - {0, -1}</strong><br> Denominator is zero at x=0 and x=-1.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">5. If \( A \times B = \{ (3,2), (3, 4), (5, 2), (5, 4) \} \) then A is</div>
+            <div class="options">
+                <div class="opt">(1) {3, 5}</div>
+                <div class="opt">(2) {2, 4}</div>
+                <div class="opt">(3) {2, 3, 4, 5}</div>
+                <div class="opt">(4) {}</div>
+            </div>
+            <div class="ans-box"><strong>(1) {3, 5}</strong><br> Set of first coordinates.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">6. If \( f(x) = x^2 - x \) then \( f(x-1) - f(x+1) \) is</div>
+            <div class="options">
+                <div class="opt">(1) 4x</div>
+                <div class="opt">(2) 4x + 2</div>
+                <div class="opt">(3) 2 - 4x</div>
+                <div class="opt">(4) 4x - 2</div>
+            </div>
+            <div class="ans-box"><strong>(3) 2 - 4x</strong><br> \( (x^2-3x+2) - (x^2+x) = 2-4x \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">7. If \( f(x)=\frac{1}{x} \) and \( g(x)=-\frac{1}{x} \) then \( f \circ g = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) -x</div>
+                <div class="opt">(2) 1/x</div>
+                <div class="opt">(3) -1/x</div>
+                <div class="opt">(4) x</div>
+            </div>
+            <div class="ans-box"><strong>(1) -x</strong><br> \( f(-1/x) = \frac{1}{-1/x} = -x \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">8. If there are 28 relations from a set \( A=\{2,4,6,8\} \) to a set B, then n(B) is</div>
+            <div class="options">
+                <div class="opt">(1) 7</div>
+                <div class="opt">(2) 14</div>
+                <div class="opt">(3) 5</div>
+                <div class="opt">(4) 2</div>
+            </div>
+            <div class="ans-box"><strong>(4) 2</strong><br> \( 2^{mn} = 2^8 \Rightarrow 4n=8 \Rightarrow n=2 \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">9. A function \( f: A \to B \) is bijective if it is:</div>
+            <div class="options">
+                <div class="opt">(1) one-one not onto</div>
+                <div class="opt">(2) onto not one-one</div>
+                <div class="opt">(3) one-one and onto</div>
+                <div class="opt">(4) one-one and into</div>
+            </div>
+            <div class="ans-box"><strong>(3) both one-one and onto</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">10. Let n(A)=m and n(B)=n. Total non-empty relations from A to B is:</div>
+            <div class="options">
+                <div class="opt">(1) \( m^n \)</div>
+                <div class="opt">(2) \( n^m \)</div>
+                <div class="opt">(3) \( 2^{mn}-1 \)</div>
+                <div class="opt">(4) \( 2mn \)</div>
+            </div>
+            <div class="ans-box"><strong>(3) \( 2^{mn}-1 \)</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">11. Let n(A)=m and n(B)=n. Total functions from A to B is:</div>
+            <div class="options">
+                <div class="opt">(1) \( m^n \)</div>
+                <div class="opt">(2) \( n^m \)</div>
+                <div class="opt">(3) \( 2^{mn} \)</div>
+                <div class="opt">(4) 2mn</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( n^m \)</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">12. If \( f: N \to N, f(x)=2x \) then the function is:</div>
+            <div class="options">
+                <div class="opt">(1) Not 1-1, not onto</div>
+                <div class="opt">(2) 1-1 and onto</div>
+                <div class="opt">(3) Not 1-1 but onto</div>
+                <div class="opt">(4) 1-1 but not onto</div>
+            </div>
+            <div class="ans-box"><strong>(4) one one but not onto</strong><br> Range is only even numbers.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">13. \( f=\{(2,a), (3,b), (4,b), (5,c)\} \) is a:</div>
+            <div class="options">
+                <div class="opt">(1) Identity</div>
+                <div class="opt">(2) One-one</div>
+                <div class="opt">(3) Many-one</div>
+                <div class="opt">(4) Constant</div>
+            </div>
+            <div class="ans-box"><strong>(3) Many - one function</strong><br> 3 and 4 both map to b.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">14. \( f(x)=(x+1)^3 - (x-1)^3 \) represents a function which is:</div>
+            <div class="options">
+                <div class="opt">(1) linear</div>
+                <div class="opt">(2) cubic</div>
+                <div class="opt">(3) reciprocal</div>
+                <div class="opt">(4) quadratic</div>
+            </div>
+            <div class="ans-box"><strong>(4) quadratic</strong><br> \( x^3 \) terms cancel out, leaving \( 6x^2 \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">15. The domain of \( f(x)=\frac{x^2+2x+1}{x^2-x-6} \) is:</div>
+            <div class="options">
+                <div class="opt">(a) \( R - \{3, -2\} \)</div>
+                <div class="opt">(b) \( R - \{-3, 2\} \)</div>
+                <div class="opt">(c) \( R - \{3, 2\} \)</div>
+                <div class="opt">(d) \( R - \{-3, -2\} \)</div>
+            </div>
+            <div class="ans-box"><strong>(a) \( R - \{3, -2\} \)</strong><br> \( x^2-x-6 = (x-3)(x+2) \).</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">16. If \( f(x)=2-3x \) then \( f \circ f(1-x) = ? \)</div>
+            <div class="options">
+                <div class="opt">(a) 5x + 9</div>
+                <div class="opt">(b) 9x - 5</div>
+                <div class="opt">(c) 5 - 9x</div>
+                <div class="opt">(d) 5x - 9</div>
+            </div>
+            <div class="ans-box"><strong>(c) 5 - 9x</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">17. \( f(x - \frac{1}{x}) = x^2 + \frac{1}{x^2} \) then \( f(x) = \)</div>
+            <div class="options">
+                <div class="opt">(a) \( x^2+2 \)</div>
+                <div class="opt">(b) \( x^2+\frac{1}{x^2} \)</div>
+                <div class="opt">(c) \( x^2-2 \)</div>
+                <div class="opt">(d) \( x^2-\frac{1}{x^2} \)</div>
+            </div>
+            <div class="ans-box"><strong>(a) \( x^2+2 \)</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">18. Given \( f(x)=(-1)^x \) is a function from N to Z. The range is</div>
+            <div class="options">
+                <div class="opt">(a) {1}</div>
+                <div class="opt">(b) N</div>
+                <div class="opt">(c) {1, -1}</div>
+                <div class="opt">(d) Z</div>
+            </div>
+            <div class="ans-box"><strong>(c) {1, -1}</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">19. If \( n(A)=p, n(B)=q \) then total relations between A and B is</div>
+            <div class="options">
+                <div class="opt">(a) \( 2^p \)</div>
+                <div class="opt">(b) \( 2^q \)</div>
+                <div class="opt">(c) \( 2^{p+q} \)</div>
+                <div class="opt">(d) \( 2^{pq} \)</div>
+            </div>
+            <div class="ans-box"><strong>(d) \( 2^{pq} \)</strong></div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">20. If \( \{(x, 2), (4, y)\} \) represents an identity function, then (x, y) is</div>
+            <div class="options">
+                <div class="opt">(A) (2, 4)</div>
+                <div class="opt">(B) (4, 2)</div>
+                <div class="opt">(C) (2, 2)</div>
+                <div class="opt">(D) (4, 4)</div>
+            </div>
+            <div class="ans-box"><strong>(A) (2, 4)</strong><br> Identity function means input = output. x=2, y=4.</div>
+        </div>
+
+        <div class="card u1-border">
+            <div class="q-text">21. If the range of a function is a singleton set, then it is</div>
+            <div class="options">
+                <div class="opt">(A) Constant function</div>
+                <div class="opt">(B) Identity function</div>
+                <div class="opt">(C) Bijective</div>
+                <div class="opt">(D) One-one</div>
+            </div>
+            <div class="ans-box"><strong>(A) Constant function</strong></div>
+        </div>
+    </div>
+
+    <!-- UNIT 2 -->
+    <div id="u2">
+        <div class="unit-header u2-bg"><h2>2. Numbers & Sequences</h2></div>
+
+        <div class="card u2-border">
+            <div class="q-text">1. If \( 55 \equiv k \pmod{11} \) then value of k is</div>
+            <div class="options">
+                <div class="opt">(1) 0</div>
+                <div class="opt">(2) 5</div>
+                <div class="opt">(3) 10</div>
+                <div class="opt">(4) 11</div>
+            </div>
+            <div class="ans-box"><strong>(1) 0</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">2. The \( p^{th} \) term of an AP is \( \frac{3p-1}{6} \). Sum of first n terms is</div>
+            <div class="options">
+                <div class="opt">(1) \( n(3n+1) \)</div>
+                <div class="opt">(2) \( \frac{n(3n+1)}{12} \)</div>
+                <div class="opt">(3) \( \frac{n(3n-1)}{12} \)</div>
+                <div class="opt">(4) \( n(3n-1) \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( \frac{n(3n+1)}{12} \)</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">3. If m, p, q are consecutive terms in an A.P. then p is</div>
+            <div class="options">
+                <div class="opt">(1) \( \frac{mq}{2} \)</div>
+                <div class="opt">(2) \( \frac{m-q}{2} \)</div>
+                <div class="opt">(3) \( \frac{m^2+q^2}{2} \)</div>
+                <div class="opt">(4) \( \frac{m+q}{2} \)</div>
+            </div>
+            <div class="ans-box"><strong>(4) \( \frac{m+q}{2} \)</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">4. When \( x=2 \), the value of \( 1+x+x^2+...+x^9 \) is</div>
+            <div class="options">
+                <div class="opt">(1) 511</div>
+                <div class="opt">(2) 1023</div>
+                <div class="opt">(3) 513</div>
+                <div class="opt">(4) 1025</div>
+            </div>
+            <div class="ans-box"><strong>(2) 1023</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">5. The sequence \( a_n=2n+1 \) is an A.P. then common difference is</div>
+            <div class="options">
+                <div class="opt">(1) 5</div>
+                <div class="opt">(2) 7</div>
+                <div class="opt">(3) 3</div>
+                <div class="opt">(4) 2</div>
+            </div>
+            <div class="ans-box"><strong>(4) 2</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">6. Common ratio of G.P, \( \frac{1}{\sqrt{2}}, 1, \sqrt{2} \)... is</div>
+            <div class="options">
+                <div class="opt">(1) \( 1/\sqrt{2} \)</div>
+                <div class="opt">(2) \( \sqrt{2} \)</div>
+                <div class="opt">(3) 2</div>
+                <div class="opt">(4) 1/2</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( \sqrt{2} \)</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">7. Number of multiples of 7 between 100 and 300 is</div>
+            <div class="options">
+                <div class="opt">(1) 21</div>
+                <div class="opt">(2) 24</div>
+                <div class="opt">(3) 28</div>
+                <div class="opt">(4) 35</div>
+            </div>
+            <div class="ans-box"><strong>(3) 28</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">8. The \( n^{th} \) term of sequence \( \frac{1}{2}, \frac{3}{4}, \frac{5}{6}, \frac{7}{8}... \) is</div>
+            <div class="options">
+                <div class="opt">(1) \( 1+\frac{1}{2n} \)</div>
+                <div class="opt">(2) \( 1-\frac{1}{2n} \)</div>
+                <div class="opt">(3) \( 1-\frac{1}{n+2} \)</div>
+                <div class="opt">(4) \( \frac{n-1}{n+2} \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( 1-\frac{1}{2n} \)</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">9. Sequence \( \sqrt{11}, \sqrt{55}, 5\sqrt{11}, 5\sqrt{55}... \) is</div>
+            <div class="options">
+                <div class="opt">(1) A.P.</div>
+                <div class="opt">(2) G.P.</div>
+                <div class="opt">(3) Both</div>
+                <div class="opt">(4) Neither</div>
+            </div>
+            <div class="ans-box"><strong>(2) G.P.</strong><br> Common ratio is \( \sqrt{5} \).</div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">10. If \( t_1=n, t_2=n+1, t_3=n+2 \) then \( t_n=? \)</div>
+            <div class="options">
+                <div class="opt">(1) n</div>
+                <div class="opt">(2) 2n-1</div>
+                <div class="opt">(3) 2n+1</div>
+                <div class="opt">(4) 2n</div>
+            </div>
+            <div class="ans-box"><strong>(2) 2n-1</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">11. First term of G.P. is 1. Sum of 3rd and 5th term is 90. Common ratio is</div>
+            <div class="options">
+                <div class="opt">(1) ±10</div>
+                <div class="opt">(2) +9</div>
+                <div class="opt">(3) ±5</div>
+                <div class="opt">(4) ±3</div>
+            </div>
+            <div class="ans-box"><strong>(4) ±3</strong><br> \( r^2 + r^4 = 90 \Rightarrow x+x^2=90 \Rightarrow x=9 \Rightarrow r^2=9 \).</div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">12. The value of x such that \( 8x+4, 6x-2 \) and \( 2x+7 \) will form an AP is</div>
+            <div class="options">
+                <div class="opt">(1) 15</div>
+                <div class="opt">(2) 2</div>
+                <div class="opt">(3) 15/2</div>
+                <div class="opt">(4) 1</div>
+            </div>
+            <div class="ans-box"><strong>(3) 15/2</strong><br> \( 2(6x-2) = (8x+4)+(2x+7) \).</div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">13. If a and b are positive integers, b is a factor of a, then LCM(a,b) is</div>
+            <div class="options">
+                <div class="opt">(1) b</div>
+                <div class="opt">(2) a</div>
+                <div class="opt">(3) 3ab</div>
+                <div class="opt">(4) a/b</div>
+            </div>
+            <div class="ans-box"><strong>(2) a</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">14. Condition for a, b, c to be in A.P. is</div>
+            <div class="options">
+                <div class="opt">(1) \( b^2=ac \)</div>
+                <div class="opt">(2) \( b=2(a+c) \)</div>
+                <div class="opt">(3) \( a+c=2b \)</div>
+                <div class="opt">(4) \( b=2ac \)</div>
+            </div>
+            <div class="ans-box"><strong>(3) \( a+c=2b \)</strong></div>
+        </div>
+
+        <div class="card u2-border">
+            <div class="q-text">15. If \( 1+2+...+n=k \) then \( 1^3+2^3+...+n^3 \) is</div>
+            <div class="options">
+                <div class="opt">(1) \( k^2 \)</div>
+                <div class="opt">(2) \( k^3 \)</div>
+                <div class="opt">(3) \( k(k+1)/2 \)</div>
+                <div class="opt">(4) \( (k+1)^3 \)</div>
+            </div>
+            <div class="ans-box"><strong>(1) \( k^2 \)</strong></div>
+        </div>
+    </div>
+
+    <!-- UNIT 3 -->
+    <div id="u3">
+        <div class="unit-header u3-bg"><h2>3. Algebra</h2></div>
+
+        <div class="card u3-border">
+            <div class="q-text">1. Solution of \( \frac{1}{x} + \frac{1}{y} = 2 \) and \( \frac{1}{x} - \frac{1}{y} = 4 \) is</div>
+            <div class="options">
+                <div class="opt">(1) x=1/3, y=-1</div>
+                <div class="opt">(2) x=1/3, y=3</div>
+                <div class="opt">(3) x=3, y=-1</div>
+                <div class="opt">(4) x=1/3, y=1/3</div>
+            </div>
+            <div class="ans-box"><strong>(1) x=1/3, y=-1</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">2. LCM of \( 2^k, 2^{k+1}, 2^{k+5} \) is</div>
+            <div class="options">
+                <div class="opt">(1) 2</div>
+                <div class="opt">(2) \( 2^k \)</div>
+                <div class="opt">(3) \( 2^{k+1} \)</div>
+                <div class="opt">(4) \( 2^{k+5} \)</div>
+            </div>
+            <div class="ans-box"><strong>(4) \( 2^{k+5} \)</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">3. \( \frac{a^2}{a^2-b^2} + \frac{b^2}{b^2-a^2} = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) a-b</div>
+                <div class="opt">(2) a+b</div>
+                <div class="opt">(3) \( a^2-b^2 \)</div>
+                <div class="opt">(4) 1</div>
+            </div>
+            <div class="ans-box"><strong>(4) 1</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">4. The simplified form of \( \frac{(x-4)(x+3)}{3x-12} \) is</div>
+            <div class="options">
+                <div class="opt">(1) \( \frac{x-3}{x+3} \)</div>
+                <div class="opt">(2) \( \frac{x+3}{x-3} \)</div>
+                <div class="opt">(3) \( \frac{x+3}{3} \)</div>
+                <div class="opt">(4) 1</div>
+            </div>
+            <div class="ans-box"><strong>(3) \( \frac{x+3}{3} \)</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">5. If \( \frac{9}{y} + \frac{4}{x} = \frac{12}{\sqrt{xy}} \), then \( 3\sqrt{x} - 2\sqrt{y} = \)</div>
+            <div class="options">
+                <div class="opt">(1) 3</div>
+                <div class="opt">(2) 2</div>
+                <div class="opt">(3) 5</div>
+                <div class="opt">(4) 0</div>
+            </div>
+            <div class="ans-box"><strong>(4) 0</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">6. If one root of \( 3x^2-10x+k=0 \) is \( 1/3 \), then k is</div>
+            <div class="options">
+                <div class="opt">(1) 3</div>
+                <div class="opt">(2) -3</div>
+                <div class="opt">(3) 6</div>
+                <div class="opt">(4) -6</div>
+            </div>
+            <div class="ans-box"><strong>(1) 3</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">7. If \( \alpha + \beta = 14 \) and \( \alpha - \beta = 2\sqrt{3} \) then \( \alpha\beta = \)</div>
+            <div class="options">
+                <div class="opt">(1) 42</div>
+                <div class="opt">(2) 44</div>
+                <div class="opt">(3) 46</div>
+                <div class="opt">(4) 48</div>
+            </div>
+            <div class="ans-box"><strong>(3) 46</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">8. What should be added to \( x(x+14) \) so that it becomes a perfect square?</div>
+            <div class="options">
+                <div class="opt">(1) 14</div>
+                <div class="opt">(2) 49</div>
+                <div class="opt">(3) 7</div>
+                <div class="opt">(4) 28</div>
+            </div>
+            <div class="ans-box"><strong>(2) 49</strong><br> \( (14/2)^2 = 49 \).</div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">9. If \( \begin{pmatrix} -1 & -2 \\ 4 & 2a-3 \end{pmatrix} = \begin{pmatrix} -1 & -2 \\ 4 & -10 \end{pmatrix} \) then a is</div>
+            <div class="options">
+                <div class="opt">(1) 2</div>
+                <div class="opt">(2) -4</div>
+                <div class="opt">(3) 4</div>
+                <div class="opt">(4) -3.5</div>
+            </div>
+            <div class="ans-box"><strong>(4) -3.5</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">10. If order of A is 3x4 and B is 5x3, then order of \( (BA)^T \) is</div>
+            <div class="options">
+                <div class="opt">(1) 4x3</div>
+                <div class="opt">(2) 3x3</div>
+                <div class="opt">(3) 4x5</div>
+                <div class="opt">(4) 5x4</div>
+            </div>
+            <div class="ans-box"><strong>(3) 4x5</strong><br> BA is 5x4. Transpose is 4x5.</div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">11. Which should be added to \( x^4 + 64 \) to make it a perfect square?</div>
+            <div class="options">
+                <div class="opt">(1) \( 4x^2 \)</div>
+                <div class="opt">(2) \( 16x^2 \)</div>
+                <div class="opt">(3) \( 8x^2 \)</div>
+                <div class="opt">(4) \( -8x^2 \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( 16x^2 \)</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">12. If number of columns and rows are not equal in a matrix then it is said to be a:</div>
+            <div class="options">
+                <div class="opt">(1) diagonal</div>
+                <div class="opt">(2) rectangular</div>
+                <div class="opt">(3) square</div>
+                <div class="opt">(4) identity</div>
+            </div>
+            <div class="ans-box"><strong>(2) rectangular</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">13. The remainder when \( x^2 - 2x + 7 \) is divided by \( x+4 \) is</div>
+            <div class="options">
+                <div class="opt">(A) 28</div>
+                <div class="opt">(B) 29</div>
+                <div class="opt">(C) 30</div>
+                <div class="opt">(D) 31</div>
+            </div>
+            <div class="ans-box"><strong>(D) 31</strong></div>
+        </div>
+
+        <div class="card u3-border">
+            <div class="q-text">14. If \( A = \begin{pmatrix} 4 & -2 \\ 6 & -3 \end{pmatrix} \) then \( A^2 \) is</div>
+            <div class="options">
+                <div class="opt">(A) Identity</div>
+                <div class="opt">(B) Null</div>
+                <div class="opt">(C) Diagonal</div>
+                <div class="opt">(D) A</div>
+            </div>
+            <div class="ans-box"><strong>(D) A</strong><br> A is idempotent.</div>
+        </div>
+    </div>
+
+    <!-- UNIT 4 -->
+    <div id="u4">
+        <div class="unit-header u4-bg"><h2>4. Geometry</h2></div>
+
+        <div class="card u4-border">
+            <div class="q-text">1. In &#916;ABC, DE || AB and AD:DC = 3:2. Then Area(&#916;ABC) : Area(&#916;DEC) = ?</div>
+            <div class="options">
+                <div class="opt">(1) 4:25</div>
+                <div class="opt">(2) 4:9</div>
+                <div class="opt">(3) 9:4</div>
+                <div class="opt">(4) 25:4</div>
+            </div>
+            <div class="ans-box"><strong>(4) 25:4</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">2. If &#916;ABC is isosceles right triangle with &#8736;C = 90&#176;, then</div>
+            <div class="options">
+                <div class="opt">(1) AB&#178; = 2AC&#178;</div>
+                <div class="opt">(2) AC&#178; = 2AB&#178;</div>
+                <div class="opt">(3) BC&#178; = 2AC&#178;</div>
+                <div class="opt">(4) AC&#178; = 2BC&#178;</div>
+            </div>
+            <div class="ans-box"><strong>(1) AB&#178; = 2AC&#178;</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">3. If &#916;ABC ~ &#916;PQR and Area(&#916;PQR) = 4 Area(&#916;ABC), then AB:PQ is</div>
+            <div class="options">
+                <div class="opt">(1) 2:1</div>
+                <div class="opt">(2) 4:1</div>
+                <div class="opt">(3) 1:2</div>
+                <div class="opt">(4) 1:4</div>
+            </div>
+            <div class="ans-box"><strong>(3) 1:2</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">4. In &#916;ABC, AB=6 cm, AD is bisector of &#8736;A. If BD:DC = 3:2 then AC = ?</div>
+            <div class="options">
+                <div class="opt">(1) 4 cm</div>
+                <div class="opt">(2) 6 cm</div>
+                <div class="opt">(3) 2 cm</div>
+                <div class="opt">(4) 8 cm</div>
+            </div>
+            <div class="ans-box"><strong>(1) 4 cm</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">5. If tangents PA and PB are inclined at 40&#176;, then &#8736;POA = ?</div>
+            <div class="options">
+                <div class="opt">(1) 70&#176;</div>
+                <div class="opt">(2) 80&#176;</div>
+                <div class="opt">(3) 50&#176;</div>
+                <div class="opt">(4) 60&#176;</div>
+            </div>
+            <div class="ans-box"><strong>(1) 70&#176;</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">6. A tangent is perpendicular to the radius at the</div>
+            <div class="options">
+                <div class="opt">(1) centre</div>
+                <div class="opt">(2) point of contact</div>
+                <div class="opt">(3) infinity</div>
+                <div class="opt">(4) chord</div>
+            </div>
+            <div class="ans-box"><strong>(2) point of contact</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">7. How many tangents can be drawn to the circle from an exterior point?</div>
+            <div class="options">
+                <div class="opt">(1) one</div>
+                <div class="opt">(2) two</div>
+                <div class="opt">(3) infinite</div>
+                <div class="opt">(4) zero</div>
+            </div>
+            <div class="ans-box"><strong>(2) two</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">8. If a vertical stick 12m casts a shadow 8m... and a tower casts shadow 40m, then height of tower is</div>
+            <div class="options">
+                <div class="opt">(1) 40 m</div>
+                <div class="opt">(2) 50 m</div>
+                <div class="opt">(3) 75 m</div>
+                <div class="opt">(4) 60 m</div>
+            </div>
+            <div class="ans-box"><strong>(4) 60 m</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">9. The perimeter of two similar triangles are 24 cm and 18 cm. If one side of first is 8 cm, corresponding side of other is</div>
+            <div class="options">
+                <div class="opt">(A) 4</div>
+                <div class="opt">(B) 3</div>
+                <div class="opt">(C) 9</div>
+                <div class="opt">(D) 6</div>
+            </div>
+            <div class="ans-box"><strong>(D) 6 cm</strong></div>
+        </div>
+
+        <div class="card u4-border">
+            <div class="q-text">10. Two chords AB and CD meet at P outside circle. AP=8, CD=2. If PD=4, then PC=?</div>
+            <div class="options">
+                <div class="opt">(A) 12</div>
+                <div class="opt">(B) 5</div>
+                <div class="opt">(C) 6</div>
+                <div class="opt">(D) 4</div>
+            </div>
+            <div class="ans-box"><strong>(D) 4 cm (for PD)</strong><br> Note: This depends on the specific variables asked. Standard Secant theorem applies \( PA \cdot PB = PC \cdot PD \).</div>
+        </div>
+    </div>
+
+    <!-- UNIT 5 -->
+    <div id="u5">
+        <div class="unit-header u5-bg"><h2>5. Coordinate Geometry</h2></div>
+
+        <div class="card u5-border">
+            <div class="q-text">1. The slope of the line \( 7y - 2x = 11 \) is equal to:</div>
+            <div class="options">
+                <div class="opt">(1) -7/2</div>
+                <div class="opt">(2) 7/2</div>
+                <div class="opt">(3) 2/7</div>
+                <div class="opt">(4) -2/7</div>
+            </div>
+            <div class="ans-box"><strong>(3) 2/7</strong></div>
+        </div>
+
+        <div class="card u5-border">
+            <div class="q-text">2. The point of intersection of the straight lines \( y=0 \) and \( x=-4 \) is:</div>
+            <div class="options">
+                <div class="opt">(1) (0, -4)</div>
+                <div class="opt">(2) (-4, 0)</div>
+                <div class="opt">(3) (0, 4)</div>
+                <div class="opt">(4) (4, 0)</div>
+            </div>
+            <div class="ans-box"><strong>(2) (-4, 0)</strong></div>
+        </div>
+    </div>
+
+    <!-- UNIT 6 -->
+    <div id="u6">
+        <div class="unit-header u6-bg"><h2>6. Trigonometry</h2></div>
+
+        <div class="card u6-border">
+            <div class="q-text">1. \( \frac{\sqrt{1-\sin^2\theta}}{\sin\theta} = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) \( \cot\theta \)</div>
+                <div class="opt">(2) \( \sin\theta/2 \)</div>
+                <div class="opt">(3) \( \tan\theta \)</div>
+                <div class="opt">(4) \( (1+\sin\theta)/\sin\theta \)</div>
+            </div>
+            <div class="ans-box"><strong>(1) \( \cot\theta \)</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">2. If \( \tan\theta + \cot\theta = 2 \), then \( \tan^2\theta + \cot^2\theta = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) 0</div>
+                <div class="opt">(2) 1</div>
+                <div class="opt">(3) 2</div>
+                <div class="opt">(4) 4</div>
+            </div>
+            <div class="ans-box"><strong>(3) 2</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">3. If \( \cot\theta = x/a \), then \( \frac{x}{\sqrt{a^2+x^2}} = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) \( \cos\theta \)</div>
+                <div class="opt">(2) \( \sin\theta \)</div>
+                <div class="opt">(3) \( \text{cosec}\theta \)</div>
+                <div class="opt">(4) \( \sec\theta \)</div>
+            </div>
+            <div class="ans-box"><strong>(1) \( \cos\theta \)</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">4. The shadow of a pillar of height 5 m is 5 m. The angle of elevation is</div>
+            <div class="options">
+                <div class="opt">(1) 90°</div>
+                <div class="opt">(2) 45°</div>
+                <div class="opt">(3) 60°</div>
+                <div class="opt">(4) 30°</div>
+            </div>
+            <div class="ans-box"><strong>(2) 45°</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">5. If \( \text{cosec}A - \cot A = 5 \), then \( \text{cosec}A + \cot A = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) -5</div>
+                <div class="opt">(2) 5</div>
+                <div class="opt">(3) 1/5</div>
+                <div class="opt">(4) -1/5</div>
+            </div>
+            <div class="ans-box"><strong>(3) 1/5</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">6. \( \sin^2 20^\circ + \sin^2 70^\circ - \tan 45^\circ = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) 1</div>
+                <div class="opt">(2) 0</div>
+                <div class="opt">(3) 2</div>
+                <div class="opt">(4) -1</div>
+            </div>
+            <div class="ans-box"><strong>(2) 0</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">7. If the ratio of height of tower and shadow is \( \sqrt{3}:1 \), angle is</div>
+            <div class="options">
+                <div class="opt">(1) 45°</div>
+                <div class="opt">(2) 30°</div>
+                <div class="opt">(3) 90°</div>
+                <div class="opt">(4) 60°</div>
+            </div>
+            <div class="ans-box"><strong>(4) 60°</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">8. If \( \sin\theta = \cos\theta \), then \( \sin^4\theta + \cos^4\theta \) is</div>
+            <div class="options">
+                <div class="opt">(1) 1</div>
+                <div class="opt">(2) 1/2</div>
+                <div class="opt">(3) 1/4</div>
+                <div class="opt">(4) 3/4</div>
+            </div>
+            <div class="ans-box"><strong>(2) 1/2</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">9. \( 9\tan^2 x - 9\sec^2 x = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) 1</div>
+                <div class="opt">(2) 0</div>
+                <div class="opt">(3) 9</div>
+                <div class="opt">(4) -9</div>
+            </div>
+            <div class="ans-box"><strong>(4) -9</strong></div>
+        </div>
+
+        <div class="card u6-border">
+            <div class="q-text">10. \( \cos^4 x - \sin^4 x = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) \( 2\sin^2 x - 1 \)</div>
+                <div class="opt">(2) \( 2\cos^2 x - 1 \)</div>
+                <div class="opt">(3) \( 1 - 2\sin^2 x \)</div>
+                <div class="opt">(4) Both 2 and 3</div>
+            </div>
+            <div class="ans-box"><strong>(4) Both 2 and 3</strong><br> Typically presented as \( 1-2\sin^2 x \) or \( 2\cos^2 x - 1 \).</div>
+        </div>
+    </div>
+
+    <!-- UNIT 7 -->
+    <div id="u7">
+        <div class="unit-header u7-bg"><h2>7. Mensuration</h2></div>
+
+        <div class="card u7-border">
+            <div class="q-text">1. Ratio of volumes of cylinder, cone, sphere of same dia and height</div>
+            <div class="options">
+                <div class="opt">(1) 1:2:3</div>
+                <div class="opt">(2) 2:1:3</div>
+                <div class="opt">(3) 1:3:2</div>
+                <div class="opt">(4) 3:1:2</div>
+            </div>
+            <div class="ans-box"><strong>(4) 3:1:2</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">2. If radius of sphere is 2cm, then CSA is</div>
+            <div class="options">
+                <div class="opt">(1) \( 8\pi \)</div>
+                <div class="opt">(2) 16</div>
+                <div class="opt">(3) \( 12\pi \)</div>
+                <div class="opt">(4) \( 16\pi \)</div>
+            </div>
+            <div class="ans-box"><strong>(4) \( 16\pi \)</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">3. Volume of cone is ____ of cylinder</div>
+            <div class="options">
+                <div class="opt">(1) 3 times</div>
+                <div class="opt">(2) equal</div>
+                <div class="opt">(3) half</div>
+                <div class="opt">(4) one-third</div>
+            </div>
+            <div class="ans-box"><strong>(4) one-third</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">4. TSA of hemisphere of diameter 7 cm is</div>
+            <div class="options">
+                <div class="opt">(1) 308</div>
+                <div class="opt">(2) 462</div>
+                <div class="opt">(3) 115.5</div>
+                <div class="opt">(4) 77</div>
+            </div>
+            <div class="ans-box"><strong>(3) 115.5</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">5. If radius of cone is a, height a, slant height is</div>
+            <div class="options">
+                <div class="opt">(1) \( 2\sqrt{a} \)</div>
+                <div class="opt">(2) \( a\sqrt{2} \)</div>
+                <div class="opt">(3) \( \sqrt{2a} \)</div>
+                <div class="opt">(4) 2a</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( a\sqrt{2} \)</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">6. Total surface area of a solid hemisphere of radius a is</div>
+            <div class="options">
+                <div class="opt">(1) \( 2\pi a^2 \)</div>
+                <div class="opt">(2) \( 3\pi a^2 \)</div>
+                <div class="opt">(3) \( 3\pi a \)</div>
+                <div class="opt">(4) \( 3a^2 \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( 3\pi a^2 \)</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">7. If surface area of sphere is \( 36\pi \), volume is</div>
+            <div class="options">
+                <div class="opt">(1) \( 12\pi \)</div>
+                <div class="opt">(2) \( 36\pi \)</div>
+                <div class="opt">(3) \( 72\pi \)</div>
+                <div class="opt">(4) \( 108\pi \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) \( 36\pi \)</strong></div>
+        </div>
+
+        <div class="card u7-border">
+            <div class="q-text">8. If radius of a sphere is half of another sphere, volume ratio is</div>
+            <div class="options">
+                <div class="opt">(1) 1:8</div>
+                <div class="opt">(2) 2:1</div>
+                <div class="opt">(3) 1:2</div>
+                <div class="opt">(4) 8:1</div>
+            </div>
+            <div class="ans-box"><strong>(1) 1:8</strong></div>
+        </div>
+    </div>
+
+    <!-- UNIT 8 -->
+    <div id="u8">
+        <div class="unit-header u8-bg"><h2>8. Statistics & Probability</h2></div>
+
+        <div class="card u8-border">
+            <div class="q-text">1. The variance of the first 7 natural numbers is</div>
+            <div class="options">
+                <div class="opt">(1) 5</div>
+                <div class="opt">(2) 4</div>
+                <div class="opt">(3) 16</div>
+                <div class="opt">(4) 8</div>
+            </div>
+            <div class="ans-box"><strong>(2) 4</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">2. Variance is 1.96. Standard deviation is</div>
+            <div class="options">
+                <div class="opt">(1) 0.14</div>
+                <div class="opt">(2) 1.4</div>
+                <div class="opt">(3) 1.3</div>
+                <div class="opt">(4) 1.96^2</div>
+            </div>
+            <div class="ans-box"><strong>(2) 1.4</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">3. The range of first 10 prime numbers is</div>
+            <div class="options">
+                <div class="opt">(1) 28</div>
+                <div class="opt">(2) 22</div>
+                <div class="opt">(3) 29</div>
+                <div class="opt">(4) 27</div>
+            </div>
+            <div class="ans-box"><strong>(4) 27</strong><br> 29 - 2 = 27.</div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">4. Range of data 8, 8, 8, 8, 8 is</div>
+            <div class="options">
+                <div class="opt">(1) 0</div>
+                <div class="opt">(2) 1</div>
+                <div class="opt">(3) 8</div>
+                <div class="opt">(4) 3</div>
+            </div>
+            <div class="ans-box"><strong>(1) 0</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">5. SD is \( 2\sqrt{2} \). If each value multiplied by \( \sqrt{2} \), new SD is</div>
+            <div class="options">
+                <div class="opt">(1) 2</div>
+                <div class="opt">(2) 4</div>
+                <div class="opt">(3) \( 2\sqrt{2} \)</div>
+                <div class="opt">(4) \( 4\sqrt{2} \)</div>
+            </div>
+            <div class="ans-box"><strong>(2) 4</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">6. Probability of 53 Sundays in a leap year is</div>
+            <div class="options">
+                <div class="opt">(1) 1/7</div>
+                <div class="opt">(2) 2/7</div>
+                <div class="opt">(3) 53/366</div>
+                <div class="opt">(4) 1/53</div>
+            </div>
+            <div class="ans-box"><strong>(2) 2/7</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">7. Probability of drawing a red ball from bag with 4 white, 6 blue is</div>
+            <div class="options">
+                <div class="opt">(1) 10</div>
+                <div class="opt">(2) 6/10</div>
+                <div class="opt">(3) 0</div>
+                <div class="opt">(4) 1</div>
+            </div>
+            <div class="ans-box"><strong>(3) 0</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">8. \( P(A \cup B) + P(A \cap B) = ? \)</div>
+            <div class="options">
+                <div class="opt">(1) \( P(A)+P(B) \)</div>
+                <div class="opt">(2) P(S)</div>
+                <div class="opt">(3) \( \Phi \)</div>
+                <div class="opt">(4) 1</div>
+            </div>
+            <div class="ans-box"><strong>(1) \( P(A)+P(B) \)</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">9. Sum of deviations from mean is</div>
+            <div class="options">
+                <div class="opt">(1) positive</div>
+                <div class="opt">(2) negative</div>
+                <div class="opt">(3) zero</div>
+                <div class="opt">(4) integer</div>
+            </div>
+            <div class="ans-box"><strong>(3) zero</strong></div>
+        </div>
+
+        <div class="card u8-border">
+            <div class="q-text">10. Coefficient of variation if \( \bar{x}=48, \sigma=12 \) is</div>
+            <div class="options">
+                <div class="opt">(A) 42</div>
+                <div class="opt">(B) 25</div>
+                <div class="opt">(C) 28</div>
+                <div class="opt">(D) 48</div>
+            </div>
+            <div class="ans-box"><strong>(B) 25</strong><br> \( (12/48)*100 = 25 \).</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Interactive Quiz Logic -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            const ansBox = card.querySelector('.ans-box');
+            if(!ansBox) return;
+            
+            // Extract the correct prefix (e.g., "(4)", "(a)", "(D)") from the strong tag
+            const strongTag = ansBox.querySelector('strong');
+            if(!strongTag) return;
+            
+            const strongText = strongTag.innerText.trim();
+            const prefixMatch = strongText.match(/^\([a-zA-Z0-9]\)/);
+            if(!prefixMatch) return;
+            
+            const correctPrefix = prefixMatch[0].toLowerCase();
+            const opts = card.querySelectorAll('.opt');
+            
+            opts.forEach(opt => {
+                // Determine if this specific option is the correct one
+                const optText = opt.innerText.trim();
+                const optPrefixMatch = optText.match(/^\([a-zA-Z0-9]\)/);
+                
+                if(optPrefixMatch && optPrefixMatch[0].toLowerCase() === correctPrefix) {
+                    opt.dataset.correct = "true";
+                }
+                
+                // Add click listener to each option
+                opt.addEventListener('click', function() {
+                    if(card.dataset.answered === "true") return; // Prevent changing answer
+                    card.dataset.answered = "true";
+                    
+                    // Disable all options visually
+                    opts.forEach(o => o.classList.add('disabled'));
+                    
+                    const isCorrect = this.dataset.correct === "true";
+                    
+                    if(isCorrect) {
+                        // User clicked the right answer
+                        this.classList.add('correct');
+                        
+                        // Safely append icon without destroying MathJax
+                        const icon = document.createElement('i');
+                        icon.className = 'fa-solid fa-circle-check';
+                        this.appendChild(icon);
+                        
+                    } else {
+                        // User clicked the wrong answer
+                        this.classList.add('wrong');
+                        
+                        const wrongIcon = document.createElement('i');
+                        wrongIcon.className = 'fa-solid fa-circle-xmark';
+                        this.appendChild(wrongIcon);
+                        
+                        // Highlight the correct answer as well
+                        opts.forEach(o => {
+                            if(o.dataset.correct === "true") {
+                                o.classList.add('correct');
+                                const rightIcon = document.createElement('i');
+                                rightIcon.className = 'fa-solid fa-circle-check';
+                                o.appendChild(rightIcon);
+                            }
+                        });
+                    }
+                    
+                    // Reveal the answer and explanation box smoothly
+                    ansBox.classList.add('show');
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

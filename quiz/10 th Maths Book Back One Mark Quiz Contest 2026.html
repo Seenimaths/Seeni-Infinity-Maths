@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Maths - One Mark Quiz (LaTeX Mode)</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Google Form Styling - GREEN THEME */
+        body {
+            font-family: 'Cambria Math', Times New Roman;
+            background-color: #e8f5e9; /* Light Green Background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        /* --- HEADER STYLES (Green, Centered, White Text) --- */
+        .header-card {
+            background-color: #2e7d32; /* Dark Green */
+            border-radius: 8px;
+            /* Border top removed as the whole card is now green */
+            padding: 24px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            text-align: center; /* Center Align */
+            color: white; /* White Text */
+        }
+        .header-card h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+        }
+        .header-card p {
+            margin: 0;
+            color: #e8f5e9; /* Off-white for description */
+            font-size: 16px;
+        }
+
+        /* --- QUESTION CARD STYLES (Multi-Color) --- */
+        .question-card {
+            background-color: white; /* Fallback */
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            transition: transform 0.2s;
+            border-left: 6px solid rgba(0,0,0,0.1);
+        }
+
+/* --- QUESTION CARD CYCLING COLORS (Loops every 10 questions) --- */
+
+        /* 1. Light Orange (Questions 1, 11, 21, 31...) */
+        .question-card:nth-of-type(10n + 1) { background-color: #fff3e0; border-left-color: #ff9800; }
+
+        /* 2. Light Blue (Questions 2, 12, 22, 32...) */
+        .question-card:nth-of-type(10n + 2) { background-color: #e3f2fd; border-left-color: #2196f3; }
+
+        /* 3. Light Pink (Questions 3, 13, 23, 33...) */
+        .question-card:nth-of-type(10n + 3) { background-color: #fce4ec; border-left-color: #e91e63; }
+
+        /* 4. Light Yellow (Questions 4, 14, 24, 34...) */
+        .question-card:nth-of-type(10n + 4) { background-color: #fffde7; border-left-color: #fbc02d; }
+
+        /* 5. Lavender (Questions 5, 15, 25, 35...) */
+        .question-card:nth-of-type(10n + 5) { background-color: #f3e5f5; border-left-color: #9c27b0; }
+
+        /* 6. Mint/Teal (Questions 6, 16, 26, 36...) */
+        .question-card:nth-of-type(10n + 6) { background-color: #e0f2f1; border-left-color: #009688; }
+
+        /* 7. Light Red (Questions 7, 17, 27, 37...) */
+        .question-card:nth-of-type(10n + 7) { background-color: #ffebee; border-left-color: #f44336; }
+
+        /* 8. Light Lime (Questions 8, 18, 28, 38...) */
+        .question-card:nth-of-type(10n + 8) { background-color: #f9fbe7; border-left-color: #cddc39; }
+
+        /* 9. Light Cyan (Questions 9, 19, 29, 39...) */
+        .question-card:nth-of-type(10n + 9) { background-color: #e0f7fa; border-left-color: #00bcd4; }
+
+        /* 10. Deep Purple/Indigo (Questions 10, 20, 30, 40...) */
+        .question-card:nth-of-type(10n + 10) { background-color: #e8eaf6; border-left-color: #3f51b5; }
+
+        .question-text {
+            font-family: 'Cambria Math', Times New Roman;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #333; /* Dark text for contrast against colored bg */
+        }
+        
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option-label {
+            font-family: 'Cambria Math', Times New Roman;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: #202124;
+            background: rgba(255,255,255,0.6); /* Slight transparency for options */
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .option-label:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        .option-label input {
+            margin-right: 15px;
+            accent-color: #2e7d32; /* Green Checkbox/Radio */
+            transform: scale(1.2);
+        }
+
+        /* Button Styles - GREEN */
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Center the button */
+            align-items: center;
+        }
+        .submit-btn {
+            background-color: #2e7d32; /* Green */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px; /* Rounded button */
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .submit-btn:hover {
+            background-color: #1b5e20; /* Darker Green */
+            transform: scale(1.05);
+        }
+        
+        /* Results & Explanations */
+        .explanation {
+            font-family: 'Cambria Math', Times New Roman;
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 2px solid #2e7d32;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #202124;
+            line-height: 1.6;
+        }
+        .correct-answer-box {
+            background-color: #e8f5e9; /* Light Green */
+            border: 2px solid #2e7d32;
+        }
+        .wrong-answer-box {
+            background-color: #ffebee; /* Light Red */
+            border: 2px solid #c62828;
+        }
+        
+        .score-board {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 5px solid #2e7d32;
+        }
+        .coin-display {
+            display: inline-flex;
+            align-items: center;
+            background: #ffd700;
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="scoreBoard" class="score-board">
+        <h2 style="margin:0;">Quiz Results</h2>
+        <p id="scoreText" style="font-size: 18px; margin: 10px 0;">Score: 0/0</p>
+        <div class="coin-display">
+            💰 <span id="coinCount">0</span> Coins Earned
+        </div>
+        <p style="font-size: 12px; color: gray; margin-top: 10px;">Scroll down to see explanations!</p>
+    </div>
+
+    <div class="header-card">
+        <h1>10th Maths Book Back One Mark Questions 2026</h1>
+	<h1>PREPARED BY Y.SEENIVASAN. M.Sc,B.Ed -8489880553</h1>
+        <p>CH-1 to 8:Relations and Functions | Numbers and Sequences | Algebra | Geometry | Co-Ordinate Geometry | Trigonometry | Mensuration | Statistics and Probability </p>
+        <p style="color: #673ab7; font-weight: bold; margin-top: 10px;">* Get 10 Coins for every correct answer!</p>
+    </div>
+
+<!-- Timer HTML -->
+<div class="timer-container">
+    <div class="timer-display">
+        <div class="time" id="timerDisplay">05:00</div>
+    </div>
+    <div class="timer-controls">
+        <button class="timer-btn start-btn" onclick="startQuizTimer()">Start</button>
+        <button class="timer-btn pause-btn" id="pauseBtn" onclick="pauseQuizTimer()" disabled>Pause</button>
+        <button class="timer-btn reset-btn" onclick="resetQuizTimer()">Reset</button>
+    </div>
+</div>
+
+<style>
+/* Timer CSS */
+.timer-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.timer-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.time {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    font-family: 'Courier New', monospace;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.timer-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.start-btn {
+    background: #10b981;
+    color: white;
+}
+
+.start-btn:hover {
+    background: #059669;
+}
+
+.pause-btn {
+    background: #f59e0b;
+    color: white;
+}
+
+.pause-btn:hover {
+    background: #d97706;
+}
+
+.reset-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.reset-btn:hover {
+    background: #dc2626;
+}
+
+.timer-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+</style>
+
+<script>
+// Timer JavaScript
+let quizTimeLeft = 900; // 15 minutes in seconds (change as needed)
+let quizTimerInterval;
+let quizPaused = false;
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(quizTimeLeft / 60);
+    const seconds = quizTimeLeft % 60;
+    document.getElementById('timerDisplay').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function startQuizTimer() {
+    const startBtn = document.querySelector('.start-btn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    
+    quizTimerInterval = setInterval(() => {
+        quizTimeLeft--;
+        updateTimerDisplay();
+        
+        if (quizTimeLeft <= 0) {
+            clearInterval(quizTimerInterval);
+            alert('Time\'s up! Quiz has ended.');
+            // Add your quiz end logic here
+        }
+    }, 1000);
+}
+
+function pauseQuizTimer() {
+    const startBtn = document.querySelector('.start-btn');
+    
+    clearInterval(quizTimerInterval);
+    quizPaused = true;
+    startBtn.disabled = false;
+    startBtn.textContent = 'Resume';
+}
+
+function resetQuizTimer() {
+    const startBtn = document.querySelector('.start-btn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    
+    clearInterval(quizTimerInterval);
+    quizTimeLeft = 300; // Reset to 5 minutes
+    updateTimerDisplay();
+    
+    startBtn.disabled = false;
+    startBtn.textContent = 'Start';
+    pauseBtn.disabled = true;
+    quizPaused = false;
+}
+
+// Initialize display
+updateTimerDisplay();
+</script>
+
+    <form id="quizForm">
+        <div id="questions-container"></div>
+        
+        <div class="btn-container">
+            <button type="button" class="submit-btn" onclick="submitQuiz()">Submit</button>
+            <button type="button" class="submit-btn" style="background-color: #5f6368;" onclick="location.reload()">Reset</button>
+        </div>
+    </form>
+    
+    <br><br>
+</div>
+
+<script>
+    // Data with LaTeX syntax: \( math \)
+    const quizData = [
+        {
+            id: 1,
+            q: "If \\( n(A \\times B) = 6 \\) and \\( A = \\{1, 3\\} \\), then \\( n(B) \\) is",
+            options: ["1", "2", "3", "6"],
+            correct: 2, 
+            explanation: "We know \\( n(A \\times B) = n(A) \\times n(B) \\). Given \\( 6 = 2 \\times n(B) \\), so \\( n(B) = 3 \\)."
+        },
+        {
+            id: 2,
+            q: "\\( A = \\{a, b, p\\}, B = \\{2, 3\\}, C = \\{p, q, r, s\\} \\) then \\( n[(A \\cup C) \\times B] \\) is",
+            options: ["8", "20", "12", "16"],
+            correct: 2,
+            explanation: "\\( A \\cup C = \\{a, b, p, q, r, s\\} \\) (6 elements). \\( n(B) = 2 \\). So, \\( 6 \\times 2 = 12 \\)."
+        },
+        {
+            id: 3,
+            q: "If \\( A = \\{1, 2\\}, B = \\{1, 2, 3, 4\\}, C = \\{5, 6\\} \\) and \\( D = \\{5, 6, 7, 8\\} \\) then which statement is true?",
+            options: ["\\( (A \\times C) \\subset (B \\times D) \\)", "\\( (B \\times D) \\subset (A \\times C) \\)", "\\( (A \\times B) \\subset (A \\times D) \\)", "\\( (D \\times A) \\subset (B \\times A) \\)"],
+            correct: 0,
+            explanation: "Since \\( A \\subset B \\) and \\( C \\subset D \\), the cross product \\( (A \\times C) \\) is a subset of \\( (B \\times D) \\)."
+        },
+        {
+            id: 4,
+            q: "If there are 1024 relations from a set \\( A = \\{1, 2, 3, 4, 5\\} \\) to a set B, then the number of elements in B is",
+            options: ["3", "2", "4", "8"],
+            correct: 1,
+            explanation: "Total relations = \\( 2^{mn} \\). \\( 1024 = 2^{10} \\). Since \\( n(A)=5 \\), \\( 5n = 10 \\), so \\( n(B) = 2 \\)."
+        },
+        {
+            id: 5,
+            q: "The range of the relation \\( R = \\{(x, x^2) \\mid x \\text{ is a prime number less than 13}\\} \\) is",
+            options: ["\\( \\{2,3,5,7\\} \\)", "\\( \\{2,3,5,7,11\\} \\)", "\\( \\{4,9,25,49,121\\} \\)", "\\( \\{1,4,9,25,49,121\\} \\)"],
+            correct: 2,
+            explanation: "Primes < 13 are 2, 3, 5, 7, 11. Their squares are 4, 9, 25, 49, 121."
+        },
+        {
+            id: 6,
+            q: "If the ordered pairs \\( (a + 2, 4) \\) and \\( (5, 2a + b) \\) are equal then \\( (a, b) \\) is",
+            options: ["\\( (2, -2) \\)", "\\( (5, 1) \\)", "\\( (2, 3) \\)", "\\( (3, -2) \\)"],
+            correct: 3,
+            explanation: "\\( a+2=5 \\Rightarrow a=3 \\). And \\( 2a+b=4 \\Rightarrow 6+b=4 \\Rightarrow b=-2 \\)."
+        },
+        {
+            id: 7,
+            q: "Let \\( n(A) = m \\) and \\( n(B) = n \\) then the total number of non-empty relations that can be defined from A to B is",
+            options: ["\\( m^n \\)", "\\( n^m \\)", "\\( 2^{mn} - 1 \\)", "\\( 2^{mn} \\)"],
+            correct: 2,
+            explanation: "Total relations is \\( 2^{mn} \\). Subtract 1 for the empty relation."
+        },
+        {
+            id: 8,
+            q: "If \\( \\{(a, 8), (6, b)\\} \\) represents an identity function, then the value of \\( a \\) and \\( b \\) are respectively",
+            options: ["(8, 6)", "(8, 8)", "(6, 8)", "(6, 6)"],
+            correct: 0,
+            explanation: "In an identity function, inputs equal outputs. So \\( a=8 \\) and \\( b=6 \\)."
+        },
+        {
+            id: 9,
+            q: "Let \\( A = \\{1,2,3,4\\} \\) and \\( B = \\{4,8,9,10\\} \\). A function \\( f : A \\to B \\) given by \\( f = \\{(1,4), (2,8), (3,9), (4,10)\\} \\) is a",
+            options: ["Many – One Function", "Identity Function", "One – to – One Function", "Into Function"],
+            correct: 2,
+            explanation: "Every element in A maps to a unique element in B (Distinct inputs have distinct images)."
+        },
+        {
+            id: 10,
+            q: "If \\( f(x) = 2x^2 \\) and \\( g(x) = \\frac{1}{3x} \\), then \\( f \\circ g \\) is",
+            options: ["\\( \\frac{3}{2x^2} \\)", "\\( \\frac{2}{3x^2} \\)", "\\( \\frac{2}{9x^2} \\)", "\\( \\frac{1}{6x^2} \\)"],
+            correct: 2,
+            explanation: "\\( f(g(x)) = f(\\frac{1}{3x}) = 2(\\frac{1}{3x})^2 = 2(\\frac{1}{9x^2}) = \\frac{2}{9x^2} \\)."
+        },
+        {
+            id: 11,
+            q: "If \\( f : A \\to B \\) is a bijective function and if \\( n(B) = 7 \\), then \\( n(A) \\) is equal to",
+            options: ["7", "49", "1", "14"],
+            correct: 0,
+            explanation: "For a bijection (one-to-one and onto), \\( n(A) \\) must equal \\( n(B) \\)."
+        },
+        {
+            id: 12,
+            q: "Let \\( f \\) and \\( g \\) be two functions given by \\( f=\\{(0,1),(2,0),(3,-4),(4,2),(5,7)\\} \\) and \\( g=\\{(0,2),(1,0),(2,4),(-4,2),(7,0)\\} \\) then the range of \\( f \\circ g \\) is",
+            options: ["\\( \\{0,2,3,4,5\\} \\)", "\\( \\{-4,1,0,2,7\\} \\)", "\\( \\{1,2,3,4,5\\} \\)", "\\( \\{0,1,2\\} \\)"],
+            correct: 3,
+            explanation: "Mapping: \\( 0\\to2\\to0 \\), \\( 1\\to0\\to1 \\), \\( 2\\to4\\to2 \\), \\( 7\\to0\\to1 \\). The resulting outputs are \\( \\{0, 1, 2\\} \\)."
+        },
+        {
+            id: 13,
+            q: "Let \\( f(x) = \\sqrt{1 + x^2} \\) then",
+            options: ["\\( f(xy) = f(x)f(y) \\)", "\\( f(xy) \\ge f(x)f(y) \\)", "\\( f(xy) \\le f(x)f(y) \\)", "None of these"],
+            correct: 2,
+            explanation: "Mathematically, \\( \\sqrt{1+x^2y^2} \\le \\sqrt{1+x^2}\\sqrt{1+y^2} \\)."
+        },
+        {
+            id: 14,
+            q: "If \\( g = \\{(1,1), (2,3), (3,5), (4,7)\\} \\) is a function given by \\( g(x) = \\alpha x + \\beta \\) then the value of \\( \\alpha \\) and \\( \\beta \\) are",
+            options: ["\\( (-1, 2) \\)", "\\( (2, -1) \\)", "\\( (-1, -2) \\)", "\\( (1, 2) \\)"],
+            correct: 1,
+            explanation: "Using substitution: \\( 1\\alpha+\\beta=1 \\) and \\( 2\\alpha+\\beta=3 \\). Subtracting gives \\( \\alpha=2 \\), then \\( \\beta=-1 \\)."
+        },
+
+        {
+            id: 15,
+            q: "\\( f(x) = (x + 1)^3 - (x - 1)^3 \\) represents a function which is",
+            options: ["Linear", "Cubic", "Reciprocal", "Quadratic"],
+            correct: 3,
+            explanation: "Expanding: \\( (x^3 + 3x^2 + 3x + 1) - (x^3 - 3x^2 + 3x - 1) = 6x^2 + 2 \\), which is Quadratic."
+        },
+        {
+            id: 16,
+            q: "Euclid's division lemma states that for positive integers \\( a \\) and \\( b \\), there exist unique integers \\( q \\) and \\( r \\) such that \\( a = bq + r \\), where \\( r \\) must satisfy",
+            options: ["\\( 1 < r < b \\)", "\\( 0 < r < b \\)", "\\( 0 \\le r < b \\)", "\\( 0 < r \\le b \\)"],
+            correct: 2,
+            explanation: "The remainder \\( r \\) must be greater than or equal to 0 and strictly less than the divisor \\( b \\)."
+        },
+        {
+            id: 17,
+            q: "Using Euclid's division lemma, if the cube of any positive integer is divided by 9 then the possible remainders are",
+            options: ["0, 1, 8", "1, 4, 8", "0, 1, 3", "1, 3, 5"],
+            correct: 0,
+            explanation: "Cubing forms of \\( 3k, 3k+1, 3k+2 \\) results in remainders 0, 1, or 8 when divided by 9."
+        },
+        {
+            id: 18,
+            q: "If the HCF of 65 and 117 is expressible in the form of \\( 65m - 117 \\), then the value of \\( m \\) is",
+            options: ["4", "2", "1", "3"],
+            correct: 1,
+            explanation: "HCF(65, 117) is 13. Solving \\( 65m - 117 = 13 \\) gives \\( 65m = 130 \\), so \\( m = 2 \\)."
+        },
+{
+            id: 19,
+            q: "The sum of the exponents of the prime factors in the prime factorization of 1729 is",
+            options: ["1", "2", "3", "4"],
+            correct: 2, // (c) 3
+            explanation: "Prime factorization of \\( 1729 = 7^1 \\times 13^1 \\times 19^1 \\). Sum of exponents = \\( 1 + 1 + 1 = 3 \\)."
+        },
+        {
+            id: 20,
+            q: "The least number that is divisible by all the numbers from 1 to 10 (both exclusive) is",
+            options: ["2025", "5220", "5025", "2520"],
+            correct: 3, // (d) 2520
+            explanation: "The LCM of numbers from 1 to 10 is 2520."
+        },
+        {
+            id: 21,
+            q: "\\( 7^{4k} \\equiv \\_\\_\\_\\_ \\pmod{100} \\)",
+            options: ["1", "2", "3", "4"],
+            correct: 0, // (a) 1
+            explanation: "\\( 7^4 = 2401 \\). \\( 2401 \\equiv 1 \\pmod{100} \\). Therefore \\( (7^4)^k \\equiv 1^k \\equiv 1 \\pmod{100} \\)."
+        },
+        {
+            id: 22,
+            q: "Given \\( F_1 = 1, F_2 = 3 \\) and \\( F_n = F_{n-1} + F_{n-2} \\) then \\( F_5 \\) is",
+            options: ["3", "5", "8", "11"],
+            correct: 3, // (d) 11
+            explanation: "Sequence: \\( F_1=1, F_2=3 \\). \\( F_3=1+3=4 \\), \\( F_4=3+4=7 \\), \\( F_5=4+7=11 \\)."
+        },
+        {
+            id: 23,
+            q: "The first term of an arithmetic progression is unity and the common difference is 4. Which of the following will be a term of this A.P.",
+            options: ["4551", "10091", "7881", "13531"],
+            correct: 2, // (c) 7881
+            explanation: "Terms are of form \\( 1 + 4n \\) (numbers that leave remainder 1 when divided by 4). \\( 7881 \\div 4 \\) gives remainder 1."
+        },
+        {
+            id: 24,
+            q: "If 6 times of \\( 6^{th} \\) term of an A.P is equal to 7 times the \\( 7^{th} \\) term, then the \\( 13^{th} \\) term of the A.P is",
+            options: ["0", "6", "7", "13"],
+            correct: 0, // (a) 0
+            explanation: "\\( 6(a+5d) = 7(a+6d) \\Rightarrow 6a+30d = 7a+42d \\Rightarrow a+12d=0 \\). \\( t_{13} = a+12d = 0 \\)."
+        },
+        {
+            id: 25,
+            q: "An A.P consists of 31 terms. If its \\( 16^{th} \\) term is \\( m \\), then the sum of all the terms of this A.P is",
+            options: ["\\( 16 m \\)", "\\( 62 m \\)", "\\( 31 m \\)", "\\( \\frac{31}{2} m \\)"],
+            correct: 2, // (c) 31 m
+            explanation: "In an AP with odd number of terms, Sum = \\( n \\times \\text{middle term} \\). Here \\( n=31 \\), middle is \\( 16^{th} \\) term (m). Sum = \\( 31m \\)."
+        },
+        {
+            id: 26,
+            q: "In an A.P the first term is 1 and the common difference is 4. How many terms of the A.P must be taken for their sum to be equal to 120?",
+            options: ["6", "7", "8", "9"],
+            correct: 2, // (c) 8
+            explanation: "\\( S_n = \\frac{n}{2}[2a+(n-1)d] = 120 \\). Solving \\( 2n^2 - n - 120 = 0 \\) gives \\( n=8 \\)."
+        },
+        {
+            id: 27,
+            q: "If \\( A = 2^{65} \\) and \\( B = 2^{64} + 2^{63} + 2^{62} + \\dots + 2^0 \\) which of the following is true?",
+            options: ["B is \\( 2^{64} \\) more than A", "A and B are Equal", "B is larger than A by 1", "A is larger than B by 1"],
+            correct: 3, // (d)
+            explanation: "B is a Geometric Series sum: \\( 2^{65}-1 \\). Since \\( A=2^{65} \\), A is larger than B by exactly 1."
+        },
+        {
+            id: 28,
+            q: "The next term of the sequence \\( \\frac{3}{16}, \\frac{1}{8}, \\frac{1}{12}, \\frac{1}{18}, \\dots \\) is",
+            options: ["\\( \\frac{1}{24} \\)", "\\( \\frac{1}{27} \\)", "\\( \\frac{2}{3} \\)", "\\( \\frac{1}{81} \\)"],
+            correct: 1, // (b) 1/27
+            explanation: "This is a G.P with ratio \\( r = \\frac{2}{3} \\). Next term = \\( \\frac{1}{18} \\times \\frac{2}{3} = \\frac{1}{27} \\)."
+        },
+        {
+            id: 29,
+            q: "If the sequence \\( t_1, t_2, t_3, \\dots \\) are in A.P then the sequence \\( t_6, t_{12}, t_{18}, \\dots \\) is",
+            options: ["A Geometric Progression", "An Arithmetic Progression", "Neither AP nor GP", "A constant sequence"],
+            correct: 1, // (b) An Arithmetic Progression
+            explanation: "Selecting terms at regular intervals (every 6th term) from an A.P results in a new A.P."
+        },
+        {
+            id: 30,
+            q: "The value of \\( (1^3 + 2^3 + 3^3 + \\dots + 15^3) - (1 + 2 + 3 + \\dots + 15) \\) is",
+            options: ["14400", "14200", "14280", "14520"],
+            correct: 2, // (c) 14280
+            explanation: "Sum of cubes \\( (\\frac{15 \\times 16}{2})^2 = 120^2 = 14400 \\). Sum of naturals \\( 120 \\). \\( 14400 - 120 = 14280 \\)."
+        },
+        
+        // --- CHAPTER 3 (ALGEBRA) ---
+        
+        {
+            id: 31,
+            q: "A system of three linear equations in three variables is inconsistent if their planes",
+            options: ["Intersect only at a point", "Intersect in a line", "Coincides with each other", "Do not intersect"],
+            correct: 3, // (d) Do not intersect
+            explanation: "Inconsistency implies there is no common solution, which geometrically corresponds to planes having no common intersection point (e.g., parallel)."
+        },
+        {
+            id: 32,
+            q: "The solution of the system \\( x + y - 3z = -6, -7y + 7z = 7, 3z = 9 \\) is",
+            options: ["\\( x=1, y=2, z=3 \\)", "\\( x=-1, y=2, z=3 \\)", "\\( x=-1, y=-2, z=3 \\)", "\\( x=1, y=-2, z=3 \\)"],
+            correct: 0, // (a)
+            explanation: "From \\( 3z=9 \\Rightarrow z=3 \\). Substitute into eq 2: \\( -7y+21=7 \\Rightarrow y=2 \\). Substitute into eq 1: \\( x+2-9=-6 \\Rightarrow x=1 \\)."
+        },
+        {
+            id: 33,
+            q: "If \\( (x - 6) \\) is the HCF of \\( x^2 - 2x - 24 \\) and \\( x^2 - kx - 6 \\) then the value of \\( k \\) is",
+            options: ["3", "5", "6", "8"],
+            correct: 1, // (b) 5
+            explanation: "Since \\( x-6 \\) is a factor, \\( P(6) = 0 \\). \\( 6^2 - 6k - 6 = 0 \\Rightarrow 30 - 6k = 0 \\Rightarrow k = 5 \\)."
+        },
+        {
+            id: 34,
+            q: "\\( \\frac{3y-3}{y} \\div \\frac{7y-7}{3y^2} \\) is",
+            options: ["\\( \\frac{9y}{7} \\)", "\\( \\frac{9y^3}{(21y-21)} \\)", "\\( \\frac{21y^2-42y+21}{3y^3} \\)", "\\( \\frac{7(y^2-2y+1)}{y^2} \\)"],
+            correct: 0, // (a)
+            explanation: "Simplify: \\( \\frac{3(y-1)}{y} \\times \\frac{3y^2}{7(y-1)} \\). Terms cancel to give \\( \\frac{9y}{7} \\)."
+        },
+        {
+            id: 35,
+            q: "\\( y^2 + \\frac{1}{y^2} \\) is not equal to",
+            options: ["\\( \\frac{y^4+1}{y^2} \\)", "\\( (y+\\frac{1}{y})^2 \\)", "\\( (y-\\frac{1}{y})^2 + 2 \\)", "\\( (y+\\frac{1}{y})^2 - 2 \\)"],
+            correct: 1, // (b)
+            explanation: "\\( (y+\\frac{1}{y})^2 = y^2 + \\frac{1}{y^2} + 2 \\), which is not equal to \\( y^2 + \\frac{1}{y^2} \\) (it differs by 2)."
+        },
+        {
+            id: 36,
+            q: "\\( \\frac{x}{x^2-25} - \\frac{8}{x^2+6x+5} \\) gives",
+            options: ["\\( \\frac{x^2-7x+40}{(x-5)(x+5)} \\)", "\\( \\frac{x^2+7x+40}{(x-5)(x+5)(x+1)} \\)", "\\( \\frac{x^2-7x+40}{(x^2-25)(x+1)} \\)", "\\( \\frac{x^2+10}{(x^2-25)(x+1)} \\)"],
+            correct: 2, // (c)
+            explanation: "Taking LCM \\( (x-5)(x+5)(x+1) \\), numerator becomes \\( x(x+1) - 8(x-5) = x^2+x-8x+40 = x^2-7x+40 \\)."
+        },
+{
+            id: 37,
+            q: "The square root of \\( \\frac{256x^8y^4z^{10}}{25x^6y^6z^6} \\) is equal to",
+            options: ["\\( \\frac{16}{5} \\left| \\frac{x^2z^4}{y^2} \\right| \\)", "\\( 16 \\left| \\frac{y^2}{x^2z^4} \\right| \\)", "\\( \\frac{16}{5} \\left| \\frac{y}{xz^2} \\right| \\)", "\\( \\frac{16}{5} \\left| \\frac{xz^2}{y} \\right| \\)"],
+            correct: 3, // (d)
+            explanation: "Simplifying inside: \\( \\frac{256}{25} x^{8-6} y^{4-6} z^{10-6} = \\frac{256}{25} \\frac{x^2 z^4}{y^2} \\). Square root is \\( \\frac{16}{5} \\left| \\frac{xz^2}{y} \\right| \\)."
+        },
+        {
+            id: 38,
+            q: "Which of the following should be added to make \\( x^4 + 64 \\) a perfect square",
+            options: ["\\( 4x^2 \\)", "\\( 16x^2 \\)", "\\( 8x^2 \\)", "\\( -8x^2 \\)"],
+            correct: 1, // (b)
+            explanation: "\\( x^4 + 64 = (x^2)^2 + 8^2 \\). To make it \\( (x^2+8)^2 \\), we need the middle term \\( 2(x^2)(8) = 16x^2 \\)."
+        },
+        {
+            id: 39,
+            q: "The solution of \\( (2x - 1)^2 = 9 \\) is equal to",
+            options: ["-1", "2", "-1, 2", "None of these"],
+            correct: 2, // (c)
+            explanation: "\\( 2x-1 = \\pm 3 \\). Case 1: \\( 2x-1=3 \\Rightarrow x=2 \\). Case 2: \\( 2x-1=-3 \\Rightarrow x=-1 \\)."
+        },
+        {
+            id: 40,
+            q: "The value of \\( a \\) and \\( b \\) if \\( 4x^4 - 24x^3 + 76x^2 + ax + b \\) is a perfect square are",
+            options: ["100, 120", "10, 12", "-120, 100", "12, 10"],
+            correct: 2, // (c)
+            explanation: "Comparing with \\( (2x^2 - 6x + 10)^2 \\), we find \\( a = -120 \\) and \\( b = 100 \\)."
+        },
+        {
+            id: 41,
+            q: "If the roots of the equation \\( q^2x^2 + p^2x + r^2 = 0 \\) are the squares of the roots of the equation \\( qx^2 + px + r = 0 \\), then \\( q, p, r \\) are in",
+            options: ["A.P", "G.P", "Both A.P and G.P", "None of these"],
+            correct: 1, // (b)
+            explanation: "Using the relation between roots and coefficients, we derive \\( p^2 = qr \\), which is the condition for a Geometric Progression (G.P)."
+        },
+        {
+            id: 42,
+            q: "Graph of a linear equation is a",
+            options: ["Straight line", "Circle", "Parabola", "Hyperbola"],
+            correct: 0, // (a)
+            explanation: "A linear equation (degree 1) always represents a straight line."
+        },
+        {
+            id: 43,
+            q: "The number of points of intersection of the quadratic polynomial \\( x^2 + 4x + 4 \\) with the X axis is",
+            options: ["0", "1", "0 or 1", "2"],
+            correct: 1, // (b)
+            explanation: "\\( x^2 + 4x + 4 = (x+2)^2 \\). The graph touches the X-axis at only one point \\( x = -2 \\)."
+        },
+        {
+            id: 44,
+            q: "For the given matrix \\( A = \\begin{pmatrix} 1 & 3 & 5 & 7 \\\\ 2 & 4 & 6 & 8 \\\\ 9 & 11 & 13 & 15 \\end{pmatrix} \\) the order of the matrix \\( A^T \\) is",
+            options: ["\\( 2 \\times 3 \\)", "\\( 3 \\times 2 \\)", "\\( 3 \\times 4 \\)", "\\( 4 \\times 3 \\)"],
+            correct: 3, // (d)
+            explanation: "Matrix A is \\( 3 \\times 4 \\). Its transpose \\( A^T \\) will swap rows and columns, becoming \\( 4 \\times 3 \\)."
+        },
+        {
+            id: 45,
+            q: "If A is a \\( 2 \\times 3 \\) matrix and B is a \\( 3 \\times 4 \\) matrix, how many columns does AB have",
+            options: ["3", "4", "2", "5"],
+            correct: 1, // (b)
+            explanation: "Order of AB will be \\( (2 \\times 3) \\times (3 \\times 4) = 2 \\times 4 \\). So it has 4 columns."
+        },
+        {
+            id: 46,
+            q: "If number of columns and rows are not equal in a matrix then it is said to be a",
+            options: ["Diagonal matrix", "Rectangular matrix", "Square matrix", "Identity matrix"],
+            correct: 1, // (b)
+            explanation: "A matrix where \\( m \\neq n \\) is called a Rectangular matrix."
+        },
+        {
+            id: 47,
+            q: "Transpose of a column matrix is",
+            options: ["Unit matrix", "Diagonal matrix", "Column matrix", "Row matrix"],
+            correct: 3, // (d)
+            explanation: "A column matrix has order \\( m \\times 1 \\). Its transpose is \\( 1 \\times m \\), which is a Row matrix."
+        },
+        {
+            id: 48,
+            q: "Find the matrix X if \\( 2X + \\begin{pmatrix} 1 & 3 \\\\ 5 & 7 \\end{pmatrix} = \\begin{pmatrix} 5 & 7 \\\\ 9 & 5 \\end{pmatrix} \\)",
+            options: ["\\( \\begin{pmatrix} -2 & -2 \\\\ 2 & -1 \\end{pmatrix} \\)", "\\( \\begin{pmatrix} 2 & 2 \\\\ 2 & -1 \\end{pmatrix} \\)", "\\( \\begin{pmatrix} 1 & 2 \\\\ 2 & 2 \\end{pmatrix} \\)", "\\( \\begin{pmatrix} 2 & 1 \\\\ 2 & 2 \\end{pmatrix} \\)"],
+            correct: 1, // (b)
+            explanation: "\\( 2X = \\begin{pmatrix} 5 & 7 \\\\ 9 & 5 \\end{pmatrix} - \\begin{pmatrix} 1 & 3 \\\\ 5 & 7 \\end{pmatrix} = \\begin{pmatrix} 4 & 4 \\\\ 4 & -2 \\end{pmatrix} \\). Dividing by 2 gives \\( \\begin{pmatrix} 2 & 2 \\\\ 2 & -1 \\end{pmatrix} \\)."
+        },
+        {
+            id: 49,
+            q: "Which of the following can be calculated from the given matrices \\( A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\\\ 5 & 6 \\end{pmatrix} , B = \\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{pmatrix} \\)<br> (i) \\( A^2 \\) (ii) \\( B^2 \\) (iii) \\( AB \\) (iv) \\( BA \\)",
+            options: ["(i) and (ii) only", "(ii) and (iii) only", "(ii) and (iv) only", "All of these"],
+            correct: 2, // (c)
+            explanation: "\\( A \\) is \\( 3 \\times 2 \\), \\( B \\) is \\( 3 \\times 3 \\). \\( B^2 \\) works (square matrix). \\( BA \\) works (\\( 3 \\times 3 \\) times \\( 3 \\times 2 \\)). \\( A^2 \\) and \\( AB \\) are impossible due to dimension mismatch."
+        },
+        {
+            id: 50,
+            q: "If \\( A = \\begin{pmatrix} 1 & 2 & 3 \\\\ 3 & 2 & 1 \\end{pmatrix}, B = \\begin{pmatrix} 1 & 0 \\\\ 2 & -1 \\\\ 0 & 2 \\end{pmatrix}, C = \\begin{pmatrix} 0 & 1 \\\\ -2 & 5 \\end{pmatrix} \\). Which of the following are correct?<br> (i) \\( AB + C = \\begin{pmatrix} 5 & 5 \\\\ 5 & 5 \\end{pmatrix} \\) <br> (ii) \\( BC = \\begin{pmatrix} 0 & 1 \\\\ 2 & -3 \\\\ -4 & 10 \\end{pmatrix} \\) <br> (iii) \\( BA + C = \\begin{pmatrix} 2 & 5 \\\\ 3 & 0 \\end{pmatrix} \\) <br> (iv) \\( (AB)C = \\begin{pmatrix} -8 & 20 \\\\ -8 & 13 \\end{pmatrix} \\)",
+            options: ["(i) and (ii) only", "(ii) and (iii) only", "(iii) and (iv) only", "All of these"],
+            correct: 0, // (a)
+            explanation: "Calculations confirm that both statement (i) and (ii) yield the correct result matrices shown."
+        },
+        
+        // --- CHAPTER 4 (GEOMETRY) ---
+        {
+            id: 51,
+            q: "If in triangles ABC and EDF, \\( \\frac{AB}{DE} = \\frac{BC}{FD} \\) then they will be similar, when",
+            options: ["\\( \\angle B = \\angle E \\)", "\\( \\angle A = \\angle D \\)", "\\( \\angle B = \\angle D \\)", "\\( \\angle A = \\angle F \\)"],
+            correct: 2, // (c)
+            explanation: "For SAS similarity, the angle included between the proportional sides must be equal. Included angle for AB, BC is \\( \\angle B \\). Included angle for DE, FD is \\( \\angle D \\)."
+        },
+        {
+            id: 52,
+            q: "In \\( \\Delta LMN, \\angle L = 60^\\circ, \\angle M = 50^\\circ \\). If \\( \\Delta LMN \\sim \\Delta PQR \\) then the value of \\( \\angle R \\) is",
+            options: ["\\( 40^\\circ \\)", "\\( 70^\\circ \\)", "\\( 30^\\circ \\)", "\\( 110^\\circ \\)"],
+            correct: 1, // (b)
+            explanation: "In \\( \\Delta LMN \\), \\( \\angle N = 180 - (60+50) = 70^\\circ \\). Since triangles are similar, corresponding angles are equal, so \\( \\angle R = \\angle N = 70^\\circ \\)."
+        },
+        {
+            id: 53,
+            q: "If \\( \\Delta ABC \\) is an isosceles triangle with \\( \\angle C = 90^\\circ \\) and \\( AC = 5 \\) cm then \\( AB \\) is",
+            options: ["\\( 2.5 \\) cm", "\\( 5 \\) cm", "\\( 10 \\) cm", "\\( 5\\sqrt{2} \\) cm"],
+            correct: 3, // (d)
+            explanation: "Using Pythagoras theorem: \\( AB^2 = AC^2 + BC^2 \\). Since isosceles, \\( BC=AC=5 \\). \\( AB = \\sqrt{25+25} = \\sqrt{50} = 5\\sqrt{2} \\)."
+        },
+{
+            id: 54,
+            q: "In a given figure \\( ST \\parallel QR \\), \\( PS = 2 \\text{ cm} \\) and \\( SQ = 3 \\text{ cm} \\). Then the ratio of the area of \\( \\Delta PQR \\) to the area of \\( \\Delta PST \\) is <br><br> <img src='https://i.ibb.co/My56G0YQ/5.jpg' width='300'> <br><br>",
+            options: ["25 : 4", "25 : 7", "25 : 11", "25 : 13"],
+            correct: 0, // (a)
+            explanation: "By Basic Proportionality Theorem, \\( \\Delta PST \\sim \\Delta PQR \\). Ratio of sides \\( \\frac{PQ}{PS} = \\frac{2+3}{2} = \\frac{5}{2} \\). Ratio of areas is the square of the ratio of corresponding sides: \\( (\\frac{5}{2})^2 = \\frac{25}{4} \\)."
+        },
+        {
+            id: 55,
+            q: "The perimeters of two similar triangles \\( \\Delta ABC \\) and \\( \\Delta PQR \\) are 36 cm and 24 cm respectively. If \\( PQ = 10 \\text{ cm} \\), then the length of \\( AB \\) is",
+            options: ["\\( 6\\frac{2}{3} \\) cm", "\\( \\frac{10\\sqrt{6}}{3} \\) cm", "\\( 66\\frac{2}{3} \\) cm", "\\( 15 \\) cm"],
+            correct: 3, // (d)
+            explanation: "Ratio of perimeters = Ratio of corresponding sides. \\( \\frac{36}{24} = \\frac{AB}{10} \\Rightarrow \\frac{3}{2} = \\frac{AB}{10} \\Rightarrow AB = 15 \\text{ cm} \\)."
+        },
+        {
+            id: 56,
+            q: "If in \\( \\Delta ABC, DE \\parallel BC \\). \\( AB = 3.6 \\text{ cm}, AC = 2.4 \\text{ cm} \\) and \\( AD = 2.1 \\text{ cm} \\) then the length of \\( AE \\) is",
+            options: ["1.4 cm", "1.8 cm", "1.2 cm", "1.05 cm"],
+            correct: 0, // (a)
+            explanation: "By Thales Theorem (BPT), \\( \\frac{AD}{AB} = \\frac{AE}{AC} \\). \\( \\frac{2.1}{3.6} = \\frac{AE}{2.4} \\Rightarrow AE = \\frac{2.1 \\times 2.4}{3.6} = 1.4 \\text{ cm} \\)."
+        },
+        {
+            id: 57,
+            q: "In a \\( \\Delta ABC, AD \\) is the bisector of \\( \\angle BAC \\). If \\( AB = 8 \\text{ cm}, BD = 6 \\text{ cm} \\) and \\( DC = 3 \\text{ cm} \\). The length of the side \\( AC \\) is",
+            options: ["6 cm", "4 cm", "3 cm", "8 cm"],
+            correct: 1, // (b)
+            explanation: "By Angle Bisector Theorem: \\( \\frac{AB}{AC} = \\frac{BD}{DC} \\). \\( \\frac{8}{AC} = \\frac{6}{3} = 2 \\Rightarrow AC = 4 \\text{ cm} \\)."
+        },
+        {
+            id: 58,
+            q: "In the adjacent figure \\( \\angle BAC = 90^\\circ \\) and \\( AD \\perp BC \\) then <br><br> <img src='https://i.ibb.co/VyPdCKr/4.jpg' width='300'> <br><br>",
+            options: ["\\( BD \\cdot CD = BC^2 \\)", "\\( AB \\cdot AC = BC^2 \\)", "\\( BD \\cdot CD = AD^2 \\)", "\\( AB \\cdot AC = AD^2 \\)"],
+            correct: 2, // (c)
+            explanation: "This is a standard result of the geometric mean theorem (altitude rule): \\( AD^2 = BD \\times CD \\)."
+        },
+        {
+            id: 59,
+            q: "Two poles of heights 6 m and 11 m stand vertically on a plane ground. If the distance between their feet is 12 m, what is the distance between their tops?",
+            options: ["13 m", "14 m", "15 m", "12.8 m"],
+            correct: 0, // (a)
+            explanation: "Difference in height = \\( 11 - 6 = 5 \\text{ m} \\). Horizontal distance = 12 m. Hypotenuse = \\( \\sqrt{5^2 + 12^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13 \\text{ m} \\)."
+        },
+        {
+            id: 60,
+            q: "In the given figure, \\( PR = 26 \\text{ cm}, QR = 24 \\text{ cm}, \\angle PAQ = 90^\\circ, PA = 6 \\text{ cm} \\) and \\( QA = 8 \\text{ cm} \\). Find \\( \\angle PQR \\) <br><br> <img src='https://i.ibb.co/Kjv32Kf0/1.jpg' width='300'> <br><br>",
+            options: ["\\( 80^\\circ \\)", "\\( 85^\\circ \\)", "\\( 75^\\circ \\)", "\\( 90^\\circ \\)"],
+            correct: 3, // (d)
+            explanation: "First, find PQ using Pythagoras in \\( \\Delta PAQ \\): \\( PQ = \\sqrt{6^2+8^2} = 10 \\). Now in \\( \\Delta PQR \\), check sides: \\( 10^2 + 24^2 = 100 + 576 = 676 = 26^2 \\). Since \\( PQ^2 + QR^2 = PR^2 \\), \\( \\angle PQR = 90^\\circ \\)."
+        },
+        {
+            id: 61,
+            q: "A tangent is perpendicular to the radius at the",
+            options: ["Centre", "Point of contact", "Infinity", "Chord"],
+            correct: 1, // (b)
+            explanation: "A tangent to a circle is always perpendicular to the radius at the point of contact."
+        },
+        {
+            id: 62,
+            q: "How many tangents can be drawn to the circle from an exterior point?",
+            options: ["One", "Two", "Infinite", "Zero"],
+            correct: 1, // (b)
+            explanation: "From a point outside a circle, exactly two tangents can be drawn to the circle."
+        },
+        {
+            id: 63,
+            q: "The two tangents from an external points P to a circle with centre at O are PA and PB. If \\( \\angle APB = 70^\\circ \\) then the value of \\( \\angle AOB \\) is",
+            options: ["\\( 100^\\circ \\)", "\\( 110^\\circ \\)", "\\( 120^\\circ \\)", "\\( 130^\\circ \\)"],
+            correct: 1, // (b)
+            explanation: "The angle between tangents and the angle at the center are supplementary. \\( \\angle AOB = 180^\\circ - 70^\\circ = 110^\\circ \\)."
+        },
+        {
+            id: 64,
+            q: "In figure CP and CQ are tangents to a circle with centre at O. ARB is another tangent touching the circle at R. If \\( CP = 11 \\text{ cm} \\) and \\( BC = 7 \\text{ cm} \\), then the length of \\( BR \\) is <br><br> <img src='https://i.ibb.co/NgJRMWXZ/2.jpg' width='300'> <br><br>",
+            options: ["6 cm", "5 cm", "8 cm", "4 cm"],
+            correct: 3, // (d)
+            explanation: "Tangents from an external point are equal. \\( CP = CQ = 11 \\). Also, \\( CQ = CB + BQ \\), so \\( 11 = 7 + BQ \\Rightarrow BQ = 4 \\). Since \\( BR = BQ \\) (tangents from B), \\( BR = 4 \\text{ cm} \\)."
+        },
+        {
+            id: 65,
+            q: "In figure if PR is tangent to the circle at P and O is the centre of the circle, then \\( \\angle POQ \\) is (given \\( \\angle QPR = 60^\\circ \\)) <br><br> <img src='https://i.ibb.co/fVWq4CRS/3.jpg' width='300'> <br><br>",
+            options: ["\\( 120^\\circ \\)", "\\( 100^\\circ \\)", "\\( 110^\\circ \\)", "\\( 90^\\circ \\)"],
+            correct: 0, // (a)
+            explanation: "Since PR is tangent, \\( \\angle OPR = 90^\\circ \\). So \\( \\angle OPQ = 90^\\circ - 60^\\circ = 30^\\circ \\). Since \\( OP=OQ \\) (radii), \\( \\Delta OPQ \\) is isosceles and \\( \\angle OQP = 30^\\circ \\). Thus, \\( \\angle POQ = 180^\\circ - (30+30) = 120^\\circ \\)."
+        },
+
+        // --- CHAPTER 5 (COORDINATE GEOMETRY) ---
+        {
+            id: 66,
+            q: "The area of triangle formed by the points \\( (-5,0), (0,-5) \\) and \\( (5,0) \\) is",
+            options: ["0 sq.units", "25 sq.units", "5 sq.units", "None of these"],
+            correct: 1, // (b)
+            explanation: "Base is distance between (-5,0) and (5,0) = 10. Height is distance from origin to (0,-5) = 5. Area = \\( \\frac{1}{2} \\times 10 \\times 5 = 25 \\)."
+        },
+        {
+            id: 67,
+            q: "A man walks near a wall, such that the distance between him and the wall is 10 units. Consider the wall to be the Y axis. The path travelled by the man is",
+            options: ["\\( x = 10 \\)", "\\( y = 10 \\)", "\\( x = 0 \\)", "\\( y = 0 \\)"],
+            correct: 0, // (a)
+            explanation: "The distance from the Y-axis is given by the x-coordinate. A constant distance of 10 means the equation is \\( x = 10 \\)."
+        },
+// --- CHAPTER 5 (COORDINATE GEOMETRY) CONTINUED ---
+        {
+            id: 68,
+            q: "The straight line given by the equation \\( x = 11 \\) is",
+            options: ["Parallel to X axis", "Parallel to Y axis", "Passing through the origin", "Passing through the point (0,11)"],
+            correct: 1, // (b)
+            explanation: "An equation of the form \\( x = c \\) represents a vertical line, which is parallel to the Y-axis."
+        },
+        {
+            id: 69,
+            q: "If \\( (5,7), (3,p) \\) and \\( (6,6) \\) are collinear, then the value of \\( p \\) is",
+            options: ["3", "6", "9", "12"],
+            correct: 2, // (c)
+            explanation: "Slopes must be equal. \\( m_1 = \\frac{p-7}{3-5} \\), \\( m_2 = \\frac{6-p}{6-3} \\). \\( \\frac{p-7}{-2} = \\frac{6-p}{3} \\Rightarrow 3p-21 = -12+2p \\Rightarrow p=9 \\)."
+        },
+        {
+            id: 70,
+            q: "The point of intersection of \\( 3x - y = 4 \\) and \\( x + y = 8 \\) is",
+            options: ["(5,3)", "(2,4)", "(3,5)", "(4,4)"],
+            correct: 2, // (c)
+            explanation: "Adding the equations: \\( 4x = 12 \\Rightarrow x=3 \\). Substitute \\( x \\) in second eq: \\( 3+y=8 \\Rightarrow y=5 \\). Point is (3,5)."
+        },
+        {
+            id: 71,
+            q: "The slope of the line joining \\( (12,3), (4,a) \\) is \\( \\frac{1}{8} \\). The value of 'a' is",
+            options: ["1", "4", "-5", "2"],
+            correct: 3, // (d)
+            explanation: "Slope \\( m = \\frac{y_2-y_1}{x_2-x_1} \\). \\( \\frac{a-3}{4-12} = \\frac{1}{8} \\Rightarrow \\frac{a-3}{-8} = \\frac{1}{8} \\Rightarrow a-3 = -1 \\Rightarrow a=2 \\)."
+        },
+        {
+            id: 72,
+            q: "The slope of the line which is perpendicular to a line joining the points \\( (0,0) \\) and \\( (-8,8) \\) is",
+            options: ["-1", "1", "\\( \\frac{1}{3} \\)", "-8"],
+            correct: 1, // (b)
+            explanation: "Slope of given line \\( m_1 = \\frac{8-0}{-8-0} = -1 \\). Perpendicular slope \\( m_2 = -\\frac{1}{m_1} = -\\frac{1}{-1} = 1 \\)."
+        },
+        {
+            id: 73,
+            q: "If slope of the line \\( PQ \\) is \\( \\frac{1}{\\sqrt{3}} \\) then slope of the perpendicular bisector of \\( PQ \\) is",
+            options: ["\\( \\sqrt{3} \\)", "\\( -\\sqrt{3} \\)", "\\( \\frac{1}{\\sqrt{3}} \\)", "0"],
+            correct: 1, // (b)
+            explanation: "The perpendicular bisector is perpendicular to PQ. Slope \\( m_{\\perp} = -\\frac{1}{1/\\sqrt{3}} = -\\sqrt{3} \\)."
+        },
+        {
+            id: 74,
+            q: "If A is a point on the Y axis whose ordinate is 8 and B is a point on the X axis whose abscissa is 5 then the equation of the line AB is",
+            options: ["\\( 8x + 5y = 40 \\)", "\\( 8x - 5y = 40 \\)", "\\( x = 8 \\)", "\\( y = 5 \\)"],
+            correct: 0, // (a)
+            explanation: "Intercept form: \\( \\frac{x}{a} + \\frac{y}{b} = 1 \\). Here \\( a=5, b=8 \\). \\( \\frac{x}{5} + \\frac{y}{8} = 1 \\Rightarrow 8x + 5y = 40 \\)."
+        },
+        {
+            id: 75,
+            q: "The equation of a line passing through the origin and perpendicular to the line \\( 7x - 3y + 4 = 0 \\) is",
+            options: ["\\( 7x - 3y + 4 = 0 \\)", "\\( 3x - 7y + 4 = 0 \\)", "\\( 3x + 7y = 0 \\)", "\\( 7x - 3y = 0 \\)"],
+            correct: 2, // (c)
+            explanation: "Perpendicular line form is \\( 3x + 7y + k = 0 \\). Passing through origin (0,0) means \\( k=0 \\). So \\( 3x + 7y = 0 \\)."
+        },
+        {
+            id: 76,
+            q: "Consider four straight lines (i) \\( l_1: 3y = 4x + 5 \\) (ii) \\( l_2: 4y = 3x - 1 \\) (iii) \\( l_3: 4y + 3x = 7 \\) (iv) \\( l_4: 4x + 3y = 2 \\). Which of the following statement is true?",
+            options: ["\\( l_1 \\) and \\( l_2 \\) are perpendicular", "\\( l_1 \\) and \\( l_4 \\) are parallel", "\\( l_2 \\) and \\( l_4 \\) are perpendicular", "\\( l_2 \\) and \\( l_3 \\) are parallel"],
+            correct: 2, // (c)
+            explanation: "Slope of \\( l_2 \\) is \\( \\frac{3}{4} \\). Slope of \\( l_4 \\) is \\( -\\frac{4}{3} \\). Since product is -1, they are perpendicular."
+        },
+        {
+            id: 77,
+            q: "A straight line has equation \\( 8y = 4x + 21 \\). Which of the following is true",
+            options: ["The slope is 0.5 and the y intercept is 2.6", "The slope is 5 and the y intercept is 1.6", "The slope is 0.5 and the y intercept is 1.6", "The slope is 5 and the y intercept is 2.6"],
+            correct: 0, // (a)
+            explanation: "Rewrite as \\( y = \\frac{4}{8}x + \\frac{21}{8} \\Rightarrow y = 0.5x + 2.625 \\). Slope is 0.5, intercept is approx 2.6."
+        },
+        {
+            id: 78,
+            q: "When proving that a quadrilateral is a trapezium, it is necessary to show",
+            options: ["Two sides are parallel", "Two parallel and two non-parallel sides", "Opposite sides are parallel", "All sides are of equal length"],
+            correct: 1, // (b)
+            explanation: "A trapezium is strictly defined by having exactly one pair of parallel sides (and thus one pair of non-parallel sides)."
+        },
+        {
+            id: 79,
+            q: "When proving that a quadrilateral is a parallelogram by using slopes you must find",
+            options: ["The slopes of two sides", "The slopes of two pair of opposite sides", "The lengths of all sides", "Both the lengths and slopes of two sides"],
+            correct: 1, // (b)
+            explanation: "For a parallelogram, both pairs of opposite sides must be parallel. This requires finding the slopes of all four sides (two pairs)."
+        },
+        {
+            id: 80,
+            q: "\\( (2, 1) \\) is the point of intersection of two lines",
+            options: ["\\( x - y - 3 = 0; 3x - y - 7 = 0 \\)", "\\( x + y = 3; 3x + y = 7 \\)", "\\( 3x + y = 3; x + y = 7 \\)", "\\( x + 3y - 3 = 0; x - y - 7 = 0 \\)"],
+            correct: 1, // (b)
+            explanation: "Substitute (2,1): \\( 2+1=3 \\) (True) and \\( 3(2)+1=7 \\) (True). Option (b) is correct."
+        },
+
+        // --- CHAPTER 6 (TRIGONOMETRY) ---
+        {
+            id: 81,
+            q: "The value of \\( \\sin^2 \\theta + \\frac{1}{1+\\tan^2 \\theta} \\) is equal to",
+            options: ["\\( \\tan^2 \\theta \\)", "1", "\\( \\cot^2 \\theta \\)", "0"],
+            correct: 1, // (b)
+            explanation: "\\( 1+\\tan^2\\theta = \\sec^2\\theta \\). So expression is \\( \\sin^2\\theta + \\frac{1}{\\sec^2\\theta} = \\sin^2\\theta + \\cos^2\\theta = 1 \\)."
+        },
+        {
+            id: 82,
+            q: "\\( \\tan \\theta \\csc^2 \\theta - \\tan \\theta \\) is equal to",
+            options: ["\\( \\sec \\theta \\)", "\\( \\cot^2 \\theta \\)", "\\( \\sin \\theta \\)", "\\( \\cot \\theta \\)"],
+            correct: 3, // (d)
+            explanation: "Factor out \\( \\tan\\theta \\): \\( \\tan\\theta(\\csc^2\\theta - 1) = \\tan\\theta(\\cot^2\\theta) = \\frac{1}{\\cot\\theta} \\cdot \\cot^2\\theta = \\cot\\theta \\)."
+        },
+        {
+            id: 83,
+            q: "If \\( (\\sin \\alpha + \\csc \\alpha)^2 + (\\cos \\alpha + \\sec \\alpha)^2 = k + \\tan^2 \\alpha + \\cot^2 \\alpha \\), then the value of \\( k \\) is equal to",
+            options: ["9", "7", "5", "3"],
+            correct: 1, // (b)
+            explanation: "Expanding gives \\( \\sin^2+\\csc^2+2 + \\cos^2+\\sec^2+2 \\). Grouping \\( (\\sin^2+\\cos^2) + (1+\\tan^2) + (1+\\cot^2) + 4 \\Rightarrow 1 + 1 + \\tan^2 + 1 + \\cot^2 + 4 = 7 + \\tan^2 + \\cot^2 \\). So \\( k=7 \\)."
+        },
+        {
+            id: 84,
+            q: "If \\( \\sin \\theta + \\cos \\theta = a \\) and \\( \\sec \\theta + \\csc \\theta = b \\), then the value of \\( b(a^2 - 1) \\) is equal to",
+            options: ["\\( 2a \\)", "\\( 3a \\)", "0", "\\( 2ab \\)"],
+            correct: 0, // (a)
+            explanation: "\\( b = \\frac{1}{\\cos} + \\frac{1}{\\sin} = \\frac{\\sin+\\cos}{\\sin\\cos} = \\frac{a}{\\sin\\cos} \\). \\( a^2-1 = (\\sin+\\cos)^2-1 = 1+2\\sin\\cos-1 = 2\\sin\\cos \\). So \\( b(a^2-1) = \\frac{a}{\\sin\\cos} \\times 2\\sin\\cos = 2a \\)."
+        },
+// --- CHAPTER 6 (TRIGONOMETRY) CONTINUED ---
+        {
+            id: 85,
+            q: "If \\( 5x = \\sec \\theta \\) and \\( \\frac{5}{x} = \\tan \\theta \\), then \\( x^2 - \\frac{1}{x^2} \\) is equal to",
+            options: ["25", "\\( \\frac{1}{25} \\)", "5", "1"],
+            correct: 1, // (b)
+            explanation: "We know \\( \\sec^2 \\theta - \\tan^2 \\theta = 1 \\). Substituting, \\( (5x)^2 - (\\frac{5}{x})^2 = 1 \\Rightarrow 25x^2 - \\frac{25}{x^2} = 1 \\Rightarrow 25(x^2 - \\frac{1}{x^2}) = 1 \\). So \\( x^2 - \\frac{1}{x^2} = \\frac{1}{25} \\)."
+        },
+        {
+            id: 86,
+            q: "If \\( \\sin \\theta = \\cos \\theta \\), then \\( 2\\tan^2 \\theta + \\sin^2 \\theta - 1 \\) is equal to",
+            options: ["\\( \\frac{-3}{2} \\)", "\\( \\frac{3}{2} \\)", "\\( \\frac{2}{3} \\)", "\\( \\frac{-2}{3} \\)"],
+            correct: 1, // (b)
+            explanation: "\\( \\sin \\theta = \\cos \\theta \\Rightarrow \\tan \\theta = 1 \\Rightarrow \\theta = 45^{\\circ} \\). \\( 2(1)^2 + (\\frac{1}{\\sqrt{2}})^2 - 1 = 2 + 0.5 - 1 = 1.5 = \\frac{3}{2} \\)."
+        },
+        {
+            id: 87,
+            q: "If \\( x = a \\tan \\theta \\) and \\( y = b \\sec \\theta \\) then",
+            options: ["\\( \\frac{y^2}{b^2} - \\frac{x^2}{a^2} = 1 \\)", "\\( \\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1 \\)", "\\( \\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1 \\)", "\\( \\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 0 \\)"],
+            correct: 0, // (a)
+            explanation: "\\( \\frac{x}{a} = \\tan \\theta \\) and \\( \\frac{y}{b} = \\sec \\theta \\). Since \\( \\sec^2 \\theta - \\tan^2 \\theta = 1 \\), we get \\( (\\frac{y}{b})^2 - (\\frac{x}{a})^2 = 1 \\)."
+        },
+        {
+            id: 88,
+            q: "\\( (1 + \\tan \\theta + \\sec \\theta)(1 + \\cot \\theta - \\csc \\theta) \\) is equal to",
+            options: ["0", "1", "2", "-1"],
+            correct: 2, // (c)
+            explanation: "Converting to sine and cosine: \\( (1 + \\frac{s}{c} + \\frac{1}{c})(1 + \\frac{c}{s} - \\frac{1}{s}) = \\frac{(c+s+1)}{c} \\cdot \\frac{(s+c-1)}{s} = \\frac{(s+c)^2 - 1}{sc} = \\frac{s^2+c^2+2sc-1}{sc} = \\frac{1+2sc-1}{sc} = 2 \\)."
+        },
+        {
+            id: 89,
+            q: "\\( a \\cot \\theta + b \\csc \\theta = p \\) and \\( b \\cot \\theta + a \\csc \\theta = q \\) then \\( p^2 - q^2 \\) is equal to",
+            options: ["\\( a^2 - b^2 \\)", "\\( b^2 - a^2 \\)", "\\( a^2 + b^2 \\)", "\\( b - a \\)"],
+            correct: 1, // (b)
+            explanation: "Expanding \\( p^2 - q^2 \\) and using \\( \\csc^2 - \\cot^2 = 1 \\), we find the result is \\( b^2 - a^2 \\)."
+        },
+        {
+            id: 90,
+            q: "If the ratio of the height of a tower and the length of its shadow is \\( \\sqrt{3} : 1 \\), then the angle of elevation of the sun has measure",
+            options: ["\\( 45^{\\circ} \\)", "\\( 30^{\\circ} \\)", "\\( 90^{\\circ} \\)", "\\( 60^{\\circ} \\)"],
+            correct: 3, // (d)
+            explanation: "\\( \\tan \\theta = \\frac{\\text{height}}{\\text{shadow}} = \\frac{\\sqrt{3}}{1} = \\sqrt{3} \\). Since \\( \\tan 60^{\\circ} = \\sqrt{3} \\), the angle is \\( 60^{\\circ} \\)."
+        },
+        {
+            id: 91,
+            q: "The electric pole subtends an angle of \\( 30^{\\circ} \\) at a point on the same level as its foot. At a second point 'b' metres above the first, the depression of the foot of the pole is \\( 60^{\\circ} \\). The height of the pole (in metres) is equal to",
+            options: ["\\( \\sqrt{3}b \\)", "\\( \\frac{b}{3} \\)", "\\( \\frac{b}{2} \\)", "\\( \\frac{b}{\\sqrt{3}} \\)"],
+            correct: 1, // (b)
+            explanation: "Using trigonometry on the two triangles formed, the height of the pole \\( h \\) relates to \\( b \\) as \\( h = \\frac{b}{3} \\)."
+        },
+        {
+            id: 92,
+            q: "A tower is 60 m high. Its shadow reduces by x metres when the angle of elevation of the sun increases from \\( 30^{\\circ} \\) to \\( 45^{\\circ} \\) then x is equal to",
+            options: ["41.92 m", "43.92 m", "43 m", "45.6 m"],
+            correct: 1, // (b)
+            explanation: "Shadow at 30°: \\( 60\\sqrt{3} \\). Shadow at 45°: 60. Difference \\( x = 60(\\sqrt{3}-1) = 60(1.732-1) = 60(0.732) = 43.92 \\text{ m} \\)."
+        },
+        {
+            id: 93,
+            q: "The angle of depression of the top and bottom of 20 m tall building from the top of a multistoried building are \\( 30^{\\circ} \\) and \\( 60^{\\circ} \\) respectively. The height of the multistoried building and the distance between two building (in metres) is",
+            options: ["\\( 20, 10\\sqrt{3} \\)", "\\( 30, 5\\sqrt{3} \\)", "\\( 20, 10 \\)", "\\( 30, 10\\sqrt{3} \\)"],
+            correct: 3, // (d)
+            explanation: "Using tan ratios for \\( 30^{\\circ} \\) and \\( 60^{\\circ} \\), height comes to 30m and distance comes to \\( 10\\sqrt{3} \\text{ m} \\)."
+        },
+        {
+            id: 94,
+            q: "Two persons are standing 'x' metres apart from each other and the height of the first person is double that of the other. If from the middle point of the line joining their feet an observer finds the angular elevations of their tops to be complementary, then the height of the shorter person (in metres) is",
+            options: ["\\( \\sqrt{2}x \\)", "\\( \\frac{x}{2\\sqrt{2}} \\)", "\\( \\frac{x}{\\sqrt{2}} \\)", "\\( 2x \\)"],
+            correct: 1, // (b)
+            explanation: "Let heights be \\( h \\) and \\( 2h \\). Distance from mid to each is \\( x/2 \\). \\( \\tan \\theta_1 \\tan \\theta_2 = 1 \\) (complementary). \\( \\frac{h}{x/2} \\cdot \\frac{2h}{x/2} = 1 \\Rightarrow \\frac{2h^2}{x^2/4} = 1 \\Rightarrow 8h^2 = x^2 \\Rightarrow h = \\frac{x}{2\\sqrt{2}} \\)."
+        },
+        {
+            id: 95,
+            q: "The angle of elevation of a cloud from a point h metres above a lake is \\( \\beta \\). The angle of depression of its reflection in the lake is \\( 45^{\\circ} \\). The height of location of the cloud from the lake is",
+            options: ["\\( \\frac{h(1+\\tan \\beta)}{1-\\tan \\beta} \\)", "\\( \\frac{h(1-\\tan \\beta)}{1+\\tan \\beta} \\)", "\\( h \\tan(45^{\\circ} - \\beta) \\)", "None of these"],
+            correct: 0, // (a)
+            explanation: "Let cloud height be H. \\( \\tan \\beta = \\frac{H-h}{\\text{dist}} \\). Reflection is at depth H. \\( \\tan 45 = 1 = \\frac{H+h}{\\text{dist}} \\). Solving these equations yields \\( H = \\frac{h(1+\\tan \\beta)}{1-\\tan \\beta} \\)."
+        },
+
+        // --- CHAPTER 7 (MENSURATION) ---
+        {
+            id: 96,
+            q: "The curved surface area of a right circular cone of height 15 cm and base diameter 16 cm is",
+            options: ["\\( 60\\pi \\text{ cm}^2 \\)", "\\( 68\\pi \\text{ cm}^2 \\)", "\\( 120\\pi \\text{ cm}^2 \\)", "\\( 136\\pi \\text{ cm}^2 \\)"],
+            correct: 3, // (d)
+            explanation: "Radius \\( r=8 \\). Slant height \\( l = \\sqrt{15^2+8^2} = \\sqrt{225+64} = \\sqrt{289} = 17 \\). CSA \\( = \\pi rl = \\pi(8)(17) = 136\\pi \\)."
+        },
+        {
+            id: 97,
+            q: "If two solid hemispheres of same base radius r units are joined together along their bases, then curved surface area of this new solid is",
+            options: ["\\( 4\\pi r^2 \\text{ sq. units} \\)", "\\( 6\\pi r^2 \\text{ sq. units} \\)", "\\( 3\\pi r^2 \\text{ sq. units} \\)", "\\( 8\\pi r^2 \\text{ sq. units} \\)"],
+            correct: 0, // (a)
+            explanation: "Joining two hemispheres along bases forms a sphere. CSA of sphere is \\( 4\\pi r^2 \\)."
+        },
+        {
+            id: 98,
+            q: "The height of a right circular cone whose radius is 5 cm and slant height is 13 cm will be",
+            options: ["12 cm", "10 cm", "13 cm", "5 cm"],
+            correct: 0, // (a)
+            explanation: "\\( h = \\sqrt{l^2 - r^2} = \\sqrt{13^2 - 5^2} = \\sqrt{169 - 25} = \\sqrt{144} = 12 \\text{ cm} \\)."
+        },
+        {
+            id: 99,
+            q: "If the radius of the base of a right circular cylinder is halved keeping the same height, then the ratio of the volume of the cylinder thus obtained to the volume of original cylinder is",
+            options: ["1 : 2", "1 : 4", "1 : 6", "1 : 8"],
+            correct: 1, // (b)
+            explanation: "Volume \\( V = \\pi r^2 h \\). New Volume \\( V' = \\pi (r/2)^2 h = \\frac{1}{4} \\pi r^2 h \\). Ratio \\( V' : V = 1 : 4 \\)."
+        },
+        {
+            id: 100,
+            q: "The total surface area of a cylinder whose radius is \\( \\frac{1}{3} \\) of its height is",
+            options: ["\\( \\frac{9\\pi h^2}{8} \\text{ sq. units} \\)", "\\( 24\\pi h^2 \\text{ sq. units} \\)", "\\( \\frac{8\\pi h^2}{9} \\text{ sq. units} \\)", "\\( \\frac{56\\pi h^2}{9} \\text{ sq. units} \\)"],
+            correct: 2, // (c)
+            explanation: "Given \\( r = h/3 \\). TSA \\( = 2\\pi r(h+r) = 2\\pi(h/3)(h + h/3) = 2\\pi(h/3)(4h/3) = \\frac{8\\pi h^2}{9} \\)."
+        },
+// --- CHAPTER 7 (MENSURATION) CONTINUED ---
+        {
+            id: 101,
+            q: "In a hollow cylinder, the sum of the external and internal radii is 14 cm and the width is 4 cm. If its height is 20 cm, the volume of the material in it is",
+            options: ["\\( 5600\\pi \\text{ cm}^3 \\)", "\\( 1120\\pi \\text{ cm}^3 \\)", "\\( 56\\pi \\text{ cm}^3 \\)", "\\( 3600\\pi \\text{ cm}^3 \\)"],
+            correct: 1, // (b)
+            explanation: "Given \\( R+r=14 \\) and width \\( R-r=4 \\). Volume \\( V = \\pi h(R^2-r^2) = \\pi h(R+r)(R-r) = \\pi(20)(14)(4) = 1120\\pi \\)."
+        },
+        {
+            id: 102,
+            q: "If the radius of the base of a cone is tripled and the height is doubled then the volume is",
+            options: ["Made 6 times", "Made 18 times", "Made 12 times", "Unchanged"],
+            correct: 1, // (b)
+            explanation: "New Volume \\( V' = \\frac{1}{3}\\pi (3r)^2 (2h) = \\frac{1}{3}\\pi (9r^2)(2h) = 18(\\frac{1}{3}\\pi r^2 h) \\). It is 18 times the original."
+        },
+        {
+            id: 103,
+            q: "The total surface area of a hemi-sphere is how much times the square of its radius.",
+            options: ["\\( \\pi \\)", "\\( 4\\pi \\)", "\\( 3\\pi \\)", "\\( 2\\pi \\)"],
+            correct: 2, // (c)
+            explanation: "TSA of a hemisphere is \\( 3\\pi r^2 \\). This is \\( 3\\pi \\) times \\( r^2 \\)."
+        },
+        {
+            id: 104,
+            q: "A solid sphere of radius x cm is melted and cast into a shape of a solid cone of same radius. The height of the cone is",
+            options: ["3x cm", "x cm", "4x cm", "2x cm"],
+            correct: 2, // (c)
+            explanation: "Volume Sphere = Volume Cone. \\( \\frac{4}{3}\\pi x^3 = \\frac{1}{3}\\pi x^2 h \\). Simplifying gives \\( 4x = h \\)."
+        },
+        {
+            id: 105,
+            q: "A frustum of a right circular cone is of height 16 cm with radii of its ends as 8 cm and 20 cm. Then, the volume of the frustum is",
+            options: ["\\( 3328\\pi \\text{ cm}^3 \\)", "\\( 3228\\pi \\text{ cm}^3 \\)", "\\( 3240\\pi \\text{ cm}^3 \\)", "\\( 3340\\pi \\text{ cm}^3 \\)"],
+            correct: 0, // (a)
+            explanation: "\\( V = \\frac{1}{3}\\pi h(R^2+r^2+Rr) = \\frac{1}{3}\\pi(16)(400+64+160) = \\frac{16}{3}\\pi(624) = 3328\\pi \\)."
+        },
+        {
+            id: 106,
+            q: "A shuttle cock used for playing badminton has the shape of the combination of",
+            options: ["A cylinder and a sphere", "A hemisphere and a cone", "A sphere and a cone", "Frustum of a cone and a hemisphere"],
+            correct: 3, // (d)
+            explanation: "A shuttlecock consists of a cork (hemisphere) and feathers forming a frustum of a cone."
+        },
+        {
+            id: 107,
+            q: "A spherical ball of radius \\( r_1 \\) units is melted to make 8 new identical balls each of radius \\( r_2 \\) units. Then \\( r_1:r_2 \\) is",
+            options: ["2 : 1", "1 : 2", "4 : 1", "1 : 4"],
+            correct: 0, // (a)
+            explanation: "\\( \\frac{4}{3}\\pi r_1^3 = 8(\\frac{4}{3}\\pi r_2^3) \\Rightarrow r_1^3 = 8r_2^3 \\Rightarrow r_1 = 2r_2 \\). Ratio is 2:1."
+        },
+        {
+            id: 108,
+            q: "The volume (in \\( cm^3 \\)) of the greatest sphere that can be cut off from a cylindrical log of wood of base radius 1 cm and height 5 cm is",
+            options: ["\\( \\frac{4}{3}\\pi \\)", "\\( \\frac{10}{3}\\pi \\)", "\\( 5\\pi \\)", "\\( \\frac{20}{3}\\pi \\)"],
+            correct: 0, // (a)
+            explanation: "The diameter of the sphere cannot exceed the cylinder's diameter (2 cm). So max radius \\( r=1 \\). Volume \\( = \\frac{4}{3}\\pi (1)^3 = \\frac{4}{3}\\pi \\)."
+        },
+        {
+            id: 109,
+            q: "The height and radius of the cone of which the frustum is a part are \\( h_1 \\) units and \\( r_1 \\) units respectively. Height of the frustum is \\( h_2 \\) units and radius of the smaller base is \\( r_2 \\) units. If \\( h_2:h_1 = 1:2 \\) then \\( r_2:r_1 \\) is",
+            options: ["1 : 3", "1 : 2", "2 : 1", "3 : 1"],
+            correct: 1, // (b)
+            explanation: "By similar triangles, \\( \\frac{r_2}{r_1} = \\frac{h_{small}}{h_1} \\). Here \\( h_{small} = h_1 - h_2 \\). Since \\( h_2 = 0.5 h_1 \\), \\( h_{small} = 0.5 h_1 \\). Ratio is 1:2."
+        },
+        {
+            id: 110,
+            q: "The ratio of the volumes of a cylinder, a cone and a sphere, if each has the same diameter and same height is",
+            options: ["1 : 2 : 3", "2 : 1 : 3", "1 : 3 : 2", "3 : 1 : 2"],
+            correct: 3, // (d)
+            explanation: "Height \\( h = 2r \\). Cylinder: \\( 2\\pi r^3 \\). Cone: \\( \\frac{2}{3}\\pi r^3 \\). Sphere: \\( \\frac{4}{3}\\pi r^3 \\). Multiplying by 3 gives \\( 6:2:4 \\), which simplifies to \\( 3:1:2 \\)."
+        },
+
+        // --- CHAPTER 8 (STATISTICS AND PROBABILITY) ---
+        {
+            id: 111,
+            q: "Which of the following is not a measure of dispersion?",
+            options: ["Range", "Standard deviation", "Arithmetic Mean", "Variance"],
+            correct: 2, // (c)
+            explanation: "Arithmetic Mean is a measure of central tendency, not dispersion."
+        },
+        {
+            id: 112,
+            q: "The range of the data 8, 8, 8, 8, 8 ... 8 is",
+            options: ["0", "1", "8", "3"],
+            correct: 0, // (a)
+            explanation: "Range = Maximum value - Minimum value. \\( 8 - 8 = 0 \\)."
+        },
+        {
+            id: 113,
+            q: "The sum of all deviations of the data from its mean is",
+            options: ["Always positive", "Always negative", "Zero", "Non-zero integer"],
+            correct: 2, // (c)
+            explanation: "The sum of deviations of a set of values from their arithmetic mean is always zero (\\( \\sum(x - \\bar{x}) = 0 \\))."
+        },
+        {
+            id: 114,
+            q: "The mean of 100 observations is 40 and their standard deviation is 3. The sum of squares of all observations is",
+            options: ["40000", "160900", "160000", "30000"],
+            correct: 1, // (b)
+            explanation: "\\( \\sigma^2 = \\frac{\\sum x^2}{n} - (\\bar{x})^2 \\). \\( 9 = \\frac{\\sum x^2}{100} - 1600 \\). \\( \\sum x^2 = 1609 \\times 100 = 160900 \\)."
+        },
+        {
+            id: 115,
+            q: "Variance of first 20 natural numbers is",
+            options: ["32.25", "44.25", "33.25", "30"],
+            correct: 2, // (c)
+            explanation: "Variance of first n natural numbers is \\( \\frac{n^2-1}{12} \\). \\( \\frac{400-1}{12} = \\frac{399}{12} = 33.25 \\)."
+        },
+        {
+            id: 116,
+            q: "The standard deviation of a data is 3. If each value is multiplied by 5 then the new variance is",
+            options: ["3", "15", "5", "225"],
+            correct: 3, // (d)
+            explanation: "New SD = \\( 5 \\times 3 = 15 \\). New Variance = \\( (15)^2 = 225 \\)."
+        },
+        {
+            id: 117,
+            q: "If the standard deviation of x, y, z is p then the standard deviation of 3x + 5, 3y + 5, 3z + 5 is",
+            options: ["3p + 5", "3p", "p + 5", "9p + 15"],
+            correct: 1, // (b)
+            explanation: "Adding a constant (5) does not change SD. Multiplying by a constant (3) multiplies the SD by that constant. New SD is \\( 3p \\)."
+        },
+        {
+            id: 118,
+            q: "If the mean and coefficient of variation of a data are 4 and 87.5 % then the standard deviation is",
+            options: ["3.5", "3", "4.5", "2.5"],
+            correct: 0, // (a)
+            explanation: "\\( CV = \\frac{\\sigma}{\\bar{x}} \\times 100 \\). \\( 87.5 = \\frac{\\sigma}{4} \\times 100 \\). \\( \\sigma = \\frac{87.5 \\times 4}{100} = 3.5 \\)."
+        },
+// --- CHAPTER 8 (STATISTICS AND PROBABILITY) CONTINUED ---
+        {
+            id: 119,
+            q: "Which of the following is incorrect?",
+            options: ["\\( P(A) > 1 \\)", "\\( 0 \\le P(A) \\le 1 \\)", "\\( P(\\phi) = 0 \\)", "\\( P(A) + P(\\bar{A}) = 1 \\)"],
+            correct: 0, // (a)
+            explanation: "Probability of an event cannot be greater than 1. Therefore, \\( P(A) > 1 \\) is incorrect."
+        },
+        {
+            id: 120,
+            q: "The probability a red marble selected at random from a jar containing p red, q blue and r green marbles is",
+            options: ["\\( \\frac{q}{p+q+r} \\)", "\\( \\frac{p}{p+q+r} \\)", "\\( \\frac{p+q}{p+q+r} \\)", "\\( \\frac{p+r}{p+q+r} \\)"],
+            correct: 1, // (b)
+            explanation: "Total marbles = \\( p + q + r \\). Number of red marbles = \\( p \\). Probability = \\( \\frac{p}{p+q+r} \\)."
+        },
+        {
+            id: 121,
+            q: "A page is selected at random from a book. The probability that the digit at units place of the page number chosen is less than 7 is",
+            options: ["\\( \\frac{3}{10} \\)", "\\( \\frac{7}{10} \\)", "\\( \\frac{3}{9} \\)", "\\( \\frac{7}{9} \\)"],
+            correct: 1, // (b)
+            explanation: "Possible unit digits are {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} (Total 10). Digits less than 7 are {0, 1, 2, 3, 4, 5, 6} (Total 7). Probability = \\( \\frac{7}{10} \\)."
+        },
+        {
+            id: 122,
+            q: "The probability of getting a job for a person is \\( \\frac{x}{3} \\). If the probability of not getting the job is \\( \\frac{2}{3} \\) then the value of x is",
+            options: ["2", "1", "3", "1.5"],
+            correct: 1, // (b)
+            explanation: "We know \\( P(E) + P(\\bar{E}) = 1 \\). So \\( \\frac{x}{3} + \\frac{2}{3} = 1 \\Rightarrow \\frac{x+2}{3} = 1 \\Rightarrow x+2=3 \\Rightarrow x=1 \\)."
+        },
+        {
+            id: 123,
+            q: "Kamalan went to play a lucky draw contest. 135 tickets of the lucky draw were sold. If the probability of Kamalan winning is \\( \\frac{1}{9} \\), then the number of tickets bought by Kamalan is",
+            options: ["5", "10", "15", "20"],
+            correct: 2, // (c)
+            explanation: "Let \\( n \\) be the tickets bought. \\( P(\\text{winning}) = \\frac{n}{135} = \\frac{1}{9} \\). Solving for n: \\( 9n = 135 \\Rightarrow n = 15 \\)."
+        },
+        {
+            id: 124,
+            q: "If a letter is chosen at random from the English alphabets \\( \\{a, b, ... , z\\} \\), then the probability that the letter chosen precedes x",
+            options: ["\\( \\frac{12}{13} \\)", "\\( \\frac{1}{13} \\)", "\\( \\frac{23}{26} \\)", "\\( \\frac{3}{26} \\)"],
+            correct: 2, // (c)
+            explanation: "Total letters = 26. 'x' is the 24th letter. Letters preceding 'x' are a through w (Total 23). Probability = \\( \\frac{23}{26} \\)."
+        },
+        {
+            id: 125,
+            q: "A purse contains 10 notes of ₹ 2000, 15 notes of ₹ 500, and 25 notes of ₹ 200. One note is drawn at random. What is the probability that the note is either a ₹ 500 note or ₹ 200 note?",
+            options: ["\\( \\frac{1}{5} \\)", "\\( \\frac{3}{10} \\)", "\\( \\frac{2}{3} \\)", "\\( \\frac{4}{5} \\)"],
+            correct: 3, // (d)
+            explanation: "Total notes = \\( 10 + 15 + 25 = 50 \\). Favorable notes (500 or 200) = \\( 15 + 25 = 40 \\). Probability = \\( \\frac{40}{50} = \\frac{4}{5} \\)."
+        }
+
+    ];
+
+    // Function to render questions
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        let html = '';
+
+        quizData.forEach((item, index) => {
+            let optionsHtml = '';
+            item.options.forEach((opt, optIndex) => {
+                const optLetter = String.fromCharCode(97 + optIndex); // a, b, c, d
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        <span>(${optLetter}) ${opt}</span>
+                    </label>
+                `;
+            });
+
+            html += `
+                <div class="question-card" id="card-${index}">
+                    <div class="question-text">${index + 1}. ${item.q}</div>
+                    <div class="options-group">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation" id="exp-${index}">
+                        <span class="exp-title">Explanation:</span>
+                        <span id="exp-text-${index}"></span>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        
+        // Trigger MathJax to render equations after HTML is inserted
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    // Initialize
+    renderQuestions();
+
+    // Logic to submit and score
+    function submitQuiz() {
+        let score = 0;
+        let total = quizData.length;
+        const coinsPerCorrect = 10;
+        
+        quizData.forEach((item, index) => {
+            const card = document.getElementById(`card-${index}`);
+            const explanationBox = document.getElementById(`exp-${index}`);
+            const explanationText = document.getElementById(`exp-text-${index}`);
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            
+            // Prepare explanation text with correctness
+            let resultText = "";
+
+            if (selected) {
+                const answerVal = parseInt(selected.value);
+                if (answerVal === item.correct) {
+                    score++;
+                    resultText = "✅ <strong style='color:green'>Correct!</strong> ";
+                    card.style.borderLeft = "5px solid #0f9d58";
+                    explanationBox.classList.add("correct-answer-box");
+                    explanationBox.classList.remove("wrong-answer-box");
+                } else {
+                    const correctLetter = String.fromCharCode(97 + item.correct);
+                    resultText = `❌ <strong style='color:red'>Wrong.</strong> Correct option: (${correctLetter}) <br>`;
+                    card.style.borderLeft = "5px solid #d93025";
+                    explanationBox.classList.add("wrong-answer-box");
+                    explanationBox.classList.remove("correct-answer-box");
+                }
+            } else {
+                const correctLetter = String.fromCharCode(97 + item.correct);
+                resultText = `⚠️ <strong>Skipped.</strong> Correct option: (${correctLetter}) <br>`;
+                card.style.borderLeft = "5px solid #fbbc04";
+                explanationBox.classList.add("wrong-answer-box");
+            }
+
+            // Show Explanation
+            explanationText.innerHTML = resultText + item.explanation;
+            explanationBox.style.display = "block";
+        });
+
+        // Update Scoreboard
+        const scoreBoard = document.getElementById('scoreBoard');
+        scoreBoard.style.display = 'block';
+        document.getElementById('scoreText').innerText = `You scored ${score} out of ${total}`;
+        document.getElementById('coinCount').innerText = score * coinsPerCorrect;
+
+        // Render any new Math in explanation boxes
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    </script>
+
+<style>
+    /* 1. Button Style (Matches your Green Theme) */
+    #pdf-download-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #2e7d32; /* Green to match your theme */
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        border-radius: 50px;
+        font-family: 'Cambria Math', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 9999; /* Ensure it floats on top */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.2s;
+    }
+
+    #pdf-download-btn:hover {
+        background-color: #1b5e20;
+        transform: scale(1.05);
+    }
+
+    /* 2. PRINT / PDF LAYOUT RULES */
+    @media print {
+        /* Hide Buttons, Timer, and Scrollbars */
+        #pdf-download-btn, 
+        .timer-container, 
+        .btn-container,
+        .submit-btn {
+            display: none !important;
+        }
+
+        /* Adjust Body for Paper */
+        body {
+            background-color: white !important; /* Save ink */
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact; /* Keep the question card colors */
+            print-color-adjust: exact;
+        }
+
+        /* Ensure Questions don't get cut in half */
+        .question-card {
+            break-inside: avoid;
+            page-break-inside: avoid;
+            border: 1px solid #ddd; /* Add border for clarity in print */
+            box-shadow: none;
+            margin-bottom: 10px;
+        }
+
+        /* Force Explanations to be visible if you want them in the PDF */
+        /* Uncomment the line below if you want answers visible in PDF */
+        /* .explanation { display: block !important; } */
+    }
+</style>
+
+<button id="pdf-download-btn" onclick="generatePDF()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+    </svg>
+    Download PDF
+</button>
+
+<script>
+    function generatePDF() {
+        // 1. Expand all answers if you want them in the PDF (Optional)
+        // Uncomment next line to automatically show answers before printing
+        // submitQuiz(); 
+        
+        // 2. Trigger Print
+        window.print();
+    }
+</script>
+
+</body>
+</html>

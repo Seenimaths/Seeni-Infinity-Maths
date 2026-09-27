@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10th Science Quiz - TN State Board</title>
+    
+    <!-- Modern Web Fonts: Poppins for UI, Cambria Math (system) for Questions -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering Math Equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Canvas Confetti for Burst Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85); 
+            z-index: -1;
+        }
+
+        .card {
+            background: #f4ead5; 
+            width: 100%;
+            max-width: 700px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            overflow: hidden;
+            position: relative;
+            /* Added top margin to accommodate translation tool */
+            margin-top: 50px; 
+        }
+
+        .header {
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 5px solid #f39c12;
+        }
+
+        .header h1 { margin: 0; font-size: 26px; font-weight: 800; line-height: 1.3; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); letter-spacing: 0.5px; }
+        .header h2 { margin: 8px 0 0; font-size: 13px; color: #f1c40f; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .prepared-by {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            width: max-content;
+            margin: 20px auto 0;
+            padding: 8px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .prepared-by .icon {
+            background: linear-gradient(135deg, #e67e22, #d35400); color: white; width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px;
+        }
+
+        .prepared-by div { text-align: left; }
+        .prepared-by div h4 { margin: 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+        .prepared-by div p { margin: 2px 0 0; font-weight: 800; color: #c0392b; font-size: 15px; }
+        .prepared-by div small { font-size: 11px; color: #555; font-weight: 500; }
+
+        .content { padding: 30px; }
+
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; font-weight: 700; font-size: 15px; color: #2c3e50; margin-bottom: 12px; }
+        
+        .checkbox-group {
+            background: rgba(255, 255, 255, 0.6); border: 2px solid #e0e6ed; padding: 15px; border-radius: 12px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+        .checkbox-group label { font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 10px; margin: 0; color: #34495e; font-weight: 500; transition: 0.2s;}
+        .checkbox-group label:hover { color: #1f4b8f; }
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: #1f4b8f; cursor: pointer;}
+
+        .select-box { width: 100%; padding: 14px; border: 2px solid #e0e6ed; border-radius: 10px; font-size: 15px; background: #fff; outline: none; font-family: 'Poppins', sans-serif; font-weight: 500; color: #2c3e50; cursor: pointer;}
+        .select-box:focus { border-color: #3498db; }
+
+        .btn {
+            width: 100%; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border: none; padding: 16px; border-radius: 12px;
+            font-size: 18px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(230, 126, 34, 0.3); text-transform: uppercase; letter-spacing: 1px; font-family: 'Poppins', sans-serif;
+        }
+        .btn:hover { background: linear-gradient(135deg, #e67e22, #d35400); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4); }
+
+        #quiz-screen, #result-screen { display: none; }
+        
+        .timer-container { width: 100%; background: #ecf0f1; height: 10px; }
+        .timer-bar { height: 100%; width: 100%; background: #2ecc71; transition: width 1s linear, background 0.3s; }
+        .timer-text { text-align: right; font-size: 14px; font-weight: 800; padding: 10px 25px; color: #e74c3c; background: rgba(255, 255, 255, 0.5); border-bottom: 2px solid #e0e6ed; }
+
+        .quiz-content { padding: 25px 30px 35px; }
+        
+        .badges-wrap { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .badge { display: inline-block; background: #3498db; color: white; padding: 6px 15px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        .unit-badge { background: #8e44ad; }
+        
+        .question-text { font-size: 22px; font-weight: bold; color: #2c3e50; margin-bottom: 25px; line-height: 1.6; font-family: 'Cambria Math', Cambria, Georgia, serif; }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        
+        .option-btn {
+            background: #ffffff; border: 2px solid #bdc3c7; padding: 12px 18px; border-radius: 12px;
+            text-align: left; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 15px; width: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        
+        .opt-alpha {
+            background: #e0e6ed; color: #2c3e50; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px;
+            width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            flex-shrink: 0; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .opt-text {
+            font-size: 19px; font-weight: 500; color: #2c3e50; font-family: 'Cambria Math', Cambria, Georgia, serif; line-height: 1.5;
+            word-wrap: break-word; overflow-wrap: break-word;
+        }
+        
+        .math-wrap { display: inline-block; white-space: nowrap; }
+
+        .option-btn:hover:not(:disabled) { background: #f8f9fa; border-color: #3498db; transform: translateX(5px); box-shadow: 0 6px 12px rgba(0,0,0,0.05);}
+        .option-btn:hover:not(:disabled) .opt-alpha { background: #3498db; color: white; }
+        .option-btn:disabled { cursor: not-allowed; }
+        
+        .option-btn.correct { background: #d4edda; border-color: #28a745; }
+        .option-btn.correct .opt-alpha { background: #28a745; color: white; }
+        
+        .option-btn.wrong { background: #f8d7da; border-color: #dc3545; }
+        .option-btn.wrong .opt-alpha { background: #dc3545; color: white; }
+
+        .fill-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .fill-input { flex: 1; padding: 16px; border: 2px solid #bdc3c7; border-radius: 12px; font-size: 19px; font-family: 'Cambria Math', Cambria, serif; outline: none; transition: 0.3s;}
+        .fill-input:focus { border-color: #3498db; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);}
+        .submit-btn { background: #3498db; color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 16px; font-family: 'Poppins', sans-serif; transition: 0.2s;}
+        .submit-btn:hover { background: #2980b9; }
+
+        .next-btn-container { display: flex; justify-content: flex-end; margin-top: 15px; display: none; }
+        .next-btn-small { background: #2c3e50; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;}
+        .next-btn-small:hover { background: #1a252f; transform: scale(1.05); }
+
+        .score-display { text-align: center; font-size: 45px; font-weight: 800; color: #27ae60; margin: 25px 0; font-family: 'Poppins', sans-serif; }
+
+        .game-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.75);
+            display: flex; justify-content: center; align-items: center; z-index: 10000; visibility: hidden; opacity: 0; transition: opacity 0.2s;
+        }
+        .game-overlay.show { visibility: visible; opacity: 1; }
+        .popup-box {
+            background: #fff; padding: 40px 60px; border-radius: 25px; text-align: center;
+            transform: scale(0.5); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 15px 40px rgba(0,0,0,0.5); font-family: 'Poppins', sans-serif;
+        }
+        .game-overlay.show .popup-box { transform: scale(1); }
+        
+        @keyframes popup-shake {
+            0%, 100% { transform: scale(1) translateX(0); }
+            20%, 60% { transform: scale(1) translateX(-12px) rotate(-4deg); }
+            40%, 80% { transform: scale(1) translateX(12px) rotate(4deg); }
+        }
+        .game-overlay.show .popup-box.wrong-shake { animation: popup-shake 0.4s ease-in-out; }
+
+        .popup-icon { font-size: 85px; margin-bottom: 15px; line-height: 1; }
+        .popup-text { font-size: 30px; font-weight: 800; letter-spacing: 1px; }
+        .theme-correct { color: #27ae60; }
+        .theme-wrong { color: #e74c3c; }
+        
+        .svg-container { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
+
+        /* Google Translate Wrapper Styling */
+        #google_translate_wrapper {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 9999;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Default Google Translate Dropdown - Correct implementation -->
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <!-- GAME OVERLAY POPUP -->
+    <div class="game-overlay" id="game-overlay">
+        <div class="popup-box" id="popup-box">
+            <div class="popup-icon" id="popup-icon"></div>
+            <div class="popup-text" id="popup-text"></div>
+        </div>
+    </div>
+
+    <div class="card" id="quiz-card">
+        <!-- Setup Screen -->
+        <div id="setup-screen">
+            <div class="header">
+                <h1>10th Standard Science<br>One Mark Interactive Quiz</h1>
+                <h2>Tamil Nadu State Board</h2>
+                <div class="prepared-by">
+                    <div class="icon">YS</div>
+                    <div>
+                        <h4>Prepared by</h4>
+                        <p>யோ.சீனிவாசன்</p>
+                        <small>M.Sc., B.Ed., Maths Teacher | 📞 8489880553</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="input-group">
+                    <label>📚 1. Select Units (Unit 1 to 23):</label>
+                    <div class="checkbox-group" style="grid-template-columns: 1fr;">
+						<label><input type="checkbox" class="unit-cb" value="1" checked> Unit 1: Laws of Motion</label>
+                        <label><input type="checkbox" class="unit-cb" value="2" checked> Unit 2: Optics</label>
+                        <label><input type="checkbox" class="unit-cb" value="3" checked> Unit 3: Thermal Physics</label>
+                        <label><input type="checkbox" class="unit-cb" value="4" checked> Unit 4: Electricity</label>
+                        <label><input type="checkbox" class="unit-cb" value="5" checked> Unit 5: Acoustics</label>
+						<label><input type="checkbox" class="unit-cb" value="6" checked> Unit 6: Nuclear Physics</label>
+                        <label><input type="checkbox" class="unit-cb" value="7" checked> Unit 7: Atoms and Molecules</label>
+                        <label><input type="checkbox" class="unit-cb" value="8" checked> Unit 8: Periodic Classification</label>
+                        <label><input type="checkbox" class="unit-cb" value="9" checked> Unit 9: Solutions</label>
+                        <label><input type="checkbox" class="unit-cb" value="10" checked> Unit 10: Types of Reactions</label>
+						<label><input type="checkbox" class="unit-cb" value="11" checked> Unit 11: Carbon & its Compounds</label>
+                        <label><input type="checkbox" class="unit-cb" value="12" checked> Unit 12: Plant Anatomy & Phys.</label>
+                        <label><input type="checkbox" class="unit-cb" value="13" checked> Unit 13: Structural Org. of Animals</label>
+                        <label><input type="checkbox" class="unit-cb" value="14" checked> Unit 14: Transportation & Circulation</label>
+                        <label><input type="checkbox" class="unit-cb" value="15" checked> Unit 15: Nervous System</label>
+                        <label><input type="checkbox" class="unit-cb" value="16" checked> Unit 16: Plant & Animal Hormones</label>
+                        <label><input type="checkbox" class="unit-cb" value="17" checked> Unit 17: Reproduction in Plants & Animals</label>
+                        <label><input type="checkbox" class="unit-cb" value="18" checked> Unit 18: Genetics</label>
+                        <label><input type="checkbox" class="unit-cb" value="19" checked> Unit 19: Origin & Evolution of Life</label>
+                        <label><input type="checkbox" class="unit-cb" value="20" checked> Unit 20: Breeding & Biotechnology</label>
+                        <label><input type="checkbox" class="unit-cb" value="21" checked> Unit 21: Health and Diseases</label>
+                        <label><input type="checkbox" class="unit-cb" value="22" checked> Unit 22: Environmental Management</label>
+                        <label><input type="checkbox" class="unit-cb" value="23" checked> Unit 23: Visual Communication</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>🧩 2. Select Parts:</label>
+                    <div class="checkbox-group" style="grid-template-columns: 1fr;">
+                        <label><input type="checkbox" class="type-cb" value="mcq" checked> Choose the Correct Answer</label>
+                        <label><input type="checkbox" class="type-cb" value="fill" checked> Fill in the Blanks</label>
+                        <label><input type="checkbox" class="type-cb" value="match" checked> Match the Following</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>🔀 3. Question Order:</label>
+                    <select id="order-select" class="select-box">
+                        <option value="book" selected>Book Order (Sequential)</option>
+                        <option value="shuffle">Shuffled Order (Random)</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="startQuiz()">Start Quiz 🚀</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div class="header" style="padding: 20px; border-radius: 20px 20px 0 0;">
+                <h1 style="font-size: 20px;">10th Standard Science One Mark Quiz</h1>
+            </div>
+            <div class="timer-container">
+                <div class="timer-bar" id="timer-bar"></div>
+            </div>
+            <div class="timer-text" id="timer-text">⏳ 30s</div>
+
+            <div class="quiz-content">
+                <div class="badges-wrap">
+                    <span class="badge" id="part-badge">Part</span>
+                    <span class="badge unit-badge" id="unit-badge">Unit</span>
+                </div>
+                
+                <div class="question-text" id="question-text">Question goes here?</div>
+                <div id="svg-area"></div>
+                
+                <div id="answer-area"></div>
+                
+                <div id="feedback-msg" style="font-weight:700; margin-top:15px; display:none; font-size: 16px; font-family:'Poppins', sans-serif;"></div>
+
+                <div class="next-btn-container" id="next-btn-wrapper">
+                    <button class="next-btn-small" onclick="nextQuestion()">Next ➡️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <div class="header" style="border-radius: 20px 20px 0 0;">
+                <h1>🎉 Quiz Completed!</h1>
+            </div>
+            <div class="content" style="text-align: center; font-family: 'Poppins', sans-serif;">
+                <h3 style="color:#2c3e50; font-size: 26px; margin-top: 10px; font-weight: 800;">Outstanding Effort!</h3>
+                <div class="score-display" id="final-score">0 / 0</div>
+                <p style="color:#7f8c8d; margin-bottom: 35px; font-weight: 500; font-size: 16px;">Keep practicing and scoring high marks.</p>
+                <button class="btn" onclick="location.reload()">Play Again 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ta,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // --- Web Audio API Setup ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) { audioCtx = new AudioContext(); }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+        }
+
+        function playTone(freq, type, dur, timeOffset = 0) {
+            initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime + timeOffset);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + timeOffset + dur);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start(audioCtx.currentTime + timeOffset);
+            oscillator.stop(audioCtx.currentTime + timeOffset + dur);
+        }
+
+        function playSound(type) {
+            if (type === 'correct') {
+                playTone(1046.50, 'sine', 0.2, 0);       
+                playTone(1318.51, 'sine', 0.4, 0.1);     
+            } else {
+                playTone(150, 'sawtooth', 0.3, 0);
+                playTone(100, 'sawtooth', 0.4, 0.1);
+            }
+        }
+
+        // --- FULL DATABASE ---
+        // (You can paste all merged questions here)
+        const allQuestions = [
+			// UNIT 1: Laws of Motion (19 Questions)
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "Inertia of a body depends on", options: ["weight of the object", "acceleration due to gravity of the planet", "mass of the object", "Both a & b"], answer: "mass of the object" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "Impulse is equal to", options: ["rate of change of momentum", "rate of force and time", "change of momentum", "rate of change of mass"], answer: "change of momentum" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "Newton's III law is applicable", options: ["for a body is at rest", "for a body in motion", "both a and b", "only for bodies with equal masses"], answer: "both a and b" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "Plotting a graph for momentum on the X-axis and time on Y-axis. slope of momentum-time graph gives", options: ["Impulsive force", "Acceleration", "Force", "Rate of force"], answer: "Force" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "In which of the following sport the turning of effect of force used", options: ["swimming", "tennis", "cycling", "hockey"], answer: "cycling" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "The unit of 'g' is \\( m\\,s^{-2} \\). It can be also expressed as", options: ["\\( cm\\,s^{-1} \\)", "\\( N\\,kg^{-1} \\)", "\\( N\\,m^2\\,kg^{-1} \\)", "\\( cm^2\\,s^{-2} \\)"], answer: "\\( N\\,kg^{-1} \\)" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "One Kilogram force equals to", options: ["9.8 dyne", "\\( 9.8 \\times 10^4 \\) N", "\\( 98 \\times 10^4 \\) dyne", "980 dyne"], answer: "\\( 98 \\times 10^4 \\) dyne" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "The mass of a body is measured on planet Earth as \\( M \\) kg. When it is taken to a planet of radius half that of the Earth then its value will be", options: ["\\( 4 M \\)", "\\( 2 M \\)", "\\( M / 4 \\)", "\\( M \\)"], answer: "\\( M \\)" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "If the Earth shrinks to 50% of its real radius its mass remaining the same, the weight of a body on the Earth will", options: ["decrease by 50%", "increase by 50%", "decrease by 25%", "increase by 300%"], answer: "increase by 300%" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "mcq", question: "To project the rockets which of the following principle(s) is/are required?", options: ["Newton's third law of motion", "Newton's law of gravitation", "law of conservation of linear momentum", "both a and c"], answer: "both a and c" },
+            
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "fill", question: "To produce a displacement ________ is required.", answer: "Force" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "fill", question: "Passengers lean forward when sudden brake is applied in a moving vehicle. This can be explained by ________", answer: "Inertia of motion" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "fill", question: "By convention, the clockwise moments are taken as ________ and the anticlockwise moments are taken as Positive.", answer: "Negative" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "fill", question: "________ is used to change the speed of car.", answer: "Gear" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "fill", question: "A man of mass 100 kg has a weight of ________ at the surface of the Earth.", answer: "980 N" },
+            
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "match", question: "Newton's I law", options: ["propulsion of a rocket", "stable equilibrium of a body", "law of force", "flying nature of bird"], answer: "stable equilibrium of a body" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "match", question: "Newton's II law", options: ["propulsion of a rocket", "stable equilibrium of a body", "law of force", "flying nature of bird"], answer: "law of force" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "match", question: "Newton's III law", options: ["propulsion of a rocket", "stable equilibrium of a body", "law of force", "flying nature of bird"], answer: "flying nature of bird" },
+            { unit: 1, unitName: "Unit 1: Laws of Motion", type: "match", question: "Law of conservation of linear momentum", options: ["propulsion of a rocket", "stable equilibrium of a body", "law of force", "flying nature of bird"], answer: "propulsion of a rocket" },
+
+            // UNIT 2: Optics (20 Questions)
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "The refractive index of four substances A, B, C and D are 1.31, 1.43, 1.33, 2.4 respectively. The speed of light is maximum in", options: ["A", "B", "C", "D"], answer: "A" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "Where should an object be placed so that a real and inverted image of same size is obtained by a convex lens", options: ["\\( f \\)", "\\( 2f \\)", "infinity", "between \\( f \\) and \\( 2f \\)"], answer: "\\( 2f \\)" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "A small bulb is placed at the principal focus of a convex lens. When the bulb is switched on, the lens will produce", options: ["a convergent beam of light", "a divergent beam of light", "a parallel beam of light", "a coloured beam of light"], answer: "a parallel beam of light" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "Magnification of a convex lens is", options: ["positive", "negative", "either positive or negative", "zero"], answer: "either positive or negative" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "A convex lens forms a real, diminished point sized image at focus. Then the position of the object is at", options: ["focus", "infinity", "at \\( 2f \\)", "between \\( f \\) and \\( 2f \\)"], answer: "infinity" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "Power of a lens is \\( -4 \\text{ D} \\), then its focal length is", options: ["\\( 4 \\text{ m} \\)", "\\( -40 \\text{ m} \\)", "\\( -0.25 \\text{ m} \\)", "\\( -2.5 \\text{ m} \\)"], answer: "\\( -0.25 \\text{ m} \\)" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "In a myopic eye, the image of the object is formed", options: ["behind the retina", "on the retina", "in front of the retina", "on the blind spot"], answer: "in front of the retina" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "The eye defect 'presbyopia' can be corrected by", options: ["convex lens", "concave lens", "convex mirror", "Bi focal lenses"], answer: "Bi focal lenses" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "Which of the following lens would you prefer to use while reading small letters found in a dictionary?", options: ["A convex lens of focal length 5 cm", "A concave lens of focal length 5 cm", "A convex lens of focal length 10 cm", "A concave lens of focal length 10 cm"], answer: "A convex lens of focal length 5 cm" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "mcq", question: "If \\( V_B \\), \\( V_G \\), \\( V_R \\) be the velocity of blue, green and red light respectively in a glass prism, then which of the following statement gives the correct relation?", options: ["\\( V_B = V_G = V_R \\)", "\\( V_B > V_G > V_R \\)", "\\( V_B < V_G < V_R \\)", "\\( V_B < V_G > V_R \\)"], answer: "\\( V_B < V_G < V_R \\)" },
+            
+            { unit: 2, unitName: "Unit 2: Optics", type: "fill", question: "The path of the light is called as ________", answer: "ray of light" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "fill", question: "The refractive index of a transparent medium is always greater than ________", answer: "one" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "fill", question: "If the energy of incident beam and the scattered beam are same, then the scattering of light is called as ________ scattering.", answer: "Elastic" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "fill", question: "According to Rayleigh's scattering law, the amount of scattering of light is inversely proportional to the fourth power of its ________", answer: "wavelength" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "fill", question: "Amount of light entering into the eye is controlled by ________", answer: "Iris" },
+            
+            { unit: 2, unitName: "Unit 2: Optics", type: "match", question: "Retina", options: ["Path way of light", "Far point comes closer", "Power of accomodation", "Near point moves away", "Screen of the eye"], answer: "Screen of the eye" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "match", question: "Pupil", options: ["Path way of light", "Far point comes closer", "Power of accomodation", "Near point moves away", "Screen of the eye"], answer: "Path way of light" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "match", question: "Ciliary muscles", options: ["Path way of light", "Far point comes closer", "Power of accomodation", "Near point moves away", "Screen of the eye"], answer: "Power of accomodation" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "match", question: "Myopia", options: ["Path way of light", "Far point comes closer", "Power of accomodation", "Near point moves away", "Screen of the eye"], answer: "Far point comes closer" },
+            { unit: 2, unitName: "Unit 2: Optics", type: "match", question: "Hypermetropia", options: ["Path way of light", "Far point comes closer", "Power of accomodation", "Near point moves away", "Screen of the eye"], answer: "Near point moves away" },
+
+            // UNIT 3: Thermal Physics (14 Questions)
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "mcq", question: "The value of universal gas constant is", options: ["\\( 3.81 \\, \\text{mol}^{-1}\\text{K}^{-1} \\)", "\\( 8.03 \\, \\text{mol}^{-1}\\text{K}^{-1} \\)", "\\( 1.38 \\, \\text{mol}^{-1}\\text{K}^{-1} \\)", "\\( 8.31 \\, \\text{mol}^{-1}\\text{K}^{-1} \\)"], answer: "\\( 8.31 \\, \\text{mol}^{-1}\\text{K}^{-1} \\)" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "mcq", question: "If a substance is heated or cooled, the change in mass of that substance is", options: ["positive", "negative", "zero", "none of the above"], answer: "zero" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "mcq", question: "If a substance is heated or cooled, the linear expansion occurs along the axis of", options: ["\\( X \\) or \\( -X \\)", "\\( Y \\) or \\( -Y \\)", "both (a) and (b)", "(a) or (b)"], answer: "both (a) and (b)" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "mcq", question: "Temperature is the average ________ of the molecules of a substance.", options: ["difference in K.E and P.E", "sum of P.E and K.E", "difference in T.E and P.E", "difference in K.E and T.E"], answer: "difference in T.E and P.E" },
+            { 
+                unit: 3, unitName: "Unit 3: Thermal Physics", type: "mcq", 
+                question: "In the Given diagram, the possible direction of heat energy transformation is", 
+                svg: `<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:350px;">
+                        <g stroke="#333" stroke-width="2">
+                            <rect x="50" y="40" width="60" height="60" fill="#3498db"/>
+                            <text x="80" y="75" fill="white" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" stroke="none">A</text>
+                            <text x="80" y="25" font-family="Arial" font-size="14" text-anchor="middle" stroke="none">303 K</text>
+                            <rect x="170" y="40" width="60" height="60" fill="#e67e22"/>
+                            <text x="200" y="75" fill="white" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" stroke="none">B</text>
+                            <text x="200" y="25" font-family="Arial" font-size="14" text-anchor="middle" stroke="none">304 K</text>
+                            <rect x="290" y="40" width="60" height="60" fill="#e74c3c"/>
+                            <text x="320" y="75" fill="white" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" stroke="none">C</text>
+                            <text x="320" y="25" font-family="Arial" font-size="14" text-anchor="middle" stroke="none">305 K</text>
+                        </g>
+                      </svg>`,
+                options: ["A \\(\\leftarrow\\) B, A \\(\\leftarrow\\) C, B \\(\\leftarrow\\) C", "A \\(\\rightarrow\\) B, A \\(\\rightarrow\\) C, B \\(\\rightarrow\\) C", "A \\(\\leftarrow\\) B, A \\(\\rightarrow\\) C, B \\(\\rightarrow\\) C"], 
+                answer: "A \\(\\leftarrow\\) B, A \\(\\leftarrow\\) C, B \\(\\leftarrow\\) C" 
+            },
+            
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "fill", question: "The value of Avogadro number is ________", answer: "\\(6.023 \\times 10^{23} \\, / \\text{mol} \\)" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "fill", question: "The temperature and heat are ________ quantities.", answer: "Scalar" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "fill", question: "One calorie is the amount of heat energy required to raise the temperature of ________ of water through 1°C.", answer: "1g" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "fill", question: "According to Boyle's law, the shape of the graph between pressure and reciprocal of volume is ________", answer: "straight line" },
+            
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "match", question: "Linear expansion", options: ["change in volume", "hot body to cold body", "change in length", "change in area", "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)"], answer: "change in length" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "match", question: "Superficial expansion", options: ["change in volume", "hot body to cold body", "change in length", "change in area", "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)"], answer: "change in area" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "match", question: "Cubical expansion", options: ["change in volume", "hot body to cold body", "change in length", "change in area", "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)"], answer: "change in volume" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "match", question: "Heat transformation", options: ["change in volume", "hot body to cold body", "change in length", "change in area", "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)"], answer: "hot body to cold body" },
+            { unit: 3, unitName: "Unit 3: Thermal Physics", type: "match", question: "Boltzmann constant", options: ["change in volume", "hot body to cold body", "change in length", "change in area", "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)"], answer: "\\(1.381 \\times 10^{-23} \\text{ JK}^{-1} \\)" },
+
+            // UNIT 4: Electricity (14 Questions)
+            { unit: 4, unitName: "Unit 4: Electricity", type: "mcq", question: "Which of the following is correct?", options: ["Rate of change of charge is electrical power.", "Rate of change of charge is current.", "Rate of change of energy is current.", "Rate of change of current is charge."], answer: "Rate of change of charge is current." },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "mcq", question: "SI unit of resistance is", options: ["mho", "joule", "ohm", "ohm meter"], answer: "ohm" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "mcq", question: "Kilowatt hour is the unit of", options: ["resistivity", "conductivity", "electrical energy", "electrical power"], answer: "electrical energy" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "mcq", question: "In a simple circuit, why does the bulb glow when you close the switch?", options: ["The switch produces electricity.", "Closing the switch completes the circuit.", "Closing the switch breaks the circuit.", "The bulb is getting charged."], answer: "Closing the switch completes the circuit." },
+            
+            { unit: 4, unitName: "Unit 4: Electricity", type: "fill", question: "When a circuit is open, ________ cannot pass through it.", answer: "current" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "fill", question: "The ratio of the potential difference to the current is known as ________", answer: "Resistance" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "fill", question: "The wiring in a house consists of ________ circuits.", answer: "parallel" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "fill", question: "The power of an electric device is a product of ________ and current.", answer: "voltage" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "fill", question: "LED stands for ________", answer: "Light Emitting Diode" },
+            
+            { unit: 4, unitName: "Unit 4: Electricity", type: "match", question: "electric current", options: ["Ampere", "Volt", "Ohm meter", "Joule", "watt"], answer: "Ampere" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "match", question: "potential difference", options: ["Ampere", "Volt", "Ohm meter", "Joule", "watt"], answer: "Volt" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "match", question: "specific resistance", options: ["Ampere", "Volt", "Ohm meter", "Joule", "watt"], answer: "Ohm meter" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "match", question: "electrical power", options: ["Ampere", "Volt", "Ohm meter", "Joule", "watt"], answer: "watt" },
+            { unit: 4, unitName: "Unit 4: Electricity", type: "match", question: "electrical energy", options: ["Ampere", "Volt", "Ohm meter", "Joule", "watt"], answer: "Joule" },
+            
+            // UNIT 5: Acoustics (15 Questions)
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "When a sound wave travels through air, the air particles", options: ["vibrate along the direction of the wave motion", "vibrate but not in any fixed direction", "vibrate perpendicular to the direction of the wave motion", "do not vibrate"], answer: "vibrate along the direction of the wave motion" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "Velocity of sound in a gaseous medium is \\(330 \\text{ ms}^{-1} \\). If the pressure is increased by 4 times without causing a change in the temperature, the velocity of sound in the gas is", options: ["\\(330 \\text{ ms}^{-1} \\)", "\\(660 \\text{ ms}^{-1} \\)", "\\(156 \\text{ ms}^{-1} \\)", "\\(990 \\text{ ms}^{-1} \\)"], answer: "\\(330 \\text{ ms}^{-1} \\)" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "The frequency, which is audible to the human ear is", options: ["50 kHz", "20 kHz", "15000 kHz", "10000 kHz"], answer: "20 kHz" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "The velocity of sound in air at a particular temperature is \\(330 \\text{ ms}^{-1} \\). What will be its value when temperature is doubled and the pressure is halved?", options: ["\\(330 \\text{ ms}^{-1} \\)", "\\(165 \\text{ ms}^{-1} \\)", "\\(330 \\times \\sqrt{2} \\text{ ms}^{-1} \\)", "\\(320 / \\sqrt{2} \\text{ ms}^{-1} \\)"], answer: "\\(330 \\times \\sqrt{2} \\text{ ms}^{-1} \\)" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "If a sound wave travels with a frequency of \\(1.25 \\times 10^4 \\text{ Hz} \\) at \\(344 \\text{ m s}^{-1} \\), the wavelength will be", options: ["27.52 m", "275.2 m", "0.02752 m", "2.752 m"], answer: "0.02752 m" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "The sound waves are reflected from an obstacle into the same medium from which they were incident. Which of the following changes?", options: ["speed", "frequency", "wavelength", "none of these"], answer: "none of these" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "mcq", question: "Velocity of sound in the atmosphere of a planet is \\(500 \\text{ m s}^{-1} \\). The minimum distance between the sources of sound and the obstacle to hear the echo, should be", options: ["17 m", "20 m", "25 m", "50 m"], answer: "25 m" },
+            
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "fill", question: "Rapid back and forth motion of a particle about its mean position is called ________", answer: "vibration" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "fill", question: "If the energy in a longitudinal wave travels from south to north, the particles of the medium would be vibrating in ________", answer: "both north and south" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "fill", question: "A whistle giving out a sound of frequency 450 Hz, approaches a stationary observer at a speed of \\(33 \\text{ ms}^{-1} \\). The frequency heard by the observer is (speed of sound = \\(330 \\text{ ms}^{-1} \\)) ________", answer: "500 Hz" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "fill", question: "A source of sound is travelling with a velocity \\(40 \\text{ km/h} \\) towards an observer and emits a sound of frequency 2000 Hz. If the velocity of sound is \\(1220 \\text{ km/h} \\), then the apparent frequency heard by the observer is ________", answer: "2068 Hz" },
+            
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "match", question: "Infrasonic", options: ["Compressions", "22 kHz", "10 Hz", "Ultrasonography"], answer: "10 Hz" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "match", question: "Echo", options: ["Compressions", "22 kHz", "10 Hz", "Ultrasonography"], answer: "Ultrasonography" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "match", question: "Ultrasonic", options: ["Compressions", "22 kHz", "10 Hz", "Ultrasonography"], answer: "22 kHz" },
+            { unit: 5, unitName: "Unit 5: Acoustics", type: "match", question: "High pressure region", options: ["Compressions", "22 kHz", "10 Hz", "Ultrasonography"], answer: "Compressions" },
+		
+			// UNIT 6: NUCLEAR PHYSICS
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Man-made radioactivity is also known as", options: ["Induced radioactivity", "Spontaneous radioactivity", "Artificial radioactivity", "a & c"], answer: "a & c" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Unit of radioactivity is", options: ["roentgen", "curie", "becquerel", "all the above"], answer: "all the above" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Artificial radioactivity was discovered by", options: ["Bequerel", "Irene Curie", "Roentgen", "Neils Bohr"], answer: "Irene Curie" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "In which of the following, no change in mass number of the daughter nuclei takes place<br>i) \\(\\alpha\\) decay ii) \\(\\beta\\) decay iii) \\(\\gamma\\) decay iv) neutron decay", options: ["(i) is correct", "(ii) and (iii) are correct", "(i) & (iv) are correct", "(ii) & (iv) are correct"], answer: "(ii) and (iii) are correct" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "________ isotope is used for the treatment of cancer.", options: ["Radio Iodine", "Radio Cobalt", "Radio Carbon", "Radio Nickel"], answer: "Radio Cobalt" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Gamma radiations are dangerous because", options: ["it affects eyes & bones", "it affects tissues", "it produces genetic disorder", "it produces enormous amount of heat"], answer: "it produces genetic disorder" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "________ aprons are used to protect us from gamma radiations", options: ["Lead oxide", "Iron", "Lead", "Aluminium"], answer: "Lead" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Which of the following statements is/are correct?<br>i) \\(\\alpha\\) particles are photons<br>ii) Penetrating power of \\(\\gamma\\) radiation is very low<br>iii) Ionization power is maximum for \\(\\alpha\\) rays<br>iv) Penetrating power of \\(\\gamma\\) radiation is very high", options: ["(i) & (ii) are correct", "(ii) & (iii) are correct", "(iv) only correct", "(iii) & (iv) are correct"], answer: "(iii) & (iv) are correct" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Proton - Proton chain reaction is an example of", options: ["Nuclear fission", "\\(\\alpha\\) - decay", "Nuclear fusion", "\\(\\beta\\) - decay"], answer: "Nuclear fusion" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "In the nuclear reaction \\( {}_{6}X^{12} \\xrightarrow{\\alpha \\text{ decay}} {}_{Z}Y^{A} \\), the value of A & Z.", options: ["8, 6", "8, 4", "4, 8", "cannot be determined with the given data"], answer: "8, 4" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Kamini reactor is located at", options: ["Kalpakkam", "Koodankulam", "Mumbai", "Rajasthan"], answer: "Kalpakkam" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "mcq", question: "Which of the following is/are correct?<br>i) Chain reaction takes place in a nuclear reactor and an atomic bomb.<br>ii) The chain reaction in a nuclear reactor is controlled<br>iii) The chain reaction in a nuclear reactor is not controlled<br>iv) No chain reaction takes place in an atom bomb", options: ["(i) only correct", "(i) & (ii) are correct", "(iv) only correct", "(iii) & (iv) are correct"], answer: "(i) & (ii) are correct" },
+
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "One roentgen is equal to ________ disintegrations per second.", answer: "\\( 2.58 \\times 10^{-4} \\text{ C/kg} \\)" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "Positron is an ________", answer: "Elementary particle" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "Anemia can be cured by ________ isotope.", answer: "\\( \\text{Fe}^{59} \\)" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "Abbreviation of ICRP", answer: "International Commission on Radiological Protection" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "________ is used to measure exposure rate of radiation in humans.", answer: "Dosimeters" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "________ has the greatest penetration power.", answer: "gamma rays" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "\\( {}_{Z}Y^{A} \\rightarrow {}_{Z+1}Y^{A} + X \\) ; Then, X is ________", answer: "beta particle" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "\\( {}_{Z}X^{A} \\rightarrow {}_{Z}Y^{A} \\) This reaction is possible in ________ decay.", answer: "gamma" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "The average energy released in each fusion reaction is about ________ J.", answer: "\\( 3.84 \\times 10^{-12} \\)" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "Nuclear fusion is possible only at an extremely high temperature of the order of ________ K.", answer: "\\( 10^7 \\) to \\( 10^9 \\)" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "The radio isotope of ________ helps to increase the productivity of crops.", answer: "Phosphorus \\( (P^{32}) \\)" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "fill", question: "If the radiation exposure is 100 R, it may cause ________", answer: "leukemia or cancer" },
+
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "BARC", options: ["Kalpakkam", "Apsara", "Mumbai", "Tarapur"], answer: "Mumbai" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "India's first atomic power station", options: ["Kalpakkam", "Apsara", "Mumbai", "Tarapur"], answer: "Tarapur" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "IGCAR", options: ["Kalpakkam", "Apsara", "Mumbai", "Tarapur"], answer: "Kalpakkam" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "First nuclear reactor in India", options: ["Kalpakkam", "Apsara", "Mumbai", "Tarapur"], answer: "Apsara" },
+            
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Fuel", options: ["Lead", "Heavy water", "Cadmium rods", "Uranium"], answer: "Uranium" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Moderator", options: ["Lead", "Heavy water", "Cadmium rods", "Uranium"], answer: "Heavy water" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Coolant", options: ["Lead", "Heavy water", "Cadmium rods", "Uranium"], answer: "Cadmium rods" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Shield", options: ["Lead", "Heavy water", "Cadmium rods", "Uranium"], answer: "Lead" },
+
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Soddy Fajan", options: ["Natural radioactivity", "Displacement law", "Mass energy equivalence", "Artificial Radioactivity"], answer: "Displacement law" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Irene Curie", options: ["Natural radioactivity", "Displacement law", "Mass energy equivalence", "Artificial Radioactivity"], answer: "Artificial Radioactivity" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Henry Bequerel", options: ["Natural radioactivity", "Displacement law", "Mass energy equivalence", "Artificial Radioactivity"], answer: "Natural radioactivity" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Albert Einstein", options: ["Natural radioactivity", "Displacement law", "Mass energy equivalence", "Artificial Radioactivity"], answer: "Mass energy equivalence" },
+
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Uncontrolled fission reaction", options: ["Hydrogen bomb", "Nuclear reactor", "Breeder reactor", "Atom bomb"], answer: "Atom bomb" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Fertile material", options: ["Hydrogen bomb", "Nuclear reactor", "Breeder reactor", "Atom bomb"], answer: "Breeder reactor" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Controlled fission reaction", options: ["Hydrogen bomb", "Nuclear reactor", "Breeder reactor", "Atom bomb"], answer: "Nuclear reactor" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Fusion reaction", options: ["Hydrogen bomb", "Nuclear reactor", "Breeder reactor", "Atom bomb"], answer: "Hydrogen bomb" },
+
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Co-60", options: ["Age of fossil", "Function of heart", "Leukemia", "Thyroid disease"], answer: "Leukemia" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "I-131", options: ["Age of fossil", "Function of heart", "Leukemia", "Thyroid disease"], answer: "Thyroid disease" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "Na-24", options: ["Age of fossil", "Function of heart", "Leukemia", "Thyroid disease"], answer: "Function of heart" },
+            { unit: 6, unitName: "Unit 6: Nuclear Physics", type: "match", question: "C-14", options: ["Age of fossil", "Function of heart", "Leukemia", "Thyroid disease"], answer: "Age of fossil" },
+
+            // UNIT 7: ATOMS AND MOLECULES
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "Which of the following has the smallest mass?", options: ["\\( 6.023 \\times 10^{23} \\) atoms of He", "1 atom of He", "2 g of He", "1 mole atoms of He"], answer: "1 atom of He" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "Which of the following is a triatomic molecule?", options: ["Glucose", "Helium", "Carbon dioxide", "Hydrogen"], answer: "Carbon dioxide" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "The volume occupied by 4.4 g of \\( CO_2 \\) at S.T.P", options: ["22.4 litre", "2.24 litre", "0.24 litre", "0.1 litre"], answer: "2.24 litre" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "Mass of 1 mole of Nitrogen atom is", options: ["28 amu", "14 amu", "28 g", "14 g"], answer: "14 g" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "Which of the following represents 1 amu?", options: ["Mass of a C-12 atom", "Mass of a hydrogen atom", "\\( 1/12^{th} \\) of the mass of a C-12 atom", "Mass of O-16 atom"], answer: "\\( 1/12^{th} \\) of the mass of a C-12 atom" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "Which of the following statement is incorrect?", options: ["One gram of C-12 contains Avogadro's number of atoms.", "One mole of oxygen gas contains Avogadro's number of molecules.", "One mole of hydrogen gas contains Avogadro's number of atoms.", "One mole of electrons stands for \\( 6.023 \\times 10^{23} \\) electrons."], answer: "One mole of hydrogen gas contains Avogadro's number of atoms." },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "The volume occupied by 1 mole of a diatomic gas at S.T.P is", options: ["11.2 litre", "5.6 litre", "22.4 litre", "44.8 litre"], answer: "22.4 litre" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "In the nucleus of \\( {}_{20}Ca^{40} \\), there are", options: ["20 protons and 40 neutrons", "20 protons and 20 neutrons", "20 protons and 40 electrons", "40 protons and 20 electrons"], answer: "20 protons and 20 neutrons" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "The gram molecular mass of oxygen molecule is", options: ["16 g", "18 g", "32 g", "17 g"], answer: "32 g" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "mcq", question: "1 mole of any substance contains ________ molecules.", options: ["\\( 6.023 \\times 10^{23} \\)", "\\( 6.023 \\times 10^{-23} \\)", "\\( 3.0115 \\times 10^{23} \\)", "\\( 12.046 \\times 10^{23} \\)"], answer: "\\( 6.023 \\times 10^{23} \\)" },
+
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "Atoms of different elements having ________ mass number, but ________ atomic numbers are called isobars.", answer: "same, different" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "Atoms of different elements having same number of ________ are called isotones.", answer: "neutrons" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "Atoms of one element can be transmuted into atoms of other element by ________", answer: "artificial transmutation" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "The sum of the numbers of protons and neutrons of an atom is called its ________", answer: "Mass number" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "Relative atomic mass is otherwise known as ________", answer: "Standard Atomic Weight" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "The average atomic mass of hydrogen is ________ amu.", answer: "1.008" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "If a molecule is made of similar kind of atoms, then it is called ________ atomic molecule.", answer: "Homo" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "The number of atoms present in a molecule is called its ________", answer: "Atomicity" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "One mole of any gas occupies ________ ml at S.T.P.", answer: "22400" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "fill", question: "Atomicity of phosphorous is ________", answer: "4" },
+
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "match", question: "8 g of \\( O_2 \\)", options: ["4 moles", "0.25 moles", "2 moles", "0.5 moles", "13 moles"], answer: "0.25 moles" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "match", question: "4 g of \\( H_2 \\)", options: ["4 moles", "0.25 moles", "2 moles", "0.5 moles", "13 moles"], answer: "2 moles" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "match", question: "52 g of He", options: ["4 moles", "0.25 moles", "2 moles", "0.5 moles", "13 moles"], answer: "13 moles" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "match", question: "112 g of \\( N_2 \\)", options: ["4 moles", "0.25 moles", "2 moles", "0.5 moles", "13 moles"], answer: "4 moles" },
+            { unit: 7, unitName: "Unit 7: Atoms and Molecules", type: "match", question: "35.5 g of \\( Cl_2 \\)", options: ["4 moles", "0.25 moles", "2 moles", "0.5 moles", "13 moles"], answer: "0.5 moles" },
+
+            // UNIT 8: PERIODIC CLASSIFICATION OF ELEMENTS
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "The number of periods and groups in the periodic table are", options: ["6, 16", "7, 17", "8, 18", "7, 18"], answer: "7, 18" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "The basis of modern periodic law is", options: ["atomic number", "atomic mass", "isotopic mass", "number of neutrons"], answer: "atomic number" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "________ group contains the member of halogen family.", options: ["17th", "15th", "18th", "16th"], answer: "17th" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "________ is a relative periodic property.", options: ["Atomic radii", "Ionic radii", "Electron affinity", "Electronegativity"], answer: "Electronegativity" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "Chemical formula of rust is", options: ["\\( \\text{FeO.xH}_2\\text{O} \\)", "\\( \\text{FeO}_4.\\text{xH}_2\\text{O} \\)", "\\( \\text{Fe}_2\\text{O}_3.\\text{xH}_2\\text{O} \\)", "\\( \\text{FeO} \\)"], answer: "\\( \\text{Fe}_2\\text{O}_3.\\text{xH}_2\\text{O} \\)" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "In the alumino thermic process the role of Al is", options: ["oxidising agent", "reducing agent", "hydrogenating agent", "sulphurising agent"], answer: "reducing agent" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "The process of coating the surface of metal with a thin layer of zinc is called", options: ["painting", "thinning", "galvanization", "electroplating"], answer: "galvanization" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "Which of the following have inert gases 2 electrons in the outermost shell.", options: ["He", "Ne", "Ar", "Kr"], answer: "He" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "Neon shows zero electron affinity due to", options: ["Stable arrangement of neutrons", "Stable configuration of electrons", "Reduced size", "Increased density"], answer: "Stable configuration of electrons" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "mcq", question: "________ is an important metal to form amalgam.", options: ["Ag", "Hg", "Mg", "Al"], answer: "Hg" },
+
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "If the electronegativity difference between two bonded atoms in a molecule is greater than 1.7, the nature of bonding is ________", answer: "Ionic" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "________ is the longest period in the periodical table.", answer: "6th & 7th" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "________ forms the basis of modern periodic table.", answer: "Atomic Number" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "If the distance between two Cl atoms in \\( \\text{Cl}_2 \\) molecule is \\( 1.98 \\text{ \\AA} \\), then the radius of Cl atom is ________", answer: "0.99 \\AA" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "Among the given species \\( \\text{A}, \\text{A}^+, \\text{ and } \\text{A}^- \\), the smallest one in size is ________", answer: "A+" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "The scientist who propounded the modern periodic law is ________", answer: "Henry Moseley" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "Across the period, ionic radii ________ (increases, decreases).", answer: "decreases" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "________ and ________ are called inner transition elements.", answer: "Lanthanides, Actinides" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "The chief ore of Aluminium is ________", answer: "Bauxite" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "fill", question: "The chemical name of rust is ________", answer: "hydrated ferric oxide" },
+
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "match", question: "Galvanisation", options: ["Noble gas elements", "Coating with Zn", "Silver-tin amalgam", "Alumino thermic process", "Heating in the absence of air"], answer: "Coating with Zn" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "match", question: "Calcination", options: ["Noble gas elements", "Coating with Zn", "Silver-tin amalgam", "Alumino thermic process", "Heating in the absence of air"], answer: "Heating in the absence of air" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "match", question: "Redox reaction", options: ["Noble gas elements", "Coating with Zn", "Silver-tin amalgam", "Alumino thermic process", "Heating in the absence of air"], answer: "Alumino thermic process" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "match", question: "Dental filling", options: ["Noble gas elements", "Coating with Zn", "Silver-tin amalgam", "Alumino thermic process", "Heating in the absence of air"], answer: "Silver-tin amalgam" },
+            { unit: 8, unitName: "Unit 8: Periodic Classification", type: "match", question: "Group 18 elements", options: ["Noble gas elements", "Coating with Zn", "Silver-tin amalgam", "Alumino thermic process", "Heating in the absence of air"], answer: "Noble gas elements" },
+
+            // UNIT 9: SOLUTIONS
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "A solution is a ________ mixture.", options: ["homogeneous", "heterogeneous", "homogeneous and heterogeneous", "non homogeneous"], answer: "homogeneous" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "The number of components in a binary solution is", options: ["2", "3", "4", "5"], answer: "2" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "Which of the following is the universal solvent?", options: ["Acetone", "Benzene", "Water", "Alcohol"], answer: "Water" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "A solution in which no more solute can be dissolved in a definite amount of solvent at a given temperature is called", options: ["Saturated solution", "Un saturated solution", "Super saturated solution", "Dilute solution"], answer: "Saturated solution" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "Identify the non aqueous solution.", options: ["sodium chloride in water", "glucose in water", "copper sulphate in water", "sulphur in carbon-di-sulphide"], answer: "sulphur in carbon-di-sulphide" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "When pressure is increased at constant temperature the solubility of gases in liquid", options: ["No change", "increases", "decreases", "no reaction"], answer: "increases" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "Solubility of NaCl in 100 ml water is 36 g. If 25 g of salt is dissolved in 100 ml of water how much more salt is required for saturation", options: ["12g", "11g", "16g", "20g"], answer: "11g" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "A 25% alcohol solution means;", options: ["25 ml alcohol in 100 ml of water", "25 ml alcohol in 25 ml of water", "25 ml alcohol in 75 ml of water", "75 ml alcohol in 25 ml of water"], answer: "25 ml alcohol in 75 ml of water" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "Deliquescence is due to", options: ["Strong affinity to water", "Less affinity to water", "Strong hatred to water", "Inertness to water"], answer: "Strong affinity to water" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "mcq", question: "Which of the following is hygroscopic in nature?", options: ["ferric chloride", "copper sulphate penta hydrate", "silica gel", "none of the above"], answer: "silica gel" },
+
+            { unit: 9, unitName: "Unit 9: Solutions", type: "fill", question: "The component present in lesser amount, in a solution is called ________", answer: "solute" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "fill", question: "Example for liquid in solid type solution is ________", answer: "Mercury with sodium" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "fill", question: "Solubility is the amount of solute dissolved in ________ g of solvent.", answer: "100" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "fill", question: "Polar compounds are soluble in ________ solvents.", answer: "polar" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "fill", question: "Volume percentage decreases with increases in temperature because of ________", answer: "expansion of liquids" },
+
+            { unit: 9, unitName: "Unit 9: Solutions", type: "match", question: "Blue vitriol", options: ["\\( \\text{CaSO}_4.2\\text{H}_2\\text{O} \\)", "\\( \\text{CaO} \\)", "\\( \\text{CuSO}_4.5\\text{H}_2\\text{O} \\)", "\\( \\text{NaOH} \\)"], answer: "\\( \\text{CuSO}_4.5\\text{H}_2\\text{O} \\)" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "match", question: "Gypsum", options: ["\\( \\text{CaSO}_4.2\\text{H}_2\\text{O} \\)", "\\( \\text{CaO} \\)", "\\( \\text{CuSO}_4.5\\text{H}_2\\text{O} \\)", "\\( \\text{NaOH} \\)"], answer: "\\( \\text{CaSO}_4.2\\text{H}_2\\text{O} \\)" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "match", question: "Deliquescence", options: ["\\( \\text{CaSO}_4.2\\text{H}_2\\text{O} \\)", "\\( \\text{CaO} \\)", "\\( \\text{CuSO}_4.5\\text{H}_2\\text{O} \\)", "\\( \\text{NaOH} \\)"], answer: "\\( \\text{NaOH} \\)" },
+            { unit: 9, unitName: "Unit 9: Solutions", type: "match", question: "Hygroscopic", options: ["\\( \\text{CaSO}_4.2\\text{H}_2\\text{O} \\)", "\\( \\text{CaO} \\)", "\\( \\text{CuSO}_4.5\\text{H}_2\\text{O} \\)", "\\( \\text{NaOH} \\)"], answer: "\\( \\text{CaO} \\)" },
+
+            // UNIT 10: TYPES OF CHEMICAL REACTIONS
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "\\( H_2(g) + Cl_2(g) \\rightarrow 2HCl(g) \\) is a", options: ["Decomposition Reaction", "Combination Reaction", "Single Displacement Reaction", "Double Displacement Reaction"], answer: "Combination Reaction" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "Photolysis is a decomposition reaction caused by", options: ["heat", "electricity", "light", "mechanical energy"], answer: "light" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "A reaction between carbon and oxygen is represented by \\( C_{(s)} + O_{2(g)} \\rightarrow CO_{2(g)} + \\text{Heat} \\). In which of the type(s), the above reaction can be classified?<br>i) Combination Reaction ii) Combustion Reaction iii) Decomposition Reaction iv) Irreversible Reaction", options: ["i and ii", "i and iv", "i, ii and iii", "i, ii and iv"], answer: "i, ii and iv" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "The chemical equation \\( Na_2SO_{4(aq)} + BaCl_{2(aq)} \\rightarrow BaSO_{4(s)}\\downarrow + 2NaCl_{(aq)} \\) represents which of the following types of reaction?", options: ["Neutralisation", "Combustion", "Precipitation", "Single displacement"], answer: "Precipitation" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "Which of the following statements are correct about a chemical equilibrium?<br>i) It is dynamic in nature ii) The rate of the forward and backward reactions are equal at equilibrium iii) Irreversible reactions do not attain chemical equilibrium iv) The concentration of reactants and products may be different", options: ["i, ii and iii", "i, ii and iv", "ii, iii and iv", "i, iii and iv"], answer: "i, ii and iii" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "A single displacement reaction is represented by \\( X_{(s)} + 2HCl_{(aq)} \\rightarrow XCl_{2(aq)} + H_{2(g)} \\). Which of the following(s) could be X?<br>i) Zn ii) Ag iii) Cu iv) Mg<br>Choose the best pair.", options: ["i and ii", "ii and iii", "iii and iv", "i and iv"], answer: "i and iv" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "Which of the following is not an \"element + element \\(\\rightarrow\\) compound\" type reaction?", options: ["\\( C_{(s)} + O_{2(g)} \\rightarrow CO_{2(g)} \\)", "\\( 2K_{(s)} + Br_{2(l)} \\rightarrow 2KBr_{(s)} \\)", "\\( 2CO_{(g)} + O_{2(g)} \\rightarrow 2CO_{2(g)} \\)", "\\( 4Fe_{(s)} + 3O_{2(g)} \\rightarrow 2Fe_2O_{3(s)} \\)"], answer: "\\( 2CO_{(g)} + O_{2(g)} \\rightarrow 2CO_{2(g)} \\)" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "Which of the following represents a precipitation reaction?", options: ["\\( A_{(s)} + B_{(s)} \\rightarrow C_{(s)} + D_{(s)} \\)", "\\( A_{(s)} + B_{(aq)} \\rightarrow C_{(aq)} + D_{(l)} \\)", "\\( A_{(aq)} + B_{(aq)} \\rightarrow C_{(s)} + D_{(aq)} \\)", "\\( A_{(aq)} + B_{(s)} \\rightarrow C_{(aq)} + D_{(l)} \\)"], answer: "\\( A_{(aq)} + B_{(aq)} \\rightarrow C_{(s)} + D_{(aq)} \\)" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "The pH of a solution is 3. Its [OH-] concentration is", options: ["\\( 1 \\times 10^{-3} M \\)", "3 M", "\\( 1 \\times 10^{-11} M \\)", "11 M"], answer: "\\( 1 \\times 10^{-11} M \\)" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "mcq", question: "Powdered \\( CaCO_3 \\) reacts more rapidly than flaky \\( CaCO_3 \\) because of", options: ["large surface area", "high pressure", "high concentration", "high temperature"], answer: "large surface area" },
+
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "A reaction between an acid and a base is called ________", answer: "neutralisation reaction" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "When lithium metal is placed in hydrochloric acid, ________ gas is evolved.", answer: "hydrogen" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The equilibrium attained during the melting of ice is known as ________", answer: "Physical equilibrium" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The pH of a fruit juice is 5.6. If you add slaked lime to this juice, its pH ________", answer: "increases" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The value of ionic product of water at 25° C is ________", answer: "\\( 1.00 \\times 10^{-14} \\text{ mol}^2\\text{dm}^{-6} \\)" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The normal pH of human blood is ________", answer: "7.35 to 7.45" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "Electrolysis is type of ________ reaction.", answer: "decomposition" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The number of products formed in a synthesis reaction is ________", answer: "one" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "Chemical volcano is an example for ________ type of reaction.", answer: "decomposition" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "fill", question: "The ion formed by dissolution of \\( H^+ \\) in water is called ________", answer: "Hydronium ion (H3O+)" },
+
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "match", question: "\\( NH_4OH_{(aq)} + CH_3COOH_{(aq)} \\rightarrow CH_3COONH_{4(aq)} + H_2O_{(l)} \\)", options: ["Single Displacement", "Combustion", "Neutralisation", "Thermal decomposition"], answer: "Neutralisation" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "match", question: "\\( Zn_{(s)} + CuSO_{4(aq)} \\rightarrow ZnSO_{4(aq)} + Cu_{(s)} \\)", options: ["Single Displacement", "Combustion", "Neutralisation", "Thermal decomposition"], answer: "Single Displacement" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "match", question: "\\( ZnCO_{3(s)} \\xrightarrow{\\text{Heat}} ZnO_{(s)} + CO_{2(g)} \\)", options: ["Single Displacement", "Combustion", "Neutralisation", "Thermal decomposition"], answer: "Thermal decomposition" },
+            { unit: 10, unitName: "Unit 10: Types of Chemical Reactions", type: "match", question: "\\( C_2H_{4(g)} + 4O_{2(g)} \\rightarrow 2CO_{2(g)} + 2H_2O_{(g)} + \\text{Heat} \\)", options: ["Single Displacement", "Combustion", "Neutralisation", "Thermal decomposition"], answer: "Combustion" },
+		
+			// UNIT 11: CARBON AND ITS COMPOUNDS
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "The molecular formula of an open chain organic compound is \\( C_3H_6 \\). The class of the compound is", options: ["alkane", "alkene", "alkyne", "alcohol"], answer: "alkene" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "The IUPAC name of an organic compound is 3-Methyl butan-1-ol. What type compound it is?", options: ["Aldehyde", "Carboxylic acid", "Ketone", "Alcohol"], answer: "Alcohol" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "The secondary suffix used in IUPAC nomenclature of an aldehyde is", options: ["- ol", "- oic acid", "- al", "- one"], answer: "- al" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "Which of the following pairs can be the successive members of a homologous series?", options: ["\\( C_3H_8 \\) and \\( C_4H_{10} \\)", "\\( C_2H_2 \\) and \\( C_2H_4 \\)", "\\( CH_4 \\) and \\( C_3H_6 \\)", "\\( C_2H_5OH \\) and \\( C_4H_8OH \\)"], answer: "\\( C_3H_8 \\) and \\( C_4H_{10} \\)" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "\\( C_2H_5OH + 3O_2 \\rightarrow 2CO_2 + 3H_2O \\) is a", options: ["Reduction of ethanol", "Combustion of ethanol", "Oxidation of ethanoic acid", "Oxidation of ethanol"], answer: "Combustion of ethanol" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "Rectified spirit is an aqueous solution which contains about ________ of ethanol.", options: ["95.5%", "75.5%", "55.5%", "45.5%"], answer: "95.5%" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "Which of the following are used as anaesthetics?", options: ["Carboxylic acids", "Ethers", "Esters", "Aldehydes"], answer: "Ethers" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "TFM in soaps represents ________ content in soap.", options: ["mineral", "vitamin", "fatty acid", "carbohydrate"], answer: "fatty acid" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "mcq", question: "Which of the following statements is wrong about detergents?", options: ["It is a sodium salt of long chain fatty acids", "It is sodium salts of sulphonic acids", "The ionic part in a detergent is \\( -SO_3^-Na^+ \\)", "It is effective even in hard water."], answer: "It is a sodium salt of long chain fatty acids" },
+
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "An atom or a group of atoms which is responsible for chemical characteristics of an organic compound is called ________", answer: "Functional group" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "The general molecular formula of alkynes is ________", answer: "\\( C_nH_{2n-2} \\)" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "In IUPAC name, the carbon skeleton of a compound is represented by ________ (root word/prefix /suffix).", answer: "root word" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "(Saturated/Unsaturated) ________ compounds decolourize bromine water.", answer: "unsaturated" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "Dehydration of ethanol by conc. Sulphuric acid forms ________ (ethene/ ethane).", answer: "ethene" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "100% pure ethanol is called ________", answer: "absolute alcohol" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "Ethanoic acid turns ________ litmus to ________", answer: "blue, red" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "The alkaline hydrolysis of fatty acids is termed as ________", answer: "Saponification" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "fill", question: "Biodegradable detergents are made of ________ chain hydrocarbons.", answer: "straight" },
+
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "match", question: "Functional group -OH", options: ["Benzene", "Potassium stearate", "Alcohol", "Furan", "Ethene"], answer: "Alcohol" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "match", question: "Heterocyclic", options: ["Benzene", "Potassium stearate", "Alcohol", "Furan", "Ethene"], answer: "Furan" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "match", question: "Unsaturated", options: ["Benzene", "Potassium stearate", "Alcohol", "Furan", "Ethene"], answer: "Ethene" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "match", question: "Soap", options: ["Benzene", "Potassium stearate", "Alcohol", "Furan", "Ethene"], answer: "Potassium stearate" },
+            { unit: 11, unitName: "Unit 11: Carbon & its Compounds", type: "match", question: "Carbocyclic", options: ["Benzene", "Potassium stearate", "Alcohol", "Furan", "Ethene"], answer: "Benzene" },
+
+            // UNIT 12: PLANT ANATOMY AND PLANT PHYSIOLOGY
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "Casparian strips are present in the ________ of the root.", options: ["cortex", "pith", "pericycle", "endodermis"], answer: "endodermis" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "The endarch condition is the characteristic feature of", options: ["root", "stem", "leaves", "flower"], answer: "stem" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "The xylem and phloem arranged side by side on same radius is called", options: ["radial", "amphivasal", "conjoint", "None of these"], answer: "conjoint" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "Which is formed during anaerobic respiration", options: ["Carbohydrate", "Ethyl alcohol", "Acetyl CoA", "Pyruvate"], answer: "Ethyl alcohol" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "Kreb's cycle takes place in", options: ["chloroplast", "mitochondrial matrix", "stomata", "inner mitochondrial membrane"], answer: "mitochondrial matrix" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "mcq", question: "Oxygen is produced at what point during photosynthesis?", options: ["when ATP is converted to ADP", "when \\( CO_2 \\) is fixed", "when \\( H_2O \\) is splitted", "All of these"], answer: "when \\( H_2O \\) is splitted" },
+
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "fill", question: "Cortex lies between ________", answer: "Epidermis and Vascular tissues" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "fill", question: "Xylem and phloem occurring on the same radius constitute a vascular bundle called ________", answer: "Conjoint bundle" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "fill", question: "Glycolysis takes place in ________", answer: "Cytoplasm" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "fill", question: "The source of \\( O_2 \\) liberated in photosynthesis is ________", answer: "water" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "fill", question: "________ is ATP factory of the cells.", answer: "Mitochondria" },
+
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "match", question: "Amphicribal", options: ["Dracaena", "Translocation of food", "Fern", "Secondary growth", "Conduction of water"], answer: "Fern" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "match", question: "Cambium", options: ["Dracaena", "Translocation of food", "Fern", "Secondary growth", "Conduction of water"], answer: "Secondary growth" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "match", question: "Amphivasal", options: ["Dracaena", "Translocation of food", "Fern", "Secondary growth", "Conduction of water"], answer: "Dracaena" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "match", question: "Xylem", options: ["Dracaena", "Translocation of food", "Fern", "Secondary growth", "Conduction of water"], answer: "Conduction of water" },
+            { unit: 12, unitName: "Unit 12: Plant Anatomy & Phys.", type: "match", question: "Phloem", options: ["Dracaena", "Translocation of food", "Fern", "Secondary growth", "Conduction of water"], answer: "Translocation of food" },
+
+            // UNIT 13: STRUCTURAL ORGANISATION OF ANIMALS
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "In leech locomotion is performed by", options: ["Anterior sucker", "Posterium sucker", "Setae", "None of the above"], answer: "Anterior sucker" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "The segments of leech are known as", options: ["Metameres (somites)", "Proglottids", "Strobila", "All the above"], answer: "Metameres (somites)" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "Pharyngeal ganglion in leech is a part of", options: ["Excretory system", "Nervous system", "Reproductive system", "Respiratory system"], answer: "Nervous system" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "The brain of leech lies above the", options: ["Mouth", "Buccal Cavity", "Pharynx", "Crop"], answer: "Pharynx" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "The body of leech has", options: ["23 segments", "33 segments", "38 segments", "30 segments"], answer: "33 segments" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "Mammals are ________ animals.", options: ["Cold blooded", "Warm blooded", "Poikilothermic", "All the above"], answer: "Warm blooded" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "mcq", question: "The animals which give birth to young ones are", options: ["Oviparous", "Viviparous", "Ovoviviparous", "All the above"], answer: "Viviparous" },
+
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "The posterior sucker is formed by the fusion of the ________ segments.", answer: "last seven" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "The existence of two sets of teeth in the life of an animal is called ________ dentition.", answer: "Diphyodont" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "The anterior end of leech has a lobe-like structure called ________", answer: "Anterior Sucker" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "The blood sucking habit of leech is known as ________", answer: "Sanguivorous" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "________ separate nitrogenous waste from the blood in rabbit.", answer: "Kidney" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "fill", question: "________ spinal nerves are present in rabbit.", answer: "37 pairs" },
+
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "match", question: "Brain", options: ["Pleura, Abdominal cavity", "Capsule, Mediastinum", "Meninges, Cranial cavity", "Pericardium, Enclosed in thoracic cavity"], answer: "Meninges, Cranial cavity" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "match", question: "Kidney", options: ["Pleura, Abdominal cavity", "Capsule, Abdominal cavity", "Meninges, Cranial cavity", "Pericardium, Enclosed in thoracic cavity"], answer: "Capsule, Abdominal cavity" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "match", question: "Heart", options: ["Pleura, Abdominal cavity", "Capsule, Abdominal cavity", "Pericardium, Mediastinum", "Pericardium, Enclosed in thoracic cavity"], answer: "Pericardium, Mediastinum" },
+            { unit: 13, unitName: "Unit 13: Structural Org. of Animals", type: "match", question: "Lungs", options: ["Pleura, Enclosed in thoracic cavity", "Capsule, Abdominal cavity", "Meninges, Cranial cavity", "Pericardium, Mediastinum"], answer: "Pleura, Enclosed in thoracic cavity" },
+
+            // UNIT 14: TRANSPORTATION IN PLANTS AND CIRCULATION IN ANIMALS
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Active transport involves", options: ["Movement of molecules from lower to higher concentration", "Expenditure of energy", "It is an uphill task", "All of the above"], answer: "All of the above" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Water which is absorbed by roots is transported to aerial parts of the plant through", options: ["Cortex", "Epidermis", "Phloem", "Xylem"], answer: "Xylem" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "During transpiration there is loss of", options: ["Carbon di oxide", "Oxygen", "Water", "None of the above"], answer: "Water" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Root hairs are", options: ["Cortical cell", "Projection of epidermal cell", "Unicellular", "Both b and c"], answer: "Both b and c" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Which of the following process requires energy?", options: ["Active transport", "Diffusion", "Osmosis", "All of them"], answer: "Active transport" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "The wall of human heart is made up of", options: ["Endocardium", "Epicardium", "Myocardium", "All of the above"], answer: "All of the above" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Which is the sequence of correct blood flow", options: ["Ventricle - atrium - vein - arteries", "Atrium - ventricle - veins - arteries", "Atrium - Ventricle - Arteries - Vein", "Ventricles - vein - atrium - arteries"], answer: "Atrium - Ventricle - Arteries - Vein" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "A patient with blood group O was injured in an accident and has blood loss. Which blood group the doctor should effectively use for transfusion in this condition?", options: ["O group", "AB group", "A or B group", "All blood group"], answer: "O group" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "'Heart of heart' is called", options: ["SA node", "AV node", "Purkinje fibres", "Bundle of His"], answer: "SA node" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "mcq", question: "Which one of the following regarding blood composition is correct", options: ["Plasma - Blood + Lymphocytes", "Serum - Blood + Fibrinogen", "Lymph - Plasma + RBC + WBC", "Blood = Plasma + RBC + WBC + Platelets"], answer: "Blood = Plasma + RBC + WBC + Platelets" },
+
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "fill", question: "________ involves evaporative loss of water from aerial parts.", answer: "Transpiration" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "fill", question: "Water enters the root cell through a ________ plasma membrane.", answer: "Semi-permeable" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "fill", question: "Structures in roots that help to absorb water are ________", answer: "Root hairs" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "fill", question: "Normal blood pressure is ________", answer: "120 mm / 80 mm Hg" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "fill", question: "The normal human heartbeat rate is about ________ time per minute.", answer: "72-75" },
+
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Symplastic pathway", options: ["Leaf", "Plasmodesmata", "Pressure in xylem", "Pressure gradient"], answer: "Plasmodesmata" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Transpiration", options: ["Leaf", "Plasmodesmata", "Pressure in xylem", "Pressure gradient"], answer: "Leaf" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Osmosis", options: ["Leaf", "Plasmodesmata", "Pressure in xylem", "Pressure gradient"], answer: "Pressure gradient" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Root pressure", options: ["Leaf", "Plasmodesmata", "Pressure in xylem", "Pressure gradient"], answer: "Pressure in xylem" },
+            
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Leukemia", options: ["Thrombocytes", "Phagocyte", "Decrease in leucocytes", "Blood cancer"], answer: "Blood cancer" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Platelets", options: ["Thrombocytes", "Phagocyte", "Decrease in leucocytes", "Blood cancer"], answer: "Thrombocytes" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Monocytes", options: ["Thrombocytes", "Phagocyte", "Decrease in leucocytes", "Blood cancer"], answer: "Phagocyte" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Leucopenia", options: ["Thrombocytes", "Phagocyte", "Decrease in leucocytes", "Blood cancer"], answer: "Decrease in leucocytes" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "AB blood group", options: ["Allergic condition", "Inflammation", "Absence of antigen", "Absence of antibody"], answer: "Absence of antibody" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "O blood group", options: ["Allergic condition", "Inflammation", "Absence of antigen", "Absence of antibody"], answer: "Absence of antigen" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Eosinophil", options: ["Allergic condition", "Inflammation", "Absence of antigen", "Absence of antibody"], answer: "Allergic condition" },
+            { unit: 14, unitName: "Unit 14: Transportation & Circulation", type: "match", question: "Neutrophils", options: ["Allergic condition", "Inflammation", "Absence of antigen", "Absence of antibody"], answer: "Inflammation" },
+
+            // UNIT 15: NERVOUS SYSTEM
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Bipolar neurons are found in", options: ["retina of eye", "cerebral cortex", "embryo", "respiratory epithelium"], answer: "Retina of eye" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Site for processing of vision, hearing, memory, speech, intelligence and thought is", options: ["kidney", "ear", "Brain", "lungs"], answer: "Brain" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "In reflex action, the reflex arc is formed by", options: ["brain, spinal cord, muscle", "receptor, muscle, spinal cord", "muscle, receptor, brain", "Receptor, spinal cord, muscle"], answer: "Receptor, spinal cord, muscle" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Dendrites transmit impulse ________ cell body and axon transmit impulse ________ cell body.", options: ["away from, away from", "Towards, away from", "towards, towards", "away from, towards"], answer: "Towards, away from" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "The outer most of the three cranial meninges is", options: ["arachnoid membrane", "piamater", "Duramater", "myelin sheath"], answer: "Duramater" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "There are ________ pairs of cranial nerves and ________ pairs of spinal nerves.", options: ["12, 31", "31, 12", "12, 13", "12, 21"], answer: "12, 31" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "The neurons which carries impulse from the central nervous system to the muscle fibre.", options: ["afferent neurons", "association neuron", "Efferent neuron", "unipolar neuron"], answer: "Efferent neuron" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Which nervous band connects the two cerebral hemispheres of brain?", options: ["thalamus", "hypothalamus", "Corpus callosum", "pons"], answer: "Corpus callosum" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Node of Ranvier is found in", options: ["muscles", "Axons", "dendrites", "cyton"], answer: "Axons" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Vomiting centre is located in", options: ["Medulla oblongata", "stomach", "cerebrum", "hypothalamus"], answer: "Medulla oblongata" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "Nerve cells do not possess", options: ["neurilemma", "Sarcolemma", "axon", "dendrites"], answer: "Sarcolemma" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "mcq", question: "A person who met with an accident lost control of body temperature, water balance, and hunger. Which of the following part of brain is supposed to be damaged?", options: ["Medulla oblongata", "cerebrum", "pons", "Hypothalamus"], answer: "Hypothalamus" },
+
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "________ is the longest cell in our body.", answer: "Neuron / Nerve cell" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "Impulses travels rapidly in ________ neurons.", answer: "Myelinated" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "A change in the environment that causes an animal to react is called ________", answer: "Stimulus" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "________ carries the impulse towards the cell body.", answer: "Dendrite" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "The two antagonistic component of autonomic nervous system are ________ and ________", answer: "Sympathetic, Parasympathetic" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "A neuron contains all cell organelles except ________", answer: "Centriole" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "________ maintains the constant pressure inside the cranium.", answer: "Cerebrospinal fluid" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "________ and ________ increases the surface area of cerebrum.", answer: "Gyri and Sulci" },
+            { unit: 15, unitName: "Unit 15: Nervous System", type: "fill", question: "The part of human brain which acts as relay center is ________", answer: "Thalamus" },
+			
+            // UNIT 16: PLANT AND ANIMAL HORMONES
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Gibberellins cause:", options: ["Shortening of genetically tall plants", "Elongation of dwarf plants", "Promotion of rooting", "Yellowing of young leaves"], answer: "Elongation of dwarf plants" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "The hormone which has positive effect on apical dominance is:", options: ["Cytokinin", "Auxin", "Gibberellin", "Ethylene"], answer: "Auxin" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Which one of the following hormones is naturally not found in plants?", options: ["2, 4-D", "GA 3", "Gibberellin", "IAA"], answer: "2, 4-D" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Avena coleoptiles test was conducted by", options: ["Darwin", "N. Smit", "Paal", "F.W. Went"], answer: "F.W. Went" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "To increase the sugar production in sugarcanes they are sprayed with", options: ["Auxin", "Cytokinin", "Gibberellins", "Ethylene"], answer: "Ethylene" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "LH is secreted by", options: ["Adrenal gland", "Thyroid gland", "Anterior pituitary", "Hypothalamus"], answer: "Anterior pituitary" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Identify the exocrine gland", options: ["Pituitary gland", "Adrenal gland", "Salivary gland", "Thyroid gland"], answer: "Salivary gland" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Which organ acts as both exocrine gland as well as endocrine gland", options: ["Pancreas", "Kidney", "Liver", "Lungs"], answer: "Pancreas" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "mcq", question: "Which one is referred as 'Master Gland'?", options: ["Pineal gland", "Pituitary gland", "Thyroid gland", "Adrenal gland"], answer: "Pituitary gland" },
+
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "________ causes cell elongation, apical dominance and prevents abscission.", answer: "Auxin" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "________ is a gaseous hormone involved in abscission of organs and acceleration of fruit ripening.", answer: "Ethylene" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "________ causes stomatal closure.", answer: "Abscisic acid" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "Gibberellins induce stem elongation in ________ plants.", answer: "Rosette" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "The hormone which has negative effect on apical dominance is ________", answer: "Cytokinin" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "Calcium metabolism of the body is controlled by ________", answer: "Parathormone" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "In the islets of Langerhans, beta cells secrete ________", answer: "Insulin" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "The growth and functions of thyroid gland is controlled by ________", answer: "Thyroid Stimulating Hormone (TSH)" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "fill", question: "Decreased secretion of thyroid hormones in the children leads to ________", answer: "Cretinisms" },
+
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Auxin", options: ["Coleoptile tip", "Fruits", "Chloroplast", "Coconut milk", "Gibberella fujikuroi"], answer: "Coleoptile tip" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Ethylene", options: ["Coleoptile tip", "Fruits", "Chloroplast", "Coconut milk", "Gibberella fujikuroi"], answer: "Fruits" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Abscisic acid", options: ["Coleoptile tip", "Fruits", "Chloroplast", "Coconut milk", "Gibberella fujikuroi"], answer: "Chloroplast" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Cytokinin", options: ["Coleoptile tip", "Fruits", "Chloroplast", "Coconut milk", "Gibberella fujikuroi"], answer: "Coconut milk" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Gibberellins", options: ["Coleoptile tip", "Fruits", "Chloroplast", "Coconut milk", "Gibberella fujikuroi"], answer: "Gibberella fujikuroi" },
+            
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Thyroxine", options: ["Simple goitre", "Diabetes mellitus", "Tetany", "Acromegaly", "Diabetes insipidus"], answer: "Simple goitre" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Insulin", options: ["Simple goitre", "Diabetes mellitus", "Tetany", "Acromegaly", "Diabetes insipidus"], answer: "Diabetes mellitus" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Parathormone", options: ["Simple goitre", "Diabetes mellitus", "Tetany", "Acromegaly", "Diabetes insipidus"], answer: "Tetany" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "Growth hormone", options: ["Simple goitre", "Diabetes mellitus", "Tetany", "Acromegaly", "Diabetes insipidus"], answer: "Acromegaly" },
+            { unit: 16, unitName: "Unit 16: Plant & Animal Hormones", type: "match", question: "ADH", options: ["Simple goitre", "Diabetes mellitus", "Tetany", "Acromegaly", "Diabetes insipidus"], answer: "Diabetes insipidus" },
+
+            // UNIT 17: REPRODUCTION IN PLANTS AND ANIMALS
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "The plant which propagates with the help of its leaves is", options: ["Onion", "Neem", "Ginger", "Bryophyllum"], answer: "Bryophyllum" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Asexual reproduction takes place through budding in", options: ["Amoeba", "Yeast", "Plasmodium", "Bacteria"], answer: "Yeast" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Syngamy results in the formation of", options: ["Zoospores", "Conidia", "Zygote", "Chlamydospores"], answer: "Zygote" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "The essential parts of a flower are", options: ["Calyx and Corolla", "Calyx and Androecium", "Corolla and Gynoecium", "Androecium and Gynoecium"], answer: "Androecium and Gynoecium" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Anemophilous flowers have", options: ["Sessile stigma", "Small smooth stigma", "Colored flower", "Large feathery stigma"], answer: "Large feathery stigma" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Male gametes in angiosperms are formed by the division of", options: ["Generative cell", "Vegetative cell", "Microspore mother cell", "Microspore"], answer: "Generative cell" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "What is true of gametes?", options: ["They are diploid", "They give rise to gonads", "They produce hormones", "They are formed from gonads"], answer: "They are formed from gonads" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "A single highly coiled tube where sperms are stored, get concentrated and mature is known as", options: ["Epididymis", "Vasa efferentia", "Vas deferens", "Seminiferous tubules"], answer: "Epididymis" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "The large elongated cells that provide nutrition to developing sperms are", options: ["Primary germ cells", "Sertoli cells", "Leydig cells", "Spermatogonia"], answer: "Sertoli cells" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Estrogen is secreted by", options: ["Anterior pituitary", "Primary follicle", "Graffian follicle", "Corpus luteum"], answer: "Graffian follicle" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "mcq", question: "Which one of the following is an IUCD?", options: ["Copper - T", "Oral pills", "Diaphragm", "Tubectomy"], answer: "Copper - T" },
+
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "The embryo sac in a typical dicot at the time of fertilization is ________", answer: "Seven Cells" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "After fertilization the ovary develops into ________", answer: "Fruit" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "Planaria reproduces asexually by ________", answer: "Regeneration" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "Fertilization is ________ in humans.", answer: "Internal" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "The implantation of the embryo occurs at about ________ days of fertilization.", answer: "6-7 days" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "________ is the first secretion from the mammary gland after child birth.", answer: "Colostrum" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "fill", question: "Prolactin is a hormone produced by ________", answer: "anterior pituitary gland" },
+
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Fission", options: ["Amoeba", "Yeast", "Spirogyra"], answer: "Amoeba" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Budding", options: ["Amoeba", "Yeast", "Spirogyra"], answer: "Yeast" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Fragmentation", options: ["Amoeba", "Yeast", "Spirogyra"], answer: "Spirogyra" },
+            
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Parturition", options: ["Delivery of baby from uterus", "Duration between pregnancy and birth", "Release of egg from Graafian follicle", "Attachment of zygote to endometrium"], answer: "Delivery of baby from uterus" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Gestation", options: ["Delivery of baby from uterus", "Duration between pregnancy and birth", "Release of egg from Graafian follicle", "Attachment of zygote to endometrium"], answer: "Duration between pregnancy and birth" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Ovulation", options: ["Delivery of baby from uterus", "Duration between pregnancy and birth", "Release of egg from Graafian follicle", "Attachment of zygote to endometrium"], answer: "Release of egg from Graafian follicle" },
+            { unit: 17, unitName: "Unit 17: Reproduction in Plants & Animals", type: "match", question: "Implantation", options: ["Delivery of baby from uterus", "Duration between pregnancy and birth", "Release of egg from Graafian follicle", "Attachment of zygote to endometrium"], answer: "Attachment of zygote to endometrium" },
+
+            // UNIT 18: GENETICS
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "According to Mendel alleles have the following character", options: ["Pair of genes", "Responsible for character", "Production of gametes", "Recessive factors"], answer: "Responsible for character" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "9:3:3:1 ratio is due to", options: ["Segregation", "Crossing over", "Independent assortment", "Recessiveness"], answer: "Independent assortment" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "The region of the chromosome where the spindle fibres get attached during cell division", options: ["Chromomere", "Centrosome", "Centromere", "Chromonema"], answer: "Centromere" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "The centromere is found at the centre of the ________ chromosome.", options: ["Telocentric", "Metacentric", "Sub-metacentric", "Acrocentric"], answer: "Metacentric" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "The ________ units form the backbone of the DNA.", options: ["5 carbon sugar", "Phosphate", "Nitrogenous bases", "Sugar phosphate"], answer: "Sugar phosphate" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "Okasaki fragments are joined together by", options: ["Helicase", "DNA polymerase", "RNA primer", "DNA ligase"], answer: "DNA ligase" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "The number of chromosomes found in human beings are", options: ["22 pairs of autosomes and 1 pair of allosomes", "22 autosomes and 1 allosome", "46 autosomes", "46 pairs autosomes and 1 pair of allosomes"], answer: "22 pairs of autosomes and 1 pair of allosomes" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "mcq", question: "The loss of one or more chromosome in a ploidy is called", options: ["Tetraploidy", "Aneuploidy", "Euploidy", "polyploidy"], answer: "Aneuploidy" },
+
+            { unit: 18, unitName: "Unit 18: Genetics", type: "fill", question: "The pairs of contrasting character (traits) of Mendel are called ________", answer: "Alleles" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "fill", question: "Physical expression of a gene is called ________", answer: "Phenotype" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "fill", question: "The thin thread like structures found in the nucleus of each cell are called ________", answer: "Chromosomes" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "fill", question: "DNA consists of two ________ chains.", answer: "Polynucleotide" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "fill", question: "An inheritable change in the amount or the structure of a gene or a chromosome is called ________", answer: "Mutation" },
+
+            { unit: 18, unitName: "Unit 18: Genetics", type: "match", question: "Autosomes", options: ["22 pair of chromosome", "2n", "23rd pair of chromosome", "Trisomy 21", "9:3:3:1"], answer: "22 pair of chromosome" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "match", question: "Diploid condition", options: ["22 pair of chromosome", "2n", "23rd pair of chromosome", "Trisomy 21", "9:3:3:1"], answer: "2n" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "match", question: "Allosome", options: ["22 pair of chromosome", "2n", "23rd pair of chromosome", "Trisomy 21", "9:3:3:1"], answer: "23rd pair of chromosome" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "match", question: "Down's syndrome", options: ["22 pair of chromosome", "2n", "23rd pair of chromosome", "Trisomy 21", "9:3:3:1"], answer: "Trisomy 21" },
+            { unit: 18, unitName: "Unit 18: Genetics", type: "match", question: "Dihybrid ratio", options: ["22 pair of chromosome", "2n", "23rd pair of chromosome", "Trisomy 21", "9:3:3:1"], answer: "9:3:3:1" },
+
+            // UNIT 19: ORIGIN AND EVOLUTION OF LIFE
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "mcq", question: "Biogenetic law states that", options: ["Ontogeny and phylogeny go together", "Ontogeny recapitulates phylogeny", "Phylogeny recapitulates ontogeny", "There is no relationship between phylogeny and ontogeny"], answer: "Ontogeny recapitulates phylogeny" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "mcq", question: "The 'use and disuse theory' was proposed by", options: ["Charles Darwin", "Ernst Haeckel", "Jean Baptiste Lamarck", "Gregor Mendel"], answer: "Jean Baptiste Lamarck" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "mcq", question: "Palaeontologist deal with", options: ["Embryological evidences", "Fossil evidences", "Vestigial organ evidences", "All the above"], answer: "Fossil evidences" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "mcq", question: "The best way of direct dating fossils of recent origin is by", options: ["Radio-carbon method", "Uranium lead method", "Potassium-argon method", "Both (a) and (c)"], answer: "Radio-carbon method" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "mcq", question: "The term Ethnobotany was coined by", options: ["Khorana", "J.W. Harsbberger", "Ronald Ross", "Hugo de Vries"], answer: "J.W. Harsbberger" },
+
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "fill", question: "The characters developed by the animals during their life time, in response to the environmental changes are called ________", answer: "Adaptation" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "fill", question: "The degenerated and non-functional organs found in an organism are called ________", answer: "Vestigial organs" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "fill", question: "The forelimb of bat and human are examples of ________ organs.", answer: "Homologous" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "fill", question: "The theory of natural selection for evolution was proposed by ________", answer: "Charles Darwin" },
+
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "Atavism", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "Rudimentary tail and thick hair on the body" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "Vestigial organs", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "Caudal vertebrae and vermiform appendix" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "Analogous organs", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "A wing of a bat and a wing of an insect" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "Homologous organs", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "A forelimb of a cat and a bat's wing" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "Wood park", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "Thiruvakkarai" },
+            { unit: 19, unitName: "Unit 19: Origin & Evolution of Life", type: "match", question: "W.F. Libby", options: ["Rudimentary tail and thick hair on the body", "Caudal vertebrae and vermiform appendix", "A wing of a bat and a wing of an insect", "A forelimb of a cat and a bat's wing", "Thiruvakkarai", "Radiocarbon dating"], answer: "Radiocarbon dating" },
+
+            // UNIT 20: BREEDING AND BIOTECHNOLOGY
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "Which method of crop improvement can be practised by a farmer if he is inexperienced?", options: ["clonal selection", "mass selection", "pureline selection", "hybridisation"], answer: "mass selection" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "Pusa Komal is a disease resistant variety of", options: ["sugarcane", "rice", "cow pea", "maize"], answer: "cow pea" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "Himgiri developed by hybridisation and selection for disease resistance against rust pathogens is a variety of", options: ["chilli", "maize", "sugarcane", "wheat"], answer: "wheat" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "The miracle rice which saved millions of lives and celebrated its 50th birthday is", options: ["IR 8", "IR 24", "Atomita 2", "Ponni"], answer: "IR 8" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "Which of the following is used to produce products useful to humans by biotechnology techniques?", options: ["enzyme from organism", "live organism", "vitamins", "both (a) and (b)"], answer: "both (a) and (b)" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "We can cut the DNA with the help of", options: ["scissors", "restriction endonucleases", "knife", "RNAase"], answer: "restriction endonucleases" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "rDNA is a", options: ["vector DNA", "circular DNA", "recombinant of vector DNA and desired DNA", "satellite DNA"], answer: "recombinant of vector DNA and desired DNA" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "DNA fingerprinting is based on the principle of identifying ________ sequences of DNA", options: ["single stranded", "mutated", "polymorphic", "repetitive"], answer: "repetitive" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "Organisms with modified endogenous gene or a foregin gene are also known as", options: ["transgenic organsims", "genetically modified", "mutated", "both a and b"], answer: "both a and b" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "mcq", question: "In a hexaploid wheat \\( (2n=6x=42) \\) the haploid (n) and the basic(x) number of chromosomes are", options: ["\\( n=7 \\) and \\( x=21 \\)", "\\( n=21 \\) and \\( x=21 \\)", "\\( n=7 \\) and \\( x=7 \\)", "\\( n=21 \\) and \\( x=7 \\)"], answer: "\\( n=21 \\) and \\( x=7 \\)" },
+
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "Economically important crop plants with superior quality are raised by ________", answer: "Plant breeding" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "A protein rich wheat variety is ________", answer: "Atlas 66" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "________ is the chemical used for doubling the chromosomes.", answer: "Colchicine" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "The scientific process which produces crop plants enriched with desirable nutrients are called ________", answer: "Biofortification" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "Rice normally grows well in alluvial soil, but ________ is a rice variety produced by mutation breeding that grows well in saline soil.", answer: "Atomita 2" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "________ technique made it possible to genetically engineer living organism.", answer: "Genetic Engineering / rDNA" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "Restriction endonucleases cut the DNA molecule at specific positions known as ________", answer: "Restriction sites" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "Similar DNA fingerprinting is obtained for ________", answer: "identical twins" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "________ cells are undifferentiated mass of cells.", answer: "Stem" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "fill", question: "In gene cloning the DNA of interest is integrated in a ________", answer: "Vector DNA" },
+
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Sonalika", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Semi-dwarf wheat" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "IR 8", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Semi-dwarf Rice" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Saccharum", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Surgarcane" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Mung No. 1", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Phaseolus mungo" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "TMU-2", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Ground nut" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Insulin", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "First hormone produced using rDNA technique" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Bt toxin", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Bacillus thuringienesis" },
+            { unit: 20, unitName: "Unit 20: Breeding & Biotechnology", type: "match", question: "Golden rice", options: ["Semi-dwarf wheat", "Semi-dwarf Rice", "Surgarcane", "Phaseolus mungo", "Ground nut", "First hormone produced using rDNA technique", "Bacillus thuringienesis", "Beta carotene"], answer: "Beta carotene" },
+
+            // UNIT 21: HEALTH AND DISEASES
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Tobacco consumption is known to stimulate secretion of adrenaline. The component causing this could be", options: ["Nicotine", "Tannic acid", "Curcumin", "heptin"], answer: "Nicotine" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "World 'No Tobacco Day' is observed on", options: ["May 31", "June 6", "April 22", "October 2"], answer: "May 31" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Cancer cells are more easily damaged by radiations than normal cells because they are", options: ["Different in structure", "Non dividing", "Starved mutation", "Undergoing rapid division"], answer: "Undergoing rapid division" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Which type of cancer affects lymph nodes and spleen?", options: ["Carcinoma", "Sarcoma", "Leukemia", "Lymphoma"], answer: "Leukemia" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Excessive consumption of alcohol leads to", options: ["Loss of memory", "Cirrhosis of liver", "State of hallucination", "Supression of brain"], answer: "Cirrhosis of liver" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Coronary heart disease is due to", options: ["Streptococci bacteria", "Inflammation of pericardium", "Weakening of heart valves", "Insufficient blood supply to heart muscles"], answer: "Insufficient blood supply to heart muscles" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Cancer of the epithelial cells is called", options: ["Leukemia", "Sarcoma", "Carcinoma", "Lipoma"], answer: "Carcinoma" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Metastasis is associated with", options: ["Malignant tumour", "Benign tumour", "Both (a) and (b)", "Crown gall tumour"], answer: "Malignant tumour" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Polyphagia is a condition seen in", options: ["Obesity", "Diabetes mellitus", "Diabetes insipidus", "AIDS"], answer: "Diabetes mellitus" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "mcq", question: "Where does alcohol effect immediately after drinking?", options: ["Eyes", "Auditory region", "Liver", "Central nervous system"], answer: "Central nervous system" },
+
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "fill", question: "Cirrhosis is caused in liver due to excessive use of ________", answer: "Alcohol" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "fill", question: "A highly poisonous chemicals derived from tobacco is ________", answer: "Nicotine" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "fill", question: "Blood cancer is called ________", answer: "Leukaemia" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "fill", question: "Less response of a drug to a specific dose with repeated use is called ________", answer: "Drug tolerance" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "fill", question: "Insulin resistance is a condition in ________ diabetes mellitus.", answer: "Type 2" },
+
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "match", question: "Sarcoma", options: ["Connective tissue cancer", "Stomach cancer", "Excessive thirst", "Excessive hunger", "Lack of blood flow to heart muscle"], answer: "Connective tissue cancer" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "match", question: "Carcinoma", options: ["Connective tissue cancer", "Stomach cancer", "Excessive thirst", "Excessive hunger", "Lack of blood flow to heart muscle"], answer: "Stomach cancer" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "match", question: "Polydipsia", options: ["Connective tissue cancer", "Stomach cancer", "Excessive thirst", "Excessive hunger", "Lack of blood flow to heart muscle"], answer: "Excessive thirst" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "match", question: "Polyphagia", options: ["Connective tissue cancer", "Stomach cancer", "Excessive thirst", "Excessive hunger", "Lack of blood flow to heart muscle"], answer: "Excessive hunger" },
+            { unit: 21, unitName: "Unit 21: Health and Diseases", type: "match", question: "Myocardial Infarction", options: ["Connective tissue cancer", "Stomach cancer", "Excessive thirst", "Excessive hunger", "Lack of blood flow to heart muscle"], answer: "Lack of blood flow to heart muscle" },
+
+            // UNIT 22: ENVIRONMENTAL MANAGEMENT
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Which of the following is / are a fossil fuel? i. Tar ii. Coal iii. Petroleum", options: ["i only", "i and ii", "ii and iii", "i, ii and iii"], answer: "ii and iii" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "What are the steps will you adopt for better waste management?", options: ["reduce the amount of waste formed", "reuse the waste", "recycle the waste", "all of the above"], answer: "all of the above" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "The gas released from vehicles exhaust are i. Carbon monoxide ii. Sulphur dioxide iii. Oxides of nitrogen", options: ["i and ii", "i and iii", "ii and iii", "i, ii and iii"], answer: "i, ii and iii" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Soil erosion can be prevented by", options: ["deforestation", "afforestation", "over grazing", "removal of vegetation"], answer: "afforestation" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "A renewable source of energy is", options: ["petroleum", "coal", "nuclear fuel", "trees"], answer: "trees" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Soil erosion is more where there is", options: ["no rain fall", "low rainfall", "rain fall is high", "none of these"], answer: "rain fall is high" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "An inexhaustible resources is", options: ["wind power", "soil fertility", "wild life", "all of the above"], answer: "all of the above" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Common energy source in village is", options: ["electricity", "coal", "biogas", "wood and animal dung"], answer: "wood and animal dung" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Green house effect refers to", options: ["cooling of earth", "trapping of UV rays", "cultivation of plants", "warming of earth"], answer: "warming of earth" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "A cheap, conventional, commercial and inexhaustible source of energy is", options: ["hydropower", "solar energy", "wind energy", "thermal energy"], answer: "hydropower" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Global warming will cause", options: ["raise in level of oceans", "melting of glaciers", "sinking of islands", "all of these"], answer: "all of these" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "mcq", question: "Which of the following statement is wrong with respect to wind energy", options: ["wind energy is a renewable energy", "the blades of wind mill are operated with the help of electric motor", "production of wind energy is pollution free", "usage of wind energy can reduce the consumption of fossil fuels."], answer: "the blades of wind mill are operated with the help of electric motor" },
+
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "Deforestation leads to ________ in rainfall.", answer: "Decrease" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "Removal of soil particles from the land is called ________", answer: "Soil erosion" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "Chipko movement is initiated against ________", answer: "Deforestation" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "________ is a biosphere reserve in Tamilnadu.", answer: "Nilgiris" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "Tidal energy is ________ type of energy.", answer: "renewable" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "Coal, petroleum and natural gas are called ________ fuels.", answer: "Fossil" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "fill", question: "________ is the most commonly used fuel for the production of electricity.", answer: "Coal" },
+
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Soil erosion", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "removal of vegetation" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Bio gas", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "CO2" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Natural gas", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "non-renewable energy" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Green house gas", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "acid rain" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "CFL bulbs", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "energy saving" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Wind", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "renewable energy" },
+            { unit: 22, unitName: "Unit 22: Environmental Management", type: "match", question: "Solid waste", options: ["removal of vegetation", "CO2", "non-renewable energy", "acid rain", "energy saving", "renewable energy", "lead and heavy metals"], answer: "lead and heavy metals" },
+
+            // UNIT 23: VISUAL COMMUNICATION
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "mcq", question: "Which software is used to create animation ?", options: ["Paint", "PDF", "MS Word", "Scratch"], answer: "Scratch" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "mcq", question: "All files are stored in the", options: ["Folder", "box", "Paint", "scanner"], answer: "Folder" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "mcq", question: "Which is used to build scripts?", options: ["Script area", "Block palette", "stage", "sprite"], answer: "Script area" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "mcq", question: "Which is used to edit programs?", options: ["Inkscape", "script editor", "stage", "sprite"], answer: "script editor" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "mcq", question: "Where you will create category of blocks?", options: ["Block palette", "Block menu", "Script area", "sprite"], answer: "Block menu" },
+
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "match", question: "Script area", options: ["Build scripts", "Store files", "Animation software", "Edit programs", "Type notes"], answer: "Build scripts" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "match", question: "Folder", options: ["Build scripts", "Store files", "Animation software", "Edit programs", "Type notes"], answer: "Store files" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "match", question: "Scratch", options: ["Build scripts", "Store files", "Animation software", "Edit programs", "Type notes"], answer: "Animation software" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "match", question: "Costume editor", options: ["Build scripts", "Store files", "Animation software", "Edit programs", "Type notes"], answer: "Edit programs" },
+            { unit: 23, unitName: "Unit 23: Visual Communication", type: "match", question: "Notepad", options: ["Build scripts", "Store files", "Animation software", "Edit programs", "Type notes"], answer: "Type notes" }
+        ];
+
+        let quizQuestions = [];
+        let currentIdx = 0;
+        let score = 0;
+        let timerInterval;
+        let timeLeft = 30;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function wrapMathTokens(str) {
+            return `<span class="math-wrap">${str}</span>`;
+        }
+
+        function startQuiz() {
+            initAudio(); 
+            
+            const units = Array.from(document.querySelectorAll('.unit-cb:checked')).map(cb => parseInt(cb.value));
+            const types = Array.from(document.querySelectorAll('.type-cb:checked')).map(cb => cb.value);
+            const order = document.getElementById('order-select').value;
+
+            if (units.length === 0 || types.length === 0) {
+                alert("Please select at least one Unit and one Part!");
+                return;
+            }
+
+            quizQuestions = allQuestions.filter(q => units.includes(q.unit) && types.includes(q.type));
+
+            if (quizQuestions.length === 0) {
+                alert("No questions found for this selection!");
+                return;
+            }
+
+            if (order === "shuffle") shuffleArray(quizQuestions);
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            updateTimerUI();
+            
+            document.getElementById('next-btn-wrapper').style.display = 'none';
+            document.getElementById('feedback-msg').style.display = 'none';
+            document.getElementById('svg-area').innerHTML = '';
+            
+            const q = quizQuestions[currentIdx];
+            
+            document.getElementById('unit-badge').innerText = q.unitName;
+            let partText = q.type === 'mcq' ? "Choose the Correct Answer" : (q.type === 'fill' ? "Fill in the Blanks" : "Match the Following");
+            document.getElementById('part-badge').innerText = partText;
+
+            let qText = (currentIdx + 1) + ". " + q.question;
+            if(q.type === 'match') qText = (currentIdx + 1) + ". Match: <b>" + q.question + "</b>";
+            document.getElementById('question-text').innerHTML = qText;
+
+            if(q.svg) {
+                document.getElementById('svg-area').innerHTML = `<div class="svg-container">${q.svg}</div>`;
+            }
+            
+            const answerArea = document.getElementById('answer-area');
+            answerArea.innerHTML = "";
+
+            if (q.type === "mcq" || q.type === "match") {
+                const optsDiv = document.createElement('div');
+                optsDiv.className = "options-grid";
+                
+                let opts = [...q.options];
+                shuffleArray(opts); 
+
+                opts.forEach((opt, index) => {
+                    const letter = String.fromCharCode(65 + index); 
+                    const btn = document.createElement('button');
+                    btn.className = "option-btn";
+                    btn.innerHTML = `<span class="opt-alpha">${letter}</span> <span class="opt-text">${wrapMathTokens(opt)}</span>`;
+                    btn.onclick = () => checkAnswer(opt, btn); 
+                    optsDiv.appendChild(btn);
+                });
+                answerArea.appendChild(optsDiv);
+            } else if (q.type === "fill") {
+                const group = document.createElement('div');
+                group.className = "fill-input-group";
+                
+                const input = document.createElement('input');
+                input.type = "text";
+                input.id = "fill-input";
+                input.className = "fill-input";
+                input.placeholder = "Type your answer here...";
+                
+                const subBtn = document.createElement('button');
+                subBtn.className = "submit-btn";
+                subBtn.innerText = "Check Answer";
+                subBtn.onclick = () => checkAnswer(input.value.trim(), null);
+
+                group.appendChild(input);
+                group.appendChild(subBtn);
+                answerArea.appendChild(group);
+            }
+
+            if (window.MathJax) {
+                MathJax.typesetPromise().catch((err) => console.log('MathJax error: ', err));
+            }
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const bar = document.getElementById('timer-bar');
+            const txt = document.getElementById('timer-text');
+            let pct = (timeLeft / 30) * 100;
+            bar.style.width = pct + "%";
+            txt.innerText = `⏳ ${timeLeft}s`;
+            
+            if (timeLeft > 15) bar.style.background = "#2ecc71";
+            else if (timeLeft > 5) bar.style.background = "#f1c40f";
+            else bar.style.background = "#e74c3c";
+        }
+
+        function fireConfetti() {
+            var duration = 1500;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#2ecc71', '#f1c40f', '#3498db', '#e74c3c'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function showGameOverlay(isCorrect) {
+            const overlay = document.getElementById('game-overlay');
+            const box = document.getElementById('popup-box');
+            const icon = document.getElementById('popup-icon');
+            const text = document.getElementById('popup-text');
+            
+            box.className = 'popup-box'; 
+            
+            if (isCorrect) {
+                icon.innerHTML = "✅";
+                text.innerHTML = "மிகச் சரி! (CORRECT)";
+                text.className = "popup-text theme-correct";
+            } else {
+                icon.innerHTML = "❌";
+                text.innerHTML = "தவறு! (WRONG)";
+                text.className = "popup-text theme-wrong";
+                box.classList.add('wrong-shake'); 
+            }
+            
+            overlay.classList.add('show');
+            setTimeout(() => { overlay.classList.remove('show'); }, 1300);
+        }
+
+        function handleTimeOut() {
+            initAudio();
+            playSound('wrong');
+            showGameOverlay(false);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.innerHTML = "❌ Time's Up! The correct answer is: <b>" + wrapMathTokens(quizQuestions[currentIdx].answer) + "</b>";
+            msg.style.color = "#e74c3c";
+            msg.style.display = "block";
+            
+            disableAllInputs();
+            showNextBtn();
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function checkAnswer(userAns, btnElement) {
+            clearInterval(timerInterval);
+            initAudio(); 
+            
+            const q = quizQuestions[currentIdx];
+            
+            const cleanUser = userAns.replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+            const cleanAns = q.answer.replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+            
+            const isCorrect = cleanUser === cleanAns || cleanUser.includes(cleanAns) || cleanAns.includes(cleanUser);
+            
+            const msg = document.getElementById('feedback-msg');
+            msg.style.display = "block";
+
+            disableAllInputs();
+
+            if (isCorrect) {
+                score++;
+                playSound('correct');
+                fireConfetti();
+                showGameOverlay(true);
+                
+                msg.innerText = "✅ Excellent! Correct Answer!";
+                msg.style.color = "#27ae60";
+
+                if (btnElement) {
+                    btnElement.classList.add('correct');
+                } else {
+                    document.getElementById('fill-input').style.borderColor = "#27ae60";
+                    document.getElementById('fill-input').style.backgroundColor = "#d4edda";
+                }
+            } else {
+                playSound('wrong');
+                showGameOverlay(false);
+                
+                msg.innerHTML = "❌ Wrong! Correct answer: <b>" + wrapMathTokens(q.answer) + "</b>";
+                msg.style.color = "#e74c3c";
+                
+                if (btnElement) {
+                    btnElement.classList.add('wrong');
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        let btnContent = b.querySelector('.opt-text').innerHTML.replace(/<span class="math-wrap">|<\/span>/g, '').replace(/<[^>]*>?/gm, '').trim().toLowerCase().replace(/,/g, '');
+                        if (btnContent === cleanAns || btnContent.includes(cleanAns)) {
+                            b.classList.add('correct');
+                        }
+                    });
+                } else {
+                    document.getElementById('fill-input').style.borderColor = "#e74c3c";
+                    document.getElementById('fill-input').style.backgroundColor = "#f8d7da";
+                }
+            }
+
+            if (window.MathJax) MathJax.typesetPromise();
+            showNextBtn();
+        }
+
+        function disableAllInputs() {
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+            const fillInput = document.getElementById('fill-input');
+            const submitBtn = document.querySelector('.submit-btn');
+            if (fillInput) fillInput.disabled = true;
+            if (submitBtn) submitBtn.disabled = true;
+        }
+
+        function showNextBtn() {
+            const wrapper = document.getElementById('next-btn-wrapper');
+            wrapper.style.display = 'flex';
+            if (currentIdx === quizQuestions.length - 1) {
+                wrapper.querySelector('button').innerText = "Show Results 🏆";
+            }
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('final-score').innerText = score + " / " + quizQuestions.length;
+            if(score > (quizQuestions.length / 2)) {
+                fireConfetti();
+                playSound('correct');
+            }
+        }
+    </script>
+</body>
+</html>
