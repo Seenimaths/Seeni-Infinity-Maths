@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Exam Seating Arrangement Web App</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Tamil Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+	
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg: #f4e8d8;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --border: #E5E7EB;
+            --danger: #EF4444;
+            --success: #10B981;
+            --special: #D97706; 
+            --special-hover: #B45309;
+            --hs-color: #059669; 
+            --hs-hover: #047857;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Tamil', 'Cambria', Arial, sans-serif;}
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 2rem; }
+
+        /* Bilingual Display Logic */
+        body.ta-mode .lang-en { display: none !important; }
+        body:not(.ta-mode) .lang-ta { display: none !important; }
+
+        .top-bar { background-color: #7C3AED; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar-center { text-align: center; flex-grow: 1; }
+        .top-bar h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.2rem; letter-spacing: 1px;}
+        .sub-bar { font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
+        
+        .lang-toggle-btn { background: #fff; color: #7C3AED; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .section-card { background: var(--card); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+        
+        .section-title { display: flex; align-items: center; justify-content: space-between; font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--primary); border-bottom: 2px solid #E5E7EB; padding-bottom: 0.5rem; }
+        .title-left { display: flex; align-items: center; gap: 0.5rem; }
+        .circle-num { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+        .session-btn-group { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .btn-morning, .btn-afternoon { font-weight: 600; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-morning { background-color: #87CEEB; color: #000; }
+        .btn-afternoon { background-color: #FFA500; color: #fff; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        label { font-size: 0.9rem; font-weight: 600; color: #4B5563; }
+        input, select { padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; outline: none; font-size: 0.95rem; width: 100%; }
+        
+        /* NEW BOX STYLE FOR STUDENT INPUTS */
+        .class-input-box { background: #F9FAFB; border: 1px solid #D1D5DB; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; position: relative; }
+        .class-input-box-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--primary); border-bottom: 1px dashed #D1D5DB; padding-bottom: 5px;}
+        .class-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; align-items: end; }
+        
+        .btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-outline { background: white; color: var(--primary); border: 1px solid var(--primary); margin-top: 10px;}
+        .btn-block { width: 100%; font-size: 1.1rem; padding: 1rem; margin-top: 1rem; }
+        
+        .btn-special { background: var(--special); color: white; border: none; padding: 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 1.1rem; margin-top: 1rem; }
+        .btn-hs { background: var(--hs-color); color: white; border: none; padding: 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 1.1rem; margin-top: 1rem; }
+        
+        .btn-remove { background: #FEE2E2; color: var(--danger); border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem;}
+        
+        .print-controls { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; border: 1px solid var(--primary); position: sticky; top: 0; z-index: 100;}
+        .print-page { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
+        .print-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #000; }
+        .print-header h1 { font-size: 1.8rem; margin: 0; }
+        .print-header h2 { font-size: 1.3rem; margin: 5px 0 10px 0; color: #374151;}
+        .print-meta { display: flex; justify-content: space-between; font-weight: 600; margin-top: 0.5rem; }
+        
+        .board-marker { text-align: center; background: #E5E7EB; padding: 0.5rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 2rem; border-radius: 4px; }
+        .room-grid { display: grid; gap: 1rem; justify-content: center; margin: 0 auto; }
+        .seat { width: 90px; height: 80px; border: 1px solid #9CA3AF; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; text-align: center; padding: 2px;}
+        .seat .class-tag { font-size: 0.65rem; color: #4B5563; }
+        .seat .sub-tag { font-size: 0.6rem; color: #1D4ED8; font-weight: bold;}
+        .seat.empty { border: 1px dashed #D1D5DB; background: #F9FAFB; color: #9CA3AF; }
+
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .summary-table th, .summary-table td { border: 1px solid #000; padding: 0.75rem; text-align: center; }
+        .summary-table th { background-color: #F3F4F6; }
+        .button-group { display: flex; gap: 1rem; margin-top: 1.5rem; flex-direction: column; }
+
+        .developer-footer { text-align: center; margin-top: 3rem; margin-bottom: 1rem; color: #6B7280; font-size: 0.95rem; font-weight: 600; }
+
+        #resultView { display: none; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            /* Hide the form view, top bar, print controls, and developer footer when printing */
+            .top-bar, .print-controls, #formView, .developer-footer { display: none !important; } 
+            #resultView { display: block !important; }
+            .print-page { box-shadow: none; margin: 0; padding: 0; border: none; page-break-after: always; }
+            body.print-summary-only .room-page { display: none !important; }
+            body.print-master .print-page { display: block; }
+            body[data-print-room="1"] .print-page:not(.room-1) { display: none !important; }
+            body[data-print-room="2"] .print-page:not(.room-2) { display: none !important; }
+            body[data-print-room="3"] .print-page:not(.room-3) { display: none !important; }
+            body[data-print-room="4"] .print-page:not(.room-4) { display: none !important; }
+            body[data-print-room="5"] .print-page:not(.room-5) { display: none !important; }
+            body[data-print-room="6"] .print-page:not(.room-6) { display: none !important; }
+            body[data-print-room] .summary-page { display: none !important; } 
+        }
+    </style>
+</head>
+<body class="ta-mode">
+
+    <div class="top-bar">
+        <div style="width: 100px;"></div>
+        <div class="top-bar-center">
+            <h1>
+                <span class="lang-en">PRO SEATING ARRANGEMENT WEB APP</span>
+                <span class="lang-ta">ப்ரோ தேர்வு இருக்கை ஒதுக்கீடு வெப் ஆப்</span>
+            </h1>
+        </div>
+        <button class="lang-toggle-btn" onclick="document.body.classList.toggle('ta-mode')">தமிழ் / English</button>
+    </div>
+
+    <div class="container" id="formView">
+        
+        <!-- SECTION 1: SCHOOL & EXAM DETAILS -->
+        <div class="section-card">
+            <div class="section-title">
+                <div class="title-left"><div class="circle-num">1</div> <span class="lang-ta">பள்ளி மற்றும் தேர்வு விவரங்கள்</span><span class="lang-en">School & Exam Details</span></div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><span class="lang-ta">பள்ளி பெயர் *</span><span class="lang-en">School Name *</span></label>
+                    <input type="text" id="schoolName" value="Government Higher Secondary School">
+                </div>
+                <div class="form-group">
+                    <label><span class="lang-ta">தேர்வு பெயர்</span><span class="lang-en">Exam Name</span></label>
+                    <input type="text" id="examName" value="Quarterly Examination 2026">
+                </div>
+                <div class="form-group">
+                    <label><span class="lang-ta">தேர்வு நாள் *</span><span class="lang-en">Exam Date *</span></label>
+                    <input type="date" id="examDate">
+                </div>
+                <div class="form-group">
+                    <label><span class="lang-ta">தேர்வு நேரம் (Session)</span><span class="lang-en">Session (FN/AN)</span></label>
+                    <select id="examSession">
+                        <option value="FN (Forenoon)">FN (காலை)</option>
+                        <option value="AN (Afternoon)">AN (மதியம்)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: ROOM DETAILS -->
+        <div class="section-card">
+            <div class="section-title">
+                <div class="title-left"><div class="circle-num">2</div> <span class="lang-ta">அறை விவரங்கள்</span><span class="lang-en">Room Details</span></div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><span class="lang-ta">மொத்த அறைகள்</span><span class="lang-en">Total Rooms</span></label>
+                    <input type="number" id="numRooms" value="3" min="1">
+                </div>
+                <div class="form-group">
+                    <label><span class="lang-ta">ஒரு வகுப்பில் உள்ள வரிசைகள்</span><span class="lang-en">Rows per Room</span></label>
+                    <input type="number" id="roomRows" value="6" min="1">
+                </div>
+                <div class="form-group">
+                    <label><span class="lang-ta">ஒரு இருக்கையில் அமரும் மாணவர்கள் (Cols)</span><span class="lang-en">Seats per Row</span></label>
+                    <input type="number" id="roomCols" value="3" min="2" max="4">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: STUDENTS DETAILS (BOX LAYOUT) -->
+        <div class="section-card">
+            <div class="section-title">
+                <div class="title-left"><div class="circle-num">3</div> <span class="lang-ta">மாணவர்கள் விவரம் (வகுப்பு / பாடம்)</span><span class="lang-en">Student Details (Class / Subject)</span></div>
+            </div>
+            
+            <div class="session-btn-group">
+                <button class="btn-morning" id="btnMorning" onclick="loadSessionClasses('Morning')"><span class="lang-ta">காலைத் தேர்வுகள்</span><span class="lang-en">Morning Exams</span></button>
+                <button class="btn-afternoon" id="btnAfternoon" onclick="loadSessionClasses('Afternoon')"><span class="lang-ta">மதியத் தேர்வுகள்</span><span class="lang-en">Afternoon Exams</span></button>
+            </div>
+            
+            <div id="classRowsContainer">
+                <!-- Box rows injected via JS -->
+            </div>
+            
+            <button class="btn btn-outline" onclick="addClassBox()">
+                <span class="lang-ta">+ புதிய வகுப்பு / பாடம் சேர்க்க</span><span class="lang-en">+ Add Class / Subject</span>
+            </button>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-block" onclick="generateSeating()">
+                <span class="lang-ta">சாதாரண இருக்கை ஒதுக்கீடு (Regular)</span><span class="lang-en">Generate Regular Seating</span>
+            </button>
+            <button class="btn-special" onclick="generateSpecialSeating()">
+                <span class="lang-ta">⭐ 10th - 8th - 10th சிறப்பு ஒதுக்கீடு</span><span class="lang-en">⭐ Generate Special (10-8-10)</span>
+            </button>
+            <button class="btn-hs" onclick="generateHigherSecSeating()">
+                <span class="lang-ta">🎓 11th/12th மூவர் இருக்கை (3 Subjects: eg. Phy-Bio-Che)</span><span class="lang-en">🎓 11th/12th 3-Subject Seating</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div class="container" id="resultView">
+        <div class="print-controls">
+            <button class="btn btn-outline" onclick="backToForm()">← <span class="lang-ta">பின்செல்</span><span class="lang-en">Back</span></button>
+            <button class="btn" style="background: var(--success)" onclick="printSummary()">Summary Report</button>
+            <button class="btn" style="background: #2563EB" onclick="printMaster()">Master Print</button>
+            <div style="width: 2px; background: #E5E7EB; margin: 0 0.5rem;"></div>
+            <div id="roomPrintButtons" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+        </div>
+        <div id="outputContainer"></div>
+    </div>
+
+    <!-- Footer Developer Name (Hidden during print) -->
+    <div class="developer-footer">
+        Developed by Y. Srinivasan, M.Sc., B.Ed., Maths Teacher. Phone number 8489880553.
+    </div>
+
+    <script>
+        document.getElementById('examDate').valueAsDate = new Date();
+
+        function addClassBox(name='', sec='A', sub='', gender='All', first='', last='', count='0') {
+            const container = document.getElementById('classRowsContainer');
+            const box = document.createElement('div');
+            box.className = 'class-input-box class-row'; 
+            
+            box.innerHTML = `
+                <div class="class-input-box-header">
+                    <span><span class="lang-ta">வகுப்பு விவரங்கள்</span><span class="lang-en">Class Details</span></span>
+                    <button class="btn-remove" onclick="this.parentElement.parentElement.remove();">X நீக்கு</button>
+                </div>
+                <div class="class-grid">
+                    <div class="form-group">
+                        <label><span class="lang-ta">வகுப்பு</span><span class="lang-en">Class</span></label>
+                        <input type="text" class="c-name" value="${name}" placeholder="Eg: 11">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">பிரிவு</span><span class="lang-en">Sec</span></label>
+                        <input type="text" class="c-sec" value="${sec}">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">பாடம் (Code/Name)</span><span class="lang-en">Subject</span></label>
+                        <input type="text" class="c-sub" value="${sub}" placeholder="Eg: PHY / 101">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">பாலினம்</span><span class="lang-en">Gender</span></label>
+                        <select class="c-gen">
+                            <option value="All" ${gender==='All'?'selected':''}>All (அனைவரும்)</option>
+                            <option value="Boy" ${gender==='Boy'?'selected':''}>Boys (மாணவர்கள்)</option>
+                            <option value="Girl" ${gender==='Girl'?'selected':''}>Girls (மாணவிகள்)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">முதல் எண்</span><span class="lang-en">From Roll</span></label>
+                        <input type="number" class="c-first" value="${first}">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">இறுதி எண்</span><span class="lang-en">To Roll</span></label>
+                        <input type="number" class="c-last" value="${last}">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="lang-ta">எண்ணிக்கை</span><span class="lang-en">Total</span></label>
+                        <input type="number" class="c-count" value="${count}" readonly style="background:#E5E7EB;">
+                    </div>
+                </div>
+            `;
+            container.appendChild(box);
+        }
+
+        document.addEventListener('input', function(e) {
+            if(e.target.classList.contains('c-first') || e.target.classList.contains('c-last')) {
+                let box = e.target.closest('.class-input-box');
+                let first = parseInt(box.querySelector('.c-first').value) || 0;
+                let last = parseInt(box.querySelector('.c-last').value) || 0;
+                let countField = box.querySelector('.c-count');
+                countField.value = (last >= first && first > 0) ? (last - first) + 1 : 0;
+            }
+        });
+
+        function loadSessionClasses(session) {
+            document.getElementById('classRowsContainer').innerHTML = '';
+            if(session === 'Morning') {
+                addClassBox('10', 'A', 'TAM', 'All', '1001', '1020', '20');
+                addClassBox('8', 'A', 'ENG', 'All', '8001', '8010', '10');
+            } else {
+                addClassBox('11', 'A', 'PHY', 'All', '11001', '11020', '20');
+                addClassBox('11', 'B', 'BIO', 'All', '11101', '11120', '20');
+                addClassBox('11', 'C', 'CHE', 'All', '11201', '11220', '20');
+            }
+        }
+
+        window.onload = () => loadSessionClasses('Afternoon');
+        function backToForm() { document.getElementById('formView').style.display = 'block'; document.getElementById('resultView').style.display = 'none'; }
+
+        // Core Functions
+        function getExamData() {
+            return {
+                school: document.getElementById('schoolName').value || 'School Name Not Set',
+                exam: document.getElementById('examName').value || 'Exam Name Not Set',
+                session: document.getElementById('examSession').value,
+                date: document.getElementById('examDate').value,
+                numRooms: parseInt(document.getElementById('numRooms').value),
+                rows: parseInt(document.getElementById('roomRows').value),
+                cols: parseInt(document.getElementById('roomCols').value)
+            };
+        }
+
+        function formatDisplayDate(dateStr) {
+            if(!dateStr) return '';
+            let d = new Date(dateStr);
+            return d.toLocaleDateString('en-GB'); 
+        }
+
+        function extractStudents() {
+            let classBoxes = document.querySelectorAll('.class-input-box');
+            let studentGroups = [];
+            let total = 0;
+
+            classBoxes.forEach(box => {
+                let cName = box.querySelector('.c-name').value;
+                let cSec = box.querySelector('.c-sec').value;
+                let cSub = box.querySelector('.c-sub').value;
+                let cGen = box.querySelector('.c-gen').value;
+                let first = parseInt(box.querySelector('.c-first').value);
+                let last = parseInt(box.querySelector('.c-last').value);
+                
+                if(cName && first && last && last >= first) {
+                    let arr = [];
+                    for(let r = first; r <= last; r++) {
+                        let genTag = cGen !== 'All' ? `(${cGen.charAt(0)})` : '';
+                        arr.push({ class: `${cName}-${cSec} ${genTag}`, roll: r, sub: cSub });
+                    }
+                    total += arr.length;
+                    studentGroups.push(arr);
+                }
+            });
+            return { groups: studentGroups, total: total };
+        }
+
+        // 1. Regular Interleave
+        function generateSeating() {
+            let config = getExamData();
+            let data = extractStudents();
+            if(data.total === 0) return alert("பதிவு எண்களை உள்ளிடவும்!");
+
+            let masterList = [];
+            let added = true;
+            while(added) {
+                added = false;
+                for(let i = 0; i < data.groups.length; i++) {
+                    if(data.groups[i].length > 0) {
+                        masterList.push(data.groups[i].shift());
+                        added = true;
+                    }
+                }
+            }
+            renderRooms(config, masterList, null);
+        }
+
+        // 2. Special 10-8-10
+        function generateSpecialSeating() {
+            let config = getExamData();
+            if(config.cols !== 3) return alert("இந்த முறைக்கு 'Columns' 3 ஆக இருக்க வேண்டும்!");
+            
+            let data = extractStudents();
+            let class10 = [], class8 = [];
+            
+            data.groups.forEach(group => {
+                if(group[0] && group[0].class.startsWith('10')) class10 = class10.concat(group);
+                else if(group[0] && group[0].class.startsWith('8')) class8 = class8.concat(group);
+            });
+
+            let specialList = [];
+            let capacityNeeded = config.numRooms * config.rows;
+            for(let r = 0; r < capacityNeeded; r++) {
+                specialList.push(class10.length > 0 ? class10.shift() : null); 
+                specialList.push(class8.length > 0 ? class8.shift() : null);   
+                specialList.push(class10.length > 0 ? class10.shift() : null); 
+            }
+            renderRooms(config, null, specialList);
+        }
+
+        // 3. 11th/12th 3 Subjects
+        function generateHigherSecSeating() {
+            let config = getExamData();
+            if(config.cols !== 3) return alert("3 பாடங்களுக்கு இருக்கைகளை ஒதுக்க Columns = 3 என மாற்றவும்!");
+            
+            let data = extractStudents();
+            if(data.groups.length < 3) return alert("குறைந்தது 3 பாடங்களை (பாக்ஸ்களை) சேர்க்கவும் (எ.கா: Phy, Bio, Che).");
+
+            let subA = data.groups[0] || [];
+            let subB = data.groups[1] || [];
+            let subC = data.groups[2] || [];
+            let extraGroups = data.groups.slice(3).flat(); 
+
+            let hsList = [];
+            let capacityNeeded = config.numRooms * config.rows;
+            
+            for(let r = 0; r < capacityNeeded; r++) {
+                if(subA.length > 0) hsList.push(subA.shift()); else if(extraGroups.length > 0) hsList.push(extraGroups.shift()); else hsList.push(null);
+                if(subB.length > 0) hsList.push(subB.shift()); else if(extraGroups.length > 0) hsList.push(extraGroups.shift()); else hsList.push(null);
+                if(subC.length > 0) hsList.push(subC.shift()); else if(extraGroups.length > 0) hsList.push(extraGroups.shift()); else hsList.push(null);
+            }
+            renderRooms(config, null, hsList);
+        }
+
+        function renderRooms(config, regularList, specificList) {
+            const out = document.getElementById('outputContainer');
+            out.innerHTML = '';
+            let summary = {}; 
+            let idx = 0;
+            let formattedDate = formatDisplayDate(config.date);
+
+            for(let rm = 1; rm <= config.numRooms; rm++) {
+                let html = `<div class="print-page room-page room-${rm}">
+                    <div class="print-header">
+                        <h1>${config.school}</h1>
+                        <h2>${config.exam}</h2>
+                        <div class="print-meta">
+                            <span>Date: ${formattedDate}</span>
+                            <span>Room: Hall ${rm}</span>
+                            <span>Session: ${config.session}</span>
+                        </div>
+                    </div>
+                    <div class="board-marker">TEACHER DESK</div>
+                    <div class="room-grid" style="grid-template-columns: repeat(${config.cols}, 90px);">`;
+
+                for(let r = 0; r < config.rows; r++) {
+                    for(let c = 0; c < config.cols; c++) {
+                        let student = specificList ? specificList[idx] : (regularList && idx < regularList.length ? regularList[idx] : null);
+                        
+                        if(student) {
+                            let hue = (student.class.charCodeAt(0) * 40) % 360;
+                            html += `<div class="seat" style="background:hsl(${hue}, 70%, 95%); border-color:hsl(${hue}, 50%, 75%)">
+                                <span>${student.roll}</span>
+                                <span class="class-tag">${student.class}</span>
+                                <span class="sub-tag">${student.sub || '-'}</span>
+                            </div>`;
+                            
+                            let key = `${student.class} | ${student.sub}`;
+                            if(!summary[key]) summary[key] = {room: rm, count: 0, min: student.roll, max: student.roll};
+                            summary[key].count++;
+                            if(student.roll > summary[key].max) summary[key].max = student.roll;
+                            if(student.roll < summary[key].min) summary[key].min = student.roll;
+                        } else {
+                            html += `<div class="seat empty">Empty</div>`;
+                        }
+                        idx++;
+                    }
+                }
+                html += `</div></div>`;
+                out.innerHTML += html;
+            }
+
+            // Generate Summary Page
+            let sumHtml = `<div class="print-page summary-page">
+                <div class="print-header">
+                    <h1>${config.school}</h1>
+                    <h2>${config.exam} - Master Summary Report</h2>
+                    <div class="print-meta">
+                        <span>Date: ${formattedDate}</span>
+                        <span>Total Rooms: ${config.numRooms}</span>
+                        <span>Session: ${config.session}</span>
+                    </div>
+                </div>
+                <table class="summary-table">
+                <tr><th>Room</th><th>Class & Gender</th><th>Subject</th><th>Roll Range</th><th>Count</th></tr>`;
+            
+            let totalAllocated = 0;
+            for(let k in summary) {
+                let [cls, sub] = k.split(' | ');
+                sumHtml += `<tr><td>Hall ${summary[k].room}</td><td>${cls}</td><td>${sub}</td><td>${summary[k].min} - ${summary[k].max}</td><td>${summary[k].count}</td></tr>`;
+                totalAllocated += summary[k].count;
+            }
+            sumHtml += `<tr style="font-weight:bold; background:#F3F4F6"><td colspan="4" style="text-align:right">Total Students Allocated:</td><td>${totalAllocated}</td></tr></table></div>`;
+            out.insertAdjacentHTML('afterbegin', sumHtml);
+
+            // Print Buttons setup
+            let btns = document.getElementById('roomPrintButtons');
+            btns.innerHTML = '';
+            for(let i=1; i<=config.numRooms; i++) {
+                btns.innerHTML += `<button class="btn btn-outline" onclick="printSpecificRoom(${i})">Print Hall ${i}</button>`;
+            }
+
+            document.getElementById('formView').style.display = 'none';
+            document.getElementById('resultView').style.display = 'block';
+        }
+
+        function resetPrintStyles() { document.body.classList.remove('print-summary-only', 'print-master'); document.body.removeAttribute('data-print-room'); }
+        function printSummary() { resetPrintStyles(); document.body.classList.add('print-summary-only'); window.print(); }
+        function printMaster() { resetPrintStyles(); document.body.classList.add('print-master'); window.print(); }
+        function printSpecificRoom(rm) { resetPrintStyles(); document.body.setAttribute('data-print-room', rm); window.print(); }
+    </script>
+</body>
+</html>

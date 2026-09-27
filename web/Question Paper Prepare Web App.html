@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Maths Question Paper Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            startup: { typeset: false }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&family=Poppins:wght@300;400;600;700&family=Tiro+Tamil:ital@0;1&display=swap');
+        
+        body { 
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Poppins', 'Tiro Tamil', sans-serif; 
+            margin: 0; color: #333; min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* Language Switcher */
+        .lang-switch-container { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
+        .lang-btn { background: white; color: #4f46e5; border: 2px solid #4f46e5; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .lang-btn.active { background: #4f46e5; color: white; }
+
+        .bg-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.6); }
+
+        .tab-btn { padding: 10px 24px; font-weight: bold; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; }
+        .tab-active { background: #4f46e5; color: white; border-color: #4338ca; box-shadow: 0 4px 15px rgba(79,70,229,0.4); }
+        .tab-inactive { background: rgba(255,255,255,0.6); color: #475569; border-color: #cbd5e1; }
+        .tab-inactive:hover { background: white; border-color: #94a3b8; transform: translateY(-2px); }
+
+        .a4-paper { width: 210mm; min-height: 297mm; background: white; margin: 0 auto; padding: 1.5cm; box-shadow: 0 15px 35px rgba(0,0,0,0.15); font-family: 'Times New Roman', Times, 'Tiro Tamil', serif; color: #000; display: flex; flex-direction: column; border-radius: 4px; }
+        .paper-header { text-align: center; margin-bottom: 10px; }
+        .paper-header h1 { font-size: 20px; font-weight: bold; margin-bottom: 4px; text-transform: uppercase; }
+        .paper-header h2 { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+        .paper-header h3 { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
+        
+        .meta-info { display: flex; justify-content: space-between; font-size: 15px; font-weight: bold; margin-bottom: 5px; align-items: flex-start; }
+        .thick-hr { border: none; border-top: 2px solid #000; border-bottom: 1px solid #000; height: 3px; margin: 10px 0 15px 0; }
+
+        .part-header { display: flex; justify-content: space-between; align-items: flex-start; font-weight: bold; font-size: 15px; margin-top: 15px; margin-bottom: 10px; }
+        .part-title { text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+        .part-main-text { font-size: 16px; text-transform: uppercase; margin-bottom: 2px; }
+        .part-sub-text { font-weight: normal; font-size: 14px; }
+        .part-marks { white-space: nowrap; font-size: 15px; min-width: 80px; text-align: right; }
+        
+        .question-content { font-size: 15px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 15px; padding-left: 5px;}
+        .question-content img { max-width: 250px; display: block; margin: 10px auto; border: 1px solid #ccc; border-radius: 4px; }
+
+        .end-line { text-align: center; margin-top: 30px; margin-bottom: 30px; font-size: 14px; font-weight: bold; }
+        .end-line::before, .end-line::after { content: " ---------------- "; letter-spacing: 2px; }
+        .paper-footer-container { margin-top: auto; padding-top: 20px; }
+        .paper-footer { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
+        .footer-left { width: 100px; text-align: left; }
+        .footer-center { flex-grow: 1; text-align: center; font-style: italic; }
+        .footer-right { width: 100px; text-align: right; }
+
+        input[type="text"], textarea { width: 100%; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; transition: all 0.3s; background: rgba(255,255,255,0.8); font-size: 14px; }
+        input[type="text"]:focus, textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); background: white;}
+        textarea { font-family: monospace; }
+
+        .math-keyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 6px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .math-btn { background: white; border: 1px solid #cbd5e1; padding: 6px 2px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; transition: all 0.2s; color: #4338ca; display: flex; align-items: center; justify-content: center; }
+        .math-btn:hover { background: #4f46e5; color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3); border-color: #4f46e5; }
+        .kbd-title { grid-column: 1 / -1; font-size: 11px; font-weight: bold; color: #64748b; margin-top: 6px; margin-bottom: 4px; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+
+        .img-upload-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.3s; box-shadow: 0 2px 4px rgba(217, 119, 6, 0.3); }
+        .img-upload-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(217, 119, 6, 0.4); }
+
+        .fab-container { position: sticky; bottom: 20px; display: flex; gap: 12px; justify-content: center; margin-top: 20px; z-index: 50; }
+        .fab-btn { padding: 14px 28px; border-radius: 50px; font-weight: bold; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 8px; border: none; font-size: 15px; }
+        .fab-update { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .fab-print { background: linear-gradient(135deg, #10b981, #059669); }
+        .fab-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.35); }
+
+        .dev-footer-container { display: flex; justify-content: center; align-items: center; padding: 20px 0; width: 100%; margin-top: auto; }
+        .dev-footer-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 12px 30px; border-radius: 50px; font-weight: bold; font-size: 15px; box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4); display: inline-flex; align-items: center; gap: 8px; cursor: default; }
+
+        @media print {
+            body { background: white; margin: 0; padding: 0; animation: none; }
+            .bg-shapes, .no-print, .lang-switch-container { display: none !important; }
+            .a4-paper { box-shadow: none; margin: 0; width: 100%; height: 100%; padding: 0; }
+            @page { size: A4; margin: 1.5cm; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="lang-switch-container no-print">
+        <button id="btn-ta" class="lang-btn active" onclick="setLanguage('ta')">தமிழ்</button>
+        <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">English</button>
+    </div>
+
+    <div class="bg-shapes"></div>
+    <input type="file" id="globalImageUploader" accept="image/*" style="display: none;">
+
+    <div class="glass-panel text-center p-5 m-4 mt-10 no-print border border-white/60">
+        <h1 id="mainTitle" class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 mb-3">
+            சிறந்த வினாத்தாள் உருவாக்கி (Pro Question Paper Maker)
+        </h1>
+        
+        <div class="flex justify-center gap-4 mt-2">
+            <button id="btn100" class="tab-btn tab-active" onclick="switchMode(100)">100 Marks (காலாண்டு/அரையாண்டு)</button>
+            <button id="btn50" class="tab-btn tab-inactive" onclick="switchMode(50)">50 Marks (அலகுத் தேர்வு)</button>
+        </div>
+    </div>
+
+    <div class="max-w-[1500px] mx-auto flex flex-col lg:flex-row gap-8 p-4">
+        
+        <div class="w-full lg:w-5/12 glass-panel p-6 no-print max-h-[75vh] overflow-y-auto">
+            
+            <h2 id="sec1Title" class="text-lg font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">1. வினாத்தாள் அமைப்பு</h2>
+            <div class="space-y-4 mb-8">
+                <div><label id="lSchName" class="font-bold text-gray-700 text-sm mb-1 block">பள்ளி பெயர்</label>
+                <input type="text" id="schName" value="GOVERNMENT HIGHER SECONDARY SCHOOL"></div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label id="lExmName" class="font-bold text-gray-700 text-sm mb-1 block">தேர்வு பெயர்</label>
+                    <input type="text" id="exmName" value="Quarterly Examination - 2026"></div>
+                    <div><label id="lSubName" class="font-bold text-gray-700 text-sm mb-1 block">பாடம்</label>
+                    <input type="text" id="subName" value="MATHEMATICS"></div>
+                </div>
+                
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div><label id="lClass" class="font-bold text-gray-700 text-sm mb-1 block">வகுப்பு</label>
+                    <input type="text" id="exmClass" value="10th Standard"></div>
+                    <div><label id="lDate" class="font-bold text-gray-700 text-sm mb-1 block">தேதி</label>
+                    <input type="text" id="exmDate" value="22.09.2026"></div>
+                    <div><label id="lTime" class="font-bold text-gray-700 text-sm mb-1 block">நேரம்</label>
+                    <input type="text" id="exmTime" value="3.00 Hours"></div>
+                    <div><label id="lMarks" class="font-bold text-gray-700 text-sm mb-1 block">மொத்த மதிப்பெண்கள்</label>
+                    <input type="text" id="exmMarks" value="100"></div>
+                </div>
+            </div>
+
+            <h2 id="sec2Title" class="text-lg font-bold text-indigo-800 mb-3 border-b-2 border-indigo-200 pb-2 flex justify-between items-center">
+                2. வினாக்களை உள்ளிடுக
+            </h2>
+
+            <div class="math-keyboard no-print" id="mathKeyboard">
+                <div class="kbd-title mt-0">Basics & Blocks</div>
+                <button class="math-btn" onclick="insertMath('$...$')" title="Inline Math">$ $</button>
+                <button class="math-btn" onclick="insertMath('$$...$$')" title="Display Math">$$ $$</button>
+                <button class="math-btn" onclick="insertMath('\\frac{a}{b}')">a/b</button>
+                <button class="math-btn" onclick="insertMath('x^2')">x²</button>
+                <button class="math-btn" onclick="insertMath('x^{y}')">xʸ</button>
+                <button class="math-btn" onclick="insertMath('x_{n}')">xₙ</button>
+                <button class="math-btn" onclick="insertMath('\\sqrt{x}')">√</button>
+
+                <div class="kbd-title">Operators & Relations</div>
+                <button class="math-btn" onclick="insertMath('\\times')">×</button>
+                <button class="math-btn" onclick="insertMath('\\div')">÷</button>
+                <button class="math-btn" onclick="insertMath('\\pm')">±</button>
+                <button class="math-btn" onclick="insertMath('\\neq')">≠</button>
+                <button class="math-btn" onclick="insertMath('\\le')">≤</button>
+                <button class="math-btn" onclick="insertMath('\\ge')">≥</button>
+
+                <div class="kbd-title">Symbols & Calculus</div>
+                <button class="math-btn" onclick="insertMath('\\pi')">π</button>
+                <button class="math-btn" onclick="insertMath('\\theta')">θ</button>
+                <button class="math-btn" onclick="insertMath('\\alpha')">α</button>
+                <button class="math-btn" onclick="insertMath('\\beta')">β</button>
+                <button class="math-btn" onclick="insertMath('\\sum_{i=1}^{n}')">∑</button>
+                <button class="math-btn" onclick="insertMath('\\int_{a}^{b}')">∫</button>
+                <button class="math-btn" onclick="insertMath('\\cup')">∪</button>
+                <button class="math-btn" onclick="insertMath('\\cap')">∩</button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Part I -->
+                <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-200">
+                    <div class="flex justify-between items-end mb-3">
+                        <div class="w-2/3">
+                            <label id="lInst1" class="font-bold text-gray-700 text-xs mb-1 block">பகுதி I குறிப்புகள்</label>
+                            <input type="text" id="inst1" value="சரியான விடையைத் தேர்ந்தெடுக்கவும்.">
+                        </div>
+                        <input type="text" id="m1" value="14 &times; 1 = 14" class="w-24 text-right font-bold">
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label id="lQ1" class="text-xs font-bold text-indigo-600">வினாக்கள் (பகுதி I)</label>
+                        <button onclick="triggerImageUpload('q1')" class="img-upload-btn"><span class="txt-imgBtn">🖼️ படம் சேர்</span></button>
+                    </div>
+                    <textarea id="q1" rows="4" placeholder="1. Type question..."></textarea>
+                </div>
+                
+                <!-- Part II -->
+                <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-200">
+                    <div class="flex justify-between items-end mb-3">
+                        <div class="w-2/3">
+                            <label id="lInst2" class="font-bold text-gray-700 text-xs mb-1 block">பகுதி II குறிப்புகள்</label>
+                            <input type="text" id="inst2" value="ஏதேனும் 10 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 28 கட்டாயமாகும்.">
+                        </div>
+                        <input type="text" id="m2" value="10 &times; 2 = 20" class="w-24 text-right font-bold">
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label id="lQ2" class="text-xs font-bold text-indigo-600">வினாக்கள் (பகுதி II)</label>
+                        <button onclick="triggerImageUpload('q2')" class="img-upload-btn"><span class="txt-imgBtn">🖼️ படம் சேர்</span></button>
+                    </div>
+                    <textarea id="q2" rows="4" placeholder="15. Type question..."></textarea>
+                </div>
+
+                <!-- Part III -->
+                <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-200">
+                    <div class="flex justify-between items-end mb-3">
+                        <div class="w-2/3">
+                            <label id="lInst5" class="font-bold text-gray-700 text-xs mb-1 block">பகுதி III குறிப்புகள்</label>
+                            <input type="text" id="inst5" value="ஏதேனும் 10 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 42 கட்டாயமாகும்.">
+                        </div>
+                        <input type="text" id="m5" value="10 &times; 5 = 50" class="w-24 text-right font-bold">
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label id="lQ5" class="text-xs font-bold text-indigo-600">வினாக்கள் (பகுதி III)</label>
+                        <button onclick="triggerImageUpload('q5')" class="img-upload-btn"><span class="txt-imgBtn">🖼️ படம் சேர்</span></button>
+                    </div>
+                    <textarea id="q5" rows="4" placeholder="29. Type question..."></textarea>
+                </div>
+
+                <!-- Part IV -->
+                <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-200" id="part4Container">
+                    <div class="flex justify-between items-end mb-3">
+                        <div class="w-2/3">
+                            <label id="lInst8" class="font-bold text-gray-700 text-xs mb-1 block">பகுதி IV குறிப்புகள்</label>
+                            <input type="text" id="inst8" value="பின்வரும் வினாக்களுக்கு விடையளிக்கவும்.">
+                        </div>
+                        <input type="text" id="m8" value="2 &times; 8 = 16" class="w-24 text-right font-bold">
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label id="lQ8" class="text-xs font-bold text-indigo-600">வினாக்கள் (பகுதி IV)</label>
+                        <button onclick="triggerImageUpload('q8')" class="img-upload-btn"><span class="txt-imgBtn">🖼️ படம் சேர்</span></button>
+                    </div>
+                    <textarea id="q8" rows="4" placeholder="43. Type question..."></textarea>
+                </div>
+            </div>
+
+            <h2 id="sec3Title" class="text-lg font-bold text-indigo-800 mt-8 mb-4 border-b-2 border-indigo-200 pb-2">3. அடிக்குறிப்பு அமைப்பு</h2>
+            <div class="mb-6">
+                <label id="lFooter" class="font-bold text-gray-700 text-sm mb-1 block">தயாரித்தவர் (Center Alignment)</label>
+                <input type="text" id="authorName" value="Prepared by: Y. Seenivasan, M.Sc, B.Ed." class="text-center">
+            </div>
+
+            <div class="fab-container">
+                <button onclick="generatePaper()" class="fab-btn fab-update">
+                    <span>🔄</span> <span id="btnUpdate">முன்னோட்டத்தைப் புதுப்பி</span>
+                </button>
+                <button onclick="window.print()" class="fab-btn fab-print">
+                    <span>🖨️</span> <span id="btnPrint">வினாத்தாளை அச்சிடு</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-7/12 overflow-x-auto flex justify-center pb-10">
+            <div id="printable-paper" class="a4-paper">
+                <div class="paper-header">
+                    <h1 id="outSchName">GOVERNMENT HIGHER SECONDARY SCHOOL</h1>
+                    <h2 id="outExmName">Quarterly Examination - 2026</h2>
+                    <h3 id="outSubName">MATHEMATICS</h3>
+                </div>
+                
+                <div class="meta-info">
+                    <div>
+                        <div><span id="txtClass">Class:</span> <span id="outClass">10th Standard</span></div>
+                        <div><span id="txtDate">Date:</span> <span id="outDate">22.09.2026</span></div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div><span id="txtTime">Time:</span> <span id="outTime">3.00 Hours</span></div>
+                        <div><span id="txtMarks">Max. Marks:</span> <span id="outMarks">100</span></div>
+                    </div>
+                </div>
+                
+                <hr class="thick-hr">
+
+                <div id="outPaperContent">
+                    <div class="text-center italic mt-10 text-gray-500">Update preview to see questions here...</div>
+                </div>
+
+                <div class="paper-footer-container">
+                    <div id="endLine" class="end-line">வினாத்தாள் முடிவடைந்தது</div>
+                    <div class="paper-footer">
+                        <div class="footer-left"></div>
+                        <div class="footer-center" id="outAuthorName">Developed by: Y. Seenivasan, M.Sc, B.Ed. Maths Teacher - 8489880553</div>
+                        <div class="footer-right"><span id="txtPage">பக்கம்</span> <span class="pageNumber">1</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dev-footer-container no-print">
+        <div class="dev-footer-btn">
+            <span>👨‍💻</span> Developed by Y. Seenivasan, M.Sc., B.Ed., Maths Teacher
+        </div>
+    </div>
+
+    <script>
+        const i18n = {
+            en: {
+                title: "Pro Question Paper Maker",
+                btn100: "100 Marks (Quarterly/Half-Yearly)", btn50: "50 Marks (Unit Test)",
+                s1: "1. Paper Settings", lSch: "School Name", lExm: "Exam Name", lSub: "Subject", lCls: "Class", lDt: "Date", lTm: "Time", lMk: "Max Marks",
+                s2: "2. Enter Questions", i1: "Part I Instruction", q1: "Questions (Part I)", i2: "Part II Instruction", q2: "Questions (Part II)", i5: "Part III Instruction", q5: "Questions (Part III)", i8: "Part IV Instruction", q8: "Questions (Part IV)",
+                s3: "3. Footer Settings", lFtr: "Prepared By (Center Alignment)", btnUp: "Update Preview", btnPr: "Print Paper",
+                txtC: "Class:", txtD: "Date:", txtT: "Time:", txtM: "Max. Marks:", txtP: "Page", endL: "End of the Question Paper", imgB: "🖼️ Insert Image",
+                alertM: "Please click on a text area before inserting Math symbols."
+            },
+            ta: {
+                title: "சிறந்த வினாத்தாள் உருவாக்கி (Pro Question Paper Maker)",
+                btn100: "100 மதிப்பெண்கள் (காலாண்டு/அரையாண்டு)", btn50: "50 மதிப்பெண்கள் (அலகுத் தேர்வு)",
+                s1: "1. வினாத்தாள் அமைப்பு", lSch: "பள்ளி பெயர்", lExm: "தேர்வு பெயர்", lSub: "பாடம்", lCls: "வகுப்பு", lDt: "தேதி", lTm: "நேரம்", lMk: "மொத்த மதிப்பெண்கள்",
+                s2: "2. வினாக்களை உள்ளிடுக", i1: "பகுதி I குறிப்புகள்", q1: "வினாக்கள் (பகுதி I)", i2: "பகுதி II குறிப்புகள்", q2: "வினாக்கள் (பகுதி II)", i5: "பகுதி III குறிப்புகள்", q5: "வினாக்கள் (பகுதி III)", i8: "பகுதி IV குறிப்புகள்", q8: "வினாக்கள் (பகுதி IV)",
+                s3: "3. அடிக்குறிப்பு அமைப்பு", lFtr: "தயாரித்தவர் (Center Alignment)", btnUp: "முன்னோட்டத்தைப் புதுப்பி", btnPr: "வினாத்தாளை அச்சிடு",
+                txtC: "வகுப்பு:", txtD: "தேதி:", txtT: "நேரம்:", txtM: "மதிப்பெண்கள்:", txtP: "பக்கம்", endL: "வினாத்தாள் முடிவடைந்தது", imgB: "🖼️ படம் சேர்",
+                alertM: "தயவுசெய்து ஒரு வினா கட்டத்தை (Textarea) கிளிக் செய்துவிட்டு, பின் குறியீட்டை அழுத்தவும்."
+            }
+        };
+
+        let currentLang = 'ta';
+        let lastFocused = null;
+        let imageTargetArea = null;
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('btn-ta').classList.toggle('active', lang === 'ta');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            const t = i18n[lang];
+            document.getElementById('mainTitle').innerText = t.title;
+            document.getElementById('btn100').innerText = t.btn100; document.getElementById('btn50').innerText = t.btn50;
+            
+            document.getElementById('sec1Title').innerText = t.s1;
+            document.getElementById('lSchName').innerText = t.lSch; document.getElementById('lExmName').innerText = t.lExm; document.getElementById('lSubName').innerText = t.lSub;
+            document.getElementById('lClass').innerText = t.lCls; document.getElementById('lDate').innerText = t.lDt; document.getElementById('lTime').innerText = t.lTm; document.getElementById('lMarks').innerText = t.lMk;
+            
+            document.getElementById('sec2Title').innerText = t.s2;
+            document.getElementById('lInst1').innerText = t.i1; document.getElementById('lQ1').innerText = t.q1;
+            document.getElementById('lInst2').innerText = t.i2; document.getElementById('lQ2').innerText = t.q2;
+            document.getElementById('lInst5').innerText = t.i5; document.getElementById('lQ5').innerText = t.q5;
+            document.getElementById('lInst8').innerText = t.i8; document.getElementById('lQ8').innerText = t.q8;
+            
+            document.getElementById('sec3Title').innerText = t.s3; document.getElementById('lFooter').innerText = t.lFtr;
+            document.getElementById('btnUpdate').innerText = t.btnUp; document.getElementById('btnPrint').innerText = t.btnPr;
+            
+            document.getElementById('txtClass').innerText = t.txtC; document.getElementById('txtDate').innerText = t.txtD;
+            document.getElementById('txtTime').innerText = t.txtT; document.getElementById('txtMarks').innerText = t.txtM;
+            document.getElementById('txtPage').innerText = t.txtP; document.getElementById('endLine').innerText = t.endL;
+            
+            document.querySelectorAll('.txt-imgBtn').forEach(el => el.innerText = t.imgB);
+            generatePaper();
+        }
+
+        document.querySelectorAll('textarea').forEach(ta => { ta.addEventListener('focus', () => { lastFocused = ta; }); });
+
+        function insertMath(tex) {
+            if (!lastFocused) { alert(i18n[currentLang].alertM); return; }
+            const start = lastFocused.selectionStart; const end = lastFocused.selectionEnd; const text = lastFocused.value;
+            const before = text.substring(0, start); const after  = text.substring(end, text.length);
+            lastFocused.value = before + tex + after;
+            
+            let offset = tex.length;
+            if(tex === '$...$' || tex === '$$...$$') offset = tex.indexOf('.') !== -1 ? tex.indexOf('.') : tex.length/2;
+            else if(tex.includes('{}')) offset = tex.indexOf('{') + 1;
+            lastFocused.selectionStart = lastFocused.selectionEnd = start + offset; lastFocused.focus();
+        }
+
+        const uploader = document.getElementById('globalImageUploader');
+        function triggerImageUpload(textAreaId) { imageTargetArea = document.getElementById(textAreaId); uploader.click(); }
+        uploader.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && imageTargetArea) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imgTag = `\n<img src="${event.target.result}" />\n`;
+                    const start = imageTargetArea.selectionStart; const text = imageTargetArea.value;
+                    const before = text.substring(0, start); const after  = text.substring(start, text.length);
+                    imageTargetArea.value = before + imgTag + after; generatePaper();
+                };
+                reader.readAsDataURL(file);
+            }
+            uploader.value = '';
+        });
+
+        let currentMode = 100;
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById('btn100').className = mode === 100 ? 'tab-btn tab-active' : 'tab-btn tab-inactive';
+            document.getElementById('btn50').className = mode === 50 ? 'tab-btn tab-active' : 'tab-btn tab-inactive';
+
+            if(mode === 100) {
+                document.getElementById('exmName').value = "Quarterly Examination - 2026";
+                document.getElementById('exmTime').value = "3.00 Hours";
+                document.getElementById('exmMarks').value = "100";
+                document.getElementById('inst1').value = currentLang === 'ta' ? "சரியான விடையைத் தேர்ந்தெடுக்கவும்." : "Choose the correct answer."; document.getElementById('m1').value = "14 \u00D7 1 = 14";
+                document.getElementById('inst2').value = currentLang === 'ta' ? "ஏதேனும் 10 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 28 கட்டாயமாகும்." : "Answer any 10 of the following. Question No. 28 is compulsory."; document.getElementById('m2').value = "10 \u00D7 2 = 20";
+                document.getElementById('inst5').value = currentLang === 'ta' ? "ஏதேனும் 10 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 42 கட்டாயமாகும்." : "Answer any 10 of the following. Question No. 42 is compulsory."; document.getElementById('m5').value = "10 \u00D7 5 = 50";
+                document.getElementById('inst8').value = currentLang === 'ta' ? "பின்வரும் வினாக்களுக்கு விடையளிக்கவும்." : "Answer the following questions."; document.getElementById('m8').value = "2 \u00D7 8 = 16";
+                document.getElementById('part4Container').style.display = "block";
+            } else {
+                document.getElementById('exmName').value = "Unit Test - I";
+                document.getElementById('exmTime').value = "1.30 Hours";
+                document.getElementById('exmMarks').value = "50";
+                document.getElementById('inst1').value = currentLang === 'ta' ? "சரியான விடையைத் தேர்ந்தெடுக்கவும்." : "Choose the correct answer."; document.getElementById('m1').value = "8 \u00D7 1 = 8";
+                document.getElementById('inst2').value = currentLang === 'ta' ? "ஏதேனும் 6 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 14 கட்டாயமாகும்." : "Answer any 6 questions. Question No. 14 is compulsory."; document.getElementById('m2').value = "6 \u00D7 2 = 12";
+                document.getElementById('inst5').value = currentLang === 'ta' ? "ஏதேனும் 6 வினாக்களுக்கு விடையளிக்கவும். வினா எண் 22 கட்டாயமாகும்." : "Answer any 6 questions. Question No. 22 is compulsory."; document.getElementById('m5').value = "6 \u00D7 5 = 30";
+                document.getElementById('inst8').value = ""; document.getElementById('m8').value = ""; document.getElementById('q8').value = "";
+                document.getElementById('part4Container').style.display = "none";
+            }
+            generatePaper();
+        }
+
+        function generatePaper() {
+            document.getElementById('outSchName').innerText = document.getElementById('schName').value; document.getElementById('outExmName').innerText = document.getElementById('exmName').value; document.getElementById('outSubName').innerText = document.getElementById('subName').value;
+            document.getElementById('outClass').innerText = document.getElementById('exmClass').value; document.getElementById('outDate').innerText = document.getElementById('exmDate').value; document.getElementById('outTime').innerText = document.getElementById('exmTime').value; document.getElementById('outMarks').innerText = document.getElementById('exmMarks').value; document.getElementById('outAuthorName').innerText = document.getElementById('authorName').value;
+
+            const partsData = [
+                { id: 'q1', partNum: 'PART - I', instr: document.getElementById('inst1').value, marks: document.getElementById('m1').value },
+                { id: 'q2', partNum: 'PART - II', instr: document.getElementById('inst2').value, marks: document.getElementById('m2').value },
+                { id: 'q5', partNum: 'PART - III', instr: document.getElementById('inst5').value, marks: document.getElementById('m5').value },
+                { id: 'q8', partNum: 'PART - IV', instr: document.getElementById('inst8').value, marks: document.getElementById('m8').value }
+            ];
+
+            let contentHTML = '';
+            partsData.forEach(part => {
+                const qText = document.getElementById(part.id).value.trim();
+                if (qText !== '' && part.marks !== '') {
+                    let styledInstr = part.instr.replace(/(compulsory|கட்டாயமாகும்)/gi, '<span class="compulsory-note font-bold">$1</span>');
+                    contentHTML += `
+                    <div class="part-header">
+                        <div style="width: 80px;"></div>
+                        <div class="part-title">
+                            <div class="part-main-text">${part.partNum}</div>
+                            <div class="part-sub-text">${styledInstr}</div>
+                        </div>
+                        <div class="part-marks">${part.marks.replace('x', '&times;')}</div>
+                    </div>
+                    <div class="question-content">${escapeHTML(qText)}</div>`;
+                }
+            });
+
+            const contentDiv = document.getElementById('outPaperContent');
+            contentDiv.innerHTML = contentHTML !== '' ? contentHTML : '<div class="text-center italic mt-10 text-gray-500">No questions entered.</div>';
+            if (window.MathJax) { MathJax.typesetClear([contentDiv]); MathJax.typesetPromise([contentDiv]); }
+        }
+
+        function escapeHTML(str) { return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&lt;img src="([^"]+)" \/&gt;/g, '<img src="$1" />'); }
+
+        window.onload = () => {
+            document.getElementById('q1').value = "1. If $n(A) = 2$ and $n(B \\cup C) = 3$, then $n[(A \\times B) \\cup (A \\times C)]$ is:\n   a) $2$    b) $3$    c) $6$    d) $5$";
+            document.getElementById('q5').value = "29. State and prove Pythagoras Theorem.\n\n42. Prove that $\\frac{\\sin \\theta}{1 + \\cos \\theta} + \\frac{1 + \\cos \\theta}{\\sin \\theta} = 2\\csc \\theta$";
+            lastFocused = document.getElementById('q1');
+            setLanguage('ta');
+        }
+    </script>
+</body>
+</html>

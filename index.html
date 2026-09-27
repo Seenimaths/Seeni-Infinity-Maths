@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeni Infinity Maths</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            chtml: { mtextInheritFont: true }, svg: { mtextInheritFont: true }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Times New Roman', 'Tiro Tamil', sans-serif;
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-color: #0f172a; 
+            /* Full Page Konigsberg Bridge Background */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5d/Konigsberg_bridges.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-blend-mode: overlay; /* Darkens image for better text readability */
+        }
+
+        /* Faint Ramanujan Overlay Centered */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c8/Srinivasa_Ramanujan_-_OPC_-_1.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.05; 
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Math Canvas Background (Floating Math Symbols) */
+        #math-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85); /* Slightly darker for better contrast */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
+        }
+        
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating Animations for Cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1s; }
+        .delay-3 { animation-delay: 1.5s; }
+
+        /* Marquee */
+        .marquee-wrapper {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 40;
+        }
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-marquee 20s linear infinite;
+            font-weight: 600;
+        }
+        @keyframes scroll-marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+
+        /* Custom Toast Notification */
+        #toast-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            border-left: 4px solid #3b82f6;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: slideIn 0.3s ease-out forwards;
+            backdrop-filter: blur(8px);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative">
+
+    <!-- Math Symbols Canvas Background -->
+    <canvas id="math-canvas"></canvas>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="glass-nav sticky top-0 z-50 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-blue-400 text-2xl md:text-3xl mr-2">♾️</span> 
+                    <span class="text-xl md:text-2xl font-bold text-white bilingual" data-en="Seeni Infinity Maths" data-ta="சீனி இன்ஃபினிட்டி மேக்ஸ்">சீனி இன்ஃபினிட்டி மேக்ஸ்</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex lg:items-center lg:space-x-6">
+                    <a href="#about-me" class="text-gray-200 hover:text-blue-400 font-semibold transition-colors bilingual" data-en="About Us" data-ta="என்னைப்பற்றி">என்னைப்பற்றி</a>
+                    <a href="#mathematicians" class="text-gray-200 hover:text-blue-400 font-semibold transition-colors bilingual" data-en="Mathematicians" data-ta="கணித மேதைகள்">கணித மேதைகள்</a>
+                    <a href="#features" class="text-gray-200 hover:text-blue-400 font-semibold transition-colors bilingual" data-en="Quizzes & PDFs" data-ta="வினாடி வினா & PDF">வினாடி வினா & PDF</a>
+                    
+                    <!-- Language Toggle -->
+                    <button id="langToggleDesktop" class="ml-2 bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-full font-bold text-sm shadow border border-slate-600 transition-transform flex items-center gap-2">
+                        <i class="fas fa-language text-blue-400"></i> <span class="currentLangLabel">English</span>
+                    </button>
+
+                    <!-- Auth Buttons (Desktop) -->
+                    <div id="desktop-auth-container" class="flex items-center space-x-3 ml-4 pl-4 border-l border-gray-600">
+                        <button onclick="ui.openModal('auth-modal');" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full font-bold shadow-lg transition-colors bilingual" data-en="Student Login" data-ta="மாணவர் உள்நுழைவு">மாணவர் உள்நுழைவு</button>
+                    </div>
+                    <!-- User Profile (Desktop) -->
+                    <div id="desktop-user-container" class="hidden items-center space-x-4 ml-4 pl-4 border-l border-gray-600">
+                        <div class="text-sm text-right leading-tight">
+                            <span class="text-gray-400 text-xs bilingual" data-en="Welcome," data-ta="வரவேற்கிறது,">வரவேற்கிறது,</span><br>
+                            <span id="desktop-user-email" class="text-blue-300 font-bold max-w-[150px] truncate block"></span>
+                        </div>
+                        <button onclick="appAuth.logoutUser()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-sm font-bold shadow transition-colors bilingual" data-en="Logout" data-ta="வெளியேறு">Logout</button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex items-center lg:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-t border-gray-700 pb-4 shadow-2xl">
+            <div class="px-4 pt-2 pb-3 space-y-2 text-center">
+                <a href="#about-me" class="block px-3 py-2 text-base font-semibold text-gray-200 hover:text-blue-400 hover:bg-slate-800 rounded-md bilingual" data-en="About Us" data-ta="என்னைப்பற்றி">என்னைப்பற்றி</a>
+                <a href="#mathematicians" class="block px-3 py-2 text-base font-semibold text-gray-200 hover:text-blue-400 hover:bg-slate-800 rounded-md bilingual" data-en="Mathematicians" data-ta="கணித மேதைகள்">கணித மேதைகள்</a>
+                <a href="#features" class="block px-3 py-2 text-base font-semibold text-gray-200 hover:text-blue-400 hover:bg-slate-800 rounded-md bilingual" data-en="Quizzes & PDFs" data-ta="வினாடி வினா & PDF">வினாடி வினா & PDF</a>
+                
+                <div class="pt-4 border-t border-gray-700 flex flex-col gap-3 items-center">
+                    <!-- Language Toggle Mobile -->
+                    <button id="langToggleMobile" class="w-full max-w-xs bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow border border-slate-600 flex justify-center items-center gap-2">
+                        <i class="fas fa-language text-blue-400"></i> <span class="currentLangLabel">English</span>
+                    </button>
+
+                    <!-- Auth Mobile -->
+                    <div id="mobile-auth-container" class="w-full max-w-xs flex flex-col gap-2">
+                        <button onclick="ui.openModal('auth-modal');" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-500 bilingual" data-en="Student Login" data-ta="மாணவர் உள்நுழைவு">மாணவர் உள்நுழைவு</button>
+                    </div>
+
+                    <!-- User Profile Mobile -->
+                    <div id="mobile-user-container" class="hidden w-full max-w-xs flex-col items-center gap-2">
+                        <span id="mobile-user-email" class="text-blue-300 font-bold truncate w-full text-center"></span>
+                        <button onclick="appAuth.logoutUser()" class="w-full bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-bold bilingual" data-en="Logout" data-ta="வெளியேறு">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Marquee Banner -->
+    <div class="marquee-wrapper">
+        <div class="marquee-content bilingual" data-en="✨ Welcome to Seeni Infinity Maths! | Empowering students with the magic of Mathematics. ✨" data-ta="✨ சீனி இன்ஃபினிட்டி மேக்ஸ் தங்களை அன்புடன் வரவேற்கிறது! | கணிதத்தின் மாயாஜாலத்துடன் மாணவர்களை மேம்படுத்துவோம். ✨">
+            ✨ சீனி இன்ஃபினிட்டி மேக்ஸ் தங்களை அன்புடன் வரவேற்கிறது! | கணிதத்தின் மாயாஜாலத்துடன் மாணவர்களை மேம்படுத்துவோம். ✨
+        </div>
+    </div>
+
+    <!-- Floating Contact Box (Bottom Right) -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-40">
+        <a href="https://wa.me/918489880553" target="_blank" rel="noopener noreferrer" class="bg-green-500 hover:bg-green-400 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.5)] hover:scale-110 transition-transform duration-300 group relative">
+            <i class="fab fa-whatsapp text-3xl"></i>
+            <span class="absolute right-16 bg-gray-800 text-white px-3 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none bilingual" data-en="WhatsApp Us" data-ta="வாட்ஸ்அப்">வாட்ஸ்அப்</span>
+        </a>
+        <a href="mailto:seenivasan1101@gmail.com" class="bg-red-500 hover:bg-red-400 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:scale-110 transition-transform duration-300 group relative">
+            <i class="fas fa-envelope text-2xl"></i>
+            <span class="absolute right-16 bg-gray-800 text-white px-3 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none bilingual" data-en="Email Us" data-ta="மின்னஞ்சல்">மின்னஞ்சல்</span>
+        </a>
+    </div>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+        
+        <!-- About Me Section -->
+        <section id="about-me" class="glass-panel rounded-2xl p-8 md:p-12 relative overflow-hidden animate-float">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-[100px] opacity-30"></div>
+            
+            <div class="text-center mb-10 relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white border-b-4 border-blue-500 inline-block pb-3 bilingual" data-en="About Me" data-ta="என்னைப்பற்றி (About Me)">என்னைப்பற்றி (About Me)</h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                <img src="Srinivasan.jpg" alt="Seeni Srinivasan" onerror="this.src='https://placehold.co/250x250/1e3a8a/ffffff?text=Seeni+Maths'" class="w-[200px] h-[200px] md:w-[250px] md:h-[250px] rounded-full object-cover border-4 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.5)] flex-shrink-0">
+                
+                <div class="text-lg leading-relaxed text-gray-200">
+                    <p class="mb-4 bilingual" data-en="Hello students! My name is <span class='text-blue-400 font-bold text-2xl'>Seenivasan</span>." data-ta="வணக்கம் மாணவர்களே! எனது பெயர் <span class='text-blue-400 font-bold text-2xl'>சீனிவாசன்</span>.">
+                        வணக்கம் மாணவர்களே! எனது பெயர் <span class="text-blue-400 font-bold text-2xl">சீனிவாசன்</span>.
+                    </p>
+                    <p class="text-justify bilingual" data-en="I am a Mathematics teacher with extensive experience and passion for teaching 10th standard students in the Tamil Nadu State Board curriculum. My primary goal is to make mathematics simple, interesting, and practical for students. This website is specially created to enhance students' mathematical skills and provide practice materials." data-ta="நான், ஒரு கணித ஆசிரியர். குறிப்பாக தமிழ்நாடு மாநில பாடத்திட்டத்தில் (TN State Board) 10-ஆம் வகுப்பு மாணவர்களுக்கு கணிதம் கற்பிப்பதில் அதிக அனுபவமும் ஈடுபாடும் கொண்டுள்ளேன். மாணவர்களுக்கு கணிதத்தை எளிமையாகவும், சுவாரஸ்யமாகவும், செய்முறை விளக்கங்களுடனும் கொண்டு சேர்ப்பதே எனது முதன்மை நோக்கமாகும். இந்த இணையதளம் மாணவர்களின் கணிதத் திறனை மேம்படுத்தவும், பயிற்சி பெறவும் பிரத்யேகமாக உருவாக்கப்பட்டுள்ளது.">
+                        நான், ஒரு கணித ஆசிரியர். குறிப்பாக தமிழ்நாடு மாநில பாடத்திட்டத்தில் (TN State Board) 10-ஆம் வகுப்பு மாணவர்களுக்கு கணிதம் கற்பிப்பதில் அதிக அனுபவமும் ஈடுபாடும் கொண்டுள்ளேன். மாணவர்களுக்கு கணிதத்தை எளிமையாகவும், சுவாரஸ்யமாகவும், செய்முறை விளக்கங்களுடனும் கொண்டு சேர்ப்பதே எனது முதன்மை நோக்கமாகும். இந்த இணையதளம் மாணவர்களின் கணிதத் திறனை மேம்படுத்தவும், பயிற்சி பெறவும் பிரத்யேகமாக உருவாக்கப்பட்டுள்ளது.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indian Mathematicians Section -->
+        <section id="mathematicians">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white border-b-4 border-purple-500 inline-block pb-3 mb-4 bilingual" data-en="Indian Mathematicians" data-ta="இந்திய கணித மேதைகள்">இந்திய கணித மேதைகள்</h2>
+                <p class="text-gray-300 text-lg bilingual" data-en="India's pride who made immense contributions to the world of mathematics." data-ta="கணித உலகிற்கு மாபெரும் பங்களிப்பை வழங்கிய இந்தியாவின் பெருமைகள்.">கணித உலகிற்கு மாபெரும் பங்களிப்பை வழங்கிய இந்தியாவின் பெருமைகள்.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Ramanujan -->
+                <div class="glass-panel rounded-xl p-6 text-center animate-float hover:bg-slate-800 transition-colors border-b-4 border-b-blue-400 shadow-xl">
+                    <img src="seenivasan.jpg" style="object-position: 70% 40%;" alt="Srinivasa Ramanujan" onerror="this.src='https://placehold.co/160x160/3b82f6/ffffff?text=Ramanujan'" class="w-40 h-40 rounded-full border-4 border-blue-400 mb-6 object-cover shadow-lg mx-auto">
+                    <h3 class="text-2xl font-bold text-blue-300 mb-3 bilingual" data-en="Srinivasa Ramanujan" data-ta="ஸ்ரீனிவாச ராமானுஜன்">ஸ்ரீனிவாச ராமானுஜன்</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed text-justify bilingual" data-en="Contribution: Despite lack of formal training, his formulas on Number Theory, Infinite Series, and Continued Fractions are still researched globally. The 'Hardy-Ramanujan Number' (1729) is a famous discovery." data-ta="பங்களிப்பு: முறையான கணிதப் பயிற்சி பெறாமலேயே, எண் கோட்பாடு, முடிவிலி தொடர்கள், மற்றும் தொடர் பின்னங்கள் ஆகியவற்றில் அவர் வழங்கிய சூத்திரங்கள் இன்றும் ஆராயப்பட்டு வருகின்றன. 'ஹார்டி-ராமானுஜன் எண்' (1729) இவரது புகழ்பெற்ற கண்டுபிடிப்புகளில் ஒன்றாகும்.">
+                        <strong>பங்களிப்பு:</strong> முறையான கணிதப் பயிற்சி பெறாமலேயே, எண் கோட்பாடு, முடிவிலி தொடர்கள், மற்றும் தொடர் பின்னங்கள் ஆகியவற்றில் அவர் வழங்கிய சூத்திரங்கள் இன்றும் ஆராயப்பட்டு வருகின்றன. 'ஹார்டி-ராமானுஜன் எண்' (1729) இவரது புகழ்பெற்ற கண்டுபிடிப்புகளில் ஒன்றாகும்.
+                    </p>
+                </div>
+                
+                <!-- Shakuntala Devi -->
+                <div class="glass-panel rounded-xl p-6 text-center animate-float delay-1 hover:bg-slate-800 transition-colors border-b-4 border-b-purple-400 shadow-xl">
+					<img src="sakunthaladevi.jpg" style="object-position: 30% 70%;" alt="Shakuntala Devi" onerror="this.src='https://placehold.co/160x160/a855f7/ffffff?text=Shakuntala'" class="w-40 h-40 rounded-full border-4 border-purple-400 mb-6 object-cover shadow-lg mx-auto">
+                    <h3 class="text-2xl font-bold text-purple-300 mb-3 bilingual" data-en="Shakuntala Devi" data-ta="சகுந்தலா தேவி">சகுந்தலா தேவி</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed text-justify bilingual" data-en="Contribution: Known as the 'Human Computer', she could perform extremely complex mathematical calculations in her mind instantly without any machine. She holds a Guinness Record for multiplying two 13-digit numbers in 28 seconds." data-ta="பங்களிப்பு: மனிதக் கணிப்பொறி என அழைக்கப்படும் இவர், இயந்திரத்தின் உதவியும் இல்லாமல் மிகக் கடினமான கணிதக் கணக்கீடுகளை மனதிலேயே நொடிப்பொழுதில் செய்து முடிப்பவர். 13-இலக்க எண்கள் இரண்டை 28 வினாடிகளில் பெருக்கி கின்னஸ் சாதனை படைத்துள்ளார்.">
+                        <strong>பங்களிப்பு:</strong> "மனிதக் கணிப்பொறி" என அழைக்கப்படும் இவர், இயந்திரத்தின் உதவியும் இல்லாமல் மிகக் கடினமான கணிதக் கணக்கீடுகளை மனதிலேயே நொடிப்பொழுதில் செய்து முடிப்பவர். 13-இலக்க எண்கள் இரண்டை 28 வினாடிகளில் பெருக்கி கின்னஸ் சாதனை படைத்துள்ளார்.
+                    </p>
+                </div>
+
+                <!-- Aryabhata -->
+                <div class="glass-panel rounded-xl p-6 text-center animate-float delay-2 hover:bg-slate-800 transition-colors border-b-4 border-b-green-400 shadow-xl">
+                    <img src="Aaryabhatta.jpg" alt="Aryabhata" onerror="this.src='https://placehold.co/160x160/22c55e/ffffff?text=Aryabhata'" class="w-40 h-40 rounded-full border-4 border-green-400 mb-6 object-cover shadow-lg mx-auto">
+                    <h3 class="text-2xl font-bold text-green-300 mb-3 bilingual" data-en="Aryabhata" data-ta="ஆரியபட்டடா">ஆரியபட்டடா</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed text-justify bilingual" data-en="Contribution: Father of Indian Mathematics and Astronomy. He accurately calculated the value of 'Pi', introduced the use of Zero, Place Value System, and made immense contributions to Trigonometry and Algebra." data-ta="பங்களிப்பு: இந்திய கணிதம் மற்றும் வானவியலின் தந்தை. பூஜ்ஜியத்தின் பயன்பாடு, இடமதிப்பு முறை, மற்றும் 'பை' (Pi) யின் தோராய மதிப்பை மிகத் துல்லியமாக கணக்கிட்டவர். முக்கோணவியல் மற்றும் இயற்கணிதத்தில் அளப்பரிய பங்களிப்புகளை வழங்கியுள்ளார்.">
+                        <strong>பங்களிப்பு:</strong> இந்திய கணிதம் மற்றும் வானவியலின் தந்தை. பூஜ்ஜியத்தின் பயன்பாடு, இடமதிப்பு முறை, மற்றும் 'பை' (Pi) யின் தோராய மதிப்பை மிகத் துல்லியமாக கணக்கிட்டவர். முக்கோணவியல் மற்றும் இயற்கணிதத்தில் அளப்பரிய பங்களிப்புகளை வழங்கியுள்ளார்.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Features Section -->
+        <section id="features">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white border-b-4 border-yellow-500 inline-block pb-3 mb-4 bilingual" data-en="Interactive Learning & Materials" data-ta="பயிற்சிகள் மற்றும் பாடக்குறிப்புகள்">பயிற்சிகள் மற்றும் பாடக்குறிப்புகள்</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Quiz Button Card -->
+                <div class="glass-panel p-6 rounded-2xl text-center animate-float flex flex-col justify-center items-center gap-4 hover:border-blue-500 transition-colors cursor-pointer border border-transparent shadow-2xl" onclick="ui.openModal('quiz-modal')">
+                    <div class="bg-blue-900/50 p-5 rounded-full"><i class="fas fa-laptop-code text-4xl text-blue-400"></i></div>
+                    <h3 class="text-xl font-bold text-white bilingual" data-en="Online Quizzes" data-ta="வினாடி வினாக்கள்">வினாடி வினாக்கள்</h3>
+                    <p class="text-gray-300 text-xs bilingual" data-en="Practice your Maths skills." data-ta="கணித பயிற்சி.">கணித பயிற்சி.</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all mt-auto text-sm">
+                        <span class="bilingual" data-en="Open Quizzes" data-ta="திறக்க கிளிக் செய்யவும்">திறக்க கிளிக் செய்யவும்</span>
+                    </button>
+                </div>
+
+                <!-- PDF Materials Card -->
+                <div class="glass-panel p-6 rounded-2xl text-center animate-float delay-1 flex flex-col justify-center items-center gap-4 hover:border-red-500 transition-colors cursor-pointer border border-transparent shadow-2xl" onclick="ui.openModal('pdf-modal')">
+                    <div class="bg-red-900/50 p-5 rounded-full"><i class="fas fa-file-pdf text-4xl text-red-400"></i></div>
+                    <h3 class="text-xl font-bold text-white bilingual" data-en="Study Materials (PDF)" data-ta="பாடக்குறிப்புகள் (PDF)">பாடக்குறிப்புகள் (PDF)</h3>
+                    <p class="text-gray-300 text-xs bilingual" data-en="Download formula sheets." data-ta="குறிப்புகளை பதிவிறக்கம் செய்ய.">குறிப்புகளை பதிவிறக்கம் செய்ய.</p>
+                    <button class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.5)] transition-all mt-auto text-sm">
+                        <span class="bilingual" data-en="View Materials" data-ta="பொருட்களைப் பார்க்க">பொருட்களைப் பார்க்க</span>
+                    </button>
+                </div>
+
+                <!-- Web Apps Card -->
+                <div class="glass-panel p-6 rounded-2xl text-center animate-float delay-2 flex flex-col justify-center items-center gap-4 hover:border-green-500 transition-colors cursor-pointer border border-transparent shadow-2xl" onclick="ui.openModal('apps-modal')">
+                    <div class="bg-green-900/50 p-5 rounded-full"><i class="fas fa-layer-group text-4xl text-green-400"></i></div>
+                    <h3 class="text-xl font-bold text-white bilingual" data-en="HTML Web Apps" data-ta="இணையப் பயன்பாடுகள்">இணையப் பயன்பாடுகள்</h3>
+                    <p class="text-gray-300 text-xs bilingual" data-en="Explore interactive tools." data-ta="ஊடாடும் கருவிகளை ஆராய.">ஊடாடும் கருவிகளை ஆராய.</p>
+                    <button class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-full shadow-[0_0_15px_rgba(22,163,74,0.5)] transition-all mt-auto text-sm">
+                        <span class="bilingual" data-en="Open Apps" data-ta="பயன்பாடுகளை திறக்க">பயன்பாடுகளை திறக்க</span>
+                    </button>
+                </div>
+
+                <!-- ZIP Files Card -->
+                <div class="glass-panel p-6 rounded-2xl text-center animate-float delay-3 flex flex-col justify-center items-center gap-4 hover:border-yellow-500 transition-colors cursor-pointer border border-transparent shadow-2xl" onclick="ui.openModal('zip-modal')">
+                    <div class="bg-yellow-900/50 p-5 rounded-full"><i class="fas fa-file-archive text-4xl text-yellow-400"></i></div>
+                    <h3 class="text-xl font-bold text-white bilingual" data-en="ZIP Materials" data-ta="ZIP கோப்புகள்">ZIP கோப்புகள்</h3>
+                    <p class="text-gray-300 text-xs bilingual" data-en="Download bundled resources." data-ta="தொகுக்கப்பட்ட கோப்புகளை பதிவிறக்கம் செய்ய.">தொகுக்கப்பட்ட கோப்புகளை பதிவிறக்கம் செய்ய.</p>
+                    <button class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-full shadow-[0_0_15px_rgba(202,138,4,0.5)] transition-all mt-auto text-sm">
+                        <span class="bilingual" data-en="View Archives" data-ta="கோப்புகளைப் பார்க்க">கோப்புகளைப் பார்க்க</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Software Section -->
+        <section id="software">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white border-b-4 border-pink-500 inline-block pb-3 mb-4 bilingual" data-en="Maths Software" data-ta="கணித மென்பொருட்கள்">கணித மென்பொருட்கள்</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="https://www.geogebra.org/" target="_blank" class="glass-panel p-6 rounded-xl text-center hover:bg-slate-800 transition-colors border-l-4 border-blue-500">
+                    <i class="fas fa-shapes text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-blue-300 mb-2">GeoGebra</h3>
+                    <p class="text-gray-300 text-sm bilingual" data-en="Interactive geometry, algebra, and calculus application." data-ta="வடிவியல், இயற்கணிதம் மற்றும் கால்குலஸ் கணக்குகளை வரைபடமாக விளக்கும் மென்பொருள்.">வடிவியல், இயற்கணிதம் மற்றும் கால்குலஸ் கணக்குகளை வரைபடமாக விளக்கும் மென்பொருள்.</p>
+                </a>
+                
+                <a href="https://www.desmos.com/calculator" target="_blank" class="glass-panel p-6 rounded-xl text-center hover:bg-slate-800 transition-colors border-l-4 border-green-500">
+                    <i class="fas fa-chart-line text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-green-300 mb-2">Desmos</h3>
+                    <p class="text-gray-300 text-sm bilingual" data-en="Powerful and fast online graphing calculator." data-ta="சமன்பாடுகளை எளிதாக வரைபடமாக மாற்றிக் காட்டும் வரைபட கால்குலேட்டர்.">சமன்பாடுகளை எளிதாக வரைபடமாக மாற்றிக் காட்டும் வரைபட கால்குலேட்டர்.</p>
+                </a>
+
+                <a href="https://www.robocompass.com/" target="_blank" class="glass-panel p-6 rounded-xl text-center hover:bg-slate-800 transition-colors border-l-4 border-cyan-500">
+                    <i class="fas fa-drafting-compass text-4xl text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-cyan-300 mb-2">Robocompass</h3>
+                    <p class="text-gray-300 text-sm bilingual" data-en="3D geometry construction using virtual compass and ruler." data-ta="3D வடிவியல் அமைப்புகளை கவராயம் மற்றும் அளவுகோல் கொண்டு வரைய உதவும் சாஃப்ட்வேர்.">3D வடிவியல் அமைப்புகளை கவராயம் மற்றும் அளவுகோல் கொண்டு வரைய உதவும் சாஃப்ட்வேர்.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer with Validated Visitor Counter -->
+    <footer class="glass-nav text-center py-10 px-4 mt-auto border-t border-white/20">
+        
+        <!-- Stats Row -->
+        <div class="max-w-md mx-auto flex justify-center items-center bg-black/40 p-5 rounded-2xl border border-white/10 mb-8 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-900/50 p-3 rounded-full animate-pulse">
+                    <i class="fas fa-users text-3xl text-blue-400"></i>
+                </div>
+                <div class="text-left">
+                    <p class="text-sm text-gray-400 font-semibold uppercase tracking-wider bilingual" data-en="Total Visitors" data-ta="மொத்த பார்வையாளர்கள்">மொத்த பார்வையாளர்கள்</p>
+                    <p id="visitor-count" class="text-3xl font-bold text-white tracking-widest drop-shadow-lg">---</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center gap-6 mb-6">
+            <a href="javascript:void(0)" onclick="ui.openModal('privacy-modal')" class="hover:text-blue-400 text-gray-300 transition-colors font-semibold bilingual" data-en="Privacy Policy" data-ta="தனியுரிமை கொள்கை">தனியுரிமை கொள்கை</a>
+            <div class="text-gray-500 hidden md:block">|</div>
+            <a href="mailto:seenivasan1101@gmail.com" class="hover:text-blue-400 text-gray-300 transition-colors font-semibold bilingual" data-en="Contact Us" data-ta="தொடர்புக்கு">தொடர்புக்கு</a>
+        </div>
+        
+        <div class="text-sm text-gray-400">
+            &copy; 2026 Seeni Infinity Maths. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+    
+    <!-- 1. Quizzes Modal -->
+    <div id="quiz-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-4xl max-h-[85vh] rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl">
+            <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-900/90 rounded-t-2xl">
+                <h3 class="text-xl md:text-2xl font-bold text-blue-400 bilingual" data-en="Online Quizzes Directory" data-ta="வினாடி வினா தொகுப்பு"><i class="fas fa-laptop-code mr-2"></i> வினாடி வினா தொகுப்பு</h3>
+                <button onclick="ui.closeModal('quiz-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow">
+                <div id="quiz-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Dynamic content filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. PDF Materials Modal -->
+    <div id="pdf-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-3xl max-h-[85vh] rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl">
+            <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-900/90 rounded-t-2xl">
+                <h3 class="text-xl md:text-2xl font-bold text-red-400 bilingual" data-en="Study Materials & PDFs" data-ta="பாடக்குறிப்புகள் & PDF"><i class="fas fa-file-pdf mr-2"></i> பாடக்குறிப்புகள் & PDF</h3>
+                <button onclick="ui.closeModal('pdf-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow" id="pdf-list-container">
+                <!-- PDF Items Rendered dynamically by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Web Apps Modal -->
+    <div id="apps-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-4xl max-h-[85vh] rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl">
+            <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-900/90 rounded-t-2xl">
+                <h3 class="text-xl md:text-2xl font-bold text-green-400 bilingual" data-en="My HTML Web Apps" data-ta="எனது இணையப் பயன்பாடுகள்"><i class="fas fa-code mr-2"></i> எனது இணையப் பயன்பாடுகள்</h3>
+                <button onclick="ui.closeModal('apps-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="apps-list-container">
+                <!-- Apps Items Rendered dynamically by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ZIP Materials Modal -->
+    <div id="zip-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-3xl max-h-[85vh] rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl">
+            <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-900/90 rounded-t-2xl">
+                <h3 class="text-xl md:text-2xl font-bold text-yellow-400 bilingual" data-en="ZIP Archives" data-ta="ZIP கோப்புகள்"><i class="fas fa-file-archive mr-2"></i> ZIP கோப்புகள்</h3>
+                <button onclick="ui.closeModal('zip-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow" id="zip-list-container">
+                <!-- ZIP Items Rendered dynamically by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Auth Modal (Student Login) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-slate-700 bg-slate-900/90 rounded-t-2xl flex justify-between items-center">
+                <h3 class="text-xl font-bold text-blue-400 bilingual" data-en="Student Login" data-ta="மாணவர் உள்நுழைவு"><i class="fas fa-user-graduate mr-2"></i> மாணவர் உள்நுழைவு</h3>
+                <button onclick="ui.closeModal('auth-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-8 bg-slate-900/70">
+                <form id="auth-form" onsubmit="appAuth.handleAuthSubmit(event)">
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-gray-300 mb-1.5 bilingual" data-en="Student Name" data-ta="மாணவர் பெயர்">மாணவர் பெயர்</label>
+                        <input type="text" id="student-name" required placeholder="பெயரை உள்ளிடவும்" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-colors">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-lg shadow-lg transition-all transform hover:-translate-y-1 bilingual" data-en="Start Learning" data-ta="தொடங்குக">
+                        தொடங்குக
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Privacy Policy Modal -->
+    <div id="privacy-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-2xl max-h-[85vh] rounded-2xl flex flex-col relative border border-slate-600 shadow-2xl">
+            <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-900/90 rounded-t-2xl">
+                <h3 class="text-xl md:text-2xl font-bold text-white bilingual" data-en="Privacy Policy" data-ta="தனியுரிமை கொள்கை"><i class="fas fa-shield-alt text-blue-400 mr-2"></i> தனியுரிமை கொள்கை</h3>
+                <button onclick="ui.closeModal('privacy-modal')" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-5 text-gray-300 text-sm leading-relaxed bg-slate-900/50">
+                <h4 class="font-bold text-blue-300 text-lg border-b border-slate-700 pb-2">1. Information Collection</h4>
+                <p>We do not collect any personal data online. Your name entered during login is stored strictly locally on your device (browser's localStorage) to personalize your experience. No data is sent to external servers.</p>
+                <h4 class="font-bold text-blue-300 text-lg border-b border-slate-700 pb-2 mt-4">2. Usage Tracking</h4>
+                <p>We track anonymous website visits and PDF downloads locally. Your privacy is 100% maintained as everything runs independently on your device without any external database connection.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global State & Config
+        let currentUser = null;
+
+        // USER PROVIDED ARRAYS
+        const quizzesList = ["9 th Maths One Mark Interactive Quiz Unit 1 to 9 EM and TM", "10 th Maths Book Back One Mark Quiz Contest 2026 TM", "10 th Maths Book Back One Mark Quiz Contest 2026", "10 TH MATHS Chapter 1 to 8 Creative One Mark 2026", "10 th Maths Creative Questions Ch 1 to 8", "10 th Maths One Mark Interactive Quiz EM Next Button", "10 th Maths One Mark Interactive Quiz TM Next Button", "10 th Maths One Mark Quiz Master 2026 EM", "10 th Maths One Mark Quiz Master 2026 -TM", "10 th Science All Units One Mark Interactive Quiz MCQ Fill Up, Match it", "10 th Social Quiz ", "10 th TAMIL Quiz", "12 th Maths One Mark Interactive Quiz Next Button 2026 - EM", "12 th Maths One Mark Intercative Quiz Next Button 2026 -TM", "12 th Maths One Mark Quiz Master 2026 - EM", "12 th Maths One Mark Quiz Master 2026 -TM ", "Chapter 1 to 8 QR Question TM and EM Quiz Integrated", "CREATIVE 2, 5, MARK EM"];
+        const webAppsList = ["Certificate Generate Web App (Bonafide,Attendance, Conduct)", "Exam Seating Arrangement Web app", "Question Paper Prepare Web App", "Result Analysis Web APP", "TimeTable Generator Web APP"];
+        const pdfFilesList = ["9 th Maths Geo Graph TM & EM 2026", "9 th Maths Quarterly Exam QUestion Bank 2026", "9 th Maths Quarterly Impotant Questions 2026", "10 MATHS MM EM CEO VILLUPURAM DT - 2025-2026", "10 MATHS MM TM CEO VILLUPURAM DT - 2025-2026", "10 th Graph of Variation Key Point (TM & EM) 2025", "10 th Mathematics LaTeX Material 2026 2027", "10 TH MATHEMATICS THEOREMS MATERIAL", "10 th Maths  Graph of Variation Worksheet 2025 TM", "10 th Maths  Graph of Variation Worksheet 2025", "10 TH MATHS COMPLETE QUESTION BANK TM 2026-2027", "10 th Maths EM & TM 2 M 5M Important Question 2027", "10 th Maths EM Formulae Points Hints in 2026", "10 th Maths EM Progress & Thinking & Activity Soln 2024", "10 TH Maths Geometry and Graph Complete Material Geometry 24 sums and Graph 30 Sums", "10 th Maths Geometry and Graph Question Bank", "10 th Maths GEOMETRY Complete Material 1", "10 th Maths GEOMETRY Complete Material TM 2026", "10 th Maths Geometry Graph Question Bank 2025", "10 TH MATHS GRAPH VARIATION KEY POINT TM", "10 th Maths Important Questions TM & EM 2025", "10 th Maths One Mark Book Back, Shuffled, QR Code Ques 2025-2026", "10 th Maths One Mark Full Explanation 2025", "10 th Maths One Mark Questions Shuffled", "10 th Maths One Mark Questions TM", "10 th Maths One Mark Questions with Answer", "10 th Maths One Mark Questions", "10 th Maths PC TC Activity TM", "10 th Maths Progress Check & Thinking Corner Full", "10 th Maths Progress Check Soln Full", "10 TH MATHS PUBLIC EXAM IMPORTANT QUE 2026", "10 th MATHS Public One Mark Que Year Wise 2026-2027", "10 th MATHS Public Que Worksheet 2026", "10 th Maths PUBLIC Questions 2019-2026 July Updated EM (10.07.2026)", "10 th Maths PUBLIC Questions 2019-2026 Updated EM (15.05.2026)", "10 th Maths PUBLIC Questions 2019-2026 Updated TM (15.05.2026)", "10 th Maths QR Code Questions. Answer ", "10 th Maths QR Code Questions", "10 th Maths Quarterly Creative QB TM 2026", "10 th MATHS QUESTION BANK EM 2026 NEW", "10 th MATHS QUESTION BANK EM JULY 2026 UPDATE", "10 th Maths Unit exercise Complete Solution EM 24-25", "10 th Maths Unit Test Quarterly 2026", "10 th Maths Way To Sucess CREATIVE MCQ EM 2027", "10 th Maths Way To Sucess CREATIVE MCQ TM 2027", "10 ம் வகுப்பு ஒரு மதிப்பெண் வினாக்கள் ஜியோஜிப்ரா இணைப்பு", "10TH MATHS GRAPH MATERIAL", "10TH MATHS Public Exam Questions and PTA Questions  2019-2026", "10TH MATHS Public Exam Questions Chapter Wise", "12TH Maths Vol I & II Full Study Material No WM 2026", "2025-2026 Maths Book Total Sums Detailed", "Ch-1 to 8 Public Questions 2026", "Graph of Variation Worksheet 2025", "SSLC MATHS ALL PUBLIC ORIGINAL QUES 2020 to JULY 2026", "பத்தாம் வகுப்பு கணிதம் வடிவியல் வரைபடம் வினா வங்கி 2025", "பத்தாம் வகுப்பு செய்முறை வடிவியல் TM and EM New 2026"];
+        const zipFilesList = ["6 to 9 th All one Mark.zip", "Geogebra XML Code.zip", "MATHS 6 TH TO 12 WORD FORMAT FILE.zip", "Robocompass JSON COde.zip"];
+
+        // Function to safely create Local Document IDs from strings
+        function safeId(str) {
+            return str.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
+        }
+
+        // Custom UI Helper
+        window.ui = {
+            openModal: function(id) {
+                const m = document.getElementById(id);
+                if(m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+            },
+            closeModal: function(id) {
+                const m = document.getElementById(id);
+                if(m) { m.classList.add('hidden'); document.body.style.overflow = ''; }
+            },
+            showToast: function(message) {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `<i class="fas fa-info-circle mr-2"></i> ${message}`;
+                container.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+        };
+
+        function renderDynamicLists() {
+            // Render Quizzes
+            const quizContainer = document.getElementById('quiz-list-container');
+            if(quizContainer) {
+                quizContainer.innerHTML = quizzesList.map(q => `
+                    <a href="quiz/${encodeURI(q + '.html')}" target="_blank" class="block p-4 rounded-xl bg-slate-800/80 border border-slate-700 hover:bg-blue-600/30 transition text-sm font-semibold text-white shadow-md">
+                        <i class="fas fa-question-circle text-blue-400 mr-2"></i> ${q}
+                    </a>
+                `).join('');
+            }
+
+            // Render Web Apps
+            const appsContainer = document.getElementById('apps-list-container');
+            if(appsContainer) {
+                appsContainer.innerHTML = webAppsList.map(w => `
+                    <a href="web/${encodeURI(w + '.html')}" target="_blank" class="glass-panel p-6 rounded-xl border border-slate-600 hover:bg-green-600/20 text-center cursor-pointer transition flex flex-col items-center justify-center">
+                        <i class="fas fa-window-maximize text-4xl text-green-400 mb-3"></i>
+                        <h4 class="font-bold text-white text-md">${w}</h4>
+                    </a>
+                `).join('');
+            }
+
+            // Render ZIPs (Fix for spaces in filename causing 'Site cannot be reached')
+            const zipContainer = document.getElementById('zip-list-container');
+            if(zipContainer) {
+                zipContainer.innerHTML = zipFilesList.map(z => `
+                    <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-600 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:bg-slate-700 transition-colors group shadow">
+                        <div class="flex-grow">
+                            <h4 class="text-md font-bold text-white mb-1"><i class="fas fa-file-archive text-yellow-400 mr-2"></i> ${z}</h4>
+                        </div>
+                        <a href="${encodeURI(z)}" download="${z}" class="w-full md:w-auto bg-yellow-600 hover:bg-yellow-500 text-white px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 font-bold shadow-lg transform group-hover:scale-105 transition-all text-sm">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Local Auth Logic
+        window.appAuth = {
+            init: function() {
+                const storedName = localStorage.getItem('studentName');
+                if (storedName) {
+                    currentUser = storedName;
+                }
+                this.updateAuthUI();
+                setupLocalStats(); 
+            },
+            handleAuthSubmit: function(e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('student-name').value.trim();
+                if (nameInput) {
+                    localStorage.setItem('studentName', nameInput);
+                    currentUser = nameInput;
+                    this.updateAuthUI();
+                    ui.closeModal('auth-modal');
+                    ui.showToast(window.appState.currentLang === 'en' ? `Welcome, ${nameInput}!` : `நல்வரவு, ${nameInput}!`);
+                }
+            },
+            logoutUser: function() {
+                localStorage.removeItem('studentName');
+                currentUser = null;
+                this.updateAuthUI();
+                ui.showToast(window.appState.currentLang === 'en' ? "Logged out successfully." : "வெற்றிகரமாக வெளியேறினீர்கள்.");
+            },
+            updateAuthUI: function() {
+                const isUserLogged = !!currentUser;
+                
+                // Toggle Desktop Auth Elements
+                const deskAuthContainer = document.getElementById('desktop-auth-container');
+                const deskUserContainer = document.getElementById('desktop-user-container');
+                const deskUserEmail = document.getElementById('desktop-user-email');
+                
+                if (isUserLogged) {
+                    deskAuthContainer.classList.add('hidden');
+                    deskUserContainer.classList.remove('hidden');
+                    deskUserContainer.classList.add('flex');
+                    deskUserEmail.textContent = currentUser;
+                } else {
+                    deskAuthContainer.classList.remove('hidden');
+                    deskUserContainer.classList.add('hidden');
+                    deskUserContainer.classList.remove('flex');
+                }
+
+                // Toggle Mobile Auth Elements
+                const mobAuthContainer = document.getElementById('mobile-auth-container');
+                const mobUserContainer = document.getElementById('mobile-user-container');
+                const mobUserEmail = document.getElementById('mobile-user-email');
+
+                if (isUserLogged) {
+                    mobAuthContainer.classList.add('hidden');
+                    mobUserContainer.classList.remove('hidden');
+                    mobUserContainer.classList.add('flex');
+                    mobUserEmail.textContent = currentUser;
+                } else {
+                    mobAuthContainer.classList.remove('hidden');
+                    mobUserContainer.classList.add('hidden');
+                    mobUserContainer.classList.remove('flex');
+                }
+            }
+        };
+
+        // Local Stats Logic (Replaces Firebase)
+        let currentPdfCounts = JSON.parse(localStorage.getItem('pdf_downloads_stats')) || {};
+
+        function setupLocalStats() {
+            // Visitor Counter
+            let visitors = parseInt(localStorage.getItem('totalVisitors'));
+            if (isNaN(visitors)) {
+                visitors = 1250; // Starting baseline
+            }
+            if (!sessionStorage.getItem('site_visited')) {
+                visitors += 1;
+                localStorage.setItem('totalVisitors', visitors);
+                sessionStorage.setItem('site_visited', 'true');
+            }
+            document.getElementById('visitor-count').textContent = visitors.toLocaleString();
+
+            renderPdfList(); 
+        }
+
+        window.appData = {
+            downloadPdf: function(pdfId) {
+                ui.showToast(window.appState.currentLang === 'en' ? "Starting download..." : "பதிவிறக்கம் தொடங்குகிறது...");
+                
+                // Increment local counter for the specific PDF
+                currentPdfCounts[pdfId] = (currentPdfCounts[pdfId] || 0) + 1;
+                localStorage.setItem('pdf_downloads_stats', JSON.stringify(currentPdfCounts));
+                
+                // Re-render to update UI count immediately
+                renderPdfList();
+            }
+        };
+
+        function renderPdfList() {
+            const container = document.getElementById('pdf-list-container');
+            if(!container) return;
+            const lang = window.appState.currentLang;
+            
+            container.innerHTML = pdfFilesList.map(pdf => {
+                const id = 'pdf_' + safeId(pdf); 
+                const downText = lang === 'en' ? "Download" : "பதிவிறக்கம்";
+                const viewsText = lang === 'en' ? "Downloads:" : "பதிவிறக்கங்கள்:";
+                const count = currentPdfCounts[id] || 0;
+
+                return `
+                <div class="bg-slate-800/80 p-5 rounded-xl border border-slate-600 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:bg-slate-700 transition-colors group shadow">
+                    <div class="flex-grow">
+                        <h4 class="text-md font-bold text-white mb-1"><i class="fas fa-file-pdf text-red-400 mr-2"></i> ${pdf}</h4>
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-black/40 text-xs font-semibold text-blue-300 border border-blue-500/30 mt-2">
+                            <i class="fas fa-chart-bar"></i> ${viewsText} ${count}
+                        </span>
+                    </div>
+                    <a href="pdf/${encodeURI(pdf + '.pdf')}" download="${pdf}.pdf" onclick="appData.downloadPdf('${id}')" class="w-full md:w-auto bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 font-bold shadow-lg transform group-hover:scale-105 transition-all text-sm">
+                        <i class="fas fa-download"></i> ${downText}
+                    </a>
+                </div>
+                `;
+            }).join('');
+        }
+
+        window.appState = { currentLang: 'ta' }; 
+
+        function applyTranslations() {
+            const lang = window.appState.currentLang;
+            document.querySelectorAll('.bilingual').forEach(el => {
+                if (el.hasAttribute(`data-${lang}`)) {
+                    el.innerHTML = el.getAttribute(`data-${lang}`);
+                }
+            });
+            
+            // Update button labels
+            document.querySelectorAll('.currentLangLabel').forEach(el => {
+                el.textContent = lang === 'en' ? "தமிழ்" : "English";
+            });
+            
+            renderPdfList();
+        }
+
+        // Toggle triggers
+        const handleLangToggle = () => {
+            window.appState.currentLang = window.appState.currentLang === 'ta' ? 'en' : 'ta';
+            applyTranslations();
+        };
+        document.getElementById('langToggleDesktop').addEventListener('click', handleLangToggle);
+        document.getElementById('langToggleMobile').addEventListener('click', handleLangToggle);
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        const canvas = document.getElementById('math-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const mathSymbols = ['∫', '∑', 'π', '∞', '√', 'θ', 'α', 'β', '±', '×', '÷', '≈', '∆', 'µ'];
+        let particles = [];
+        const particleCount = 45; 
+
+        class MathParticle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height; 
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 50; 
+                this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
+                this.size = Math.random() * 24 + 16; 
+                this.speedX = (Math.random() - 0.5) * 0.8; 
+                this.speedY = -(Math.random() * 0.8 + 0.3); // Slower rise for calm effect
+                this.opacity = Math.random() * 0.4 + 0.1; 
+                
+                const colors = ['rgba(59, 130, 246, OP)', 'rgba(168, 85, 247, OP)', 'rgba(52, 211, 153, OP)'];
+                this.color = colors[Math.floor(Math.random() * colors.length)].replace('OP', this.opacity);
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.015; 
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                
+                if (this.x < -50) this.x = canvas.width + 50;
+                if (this.x > canvas.width + 50) this.x = -50;
+                
+                if (this.y < -50) this.reset();
+            }
+            
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.size}px "Inter", "Tiro Tamil", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.symbol, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new MathParticle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw(ctx);
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize Everything
+        window.onload = function() {
+            renderDynamicLists();
+            appAuth.init();
+            applyTranslations();
+            animateParticles();
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") {
+                    const openModal = document.querySelector('.fixed.inset-0:not(.hidden)');
+                    if(openModal) ui.closeModal(openModal.id);
+                }
+            });
+        };
+    </script>
+</body>
+</html>

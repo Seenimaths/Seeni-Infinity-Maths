@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Student Certificate Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Modern UI Font and Formal Certificate Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700&family=Tiro+Tamil:ital@0;1&display=swap');
+
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+        }
+
+        body {
+            font-family: 'Poppins', 'Tiro Tamil', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Language Switcher */
+        .lang-switch-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .lang-btn {
+            background: white;
+            color: #4f46e5;
+            border: 2px solid #4f46e5;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .lang-btn.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            background: #f8fafc;
+        }
+        .input-field:focus { 
+            border-color: var(--primary); 
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        /* Colorful Floating Buttons */
+        @keyframes floatEffect {
+            0% { transform: translateY(0px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+            50% { transform: translateY(-8px); box-shadow: 0 20px 30px rgba(0,0,0,0.25); }
+            100% { transform: translateY(0px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        }
+
+        .btn-main {
+            background: linear-gradient(45deg, #ff007a, #7a00ff);
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            animation: floatEffect 3s infinite ease-in-out;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-main:hover {
+            background: linear-gradient(45deg, #7a00ff, #ff007a);
+            animation-play-state: paused;
+            transform: scale(1.02);
+        }
+
+        .btn-small {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            padding: 0 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.3);
+        }
+        .btn-small:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 114, 255, 0.5); }
+
+        .print-btn {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white; border: none; padding: 12px 25px; border-radius: 50px; 
+            cursor: pointer; font-weight: 700; margin-top: 15px; font-size: 16px;
+            transition: 0.3s; box-shadow: 0 6px 15px rgba(17, 153, 142, 0.4);
+            animation: floatEffect 4s infinite ease-in-out reverse;
+        }
+        .print-btn:hover { background: linear-gradient(135deg, #38ef7d, #11998e); transform: scale(1.05); animation-play-state: paused; }
+
+        input[type="file"] { padding: 9px; }
+
+        /* Certificate Design */
+        .cert-container { display: none; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        
+        .certificate {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 50px; 
+            border: 12px solid transparent;
+            border-image: repeating-linear-gradient(45deg, #1e3a8a, #1e3a8a 10px, #eab308 10px, #eab308 20px) 12;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            font-family: 'Merriweather', 'Tiro Tamil', serif; 
+        }
+
+        .serial-no { position: absolute; top: 20px; left: 30px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; color: #444; }
+        .cert-header { font-family: 'Cinzel', serif; font-size: 26px; font-weight: bold; color: #1e3a8a; margin-bottom: 6px; letter-spacing: 1px; }
+        .cert-sub { font-size: 13px; color: #555; margin-bottom: 10px; font-family: 'Poppins', 'Tiro Tamil', sans-serif; font-weight: 600; letter-spacing: 0.5px; }
+        .cert-title { font-family: 'Cinzel', 'Tiro Tamil', serif; font-size: 28px; color: #b91c1c; margin-bottom: 30px; margin-top: 10px; font-weight: bold; position: relative; display: inline-block; text-align: center; }
+        .cert-title::after { content: ''; position: absolute; bottom: -8px; left: 10%; width: 80%; height: 2px; background: #b91c1c; }
+        
+        .cert-body { font-size: 18px; line-height: 2.2; text-align: justify; margin-bottom: 40px; }
+        .highlight { font-weight: bold; color: #1e3a8a; border-bottom: 1.5px dotted #333; padding: 0 15px; font-style: italic; }
+        
+        .cert-top-layout { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 20px; }
+        .photo-box { width: 2.8cm; height: 3.8cm; border: 2px solid #333; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+
+        .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 40px; font-weight: bold; font-family: 'Poppins', 'Tiro Tamil', sans-serif; font-size: 15px; }
+        .footer-left { text-align: left; }
+        .footer-right { text-align: center; border-top: 1px solid #000; padding-top: 5px; width: 250px; }
+        
+        .dev-footer-container { display: flex; justify-content: center; align-items: center; margin-top: 40px; padding-bottom: 20px; width: 100%; }
+        .dev-footer-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 12px 30px; border-radius: 50px; font-weight: bold; font-size: 15px; text-align: center; box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4); display: inline-flex; align-items: center; gap: 8px; cursor: default; }
+
+        @media print {
+            body { background: white; padding: 0; margin: 0; animation: none; }
+            .no-print, .glass-card, .dev-footer-container, .lang-switch-container { display: none !important; }
+            .cert-container { display: block !important; margin: 0; }
+            .certificate-wrapper { display: none; }
+            body.print-bonafide #wrap-bonafide { display: block; }
+            body.print-conduct #wrap-conduct { display: block; }
+            body.print-attendance #wrap-attendance { display: block; }
+            .certificate { box-shadow: none; width: 100%; max-width: 100%; margin: 0; page-break-after: always; }
+            .photo-box img { object-fit: cover !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switch-container no-print">
+        <button id="btn-ta" class="lang-btn active" onclick="setLanguage('ta')">தமிழ்</button>
+        <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">English</button>
+    </div>
+
+    <h1 id="main-title" class="text-3xl font-extrabold text-center text-indigo-900 mb-8 mt-10 drop-shadow-md no-print">🎓 சிறந்த சான்றிதழ் உருவாக்கி (Pro Certificate)</h1>
+
+    <!-- 1. School Settings Form -->
+    <div class="max-w-4xl mx-auto glass-card no-print">
+        <h2 id="sec1-title" class="text-xl font-bold mb-5 text-indigo-700 border-b-2 border-indigo-100 pb-2">1. பள்ளி அமைப்பு</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+                <label id="lbl-schName" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">பள்ளி பெயர்</label>
+                <input type="text" id="schName" class="input-field" value="GOVERNMENT HIGHER SECONDARY SCHOOL">
+            </div>
+            <div>
+                <label id="lbl-schAddress" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">முகவரி மற்றும் அங்கீகாரம்</label>
+                <input type="text" id="schAddress" class="input-field" value="Recognised by Govt. of Tamil Nadu | Chennai - 600001">
+            </div>
+            
+            <div>
+                <label id="lbl-certSerial" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">சான்றிதழ் வரிசை எண்</label>
+                <div class="flex gap-2">
+                    <input type="text" id="certSerial" class="input-field" placeholder="CERT/2026/1234">
+                    <button id="btn-auto" class="btn-small" onclick="generateSerial()">⚙️ தானியங்கி</button>
+                </div>
+            </div>
+            
+            <div>
+                <label id="lbl-schPlace" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">இடம் (Place)</label>
+                <input type="text" id="schPlace" class="input-field" value="Chennai">
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Student Details Form -->
+    <div class="max-w-4xl mx-auto glass-card no-print">
+        <h2 id="sec2-title" class="text-xl font-bold mb-5 text-indigo-700 border-b-2 border-indigo-100 pb-2">2. மாணவர் விவரங்கள்</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+            <div>
+                <label id="lbl-stuName" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">மாணவர் பெயர்</label>
+                <input type="text" id="stuName" class="input-field" placeholder="e.g. K. Dinesh">
+            </div>
+            <div>
+                <label id="lbl-stuClass" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">வகுப்பு மற்றும் பிரிவு</label>
+                <input type="text" id="stuClass" class="input-field" placeholder="e.g. 12th - A">
+            </div>
+            <div>
+                <label id="lbl-stuYear" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">கல்வியாண்டு</label>
+                <input type="text" id="stuYear" class="input-field" placeholder="e.g. 2025-2026">
+            </div>
+            <div>
+                <label id="lbl-stuAtt" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">வருகைப்பதிவு (%)</label>
+                <input type="text" id="stuAtt" class="input-field" placeholder="e.g. 98%">
+            </div>
+            <div class="md:col-span-2">
+                <label id="lbl-stuPhoto" class="block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1.5">மாணவர் புகைப்படம் (விருப்பமிருந்தால்)</label>
+                <input type="file" id="stuPhoto" accept="image/*" class="input-field" onchange="previewPhoto(event)">
+            </div>
+        </div>
+
+        <button id="btn-generate" class="btn-main" onclick="generateCertificates()">
+            ✨ மூன்று சான்றிதழ்களையும் உருவாக்கு
+        </button>
+    </div>
+
+    <!-- Generated Certificates Area -->
+    <div class="cert-container" id="certContainer">
+        
+        <!-- 1. Bonafide Certificate -->
+        <div class="certificate-wrapper" id="wrap-bonafide">
+            <div class="certificate">
+                <div class="serial-no"><span class="txt-sno">S.No:</span> <span class="out-serial">______</span></div>
+                <div class="cert-top-layout">
+                    <div style="width: 2.8cm; flex-shrink: 0;"></div> 
+                    <div class="text-center flex-grow px-4">
+                        <div class="cert-header out-school-name">SCHOOL NAME</div>
+                        <div class="cert-sub out-school-addr">School Address & Details</div>
+                    </div>
+                    <div class="photo-box"><img id="photo-1" src="" alt="Student Photo"></div>
+                </div>
+                <div class="text-center"><div class="cert-title txt-bona-title">BONAFIDE CERTIFICATE</div></div>
+                <div class="cert-body">
+                    <span id="bona-1">This is to certify that Selvan/Selvi </span><span class="highlight out-name">__________</span> 
+                    <span id="bona-2"> is a bonafide student of our school studying in Class </span><span class="highlight out-class">__________</span> 
+                    <span id="bona-3"> during the academic year </span><span class="highlight out-year">__________</span>.<br><br>
+                    <span id="bona-4">To the best of my knowledge and belief, he/she bears a good moral character.</span>
+                </div>
+                <div class="cert-footer">
+                    <div class="footer-left">
+                        <div><span class="txt-date">Date:</span> <span class="current-date"></span></div>
+                        <div style="margin-top: 8px;"><span class="txt-place">Place:</span> <span class="out-place">__________</span></div>
+                    </div>
+                    <div class="footer-right txt-sign">Headmaster / Principal Signature</div>
+                </div>
+            </div>
+            <div class="text-center no-print">
+                <button class="print-btn" onclick="printSpecific('print-bonafide')"><span class="txt-btn-bona">🖨️ Print Bonafide</span></button>
+            </div>
+        </div>
+
+        <!-- 2. Conduct Certificate -->
+        <div class="certificate-wrapper" id="wrap-conduct">
+            <div class="certificate" style="border-image: repeating-linear-gradient(45deg, #065f46, #065f46 10px, #10b981 10px, #10b981 20px) 12;">
+                <div class="serial-no"><span class="txt-sno">S.No:</span> <span class="out-serial">______</span></div>
+                <div class="cert-top-layout">
+                    <div style="width: 2.8cm; flex-shrink: 0;"></div>
+                    <div class="text-center flex-grow px-4">
+                        <div class="cert-header out-school-name" style="color:#065f46">SCHOOL NAME</div>
+                        <div class="cert-sub out-school-addr">School Address & Details</div>
+                    </div>
+                    <div class="photo-box"><img id="photo-2" src="" alt="Student Photo"></div>
+                </div>
+                <div class="text-center"><div class="cert-title txt-cond-title" style="color: #065f46;">CONDUCT CERTIFICATE</div></div>
+                <div class="cert-body">
+                    <span id="cond-1">This is to certify that the conduct and character of Selvan/Selvi </span><span class="highlight out-name">__________</span><span id="cond-2">, studying in Class </span><span class="highlight out-class">__________</span> <span id="cond-3"> during the academic year </span><span class="highlight out-year">__________</span><span id="cond-4">, has been recorded as </span><span class="highlight" id="cond-exc">EXCELLENT</span>.<br><br>
+                    <span id="cond-5">He/She has shown great discipline and actively participated in school activities.</span>
+                </div>
+                <div class="cert-footer">
+                    <div class="footer-left">
+                        <div><span class="txt-date">Date:</span> <span class="current-date"></span></div>
+                        <div style="margin-top: 8px;"><span class="txt-place">Place:</span> <span class="out-place">__________</span></div>
+                    </div>
+                    <div class="footer-right txt-sign">Headmaster / Principal Signature</div>
+                </div>
+            </div>
+            <div class="text-center no-print">
+                <button class="print-btn" onclick="printSpecific('print-conduct')"><span class="txt-btn-cond">🖨️ Print Conduct</span></button>
+            </div>
+        </div>
+
+        <!-- 3. Attendance Certificate -->
+        <div class="certificate-wrapper" id="wrap-attendance">
+            <div class="certificate" style="border-image: repeating-linear-gradient(45deg, #7c3aed, #7c3aed 10px, #c084fc 10px, #c084fc 20px) 12;">
+                <div class="serial-no"><span class="txt-sno">S.No:</span> <span class="out-serial">______</span></div>
+                <div class="cert-top-layout">
+                    <div style="width: 2.8cm; flex-shrink: 0;"></div>
+                    <div class="text-center flex-grow px-4">
+                        <div class="cert-header out-school-name" style="color:#7c3aed">SCHOOL NAME</div>
+                        <div class="cert-sub out-school-addr">School Address & Details</div>
+                    </div>
+                    <div class="photo-box"><img id="photo-3" src="" alt="Student Photo"></div>
+                </div>
+                <div class="text-center"><div class="cert-title txt-att-title" style="color: #7c3aed;">ATTENDANCE CERTIFICATE</div></div>
+                <div class="cert-body">
+                    <span id="att-1">This is to certify that Selvan/Selvi </span><span class="highlight out-name">__________</span> <span id="att-2"> of Class </span><span class="highlight out-class">__________</span> <span id="att-3"> has maintained a regular attendance record during the academic year </span><span class="highlight out-year">__________</span>.<br><br>
+                    <span id="att-4">His/Her total attendance percentage is verified as </span><span class="highlight out-att">__________</span>.
+                </div>
+                <div class="cert-footer">
+                    <div class="footer-left">
+                        <div><span class="txt-date">Date:</span> <span class="current-date"></span></div>
+                        <div style="margin-top: 8px;"><span class="txt-place">Place:</span> <span class="out-place">__________</span></div>
+                    </div>
+                    <div class="footer-right txt-sign">Headmaster / Principal Signature</div>
+                </div>
+            </div>
+            <div class="text-center no-print">
+                <button class="print-btn" onclick="printSpecific('print-attendance')"><span class="txt-btn-att">🖨️ Print Attendance</span></button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Screen Footer (Developer Badge) -->
+    <div class="dev-footer-container no-print">
+        <div class="dev-footer-btn">
+            <span>👨‍💻</span> Developed by Y. Seenivasan, M.Sc., B.Ed., Maths Teacher -8489880553
+        </div>
+    </div>
+
+    <script>
+        const i18n = {
+            en: {
+                mainTitle: "🎓 Pro Certificate Generator",
+                sec1: "1. School Configuration",
+                lSchName: "School Name",
+                lSchAdd: "Address & Recognition",
+                lCertNo: "Certificate Serial No.",
+                lPlace: "Place (Footer)",
+                btnAuto: "⚙️ Auto",
+                sec2: "2. Student Details",
+                lStuName: "Student Name",
+                lStuClass: "Class & Section",
+                lStuYear: "Academic Year",
+                lStuAtt: "Attendance (%)",
+                lStuPhoto: "Upload Student Photo (Optional)",
+                btnGen: "✨ Generate All 3 Certificates",
+                
+                // Certificate Text
+                sno: "S.No:", date: "Date:", place: "Place:", sign: "Headmaster / Principal Signature",
+                bonaTitle: "BONAFIDE CERTIFICATE",
+                b1: "This is to certify that Selvan/Selvi ", b2: " is a bonafide student of our school studying in Class ", b3: " during the academic year ", b4: "To the best of my knowledge and belief, he/she bears a good moral character.",
+                condTitle: "CONDUCT CERTIFICATE",
+                c1: "This is to certify that the conduct and character of Selvan/Selvi ", c2: ", studying in Class ", c3: " during the academic year ", c4: ", has been recorded as ", cExc: "EXCELLENT", c5: "He/She has shown great discipline and actively participated in school activities.",
+                attTitle: "ATTENDANCE CERTIFICATE",
+                a1: "This is to certify that Selvan/Selvi ", a2: " of Class ", a3: " has maintained a regular attendance record during the academic year ", a4: "His/Her total attendance percentage is verified as ",
+                
+                pBona: "🖨️ Print Bonafide", pCond: "🖨️ Print Conduct", pAtt: "🖨️ Print Attendance", alertMsg: "Please enter Student Name and Class!"
+            },
+            ta: {
+                mainTitle: "🎓 சிறந்த சான்றிதழ் உருவாக்கி (Pro Certificate)",
+                sec1: "1. பள்ளி அமைப்பு",
+                lSchName: "பள்ளி பெயர்",
+                lSchAdd: "முகவரி மற்றும் அங்கீகாரம்",
+                lCertNo: "சான்றிதழ் வரிசை எண்",
+                lPlace: "இடம் (கீழே வர)",
+                btnAuto: "⚙️ தானியங்கி",
+                sec2: "2. மாணவர் விவரங்கள்",
+                lStuName: "மாணவர் பெயர்",
+                lStuClass: "வகுப்பு மற்றும் பிரிவு",
+                lStuYear: "கல்வியாண்டு",
+                lStuAtt: "வருகைப்பதிவு (%)",
+                lStuPhoto: "மாணவர் புகைப்படம் (விருப்பமிருந்தால்)",
+                btnGen: "✨ மூன்று சான்றிதழ்களையும் உருவாக்கு",
+                
+                // Certificate Text
+                sno: "வரிசை எண்:", date: "தேதி:", place: "இடம்:", sign: "தலைமையாசிரியர் / முதல்வர் கையொப்பம்",
+                bonaTitle: "பயிலும் சான்றிதழ் (BONAFIDE)",
+                b1: "எங்களது பள்ளியில் பயிலும் செல்வன்/செல்வி ", b2: " ஒரு உண்மையான மாணவர் என்றும், இவர் ", b3: " கல்வியாண்டில் படிக்கும் வகுப்பு ", b4: "எனது அறிவுக்கு எட்டியவரை இவர் நன்னடத்தை கொண்டவர் எனச் சான்றளிக்கப்படுகிறது.",
+                condTitle: "நன்னடத்தைச் சான்றிதழ் (CONDUCT)",
+                c1: "எங்களது பள்ளியில் பயிலும் செல்வன்/செல்வி ", c2: " என்பவரின் நடத்தை மற்றும் பண்பு, ", c3: " கல்வியாண்டில் அவர் படிக்கும் வகுப்பு ", c4: " ஆகியவற்றின் அடிப்படையில் ", cExc: "மிகவும் நன்று", c5: "இவர் சிறந்த ஒழுக்கத்தைக் காட்டி பள்ளி செயல்பாடுகளில் தீவிரமாகப் பங்கேற்றுள்ளார் எனச் சான்றளிக்கப்படுகிறது.",
+                attTitle: "வருகைப்பதிவு சான்றிதழ் (ATTENDANCE)",
+                a1: "எங்களது பள்ளியில் பயிலும் செல்வன்/செல்வி ", a2: " சீரான வருகைப்பதிவைக் கொண்டுள்ளார் என்றும், இவர் ", a3: " கல்வியாண்டில் படிக்கும் வகுப்பு ", a4: "இவரது மொத்த வருகைப்பதிவு சதவீதம் ",
+                
+                pBona: "🖨️ போனஃபைட் பிரிண்ட் செய்", pCond: "🖨️ நன்னடத்தை பிரிண்ட் செய்", pAtt: "🖨️ வருகைப்பதிவு பிரிண்ட் செய்", alertMsg: "மாணவர் பெயர் மற்றும் வகுப்பை உள்ளிடவும்!"
+            }
+        };
+
+        let currentLang = 'ta';
+        let uploadedImageSrc = '';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('btn-ta').classList.toggle('active', lang === 'ta');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            const t = i18n[lang];
+            document.getElementById('main-title').innerText = t.mainTitle;
+            document.getElementById('sec1-title').innerText = t.sec1;
+            document.getElementById('lbl-schName').innerText = t.lSchName;
+            document.getElementById('lbl-schAddress').innerText = t.lSchAdd;
+            document.getElementById('lbl-certSerial').innerText = t.lCertNo;
+            document.getElementById('lbl-schPlace').innerText = t.lPlace;
+            document.getElementById('btn-auto').innerText = t.btnAuto;
+            
+            document.getElementById('sec2-title').innerText = t.sec2;
+            document.getElementById('lbl-stuName').innerText = t.lStuName;
+            document.getElementById('lbl-stuClass').innerText = t.lStuClass;
+            document.getElementById('lbl-stuYear').innerText = t.lStuYear;
+            document.getElementById('lbl-stuAtt').innerText = t.lStuAtt;
+            document.getElementById('lbl-stuPhoto').innerText = t.lStuPhoto;
+            document.getElementById('btn-generate').innerText = t.btnGen;
+
+            // Update Certificate Text
+            document.querySelectorAll('.txt-sno').forEach(e => e.innerText = t.sno);
+            document.querySelectorAll('.txt-date').forEach(e => e.innerText = t.date);
+            document.querySelectorAll('.txt-place').forEach(e => e.innerText = t.place);
+            document.querySelectorAll('.txt-sign').forEach(e => e.innerText = t.sign);
+            
+            document.querySelector('.txt-bona-title').innerText = t.bonaTitle;
+            document.getElementById('bona-1').innerText = t.b1; document.getElementById('bona-2').innerText = t.b2; document.getElementById('bona-3').innerText = t.b3; document.getElementById('bona-4').innerText = t.b4;
+            
+            document.querySelector('.txt-cond-title').innerText = t.condTitle;
+            document.getElementById('cond-1').innerText = t.c1; document.getElementById('cond-2').innerText = t.c2; document.getElementById('cond-3').innerText = t.c3; document.getElementById('cond-4').innerText = t.c4; document.getElementById('cond-exc').innerText = t.cExc; document.getElementById('cond-5').innerText = t.c5;
+            
+            document.querySelector('.txt-att-title').innerText = t.attTitle;
+            document.getElementById('att-1').innerText = t.a1; document.getElementById('att-2').innerText = t.a2; document.getElementById('att-3').innerText = t.a3; document.getElementById('att-4').innerText = t.a4;
+            
+            document.querySelector('.txt-btn-bona').innerText = t.pBona;
+            document.querySelector('.txt-btn-cond').innerText = t.pCond;
+            document.querySelector('.txt-btn-att').innerText = t.pAtt;
+        }
+
+        function generateSerial() {
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(1000 + Math.random() * 9000); 
+            document.getElementById('certSerial').value = `CERT/${year}/${randomNum}`;
+        }
+
+        window.onload = function() {
+            generateSerial();
+            setLanguage('ta');
+        }
+
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) { uploadedImageSrc = e.target.result; }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function generateCertificates() {
+            const schoolName = document.getElementById('schName').value.trim();
+            const schoolAddress = document.getElementById('schAddress').value.trim();
+            const serialNo = document.getElementById('certSerial').value.trim();
+            const place = document.getElementById('schPlace').value.trim();
+            const name = document.getElementById('stuName').value.trim();
+            const cls = document.getElementById('stuClass').value.trim();
+            const year = document.getElementById('stuYear').value.trim();
+            const att = document.getElementById('stuAtt').value.trim();
+
+            if (!name || !cls) { alert(i18n[currentLang].alertMsg); return; }
+
+            document.querySelectorAll('.out-school-name').forEach(el => el.innerText = schoolName || 'SCHOOL NAME');
+            document.querySelectorAll('.out-school-addr').forEach(el => el.innerText = schoolAddress || 'School Address');
+            document.querySelectorAll('.out-serial').forEach(el => el.innerText = serialNo || '______');
+            document.querySelectorAll('.out-place').forEach(el => el.innerText = place || '__________');
+            document.querySelectorAll('.out-name').forEach(el => el.innerText = name);
+            document.querySelectorAll('.out-class').forEach(el => el.innerText = cls);
+            document.querySelectorAll('.out-year').forEach(el => el.innerText = year || '2025-2026');
+            document.querySelectorAll('.out-att').forEach(el => el.innerText = att || '90%');
+            
+            const today = new Date().toLocaleDateString('en-GB');
+            document.querySelectorAll('.current-date').forEach(el => el.innerText = today);
+
+            if (uploadedImageSrc) {
+                for(let i=1; i<=3; i++) {
+                    const imgEl = document.getElementById('photo-' + i);
+                    imgEl.src = uploadedImageSrc; imgEl.style.display = 'block';
+                }
+            }
+            document.getElementById('certContainer').style.display = 'flex';
+            document.getElementById('certContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function printSpecific(printClass) {
+            document.body.classList.remove('print-bonafide', 'print-conduct', 'print-attendance');
+            document.body.classList.add(printClass);
+            window.print();
+            setTimeout(() => { document.body.classList.remove(printClass); }, 500);
+        }
+    </script>
+</body>
+</html>

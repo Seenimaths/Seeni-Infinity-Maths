@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Exam Result Analyzer</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Tamil Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --text-dark: #1E293B;
+            --success: #059669;
+            --danger: #DC2626;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Tamil', 'Cambria', Arial, sans-serif;}
+        
+        /* Bilingual Logic */
+        body.ta-mode .lang-en { display: none !important; }
+        body:not(.ta-mode) .lang-ta { display: none !important; }
+
+        /* Animated Gradient Background */
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* Header */
+        .top-bar { padding: 1.5rem; text-align: center; margin-bottom: 2rem; border-radius: 0 0 24px 24px; border-top: none; display: flex; justify-content: space-between; align-items: center;}
+        .top-bar h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(to right, #4F46E5, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        .lang-toggle-btn { background: #fff; color: #4F46E5; border: 2px solid #4F46E5; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .lang-toggle-btn:hover { background: #4F46E5; color: #fff; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; flex: 1; }
+        .card { padding: 1.5rem; margin-bottom: 1.5rem; }
+        .card h2 { font-size: 1.25rem; font-weight: 600; color: #312E81; border-bottom: 2px solid #E0E7FF; padding-bottom: 0.5rem; margin-bottom: 1.25rem; }
+        
+        /* Forms */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        input, select { padding: 0.75rem; border: 2px solid #E2E8F0; border-radius: 8px; outline: none; font-size: 0.95rem; background: rgba(255,255,255,0.9); transition: all 0.3s ease; }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+
+        /* Buttons */
+        .btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3); }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #059669 0%, #10B981 100%); }
+        .btn-success:hover { background: linear-gradient(135deg, #047857 0%, #059669 100%); box-shadow: 0 6px 8px -1px rgba(16, 185, 129, 0.4); }
+        .btn-danger { background: #EF4444; padding: 0.4rem 0.8rem; font-size: 0.85rem; box-shadow: none; border-radius: 6px; color: white;}
+        .btn-danger:hover { background: #DC2626; }
+
+        /* Table */
+        .table-container { overflow-x: auto; border-radius: 12px; border: 1px solid #E2E8F0; background: rgba(255,255,255,0.7); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: center; }
+        th, td { border-bottom: 1px solid #E2E8F0; padding: 1rem; }
+        th { background-color: rgba(241, 245, 249, 0.8); color: #334155; font-weight: 600; border-right: 1px solid #E2E8F0; }
+        td { border-right: 1px solid #E2E8F0; }
+        tbody tr:hover { background-color: rgba(255,255,255,0.9); }
+        
+        .pass { color: var(--success); font-weight: 700; background: #D1FAE5; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; }
+        .fail { color: var(--danger); font-weight: 700; background: #FEE2E2; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; }
+        .grade-badge { font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(0,0,0,0.05); }
+
+        /* Toast */
+        #toast { position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; border-radius: 8px; color: white; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transform: translateX(150%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 50; }
+        #toast.show { transform: translateX(0); }
+        #toast.error { background: #EF4444; }
+        #toast.success { background: #10B981; }
+
+        .dev-footer { text-align: center; padding: 1.5rem; margin-top: auto; font-weight: 600; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); font-size: 1.05rem; }
+
+        /* Print Specifics */
+        #printArea { display: none; }
+
+        @media print {
+            @page { size: landscape; margin: 10mm; }
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0; min-height: auto; animation: none; }
+            .container { margin: 0; padding: 0; max-width: 100%; }
+            
+            #printArea { display: block; background: white; }
+            .print-header { text-align: center; margin-bottom: 1.5rem; border-bottom: 3px double #000; padding-bottom: 1rem; }
+            .print-header h1 { font-size: 2rem; font-weight: bold; text-transform: uppercase; color: #000; margin-bottom: 0.3rem; }
+            .print-header h2 { font-size: 1.3rem; color: #222; margin-bottom: 0.5rem; }
+            .print-header p { font-size: 1.1rem; font-weight: 600; }
+            
+            .analysis-boxes { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+            .a-box { border: 2px solid #000; padding: 1rem; text-align: center; flex: 1; border-radius: 8px; font-weight: bold; background: #fff !important; color: #000 !important; }
+            .a-box span { display: block; font-size: 1.6rem; margin-top: 0.5rem; }
+            
+            .top-rankers { margin-bottom: 2rem; border: 2px solid #000; padding: 1rem; border-radius: 8px; }
+            .top-rankers h3 { text-align: center; border-bottom: 1px solid #000; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.2rem; }
+            .rank-list { display: flex; justify-content: space-around; font-weight: 600; font-size: 1.2rem; color: #000; }
+            
+            table { border: 2px solid #000; width: 100%; font-size: 1rem; }
+            th, td { border: 1px solid #000; color: #000; padding: 0.6rem; }
+            th { background-color: #e5e5e5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold; }
+            .fail { color: #000 !important; background: transparent !important; text-decoration: underline; }
+            .pass { color: #000 !important; background: transparent !important; }
+            .grade-badge { background: transparent !important; font-weight: bold; }
+            
+            .print-footer { margin-top: 3rem; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; color: #000; padding: 0 2rem; }
+        }
+    </style>
+</head>
+<body class="ta-mode"> <!-- Default as Tamil Mode -->
+
+    <div id="toast"></div>
+
+    <div class="glass-panel top-bar no-print max-w-[1200px] mx-auto w-full mt-4">
+        <div style="width: 100px;"></div>
+        <div>
+            <h1>
+                <span class="lang-en">Smart Exam Result Analyzer</span>
+                <span class="lang-ta">ஸ்மார்ட் தேர்வு முடிவு பகுப்பாய்வி</span>
+            </h1>
+            <p class="font-medium text-gray-600">
+                <span class="lang-en">Auto Rank & Grade Generation System for TN Schools</span>
+                <span class="lang-ta">தமிழ்நாடு பள்ளிகளுக்கான தானியங்கி ரேங்க் மற்றும் கிரேடு சிஸ்டம்</span>
+            </p>
+        </div>
+        <button class="lang-toggle-btn" onclick="document.body.classList.toggle('ta-mode')">தமிழ் / English</button>
+    </div>
+
+    <div class="container no-print">
+        <!-- Configuration Card -->
+        <div class="glass-panel card">
+            <h2>
+                <span class="lang-en">1. Exam Configuration</span>
+                <span class="lang-ta">1. தேர்வு கட்டமைப்பு</span>
+            </h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>
+                        <span class="lang-en">School Name</span>
+                        <span class="lang-ta">பள்ளி பெயர்</span>
+                    </label>
+                    <input type="text" id="schoolName" placeholder="Enter School Name" oninput="saveGlobalConfig()">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="lang-en">Exam Name</span>
+                        <span class="lang-ta">தேர்வு பெயர்</span>
+                    </label>
+                    <input type="text" id="examName" placeholder="Enter Exam Name" oninput="saveGlobalConfig()">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="lang-en">Select Class</span>
+                        <span class="lang-ta">வகுப்பைத் தேர்ந்தெடுக்கவும்</span>
+                    </label>
+                    <select id="classSelect" onchange="handleClassChange()">
+                        <option value="6">6th Standard | 6ஆம் வகுப்பு</option>
+                        <option value="7">7th Standard | 7ஆம் வகுப்பு</option>
+                        <option value="8">8th Standard | 8ஆம் வகுப்பு</option>
+                        <option value="9">9th Standard | 9ஆம் வகுப்பு</option>
+                        <option value="10">10th Standard | 10ஆம் வகுப்பு</option>
+                        <option value="11">11th Standard | 11ஆம் வகுப்பு</option>
+                        <option value="12">12th Standard | 12ஆம் வகுப்பு</option>
+                    </select>
+                </div>
+                <div class="form-group" id="groupGroup" style="display: none;">
+                    <label>
+                        <span class="lang-en">Select Group (11th & 12th)</span>
+                        <span class="lang-ta">பிரிவைத் தேர்ந்தெடுக்கவும் (11 & 12)</span>
+                    </label>
+                    <select id="groupSelect" onchange="handleGroupChange()">
+                        <option value="bio_maths">Bio Maths | உயிரியல் கணிதம்</option>
+                        <option value="comp_maths">Computer Maths | கணினி கணிதம்</option>
+                        <option value="commerce">Commerce | வணிகவியல்</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Entry Card -->
+        <div class="glass-panel card">
+            <h2>
+                <span class="lang-en">2. Enter Marks (</span><span class="lang-ta">2. மதிப்பெண்களை உள்ளிடுக (</span>
+                <span id="entryLabel" class="text-indigo-600">6th Standard</span>)
+            </h2>
+            <div class="p-4 rounded-xl border border-white/40 bg-white/40 mb-2">
+                <div class="form-grid mb-4" style="align-items: end;">
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-en">Student Name</span>
+                            <span class="lang-ta">மாணவர் பெயர்</span>
+                        </label>
+                        <input type="text" id="sName" placeholder="e.g. Kumar S" class="w-full">
+                    </div>
+                </div>
+                
+                <h3 class="text-sm font-bold text-gray-700 mb-3 border-b border-gray-300/50 pb-2">
+                    <span class="lang-en">Subject Marks (Max 100)</span>
+                    <span class="lang-ta">பாட மதிப்பெண்கள் (அதிகபட்சம் 100)</span>
+                </h3>
+                <div id="dynamicSubjectInputs" class="form-grid" style="align-items: end;">
+                    <!-- Injected via JS -->
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button class="btn w-full sm:w-auto" onclick="addStudent()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5c-2.2 0-4 1.8-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                        <span class="lang-en">Add Student Record</span>
+                        <span class="lang-ta">மாணவர் தரவைச் சேர்க்க</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Card -->
+        <div class="glass-panel card">
+            <div class="flex flex-wrap gap-4 justify-between items-center mb-4 border-b-2 border-indigo-100 pb-3">
+                <h2 style="margin: 0; border: none; padding: 0;">
+                    <span class="lang-en">3. Data Preview</span>
+                    <span class="lang-ta">3. தரவு முன்னோட்டம்</span>
+                </h2>
+                <button class="btn btn-success" onclick="generateReport()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    <span class="lang-en">Analyze & Print Report</span>
+                    <span class="lang-ta">பகுப்பாய்வு செய்து அச்சிடு</span>
+                </button>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead id="previewTableHead"></thead>
+                    <tbody id="previewTableBody"></tbody>
+                </table>
+            </div>
+            <p id="emptyStateMsg" class="text-center text-gray-600 py-8 font-medium">
+                <span class="lang-en">No students entered for this class yet.</span>
+                <span class="lang-ta">இந்த வகுப்புக்கு இன்னும் மாணவர் விவரங்கள் சேர்க்கப்படவில்லை.</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Screen Footer -->
+    <div class="dev-footer no-print">
+        Developed by Y. Seenivasan, M.Sc., B.Ed., Maths Teacher, 8489880553
+    </div>
+
+    <!-- PRINT AREA FOR NOTICE BOARD -->
+    <div id="printArea">
+        <div class="print-header">
+            <h1 id="pSchool">School Name</h1>
+            <h2 id="pExam">Exam Name - Class</h2>
+            <p>
+                <span class="lang-en">STUDENT PERFORMANCE & RANK LIST</span>
+                <span class="lang-ta">மாணவர் செயல்பாடு மற்றும் தரவரிசைப் பட்டியல்</span>
+            </p>
+        </div>
+
+        <div class="analysis-boxes">
+            <div class="a-box">
+                <span class="lang-en">Total Appeared</span><span class="lang-ta">மொத்த மாணவர்கள்</span> 
+                <span id="aTotal">0</span>
+            </div>
+            <div class="a-box">
+                <span class="lang-en">Total Passed</span><span class="lang-ta">தேர்ச்சி பெற்றவர்கள்</span> 
+                <span id="aPass">0</span>
+            </div>
+            <div class="a-box">
+                <span class="lang-en">Total Failed</span><span class="lang-ta">தோல்வி அடைந்தவர்கள்</span> 
+                <span id="aFail">0</span>
+            </div>
+            <div class="a-box">
+                <span class="lang-en">Pass Percentage</span><span class="lang-ta">தேர்ச்சி சதவீதம்</span> 
+                <span id="aPct">0%</span>
+            </div>
+        </div>
+
+        <div class="top-rankers">
+            <h3>
+                <span class="lang-en">醇 CLASS TOPPERS 醇</span>
+                <span class="lang-ta">醇 வகுப்பு முதலிடம் பிடித்தவர்கள் 醇</span>
+            </h3>
+            <div class="rank-list" id="topRankersList"></div>
+        </div>
+
+        <table>
+            <thead id="finalTableHead"></thead>
+            <tbody id="finalTableBody"></tbody>
+        </table>
+        
+        <div class="print-footer">
+            <div>
+                <span class="lang-en">Class Teacher Signature</span>
+                <span class="lang-ta">வகுப்பு ஆசிரியர் கையொப்பம்</span>
+            </div>
+            <div>
+                <span class="lang-en">Headmaster / Principal Signature</span>
+                <span class="lang-ta">தலைமை ஆசிரியர் கையொப்பம்</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants & Configuration
+        const PASS_MARK = 35;
+        const STORAGE_PREFIX = 'smartExamApp_v3_';
+        const GLOBAL_CONFIG_KEY = 'smartExamApp_GlobalConfig';
+
+        // Subjects Configuration
+        const SUBJECTS_CONFIG = {
+            'middle': ['Tamil', 'English', 'Maths', 'Science', 'Social', 'Computer'],     
+            'high': ['Tamil', 'English', 'Maths', 'Science', 'Social'],                   
+            'bio_maths': ['Tamil', 'English', 'Physics', 'Chemistry', 'Biology', 'Maths'],
+            'comp_maths': ['Tamil', 'English', 'Physics', 'Chemistry', 'Computer Science', 'Maths'], 
+            'commerce': ['Tamil', 'English', 'Economics', 'Commerce', 'Accountancy', 'Business Maths'] 
+        };
+
+        // Tamil translations for subjects
+        const taSubjects = {
+            'Tamil': 'தமிழ்', 'English': 'ஆங்கிலம்', 'Maths': 'கணிதம்', 'Science': 'அறிவியல்', 'Social': 'சமூக அறிவியல்',
+            'Computer': 'கணினி', 'Physics': 'இயற்பியல்', 'Chemistry': 'வேதியியல்', 'Biology': 'உயிரியல்',
+            'Computer Science': 'கணினி அறிவியல்', 'Economics': 'பொருளியல்', 'Commerce': 'வணிகவியல்',
+            'Accountancy': 'கணக்குப்பதிவியல்', 'Business Maths': 'வணிக கணிதம்'
+        };
+
+        const shortMap = {'Computer Science': 'CSC', 'Business Maths': 'B.MAT', 'Accountancy': 'ACC', 'Economics': 'ECO', 'Commerce':'COM', 'Physics':'PHY', 'Chemistry':'CHE', 'Biology':'BIO', 'Maths':'MAT', 'Science':'SCI', 'Social':'SOC', 'English':'ENG', 'Tamil':'TAM', 'Computer':'COMP'};
+        
+        const taShortMap = {'Computer Science': 'க.அறி', 'Business Maths': 'வ.கணி', 'Accountancy': 'கணக்கு', 'Economics': 'பொரு', 'Commerce':'வணிக', 'Physics':'இயற்', 'Chemistry':'வேதி', 'Biology':'உயிர்', 'Maths':'கணிதம்', 'Science':'அறிவி', 'Social':'சமூக', 'English':'ஆங்', 'Tamil':'தமிழ்', 'Computer':'கணினி'};
+
+        let currentStudents = [];
+
+        window.onload = function() {
+            loadGlobalConfig();
+            handleClassChange();
+        };
+
+        // --- Global Config Local Storage Logic ---
+        function saveGlobalConfig() {
+            const config = {
+                schoolName: document.getElementById('schoolName').value,
+                examName: document.getElementById('examName').value
+            };
+            localStorage.setItem(GLOBAL_CONFIG_KEY, JSON.stringify(config));
+        }
+
+        function loadGlobalConfig() {
+            const config = JSON.parse(localStorage.getItem(GLOBAL_CONFIG_KEY));
+            if (config) {
+                if(config.schoolName) document.getElementById('schoolName').value = config.schoolName;
+                if(config.examName) document.getElementById('examName').value = config.examName;
+            } else {
+                document.getElementById('schoolName').value = "Government Higher Secondary School";
+                document.getElementById('examName').value = "Quarterly Examination - 2026";
+            }
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.className = `show ${type}`;
+            setTimeout(() => { toast.className = ''; }, 3000);
+        }
+
+        function getCategoryKey() {
+            const cls = parseInt(document.getElementById('classSelect').value);
+            if (cls >= 6 && cls <= 8) return 'middle';
+            if (cls >= 9 && cls <= 10) return 'high';
+            return document.getElementById('groupSelect').value; 
+        }
+
+        function getStorageKey() {
+            const cls = document.getElementById('classSelect').value;
+            const cat = getCategoryKey();
+            return `${STORAGE_PREFIX}Class${cls}_${cat}`;
+        }
+
+        function getCurrentSubjects() {
+            return SUBJECTS_CONFIG[getCategoryKey()];
+        }
+
+        function handleClassChange() {
+            const cls = parseInt(document.getElementById('classSelect').value);
+            const groupGroup = document.getElementById('groupGroup');
+            
+            if (cls === 11 || cls === 12) {
+                groupGroup.style.display = 'flex';
+            } else {
+                groupGroup.style.display = 'none';
+            }
+            updateUIState();
+        }
+
+        function handleGroupChange() {
+            updateUIState();
+        }
+
+        function updateUIState() {
+            const selCls = document.getElementById('classSelect');
+            let labelText = selCls.options[selCls.selectedIndex].text.split('|')[0].trim();
+            const cls = parseInt(document.getElementById('classSelect').value);
+            
+            if (cls === 11 || cls === 12) {
+                const selGrp = document.getElementById('groupSelect');
+                const grpText = selGrp.options[selGrp.selectedIndex].text.split('|')[0].trim();
+                labelText += ` - ${grpText}`;
+            }
+            document.getElementById('entryLabel').innerText = labelText;
+
+            loadDataForCurrentView();
+            generateSubjectInputs();
+            renderPreviewTable();
+        }
+
+        function loadDataForCurrentView() {
+            const key = getStorageKey();
+            const stored = localStorage.getItem(key);
+            if (stored) {
+                try { currentStudents = JSON.parse(stored); } catch (e) { currentStudents = []; }
+            } else { currentStudents = []; }
+        }
+
+        function saveDataForCurrentView() {
+            const key = getStorageKey();
+            localStorage.setItem(key, JSON.stringify(currentStudents));
+        }
+        
+        function calculateGrade(avg, isPass) {
+            if (!isPass) return 'F';
+            if (avg >= 90) return 'A+';
+            if (avg >= 80) return 'A';
+            if (avg >= 70) return 'B';
+            if (avg >= 60) return 'C';
+            if (avg >= 50) return 'D';
+            return 'E';
+        }
+
+        function generateSubjectInputs() {
+            const container = document.getElementById('dynamicSubjectInputs');
+            container.innerHTML = '';
+            const subjects = getCurrentSubjects();
+            
+            subjects.forEach((sub, index) => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                
+                const label = document.createElement('label');
+                label.innerHTML = `<span class="lang-en">${sub}</span><span class="lang-ta">${taSubjects[sub]}</span>`;
+                
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.id = `mark_${index}`;
+                input.placeholder = "0-100";
+                input.onkeypress = function(e) { if (e.key === 'Enter') addStudent(); };
+                
+                group.appendChild(label);
+                group.appendChild(input);
+                container.appendChild(group);
+            });
+        }
+
+        function addStudent() {
+            const nameInput = document.getElementById('sName');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                showToast("Please enter Student Name / மாணவர் பெயரை உள்ளிடவும்", "error");
+                nameInput.focus();
+                return;
+            }
+
+            const subjects = getCurrentSubjects();
+            const marks = {};
+            let hasError = false;
+
+            subjects.forEach((sub, index) => {
+                const val = document.getElementById(`mark_${index}`).value;
+                const mark = parseInt(val);
+                if (val === '' || isNaN(mark) || mark < 0 || mark > 100) { hasError = true; } 
+                else { marks[sub] = mark; }
+            });
+
+            if (hasError) {
+                showToast("Enter valid marks (0-100) / சரியான மதிப்பெண்களை உள்ளிடுக", "error");
+                return;
+            }
+
+            const student = { id: Date.now(), name: name, marks: marks };
+            currentStudents.push(student);
+            saveDataForCurrentView();
+            
+            showToast(`${name} Added Successfully! / சேர்க்கப்பட்டது!`);
+            
+            nameInput.value = '';
+            subjects.forEach((_, index) => { document.getElementById(`mark_${index}`).value = ''; });
+            nameInput.focus();
+
+            renderPreviewTable();
+        }
+
+        function removeStudent(id) {
+            currentStudents = currentStudents.filter(s => s.id !== id);
+            saveDataForCurrentView();
+            renderPreviewTable();
+            showToast("Student deleted / மாணவர் நீக்கப்பட்டார்", "error");
+        }
+
+        function renderPreviewTable() {
+            const thead = document.getElementById('previewTableHead');
+            const tbody = document.getElementById('previewTableBody');
+            const emptyMsg = document.getElementById('emptyStateMsg');
+            const subjects = getCurrentSubjects();
+
+            if (currentStudents.length === 0) {
+                thead.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                tbody.innerHTML = '';
+                return;
+            }
+            
+            thead.style.display = 'table-header-group';
+            emptyMsg.style.display = 'none';
+
+            let hHTML = `<tr>
+                <th><span class="lang-en">S.No</span><span class="lang-ta">வ.எண்</span></th>
+                <th style="text-align: left;"><span class="lang-en">Student Name</span><span class="lang-ta">மாணவர் பெயர்</span></th>`;
+            
+            subjects.forEach(sub => { 
+                hHTML += `<th><span class="lang-en">${sub.substring(0,3).toUpperCase()}</span><span class="lang-ta">${taShortMap[sub]}</span></th>`; 
+            });
+            
+            hHTML += `<th><span class="lang-en">Total</span><span class="lang-ta">மொத்தம்</span></th>
+                      <th><span class="lang-en">Result</span><span class="lang-ta">முடிவு</span></th>
+                      <th><span class="lang-en">Grade</span><span class="lang-ta">கிரேடு</span></th>
+                      <th><span class="lang-en">Action</span><span class="lang-ta">செயல்</span></th></tr>`;
+            thead.innerHTML = hHTML;
+
+            tbody.innerHTML = '';
+            currentStudents.forEach((s, index) => {
+                let rHTML = `<tr>
+                    <td>${index + 1}</td>
+                    <td style="text-align: left; font-weight: 500;">${s.name}</td>`;
+                
+                let total = 0;
+                let isPass = true;
+                
+                subjects.forEach(sub => {
+                    const m = s.marks[sub];
+                    total += m;
+                    if (m < PASS_MARK) isPass = false;
+                    const cls = m < PASS_MARK ? 'text-red-600 font-bold' : '';
+                    rHTML += `<td class="${cls}">${m}</td>`;
+                });
+                
+                let avg = total / subjects.length;
+                let grade = calculateGrade(avg, isPass);
+                
+                let passHTML = `<span class="lang-en pass">PASS</span><span class="lang-ta pass">தேர்ச்சி</span>`;
+                let failHTML = `<span class="lang-en fail">FAIL</span><span class="lang-ta fail">தோல்வி</span>`;
+
+                rHTML += `<td style="font-weight: bold;">${total}</td>`;
+                rHTML += `<td>${isPass ? passHTML : failHTML}</td>`;
+                rHTML += `<td><span class="grade-badge">${grade}</span></td>`;
+                rHTML += `<td><button class="btn-danger" onclick="removeStudent(${s.id})"><span class="lang-en">Delete</span><span class="lang-ta">நீக்கு</span></button></td></tr>`;
+                
+                tbody.innerHTML += rHTML;
+            });
+        }
+
+        function generateReport() {
+            if (currentStudents.length === 0) {
+                showToast("No students to generate report! / அறிக்கை உருவாக்க மாணவர்கள் இல்லை", "error");
+                return;
+            }
+            saveGlobalConfig(); // Ensure latest input is saved
+
+            const subjects = getCurrentSubjects();
+
+            let analyzed = currentStudents.map(s => {
+                let total = 0;
+                let isPass = true;
+                subjects.forEach(sub => {
+                    let m = s.marks[sub] || 0;
+                    total += m;
+                    if (m < PASS_MARK) isPass = false;
+                });
+                let avg = (total / subjects.length).toFixed(1);
+                let grade = calculateGrade(total / subjects.length, isPass);
+                return { ...s, total, avg, isPass, grade };
+            });
+
+            analyzed.sort((a, b) => b.total - a.total);
+            let currentRank = 1;
+            let passCount = 0;
+
+            analyzed.forEach((s, i) => {
+                if (s.isPass) {
+                    passCount++;
+                    if (i > 0 && analyzed[i - 1].isPass && analyzed[i - 1].total === s.total) {
+                        s.rank = analyzed[i - 1].rank;
+                    } else {
+                        s.rank = currentRank;
+                    }
+                    currentRank++;
+                } else {
+                    s.rank = '-';
+                }
+            });
+
+            document.getElementById('pSchool').innerText = document.getElementById('schoolName').value || 'School Name';
+            document.getElementById('pExam').innerText = `${document.getElementById('examName').value} | ${document.getElementById('entryLabel').innerText}`;
+
+            let totalStu = analyzed.length;
+            document.getElementById('aTotal').innerText = totalStu;
+            document.getElementById('aPass').innerText = passCount;
+            document.getElementById('aFail').innerText = totalStu - passCount;
+            document.getElementById('aPct').innerText = ((passCount / totalStu) * 100).toFixed(1) + '%';
+
+            let topList = document.getElementById('topRankersList');
+            topList.innerHTML = '';
+            let r1 = analyzed.filter(s => s.rank === 1);
+            let r2 = analyzed.filter(s => s.rank === 2);
+            let r3 = analyzed.filter(s => s.rank === 3);
+
+            if(r1.length) topList.innerHTML += `<div>･<span class="lang-en">1st</span><span class="lang-ta">1ஆம் இடம்</span>: ${r1.map(s=>s.name).join(', ')} (${r1[0].total})</div>`;
+            if(r2.length) topList.innerHTML += `<div>･<span class="lang-en">2nd</span><span class="lang-ta">2ஆம் இடம்</span>: ${r2.map(s=>s.name).join(', ')} (${r2[0].total})</div>`;
+            if(r3.length) topList.innerHTML += `<div>･<span class="lang-en">3rd</span><span class="lang-ta">3ஆம் இடம்</span>: ${r3.map(s=>s.name).join(', ')} (${r3[0].total})</div>`;
+
+            let printData = [...analyzed].sort((a, b) => a.name.localeCompare(b.name));
+            const pThead = document.getElementById('finalTableHead');
+            const pTbody = document.getElementById('finalTableBody');
+            
+            let pHeadHTML = `<tr>
+                <th><span class="lang-en">S.No</span><span class="lang-ta">வ.எண்</span></th>
+                <th style="text-align: left;"><span class="lang-en">Student Name</span><span class="lang-ta">மாணவர் பெயர்</span></th>`;
+            
+            subjects.forEach(sub => { 
+                pHeadHTML += `<th><span class="lang-en">${shortMap[sub] || sub.substring(0,3).toUpperCase()}</span><span class="lang-ta">${taShortMap[sub]}</span></th>`; 
+            });
+            
+            pHeadHTML += `<th><span class="lang-en">TOTAL</span><span class="lang-ta">மொத்தம்</span></th>
+                          <th><span class="lang-en">AVG</span><span class="lang-ta">சராசரி</span></th>
+                          <th><span class="lang-en">RESULT</span><span class="lang-ta">முடிவு</span></th>
+                          <th><span class="lang-en">GRADE</span><span class="lang-ta">கிரேடு</span></th>
+                          <th><span class="lang-en">RANK</span><span class="lang-ta">ரேங்க்</span></th></tr>`;
+            pThead.innerHTML = pHeadHTML;
+            
+            pTbody.innerHTML = '';
+            printData.forEach((s, i) => {
+                let row = `<tr>
+                    <td>${i + 1}</td>
+                    <td style="text-align: left; font-weight: bold;">${s.name}</td>`;
+                
+                subjects.forEach(sub => {
+                    let m = s.marks[sub];
+                    row += `<td>${m < PASS_MARK ? `<span class="fail">${m}</span>` : m}</td>`;
+                });
+                
+                let passHTML = `<span class="lang-en pass">PASS</span><span class="lang-ta pass">தேர்ச்சி</span>`;
+                let failHTML = `<span class="lang-en fail" style="background: transparent;">FAIL</span><span class="lang-ta fail" style="background: transparent;">தோல்வி</span>`;
+
+                row += `<td style="font-weight: bold;">${s.total}</td>
+                    <td>${s.avg}</td>
+                    <td>${s.isPass ? passHTML : failHTML}</td>
+                    <td><span class="grade-badge">${s.grade}</span></td>
+                    <td style="font-weight: bold; font-size:1.1rem;">${s.rank}</td>
+                </tr>`;
+                pTbody.innerHTML += row;
+            });
+
+            setTimeout(() => { window.print(); }, 200);
+        }
+    </script>
+</body>
+</html>

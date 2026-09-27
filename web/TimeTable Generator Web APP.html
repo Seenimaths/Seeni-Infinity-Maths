@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customizable School Timetable System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Tamil Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4338CA;
+            --primary-hover: #312E81;
+            --bg: #EEF2FF;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --border: #C7D2FE;
+            --accent: #059669;
+            --danger: #DC2626;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tiro Tamil', 'Cambria', Arial, sans-serif;}
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 3rem; }
+
+        .top-bar { background-color: #1E1B4B; color: white; text-align: center; padding: 1.5rem; position: relative; }
+        .top-bar h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .top-bar p { font-size: 0.9rem; font-weight: 300; opacity: 0.9; }
+        
+        /* Language Switcher Styling */
+        .lang-switch { position: absolute; top: 1.5rem; right: 1.5rem; display: flex; gap: 5px; }
+        .lang-btn { padding: 4px 10px; cursor: pointer; border: none; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+
+        .container { max-width: 1300px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .config-card { background: var(--card); border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
+        .config-card h2 { font-size: 1.1rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem; color: var(--primary); }
+        
+        .form-row { display: flex; gap: 0.5rem; align-items: flex-end; margin-bottom: 0.5rem; }
+        input, select { padding: 0.6rem; border: 1px solid #94A3B8; border-radius: 6px; outline: none; font-size: 0.9rem; width: 100%; }
+        input:focus, select:focus { border-color: var(--primary); }
+
+        .btn { background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center;}
+        .btn:hover { background: var(--primary-hover); }
+        .btn-danger { background: var(--danger); padding: 0.4rem 0.8rem; font-size: 0.8rem;}
+        
+        .list-container { max-height: 200px; overflow-y: auto; margin-top: 1rem; border: 1px solid var(--border); border-radius: 6px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-bottom: 1px solid var(--border); background: #F8FAFC; font-size: 0.9rem;}
+        
+        /* Mapping Section */
+        .mapping-section { background: var(--card); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid #F59E0B; }
+        .mapping-section h2 { font-size: 1.2rem; color: #B45309; margin-bottom: 1rem; border-bottom: 2px solid #FDE68A; padding-bottom: 0.5rem;}
+        .mapping-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .class-map-card { background: #FFFBEB; border: 1px solid #FDE68A; padding: 1rem; border-radius: 8px; }
+        .class-map-card h3 { font-size: 1rem; color: #92400E; margin-bottom: 0.8rem; display: flex; justify-content: space-between; }
+        .map-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .map-row select { width: 65%; padding: 0.4rem; font-size: 0.85rem; }
+
+        .main-controls { background: var(--card); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
+        
+        .timetable-wrapper { background: var(--card); padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow-x: auto; margin-top: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; text-align: center; }
+        th, td { border: 1px solid #CBD5E1; padding: 0.75rem; }
+        th { background-color: #F1F5F9; color: #334155; font-size: 0.85rem; }
+        
+        .cell-content { display: flex; flex-direction: column; gap: 0.25rem; }
+        .subject-name { font-weight: 600; color: #0F172A; font-size: 0.9rem;}
+        .teacher-name { font-size: 0.75rem; color: #475569; background: #E2E8F0; padding: 0.2rem; border-radius: 4px; }
+        .class-teacher-badge { color: #B45309; font-size: 0.7rem; font-weight: bold; background: #FEF3C7; border-radius: 4px; }
+        
+        /* Updated Break Col for Perfect Centering */
+        .break-col { 
+            background-color: #FEF3C7 !important; 
+            color: #B45309 !important; 
+            font-weight: bold; 
+            width: 40px; 
+            writing-mode: vertical-rl; 
+            text-orientation: mixed; 
+            letter-spacing: 2px; 
+            text-align: center !important; 
+            vertical-align: middle !important;
+            padding: 0 !important;
+        }
+
+        .tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
+        .tab { padding: 0.5rem 1.5rem; background: #E2E8F0; border: none; font-weight: 600; cursor: pointer; border-radius: 6px; }
+        .tab.active { background: var(--primary); color: white; }
+        .badge { font-size: 0.7rem; background: #3B82F6; color: white; padding: 2px 6px; border-radius: 10px; margin-left: 5px; }
+
+        #loading { display: none; color: var(--primary); font-weight: bold; margin-top: 1rem; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { margin: 0; padding: 0; max-width: 100%; }
+            .timetable-wrapper { box-shadow: none; border: none; padding: 0; }
+            .print-page { page-break-after: always; padding: 1rem; }
+            table { border: 2px solid #000; }
+            th, td { border: 1px solid #000; color: #000; }
+            .break-col { 
+                background-color: #f0f0f0 !important; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+                text-align: center !important; 
+                vertical-align: middle !important;
+            }
+            .teacher-name { background: transparent; border: 1px dashed #666; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <div class="lang-switch">
+            <button class="lang-btn" id="btn-ta" onclick="setLanguage('ta')">தமிழ்</button>
+            <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">English</button>
+        </div>
+        <h1 id="i_title">Smart Timetable Generator - Fully Customizable</h1>
+        <p id="i_subtitle">ஒவ்வொரு வகுப்பிற்கும் தனித்தனியாக ஆசிரியர்களையும் பாடங்களையும் நீங்களே ஒதுக்கலாம்</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="config-grid no-print">
+            <!-- Teachers List -->
+            <div class="config-card">
+                <h2 id="i_t1">1. ஆசிரியர்களைச் சேர்க்க (Add Teachers)</h2>
+                <div class="form-row">
+                    <input type="text" id="tName" placeholder="ஆசிரியர் பெயர் (எ.கா: Mr. Kannan)">
+                    <button class="btn" id="b1" onclick="addTeacher()">Add</button>
+                </div>
+                <div class="list-container" id="teacherList"></div>
+            </div>
+
+            <!-- Classes List -->
+            <div class="config-card">
+                <h2 id="i_t2">2. வகுப்புகளைச் சேர்க்க (Add Classes)</h2>
+                <div class="form-row">
+                    <input type="text" id="cName" placeholder="வகுப்பு (எ.கா: 6th Std)">
+                    <select id="cType">
+                        <option value="Middle" id="i_mid">6, 7, 8 (PT, Co-curricular, Club, Value Ed)</option>
+                        <option value="High" id="i_high">9, 10 (PT, Co-curricular, Club, Value Ed)</option>
+                    </select>
+                    <select id="cTeacher"><option value="">வகுப்பாசிரியர்...</option></select>
+                    <button class="btn" id="b2" onclick="addClass()">Add</button>
+                </div>
+                <div class="list-container" id="classList"></div>
+            </div>
+        </div>
+
+        <!-- Custom Mapping Section -->
+        <div class="mapping-section no-print" id="mappingSection">
+            <h2 id="i_t3">3. பாடங்கள் மற்றும் ஆசிரியர்கள் ஒதுக்கீடு (Subject-Teacher Mapping)</h2>
+            <p id="i_mapDesc" style="font-size:0.85rem; margin-bottom:1rem; color:#6B7280;">கீழே உள்ள ஒவ்வொரு வகுப்பிற்கும் எந்த ஆசிரியர் எந்தப் பாடத்தை எடுப்பார் என்பதைத் தேர்ந்தெடுக்கவும்.</p>
+            <div class="mapping-grid" id="mappingGrid">
+                <!-- Dynamically Generated Cards Will Go Here -->
+            </div>
+        </div>
+
+        <div class="main-controls no-print">
+            <button class="btn" id="b3" style="font-size: 1.1rem; padding: 0.8rem 2rem; background: var(--accent);" onclick="generateTimetable()">
+                ⚡ டைம் டேபிளை உருவாக்கு (Generate Auto Timetable)
+            </button>
+            <div id="loading">Generating clash-free timetable... Please wait...</div>
+            
+            <div style="margin-top: 1.5rem; display: none;" id="viewControls">
+                <div class="tabs">
+                    <button class="tab active" id="tabClass" onclick="switchTab('class')">Class View</button>
+                    <button class="tab" id="tabTeacher" onclick="switchTab('teacher')">Teacher View</button>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <select id="viewSelector" style="max-width: 300px;" onchange="renderView()"></select>
+                    <button class="btn" id="b4" onclick="window.print()">🖨️ Print Current</button>
+                    <button class="btn" id="b5" style="background:#2563EB" onclick="printAll()">🖨️ Print All</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="displayArea" class="timetable-wrapper" style="display:none;"></div>
+        <div id="printArea" style="display:none;"></div>
+
+    </div>
+
+    <script>
+        // --- Translations Dictionary ---
+        const i18n = {
+            en: {
+                title: "Smart Timetable Generator",
+                subtitle: "You can assign teachers and subjects individually for each class",
+                t1: "1. Add Teachers",
+                t2: "2. Add Classes",
+                t3: "3. Subject-Teacher Mapping",
+                tName: "Teacher Name (e.g: Mr. Kannan)",
+                cName: "Class (e.g: 6th Std)",
+                mid: "6, 7, 8 (PT, Co-curricular, Club, Value Ed)",
+                high: "9, 10 (PT, Co-curricular, Club, Value Ed)",
+                add: "Add",
+                ct: "Class Teacher...",
+                mapDesc: "Select which teacher handles which subject for the classes below.",
+                gen: "⚡ Generate Auto Timetable",
+                loading: "Generating clash-free timetable... Please wait...",
+                cView: "Class View",
+                tView: "Teacher View",
+                pCur: "🖨️ Print Current",
+                pAll: "🖨️ Print All",
+                selT: "Select Teacher...",
+                assign: "- Assign Teacher -",
+                free: "Self Study / Free",
+                ctr: "★ Class Tr",
+                ctrText: "Class Tr",
+                break: "BREAK",
+                lunch: "LUNCH",
+                alert1: "Add classes and teachers!",
+                alert2: "Select Class Name and Class Teacher",
+                alert3: "✅ Timetable Generated Successfully!",
+                alert4: "❌ Could not generate a clash-free timetable. \n\nReason: One or more teachers might be assigned to too many classes simultaneously. Please adjust the 'Subject-Teacher Mapping' and try again.",
+                day: "Day"
+            },
+            ta: {
+                title: "ஸ்மார்ட் டைம் டேபிள் ஜெனரேட்டர்",
+                subtitle: "ஒவ்வொரு வகுப்பிற்கும் தனித்தனியாக ஆசிரியர்களையும் பாடங்களையும் நீங்களே ஒதுக்கலாம்",
+                t1: "1. ஆசிரியர்களைச் சேர்க்க",
+                t2: "2. வகுப்புகளைச் சேர்க்க",
+                t3: "3. பாடங்கள் மற்றும் ஆசிரியர்கள் ஒதுக்கீடு",
+                tName: "ஆசிரியர் பெயர் (எ.கா: Mr. Kannan)",
+                cName: "வகுப்பு (எ.கா: 6th Std)",
+                mid: "6, 7, 8 (PT, Co-curricular, கிளப், Value Ed)",
+                high: "9, 10 (PT, Co-curricular, கிளப், Value Ed)",
+                add: "சேர்",
+                ct: "வகுப்பாசிரியர்...",
+                mapDesc: "கீழே உள்ள ஒவ்வொரு வகுப்பிற்கும் எந்த ஆசிரியர் எந்தப் பாடத்தை எடுப்பார் என்பதைத் தேர்ந்தெடுக்கவும்.",
+                gen: "⚡ டைம் டேபிளை உருவாக்கு",
+                loading: "அட்டவணை தயாராகிறது... காத்திருக்கவும்...",
+                cView: "வகுப்புப் பார்வை",
+                tView: "ஆசிரியர் பார்வை",
+                pCur: "🖨️ இதை மட்டும் பிரிண்ட் செய்",
+                pAll: "🖨️ அனைத்தையும் பிரிண்ட் செய்",
+                selT: "ஆசிரியரைத் தேர்ந்தெடுக்கவும்...",
+                assign: "- ஆசிரியர் ஒதுக்கு -",
+                free: "சுய படிப்பு / Free",
+                ctr: "★ வகுப்பாசிரியர்",
+                ctrText: "வகுப்பாசிரியர்",
+                break: "இடைவேளை",
+                lunch: "மதிய உணவு",
+                alert1: "ஆசிரியர்கள் மற்றும் வகுப்புகளைச் சேர்க்கவும்!",
+                alert2: "வகுப்பு மற்றும் வகுப்பாசிரியரைத் தேர்ந்தெடுக்கவும்",
+                alert3: "✅ டைம் டேபிள் வெற்றிகரமாக உருவாக்கப்பட்டது!",
+                alert4: "❌ க்ளாஷ் இல்லாத (Clash-free) அட்டவணையை உருவாக்க முடியவில்லை. \n\nகாரணம்: ஒரே ஆசிரியர் ஒரே நேரத்தில் பல வகுப்புகளுக்கு ஒதுக்கப்பட்டிருக்கலாம். 'பாடங்கள் ஒதுக்கீடு' பகுதியில் சற்று மாற்றம் செய்து மீண்டும் முயற்சிக்கவும்.",
+                day: "நாள்"
+            }
+        };
+
+        let currentLang = 'ta';
+
+        // --- State Variables ---
+        let teachers = [
+            { id: 1, name: 'Mr. Kannan (Tamil)' },
+            { id: 2, name: 'Mrs. Priya (English)' },
+            { id: 3, name: 'Mr. Ramesh (Maths)' },
+            { id: 4, name: 'Mrs. Selvi (Science)' },
+            { id: 5, name: 'Mr. Dinesh (Social)' },
+            { id: 6, name: 'Mr. Balaji (PT)' },
+            { id: 7, name: 'Mrs. Geetha (Co-curricular/Club)' }
+        ];
+
+        let classes = [
+            { id: 1, name: '6th Std A', type: 'Middle', ct: 1 },
+            { id: 2, name: '9th Std A', type: 'High', ct: 3 }
+        ];
+
+        // ALL SUBJECTS NOW UNIFIED AND FREQUENCIES DEFINED
+        const allSubs = ['Tamil', 'English', 'Maths', 'Science', 'Social', 'Co-curricular', 'PT', 'Club', 'Value Education'];
+        
+        // Exact periods per week (Total = 36 periods)
+        const targetFreq = {
+            'Tamil': 6,
+            'English': 6,
+            'Maths': 6,
+            'Science': 6,
+            'Social': 6,
+            'Co-curricular': 2,
+            'PT': 2,
+            'Club': 1,
+            'Value Education': 1
+        };
+
+        let subjectMapping = {}; 
+
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const periods = [
+            'P1<br><small>09:15 - 10:15</small>', 
+            'P2<br><small>10:15 - 11:00</small>', 
+            'P3<br><small>11:15 - 12:00</small>', 
+            'P4<br><small>12:00 - 12:45</small>', 
+            'P5<br><small>01:30 - 02:15</small>', 
+            'P6<br><small>02:15 - 03:00</small>', 
+            'P7<br><small>03:00 - 03:45</small>'
+        ];
+
+        let masterSchedule = {}; 
+        let currentMode = 'class';
+
+        function init() { 
+            initDefaultMapping();
+            setLanguage('ta'); 
+        }
+
+        // --- Language Switcher ---
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('btn-ta').style.background = lang === 'ta' ? 'var(--accent)' : '#CBD5E1';
+            document.getElementById('btn-ta').style.color = lang === 'ta' ? 'white' : 'black';
+            document.getElementById('btn-en').style.background = lang === 'en' ? 'var(--accent)' : '#CBD5E1';
+            document.getElementById('btn-en').style.color = lang === 'en' ? 'white' : 'black';
+
+            document.getElementById('i_title').innerText = i18n[lang].title;
+            document.getElementById('i_subtitle').innerText = i18n[lang].subtitle;
+            document.getElementById('i_t1').innerText = i18n[lang].t1;
+            document.getElementById('tName').placeholder = i18n[lang].tName;
+            document.getElementById('b1').innerText = i18n[lang].add;
+            document.getElementById('i_t2').innerText = i18n[lang].t2;
+            document.getElementById('cName').placeholder = i18n[lang].cName;
+            document.getElementById('i_mid').innerText = i18n[lang].mid;
+            document.getElementById('i_high').innerText = i18n[lang].high;
+            document.getElementById('b2').innerText = i18n[lang].add;
+            document.getElementById('i_t3').innerText = i18n[lang].t3;
+            document.getElementById('i_mapDesc').innerText = i18n[lang].mapDesc;
+            document.getElementById('b3').innerText = i18n[lang].gen;
+            document.getElementById('loading').innerText = i18n[lang].loading;
+            document.getElementById('tabClass').innerText = i18n[lang].cView;
+            document.getElementById('tabTeacher').innerText = i18n[lang].tView;
+            document.getElementById('b4').innerText = i18n[lang].pCur;
+            document.getElementById('b5').innerText = i18n[lang].pAll;
+
+            updateTeacherUI();
+            updateClassUI();
+            renderMappingGrid();
+            if(document.getElementById('displayArea').style.display === 'block') {
+                renderView();
+            }
+        }
+
+        function initDefaultMapping() {
+            classes.forEach(c => {
+                if(!subjectMapping[c.id]) subjectMapping[c.id] = {};
+            });
+        }
+
+        function updateTeacherUI() {
+            const list = document.getElementById('teacherList');
+            list.innerHTML = '';
+            let optionsHTML = `<option value="">${i18n[currentLang].ct}</option>`;
+            
+            teachers.forEach(t => {
+                list.innerHTML += `<div class="list-item">
+                    <span><strong>${t.name}</strong></span>
+                    <button class="btn-danger" onclick="removeTeacher(${t.id})">X</button>
+                </div>`;
+                optionsHTML += `<option value="${t.id}">${t.name}</option>`;
+            });
+
+            document.getElementById('cTeacher').innerHTML = optionsHTML;
+            renderMappingGrid();
+        }
+
+        function updateClassUI() {
+            const list = document.getElementById('classList');
+            list.innerHTML = '';
+            classes.forEach(c => {
+                let tName = teachers.find(t => t.id == c.ct)?.name || 'None';
+                list.innerHTML += `<div class="list-item">
+                    <span><strong>${c.name}</strong> <span class="badge">${c.type}</span><br>
+                    <small>${i18n[currentLang].ctrText}: ${tName}</small></span>
+                    <button class="btn-danger" onclick="removeClass(${c.id})">X</button>
+                </div>`;
+            });
+            initDefaultMapping();
+            renderMappingGrid();
+        }
+
+        function addTeacher() {
+            let name = document.getElementById('tName').value;
+            if(!name) return;
+            teachers.push({ id: Date.now(), name });
+            document.getElementById('tName').value = '';
+            updateTeacherUI();
+        }
+
+        function removeTeacher(id) {
+            teachers = teachers.filter(t => t.id !== id);
+            classes.forEach(c => { if(c.ct == id) c.ct = null; });
+            for(let cId in subjectMapping) {
+                for(let sub in subjectMapping[cId]) {
+                    if(subjectMapping[cId][sub] == id) delete subjectMapping[cId][sub];
+                }
+            }
+            updateTeacherUI(); updateClassUI();
+        }
+
+        function addClass() {
+            let name = document.getElementById('cName').value;
+            let type = document.getElementById('cType').value;
+            let ct = document.getElementById('cTeacher').value;
+            if(!name || !ct) return alert(i18n[currentLang].alert2);
+            classes.push({ id: Date.now(), name, type, ct: parseInt(ct) });
+            document.getElementById('cName').value = '';
+            updateClassUI();
+        }
+
+        function removeClass(id) {
+            classes = classes.filter(c => c.id !== id);
+            delete subjectMapping[id];
+            updateClassUI();
+        }
+
+        function renderMappingGrid() {
+            const grid = document.getElementById('mappingGrid');
+            grid.innerHTML = '';
+
+            classes.forEach(c => {
+                let cardHTML = `<div class="class-map-card">
+                    <h3>${c.name} <span class="badge">${c.type}</span></h3>`;
+                
+                allSubs.forEach(sub => {
+                    let assignedTid = subjectMapping[c.id][sub] || "";
+                    cardHTML += `
+                    <div class="map-row">
+                        <strong>${sub}</strong>
+                        <select onchange="updateMapping(${c.id}, '${sub}', this.value)">
+                            <option value="">${i18n[currentLang].assign}</option>
+                            ${teachers.map(t => `<option value="${t.id}" ${t.id == assignedTid ? 'selected' : ''}>${t.name}</option>`).join('')}
+                        </select>
+                    </div>`;
+                });
+                cardHTML += `</div>`;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        function updateMapping(classId, subject, teacherId) {
+            if(!teacherId) delete subjectMapping[classId][subject];
+            else subjectMapping[classId][subject] = parseInt(teacherId);
+        }
+
+        function generateTimetable() {
+            if(classes.length === 0 || teachers.length === 0) return alert(i18n[currentLang].alert1);
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            setTimeout(() => {
+                const MAX_RETRIES = 2000; 
+                let success = false;
+
+                for(let attempt=0; attempt<MAX_RETRIES; attempt++) {
+                    if(tryGenerateSchedule()) {
+                        success = true;
+                        break;
+                    }
+                }
+
+                document.getElementById('loading').style.display = 'none';
+
+                if(success) {
+                    alert(i18n[currentLang].alert3);
+                    document.getElementById('viewControls').style.display = 'block';
+                    switchTab('class');
+                } else {
+                    alert(i18n[currentLang].alert4);
+                }
+            }, 100);
+        }
+
+        function tryGenerateSchedule() {
+            let tempSchedule = {};
+            let weeklyCounts = {};
+
+            classes.forEach(c => {
+                tempSchedule[c.id] = {};
+                weeklyCounts[c.id] = {};
+                days.forEach(d => tempSchedule[c.id][d] = []);
+                allSubs.forEach(s => weeklyCounts[c.id][s] = 0);
+            });
+
+            for(let d=0; d<days.length; d++) {
+                let day = days[d];
+
+                classes.forEach(c => {
+                    let ctInfo = teachers.find(t => t.id == c.ct);
+                    tempSchedule[c.id][day][0] = { sub: i18n[currentLang].ctrText, tName: ctInfo?ctInfo.name:'Unknown', tid: c.ct, isCT: true };
+                });
+
+                for(let p=1; p<7; p++) {
+                    let busyTeachers = {}; 
+                    let shuffledClasses = [...classes].sort(() => Math.random() - 0.5);
+
+                    for(let c of shuffledClasses) {
+                        let scheduledToday = tempSchedule[c.id][day].filter(slot => slot !== undefined).map(slot => slot.sub);
+                        
+                        // Filter remaining subjects based on WEEKLY QUOTA (targetFreq) and NOT scheduled today
+                        let remainingSubs = allSubs.filter(sub => weeklyCounts[c.id][sub] < targetFreq[sub] && !scheduledToday.includes(sub));
+
+                        remainingSubs.sort(() => Math.random() - 0.5); 
+
+                        let assigned = false;
+                        for(let sub of remainingSubs) {
+                            let mappedTid = subjectMapping[c.id][sub];
+                            
+                            if(!mappedTid) {
+                                tempSchedule[c.id][day][p] = { sub: sub, tName: i18n[currentLang].free, tid: null, isCT: false };
+                                weeklyCounts[c.id][sub]++;
+                                assigned = true;
+                                break;
+                            }
+
+                            if(!busyTeachers[mappedTid]) {
+                                let tName = teachers.find(t=>t.id == mappedTid).name;
+                                tempSchedule[c.id][day][p] = { sub: sub, tName: tName, tid: mappedTid, isCT: false };
+                                busyTeachers[mappedTid] = true;
+                                weeklyCounts[c.id][sub]++;
+                                assigned = true;
+                                break;
+                            }
+                        }
+
+                        if(!assigned) {
+                            return false; 
+                        }
+                    }
+                }
+            }
+            masterSchedule = tempSchedule;
+            return true;
+        }
+
+        function switchTab(mode) {
+            currentMode = mode;
+            document.getElementById('tabClass').classList.toggle('active', mode === 'class');
+            document.getElementById('tabTeacher').classList.toggle('active', mode === 'teacher');
+            
+            const selector = document.getElementById('viewSelector');
+            selector.innerHTML = '';
+            
+            if(mode === 'class') {
+                classes.forEach(c => selector.innerHTML += `<option value="${c.id}">${c.name}</option>`);
+            } else {
+                teachers.forEach(t => selector.innerHTML += `<option value="${t.id}">${t.name}</option>`);
+            }
+            renderView();
+        }
+
+        function renderView() {
+            const val = document.getElementById('viewSelector').value;
+            const area = document.getElementById('displayArea');
+            area.style.display = 'block';
+            
+            if(currentMode === 'class') {
+                const cls = classes.find(c => c.id == val);
+                area.innerHTML = buildClassTableHTML(cls);
+            } else {
+                area.innerHTML = buildTeacherTableHTML(val);
+            }
+        }
+
+        function buildClassTableHTML(cls) {
+            let html = `<h2 style="margin-bottom:1rem; text-align:center;">Class: ${cls.name}</h2>
+            <table><thead><tr><th>${i18n[currentLang].day}</th>
+            <th>${periods[0]}</th><th>${periods[1]}</th><th class="break-col">${i18n[currentLang].break}</th>
+            <th>${periods[2]}</th><th>${periods[3]}</th><th class="break-col">${i18n[currentLang].lunch}</th>
+            <th>${periods[4]}</th><th>${periods[5]}</th><th>${periods[6]}</th></tr></thead><tbody>`;
+
+            days.forEach(day => {
+                html += `<tr><th>${day}</th>`;
+                masterSchedule[cls.id][day].forEach((slot, idx) => {
+                    if(idx === 2) html += `<td class="break-col"></td>`; 
+                    if(idx === 4) html += `<td class="break-col"></td>`; 
+                    
+                    html += `<td><div class="cell-content">
+                        <span class="subject-name">${slot.sub}</span>
+                        <span class="teacher-name">${slot.tName}</span>
+                        ${slot.isCT ? `<span class="class-teacher-badge">${i18n[currentLang].ctr}</span>` : ''}
+                    </div></td>`;
+                });
+                html += `</tr>`;
+            });
+            return html + `</tbody></table>`;
+        }
+
+        function buildTeacherTableHTML(teacherId) {
+            let teacher = teachers.find(t => t.id == teacherId);
+            let html = `<h2 style="margin-bottom:1rem; text-align:center;">Teacher Timetable: ${teacher.name}</h2>
+            <table><thead><tr><th>${i18n[currentLang].day}</th>
+            <th>${periods[0]}</th><th>${periods[1]}</th><th class="break-col">${i18n[currentLang].break}</th>
+            <th>${periods[2]}</th><th>${periods[3]}</th><th class="break-col">${i18n[currentLang].lunch}</th>
+            <th>${periods[4]}</th><th>${periods[5]}</th><th>${periods[6]}</th></tr></thead><tbody>`;
+
+            days.forEach(day => {
+                html += `<tr><th>${day}</th>`;
+                for(let p=0; p<7; p++) {
+                    if(p === 2) html += `<td class="break-col"></td>`; 
+                    if(p === 4) html += `<td class="break-col"></td>`; 
+                    
+                    let assignedClass = "FREE"; let isCT = false; let sub = "";
+                    
+                    classes.forEach(c => {
+                        if(masterSchedule[c.id][day][p].tid == teacherId) {
+                            assignedClass = c.name;
+                            isCT = masterSchedule[c.id][day][p].isCT;
+                            sub = masterSchedule[c.id][day][p].sub;
+                        }
+                    });
+
+                    html += `<td><div class="cell-content">
+                        <span class="subject-name" style="${assignedClass==='FREE'?'color:var(--accent)':''}">${assignedClass === 'FREE' ? i18n[currentLang].free : assignedClass}</span>
+                        ${sub && assignedClass !== 'FREE' ? `<span class="teacher-name">${sub}</span>` : ''}
+                        ${isCT ? `<span class="class-teacher-badge">${i18n[currentLang].ctr}</span>` : ''}
+                    </div></td>`;
+                }
+                html += `</tr>`;
+            });
+            return html + `</tbody></table>`;
+        }
+
+        function printAll() {
+            const printArea = document.getElementById('printArea');
+            printArea.style.display = 'block'; printArea.innerHTML = '';
+
+            if(currentMode === 'class') {
+                classes.forEach(c => { printArea.innerHTML += `<div class="print-page">${buildClassTableHTML(c)}</div>`; });
+            } else {
+                teachers.forEach(t => { printArea.innerHTML += `<div class="print-page">${buildTeacherTableHTML(t.id)}</div>`; });
+            }
+            
+            document.getElementById('displayArea').style.display = 'none';
+            window.print();
+            printArea.style.display = 'none'; document.getElementById('displayArea').style.display = 'block';
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
